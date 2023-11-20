@@ -18,6 +18,13 @@ endif
 :Mail til sælger]
 |Tilbudsberegning|
 :Udfyld tilbudsberegning;
+if (Komplikationer?) is (yes) then
+|Telefonisk|
+:Ring til kunde;
+:Spørg om komplikationer;
+:Ret tilbudsberegning;
+else (no)
+endif
 |Sælger|
 :Tilbudsberegning]
 :Send tilbud til kunde;
@@ -25,7 +32,20 @@ endif
 :Tilbud]
 if (Accepter tilbud?) is (yes) then
 |Sælger|
-:Accepter tilbud;
+:Accepteret tilbud]
+:Opret og send faktura til kunde;
+|Kunde|
+:Faktura]
+:Betaling;
+|Shop|
+:Betaling]
+|Sælger|
+:Opret stykliste og send til kunde;
+
+|Kunde|
+:Stykliste]
+:Vælg leveringsmetode;
+|Sælger|
 :Opret ordre;
 |Lager|
 :Ordre]

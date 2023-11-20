@@ -1,0 +1,42 @@
+@startuml
+'https://plantuml.com/activity-diagram-beta
+
+
+|Kunde|
+start
+:Vælg egne mål for carport;
+if(Skur) then (Ja)
+:Vælg mål/placering for skur;
+else (Nej)
+endif
+:Indsend forespørgsel;
+|Shop|
+:Forespørgsel]
+|Mailsystem|
+:Send mail til sælger med forespørgsel;
+|Sælger|
+:Mail til sælger]
+|Tilbudsberegning|
+:Udfyld tilbudsberegning;
+|Sælger|
+:Tilbudsberegning]
+:Send tilbud til kunde;
+|Kunde|
+:Tilbud]
+if (Accepter tilbud?) is (yes) then
+|Sælger|
+:Accepter tilbud;
+:Opret ordre;
+|Lager|
+:Ordre]
+:Pak ordre;
+:Send ordre til kunde;
+else (no)
+endif
+
+|Kunde|
+stop
+
+
+
+@enduml

@@ -1,0 +1,55 @@
+@startuml
+'https://plantuml.com/object-diagram
+
+object website{
+
+}
+object customer{
+    name
+    email
+    address
+    phone
+    town
+    postcode
+    password
+}
+
+object employee{
+    name
+    email
+    password
+}
+
+
+object carport{
+    carportwidth
+    carportlength
+    carportheight
+    roofmaterial
+    carportprice
+
+}
+object shed{
+    shedwidth
+    shedlength
+}
+
+object order{
+    ordernumber
+    orderdate
+    orderstatus
+    orderprice
+}
+
+
+
+website --* customer
+customer --* order
+order -- carport
+employee --* order
+website --* employee
+carport -- shed
+
+
+
+@enduml

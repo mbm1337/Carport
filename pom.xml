@@ -76,6 +76,15 @@
             <scope>test</scope>
         </dependency>
 
+
+            <dependency>
+                <groupId>org.apache.xmlgraphics</groupId>
+                <artifactId>batik-transcoder</artifactId>
+                <version>1.14</version>
+            </dependency>
+
+
+
     </dependencies>
 
     <build>

@@ -8,19 +8,25 @@ public class Carport {
     private int height;
     private Shed shed;
 
+    private boolean trapezroof;
 
-    public Carport(int width, int length, int height) {
+
+    public Carport(int width, int length, int height, boolean trapezroof) {
         this.id = counter++;
         this.width = width;
         this.length = length;
         this.height = height;
+        this.trapezroof = trapezroof;
+
+
     }
 
-    public Carport(int width, int length, int height, Shed shed) {
+    public Carport(int width, int length, int height,boolean trapezroof ,Shed shed) {
         this.id = counter++;
         this.width = width;
         this.length = length;
         this.height = height;
+        this.trapezroof = trapezroof;
         this.shed = shed;
     }
 

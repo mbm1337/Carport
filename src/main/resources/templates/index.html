@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -30,20 +31,26 @@
 <div id = "content ">
 <div class = "dropdownMenu">
 
-    <label for ="Carportbredde" >Carport Bredde</label><br>
-    <select id="Carportbredde" name="Cartportbredde">
-        <option value="">:</option>
-    </select>
 
-        <label for="CarportLængde ">Carport Længde</label><br>
-        <select id="CarportLængde " name="CarportLængde">
-            <option value="">:</option>
-        </select>
+    <form id="dropdown" method="post">
+    <label for ="carportWidth" >Carport Bredde</label>
+    <select id="carportWidth" name="carportWidth">
+        <option th:each="width: ${#ctx.carportWidth}" th:value="${width}"
+        th:text="${width + ' cm'}"></option>
+    </select> <br>
 
-    <label for="tag">Carport trapeztag*</label><br>
-    <select id="tag" name="tag">
-        <option value="">:</option>
-    </select>
+        <label for="carportLength">Carport Længde</label>
+        <select id="carportLength" name="carporLength">
+            <option th:each="length: ${#ctx.carportLength}" th:value="${length}"
+                    th:text="${length + ' cm'}"></option>
+        </select> <br>
+
+    <label for="roof">Carport trapeztag</label>
+    <select id="roof" name="roof">
+        <option th:each="roof: ${#ctx.roof}" th:value="${roof}"
+                th:text="${roof}"></option>
+    </select> <br>
+    </form>
 
    <p>Redskabsrum</p>
     <p>NB! Der skal beregnes 15 cm tagudhæng på hver side af redskabsrummet*</p>

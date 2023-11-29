@@ -33,19 +33,19 @@
 
 
     <form id="dropdown" method="post">
-    <label for ="carportWidth" >Carport Bredde</label>
+    <label for ="carportWidth" >Carport Bredde</label> <br>
     <select id="carportWidth" name="carportWidth">
         <option th:each="width: ${#ctx.carportWidth}" th:value="${width}"
         th:text="${width + ' cm'}"></option>
     </select> <br>
 
-        <label for="carportLength">Carport Længde</label>
+        <label for="carportLength">Carport Længde</label> <br>
         <select id="carportLength" name="carporLength">
             <option th:each="length: ${#ctx.carportLength}" th:value="${length}"
                     th:text="${length + ' cm'}"></option>
         </select> <br>
 
-    <label for="roof">Carport trapeztag</label>
+    <label for="roof">Carport trapeztag</label> <br>
     <select id="roof" name="roof">
         <option th:each="roof: ${#ctx.roof}" th:value="${roof}"
                 th:text="${roof}"></option>
@@ -55,16 +55,18 @@
    <p>Redskabsrum</p>
     <p>NB! Der skal beregnes 15 cm tagudhæng på hver side af redskabsrummet*</p>
 
-        <label for="skurbredde">Redskabsrum bredde*</label><br>
-        <select id="skurbredde" name="skurbredde">
-            <option value="">:</option>
-        </select>
+        <label for="shedWith">Redskabsrum bredde</label> <br>
+        <select id="shedWith" name="shedWith">
+        <option th:each="width: ${#ctx.shedWidth}" th:value="${width}"
+                th:text="${width}"></option>
+        </select> <br>
 
 
-        <label for="skurLængde">Redskabsrum Længde*</label><br>
-        <select id="skurLængde" name="skurLængde">
-            <option value="">:</option>
-        </select>
+        <label for="shedLength">Redskabsrum Længde</label> <br>
+        <select id="shedLength" name="shedLength">
+        <option th:each="length: ${#ctx.shedLength}" th:value="${length}"
+                th:text="${length}"></option>
+    </select> <br>
 
     <section>
 

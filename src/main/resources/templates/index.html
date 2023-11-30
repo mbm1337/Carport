@@ -68,40 +68,9 @@
                 th:text="${length}"></option>
     </select> <br>
 
-    <section>
-
-        <form class = "input">
-            <label for="fname"> navn*</label><br>
-            <input type="text" id="fname" name="navn"><br>
-
-            <label for="Adresse">Adresse</label><br>
-            <input type="text" id="Adresse" name="Adresse"><br>
-
-            <label for="Postnummer">Postnummer</label><br>
-            <input type="text" id="Postnummer" name="Postnummer"><br>
-
-
-            <label for="By">By*</label><br>
-            <input type="text" id="By" name="By"><br>
-
-
-            <label for="Telefonnummer">Telefonnummer*</label><br>
-            <input type="text" id="Telefonnummer" name="Telefonnummer"><br>
-
-            <label for="email">Email*</label><br>
-            <input type="text" id="email" name="email"><br>
-        </form>    </section>
-
-               <p>Kontakt</p>
-            <input type="checkbox" id="Samtykke" name="Samtykke" value="Samtykke">
-            <label for="Samtykke"> Fog må benytte de afgivne oplysninger til at kontakte mig i forbindelse med tilbud på QuickByg carport*</label><br>
-
-    <button type="button">Bestil tilbud!</button>
-
-
-
-
-
+    <form id="order" method="post">
+    <button id="order-btn" type="submit" formaction="/contacts">Bestil tilbud!</button>
+    </form>
 
 
 

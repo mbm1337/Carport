@@ -7,6 +7,8 @@ import app.persistence.ConnectionPool;
 import app.persistence.ZipMapper;
 import io.javalin.http.Context;
 
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class ZipController {
@@ -15,8 +17,10 @@ public class ZipController {
         try {
             int zip = Integer.parseInt(ctx.formParam("zip"));
             City city = ZipMapper.getCityByZip(zip, connectionpool);
-            ctx.sessionAttribute("city", city);
+            ctx.attribute("city", city);
 
+            List<City> cities = new ArrayList<>(ZipMapper.citiesbyzip(connectionpool));
+            ctx.sessionAttribute("cities",cities);
             ctx.render("adresse.html");
 
 

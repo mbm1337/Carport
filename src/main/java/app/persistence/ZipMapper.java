@@ -17,7 +17,7 @@ public class ZipMapper {
     public static City getCityByZip(int zip, ConnectionPool connectionPool) throws DatabaseException {
         City city = null;
 
-        String sql = "SELECT  * FROM city WHERE zip = ?";
+        String sql = "SELECT  * FROM \"city\" WHERE zip = ?";
 
         try (Connection connection = connectionPool.getConnection()){;
             try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -36,4 +36,31 @@ public class ZipMapper {
 
         return city;
     }
+
+
+    public static List<City>citiesbyzip(ConnectionPool connectionPool) throws DatabaseException{
+
+        String sql= "SELECT zip,city_name from \"city\"";
+        List<City> city = new ArrayList<>();
+
+        try (Connection connection = connectionPool.getConnection()) {
+            PreparedStatement topPS = connection.prepareStatement(sql);
+
+            ResultSet rs = topPS.executeQuery();
+
+            while (rs.next()) {
+                int zip = rs.getInt("zip");
+                String by = rs.getString("city_name");
+
+                city.add(new City(zip, by));
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Couldn't upload the toppings from database"+city,e );
+        }
+
+        return city;
+    }
 }
+
+
+

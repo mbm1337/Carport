@@ -14,7 +14,7 @@
 
 
 <section>
-    <form id="dropdown" action="/fog-confirm" method="post">
+    <form id="dropdown" action="/" method="post">
 
     <label for="fname"> navn*</label><br>
     <input type="text" id="fname" name="navn"><br>
@@ -22,13 +22,12 @@
     <label for="Adresse">Adresse</label><br>
     <input type="text" id="Adresse" name="Adresse"><br>
 
-    <label for="Postnummer" >Postnummer</label><br>
-    <input type="text" id="Postnummer" name="zip" th:value="${#ctx.session.city.zip}" /><br>
-
-
-    <label for="By">By*</label><br>
-    <input type="text" id="By" name="city" th:value="${#ctx.session.city.name}" /><br>
-
+        <ul>
+            <li th:each="city : ${session.cities}">
+                <label th:for="${'city' + city.zip}" th:text="${city.cityName}"></label>
+                <input type="text" th:id="${'city_' + city.zip}" th:name="${'city_' + city.zip}"  th:value="${city.cityName}">
+            </li>
+        </ul>
 
     <label for="Telefonnummer">Telefonnummer*</label><br>
     <input type="text" id="Telefonnummer" name="Telefonnummer"><br>

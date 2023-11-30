@@ -15,13 +15,14 @@ public class ZipController {
         try {
             int zip = Integer.parseInt(ctx.formParam("zip"));
             City city = ZipMapper.getCityByZip(zip, connectionpool);
-            ctx.attribute("city", city);
-            Carport carport = ctx.sessionAttribute("carport");
-            ctx.render("index.html");
+            ctx.sessionAttribute("city", city);
+
+            ctx.render("adresse.html");
 
 
         } catch (DatabaseException e) {
             ctx.attribute("message", e.getMessage());
+            System.out.println(e);
         }
 
 

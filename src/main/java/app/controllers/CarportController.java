@@ -64,11 +64,12 @@ public class CarportController {
         int width = Integer.parseInt(ctx.formParam("width"));
         int length = Integer.parseInt(ctx.formParam("length"));
         int height = Integer.parseInt(ctx.formParam("height"));
-        if (ctx.formParam("trapezroof").equals("Uden tagplader")) {
-            Carport carport = new Carport(width, length, height, false);
+        if (ctx.formParam("roof").equals("Uden tagplader")) {
+            Carport carport = new Carport(width, length, height);
             ctx.sessionAttribute("carport", carport);
         } else {
-            Carport carport = new Carport(width, length, height, true);
+            String roof = ctx.formParam("roof");
+            Carport carport = new Carport(width, length, height, roof);
             ctx.sessionAttribute("carport", carport);
         }
 
@@ -83,11 +84,12 @@ public class CarportController {
 
         Shed shed = new Shed(shedWidth, shedLength);
 
-        if (ctx.formParam("trapezroof").equals("Uden tagplader")) {
-            Carport carport = new Carport(width, length, height, false, shed);
+        if (ctx.formParam("roof").equals("Uden tagplader")) {
+            Carport carport = new Carport(width, length, height, shed);
             ctx.sessionAttribute("carport", carport);
         } else {
-            Carport carport = new Carport(width, length, height, true, shed);
+            String roof = ctx.formParam("roof");
+            Carport carport = new Carport(width, length, height, roof ,shed);
             ctx.sessionAttribute("carport", carport);
         }
     }

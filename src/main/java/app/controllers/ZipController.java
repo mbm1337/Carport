@@ -11,15 +11,19 @@ import io.javalin.http.Context;
 
 public class ZipController {
     public static void cityAndZip(Context ctx, ConnectionPool connectionpool) throws DatabaseException {
-        int zip = Integer.parseInt(ctx.formParam("zip"));
-        String by = ctx.formParam("city");
-        City city = ZipMapper.getCityByZip(zip,connectionpool);
-        ctx.attribute("city", city);
-        Carport carport = ctx.sessionAttribute("carport");
+
+        try {
+            int zip = Integer.parseInt(ctx.formParam("zip"));
+            City city = ZipMapper.getCityByZip(zip, connectionpool);
+            ctx.attribute("city", city);
+            Carport carport = ctx.sessionAttribute("carport");
+            ctx.render("index.html");
+
+
+        } catch (DatabaseException e) {
+            ctx.attribute("message", e.getMessage());
+        }
 
 
     }
-
-
-    }
-
+}

@@ -1,9 +1,7 @@
 @startuml
 'https://plantuml.com/object-diagram
 
-object website{
 
-}
 object customer{
     name
     email
@@ -43,12 +41,11 @@ object order{
 
 
 
-website --* customer
-customer --* order
-order -- carport
-employee --* order
-website --* employee
-carport -- shed
+
+customer "1"--"*" order
+order "1"-- "1"carport
+employee "1"--"*" order
+carport "1"-- "1"shed
 
 
 

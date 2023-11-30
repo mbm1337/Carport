@@ -25,7 +25,7 @@ public class ZipMapper {
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 int postnummer = rs.getInt("zip");
-                String cityName = rs.getString("city");
+                String cityName = rs.getString("city_name");
                 city = new City(postnummer, cityName);
 
                 }

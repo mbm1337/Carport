@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fog/address</title>
+    <link rel="stylesheet" href="../public/stylesheet.css">
+</head>
+
+
+</head>
+<body>
+
+
+<section>
+    <form id="dropdown" action="/fog-confirm" method="post">
+
+    <label for="fname"> navn*</label><br>
+    <input type="text" id="fname" name="navn"><br>
+
+    <label for="Adresse">Adresse</label><br>
+    <input type="text" id="Adresse" name="Adresse"><br>
+
+    <label for="Postnummer" >Postnummer</label><br>
+    <input type="text" id="Postnummer" name="zip" th:value="${#ctx.city.zip}" /><br>
+
+
+    <label for="By">By*</label><br>
+    <input type="text" id="By" name="city" th:value="${#ctx.city.name}" /><br>
+
+
+    <label for="Telefonnummer">Telefonnummer*</label><br>
+    <input type="text" id="Telefonnummer" name="Telefonnummer"><br>
+
+    <label for="email">Email*</label><br>
+    <input type="text" id="email" name="email"><br>
+    <div>
+        <p>Kontakt</p>
+        <input type="checkbox" id="Samtykke" name="Samtykke" value="Samtykke">
+        <label for="Samtykke"> Fog må benytte de afgivne oplysninger til at kontakte mig i forbindelse med
+            tilbud på QuickByg carport*</label><br>
+    </div>
+        <button type="submit">bestil tilbud</button>
+        </form>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        function updateCity() {
+            var zipInput = document.getElementById('Postnummer');
+            var cityInput = document.getElementById('By');
+
+            // Use AJAX to fetch city based on ZIP code
+            // Replace '/getCityByZip' with your actual endpoint
+            fetch('/getCityByZip?zip=' + zipInput.value)
+                .then(response => response.json())
+                .then(data => {
+                    cityInput.value = data.city;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+        /*]]>*/
+    </script>
+</section>
+<footer>
+    <section class="footer">
+        <table>
+            <tr>
+                <th>Kundeservice</th>
+                <th>Aktuelt</th>
+                <th>Om Fog</th>
+                <th>Med omtanke </th>
+                <td class="icon">Fog </td>
+            </tr>
+            <tr>
+                <td>Kontakt Fog</td>
+                <td>Ofte stille spørgesmål</td>
+                <td>fragt</td>
+                <td>Lån en trailer</td>
+                <td>Udlejning </td>
+                <td> Reklamation og klage </td>
+            </tr>
+            <tr>
+                <td>Mærker</td>
+                <td>Artikler</td>
+                <td>LinkIn</td>
+                <td>Instagram</td>
+                <td>Facebook </td>
+            </tr>
+            <tr>
+                <td>Åbningstider</td>
+                <td>Om Fog</td>
+                <td>Fogs Fond </td>
+                <td>PersondataPolitik </td>
+                <td>Cookies</td>
+            </tr>
+            <tr>
+                <td>CSR-Rapporter</td>
+                <td>Certificering</td>
+                <td>Whistleblowerordning</td>
+                <td>WhistleblowerPolitik</td>
+            </tr>
+            <tr>
+                <td>Johannes Fog A/S</td>
+                <td>Firskovvej 20</td>
+                <td>2800 Lyngby</td>
+                <td>CVR-nr. 16314439</td>
+            </tr>
+        </table>
+    </section>
+</footer>
+</body>
+</html>
+</body>
+</html>

@@ -1,11 +1,7 @@
 <!DOCTYPE html>
-<<<<<<<<< Temporary merge branch 1
+
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <html lang="en">
-=========
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-
->>>>>>>>> Temporary merge branch 2
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -37,18 +33,18 @@
 <div id = "content ">
 <div class = "dropdownMenu">
 
+    <form id="order" method="post">
 
-    <form id="dropdown" method="post">
     <label for ="carportWidth" >Carport Bredde: *</label> <br>
     <select id="carportWidth" name="carportWidth">
-        <option th:each="width: ${#ctx.carportWidth}" th:value="${width}"
-        th:text="${width + ' cm'}"></option>
+        <option th:each="carportWidth: ${#ctx.carportWidth}" th:value="${carportWidth}"
+                th:text="${carportWidth}"></option>
     </select> <br>
 
         <label for="carportLength">Carport Længde: *</label> <br>
-        <select id="carportLength" name="carporLength">
-            <option th:each="length: ${#ctx.carportLength}" th:value="${length}"
-                    th:text="${length + ' cm'}"></option>
+        <select id="carportLength" name="carportLength">
+            <option th:each="carportLangth: ${#ctx.carportLength}" th:value="${carportLangth}"
+                    th:text="${carportLangth}"></option>
         </select> <br>
 
     <label for="roof">Carport Tag: *</label> <br>
@@ -56,18 +52,15 @@
         <option th:each="roof: ${#ctx.roof}" th:value="${roof}"
                 th:text="${roof}"></option>
     </select> <br>
-    </form>
 
    <p>Redskabsrum</p>
     <p>NB! Der skal beregnes 15 cm tagudhæng på hver side af redskabsrummet*</p>
 
-        <label for="shedWith">Redskabsrum bredde:</label> <br>
-        <select id="shedWith" name="shedWith">
-        <option th:each="width: ${#ctx.shedWidth}" th:value="${width}"
-                th:text="${width}"></option>
+        <label for="shedWidth">Redskabsrum bredde:</label> <br>
+        <select id="shedWidth" name="shedWidth">
+        <option th:each="shedWidth: ${#ctx.shedWidth}" th:value="${shedWidth}"
+                th:text="${shedWidth}"></option>
         </select> <br>
-
-<<<<<<<<< Temporary merge branch 1
 
         <label for="shedLength">Redskabsrum Længde:</label> <br>
         <select id="shedLength" name="shedLength">
@@ -75,8 +68,8 @@
                 th:text="${length}"></option>
     </select> <br>
 
-    <form id="order" method="post">
-    <button id="order-btn" type="submit" formaction="/carport">Bestil tilbud!</button>
+
+    <button id="order-btn" type="submit" formaction="/carport">Videre</button>
     </form>
 
 

@@ -8,7 +8,7 @@ import io.javalin.rendering.template.JavalinThymeleaf;
 
 public class Main {
     private static final String USER = "postgres";
-    private static final String PASSWORD = "postgres";
+    private static final String PASSWORD = "gruppeg";
     private static final String URL = "jdbc:postgresql://46.101.146.168:5432/%s?currentSchema=public";
     private static final String DB = "carport";
 
@@ -24,8 +24,9 @@ public class Main {
 
         // Routing
         app.get("/", ctx -> CarportController.carportDropdowns(ctx, connectionPool));
+        //app.post("/", ctx -> CarportController.carportDropdowns(ctx, connectionPool));
         app.post("/carport", ctx -> CarportController.makeCarport(ctx, connectionPool));
-        
+
 
 
 

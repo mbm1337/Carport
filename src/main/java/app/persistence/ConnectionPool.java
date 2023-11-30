@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 public class ConnectionPool {
     // TODO: Change default access credentials for MySql server as needed below:
     private static final String DEFAULT_USER = "postgres";
-    private static final String DEFAULT_PASSWORD = "postgres";
+    private static final String DEFAULT_PASSWORD = "gruppeg";
     private static final String DEFAULT_URL = "jdbc:postgresql://46.101.146.168:5432/%s?currentSchema=public";
     private static final String DEFAULT_DB = "carport";
 

@@ -36,9 +36,8 @@
 <div class="content">
     <div class="contentBox">
 
-        <form id="dropdowns" method="post">
 
-    <form id="dropdown" method="post">
+    <form id="dropdown" action="/adresse" method="post">
     <label for ="carportWidth" >Carport Bredde:</label> <br>
     <select id="carportWidth" name="carportWidth">
         <option th:each="width: ${#ctx.carportWidth}" th:value="${width}"
@@ -74,55 +73,12 @@
                 th:text="${length}"></option>
     </select> <br>
 
-        <section>
-            <label for="fname"> navn*</label><br>
-            <input type="text" id="fname" name="navn"><br>
-
-            <label for="Adresse">Adresse</label><br>
-            <input type="text" id="Adresse" name="Adresse"><br>
-
-            <label for="Postnummer" >Postnummer</label><br>
-            <input type="text" id="Postnummer"  name="zip" th:value="${city.zip} " /><br>
 
 
-            <label for="By">By*</label><br>
-            <input type="text" id="By" name="city" th:value="${city.name}" /><br>
-
-
-            <label for="Telefonnummer">Telefonnummer*</label><br>
-            <input type="text" id="Telefonnummer" name="Telefonnummer"><br>
-
-            <label for="email">Email*</label><br>
-            <input type="text" id="email" name="email"><br>
-        </section>
-
-        <p>Kontakt</p>
-        <input type="checkbox" id="Samtykke" name="Samtykke" value="Samtykke">
-        <label for="Samtykke"> Fog må benytte de afgivne oplysninger til at kontakte mig i forbindelse med
-            tilbud på QuickByg carport*</label><br>
-
-        <button type="button">Bestil tilbud!</button>
+        <button type="submit">fortsæt</button>
 
             </form>
-        <script th:inline="javascript">
-            /*<![CDATA[*/
-            function updateCity() {
-                var zipInput = document.getElementById('Postnummer');
-                var cityInput = document.getElementById('By');
 
-                // Use AJAX to fetch city based on ZIP code
-                // Replace '/getCityByZip' with your actual endpoint
-                fetch('/getCityByZip?zip=' + zipInput.value)
-                    .then(response => response.json())
-                    .then(data => {
-                        cityInput.value = data.city;
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                    });
-            }
-            /*]]>*/
-        </script>
     </div>
 </div>
 

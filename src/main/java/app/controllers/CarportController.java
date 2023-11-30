@@ -58,6 +58,7 @@ public class CarportController {
         } else {
             makeCarportWithShed(ctx, connectionPool);
         }
+        ctx.render("contact.html");
     }
 
     public static void makeCarportWithoutShed(Context ctx, ConnectionPool connectionPool) throws DatabaseException {

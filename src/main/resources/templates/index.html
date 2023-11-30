@@ -33,19 +33,19 @@
 
 
     <form id="dropdown" method="post">
-    <label for ="carportWidth" >Carport Bredde:</label> <br>
+    <label for ="carportWidth" >Carport Bredde: *</label> <br>
     <select id="carportWidth" name="carportWidth">
         <option th:each="width: ${#ctx.carportWidth}" th:value="${width}"
         th:text="${width + ' cm'}"></option>
     </select> <br>
 
-        <label for="carportLength">Carport Længde:</label> <br>
+        <label for="carportLength">Carport Længde: *</label> <br>
         <select id="carportLength" name="carporLength">
             <option th:each="length: ${#ctx.carportLength}" th:value="${length}"
                     th:text="${length + ' cm'}"></option>
         </select> <br>
 
-    <label for="roof">Carport Tag:</label> <br>
+    <label for="roof">Carport Tag: *</label> <br>
     <select id="roof" name="roof">
         <option th:each="roof: ${#ctx.roof}" th:value="${roof}"
                 th:text="${roof}"></option>
@@ -69,13 +69,16 @@
     </select> <br>
 
     <form id="order" method="post">
-    <button id="order-btn" type="submit" formaction="/contacts">Bestil tilbud!</button>
+    <button id="order-btn" type="submit" formaction="/carport">Bestil tilbud!</button>
     </form>
 
 
 
 </div>
 </div>
+
+
+
 <footer>
     <section id="footer">
         <table>

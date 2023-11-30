@@ -78,7 +78,7 @@ public class UserController {
             ctx.attribute("user", user);
             ctx.render("users.html");
         } catch (DatabaseException e) {
-            ctx.attribute("kunne Ikke Finde Brugern", e.getMessage());
+            ctx.attribute("Kunne Ikke Finde Brugern", e.getMessage());
             ctx.render("users.html");
         }
     }

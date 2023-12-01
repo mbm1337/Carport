@@ -31,7 +31,7 @@ public class ZipMapper {
                 }
             }
         } catch (SQLException e) {
-            throw new DatabaseException("Couldn't fetch the city from the database  " + zip, e);
+            throw new DatabaseException("Couldn't fetch the city from the database  " + zip);
         }
 
         return city;

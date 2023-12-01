@@ -6,7 +6,7 @@ import java.util.logging.Logger;
 
 public class DatabaseException extends Exception
 {
-    public DatabaseException(String message, SQLException e)
+    public DatabaseException(String message)
     {
         super(message);
     }

@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -6,6 +8,7 @@
     <title>Fog</title>
     <link rel="stylesheet" href="../public/stylesheet.css">
 </head>
+
 <body>
 <div>
 <header>
@@ -30,74 +33,49 @@
 <div id = "content ">
 <div class = "dropdownMenu">
 
-    <label for ="Carportbredde" >Carport Bredde</label><br>
-    <select id="Carportbredde" name="Cartportbredde">
-        <option value="">:</option>
-    </select>
+    <form id="order" method="post">
 
-        <label for="CarportLængde ">Carport Længde</label><br>
-        <select id="CarportLængde " name="CarportLængde">
-            <option value="">:</option>
-        </select>
+    <label for ="carportWidth" >Carport Bredde: *</label> <br>
+    <select id="carportWidth" name="carportWidth">
+        <option th:each="carportWidth: ${#ctx.carportWidth}" th:value="${carportWidth}"
+                th:text="${carportWidth}"></option>
+    </select> <br>
 
-    <label for="tag">Carport trapeztag*</label><br>
-    <select id="tag" name="tag">
-        <option value="">:</option>
-    </select>
+        <label for="carportLength">Carport Længde: *</label> <br>
+        <select id="carportLength" name="carportLength">
+            <option th:each="carportLangth: ${#ctx.carportLength}" th:value="${carportLangth}"
+                    th:text="${carportLangth}"></option>
+        </select> <br>
+
+    <label for="roof">Carport Tag: *</label> <br>
+    <select id="roof" name="roof">
+        <option th:each="roof: ${#ctx.roof}" th:value="${roof}"
+                th:text="${roof}"></option>
+    </select> <br>
 
    <p>Redskabsrum</p>
     <p>NB! Der skal beregnes 15 cm tagudhæng på hver side af redskabsrummet*</p>
 
-        <label for="skurbredde">Redskabsrum bredde*</label><br>
-        <select id="skurbredde" name="skurbredde">
-            <option value="">:</option>
-        </select>
+        <label for="shedWidth">Redskabsrum bredde:</label> <br>
+        <select id="shedWidth" name="shedWidth">
+        <option th:each="shedWidth: ${#ctx.shedWidth}" th:value="${shedWidth}"
+                th:text="${shedWidth}"></option>
+        </select> <br>
+
+        <label for="shedLength">Redskabsrum Længde:</label> <br>
+        <select id="shedLength" name="shedLength">
+        <option th:each="length: ${#ctx.shedLength}" th:value="${length}"
+                th:text="${length}"></option>
+    </select> <br>
 
 
-        <label for="skurLængde">Redskabsrum Længde*</label><br>
-        <select id="skurLængde" name="skurLængde">
-            <option value="">:</option>
-        </select>
-
-    <section>
-
-        <form class = "input">
-            <label for="fname"> navn*</label><br>
-            <input type="text" id="fname" name="navn"><br>
-
-            <label for="Adresse">Adresse</label><br>
-            <input type="text" id="Adresse" name="Adresse"><br>
-
-            <label for="Postnummer">Postnummer</label><br>
-            <input type="text" id="Postnummer" name="Postnummer"><br>
+    <button id="order-btn" type="submit" formaction="/carport">Videre</button>
+    </form>
 
 
-            <label for="By">By*</label><br>
-            <input type="text" id="By" name="By"><br>
-
-
-            <label for="Telefonnummer">Telefonnummer*</label><br>
-            <input type="text" id="Telefonnummer" name="Telefonnummer"><br>
-
-            <label for="email">Email*</label><br>
-            <input type="text" id="email" name="email"><br>
-        </form>    </section>
-
-               <p>Kontakt</p>
-            <input type="checkbox" id="Samtykke" name="Samtykke" value="Samtykke">
-            <label for="Samtykke"> Fog må benytte de afgivne oplysninger til at kontakte mig i forbindelse med tilbud på QuickByg carport*</label><br>
-
-    <button type="button">Bestil tilbud!</button>
-
-
-
-
-
-
-
-
+    </div>
 </div>
-</div>
+
 <footer>
     <section id="footer">
         <table>
@@ -118,6 +96,5 @@
         </table>
     </section>
 </footer>
-
 </body>
 </html>

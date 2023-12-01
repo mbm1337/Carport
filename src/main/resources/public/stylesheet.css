@@ -19,4 +19,29 @@ header{
 
 
 }
+.logo{
+        background-color: #001cd4;
+        color: white;
+        height: 20px;
+        width :50px ;
+        font-weight: bold;"
+        font-size =100px;
+}
+.content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 50px;
+        gap: 20px;
+        margin-bottom: 20px;
 
+}
+.footer {
+        display:flex;
+        bottom: 0;
+        right: 0;
+        background-color: darkgrey;
+
+}
+
+/* Style for the contact section inside the footer */

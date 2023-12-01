@@ -1,11 +1,12 @@
 package app.exceptions;
 
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class DatabaseException extends Exception
 {
-    public DatabaseException(String message)
+    public DatabaseException(String message, SQLException e)
     {
         super(message);
     }

@@ -64,7 +64,7 @@ public class CarportController {
         }
 
          */
-        ctx.render("contact.html");
+        //TODO: ctx.render("");
     }
 
     public static void makeCarportWithoutShed(Context ctx) {

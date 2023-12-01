@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="da">
+<head>
+    <title>Login - Fog</title>
+    <link rel="stylesheet" href="../public/stylesheet.css">
+</head>
+<body>
+<div class="container">
+    <div class="login-box">
+        <p>Indtast venligst brugerinfo:</p>
+        <form method="post">
+            <div class="form-group">
+                <input type="text" id="login-firstname" name="firstName" placeholder="Fornavn" required>
+            </div>
+            <div class="form-group">
+                <div class="form-group">
+                    <input type="text" id="login-lastname" name="lastName" placeholder="Efternavn" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="login-phonenumber" name="phoneNumber" placeholder="Telefon nummer" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="login-email" name="email" placeholder="Email" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="login-zip" name="zip" placeholder="Postnummer" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="login-address" name="address" placeholder="Addresse" required>
+                </div>
+                <input type="password" id="login-password" name="password1" placeholder="Kodeord" required>
+            </div>
+            <div class="form-group">
+                <input type="password" id="login-password2" name="password2" placeholder="Gentag kodeord" required>
+            </div>
+            <input type="hidden" name="admin" th:value="${isLoggedIn ? 'true' : 'false'}" />
+            <button id="login-btn" type="submit" formaction="/createuser">Opret bruger</button>
+            <p class="errormessage" th:text="${#ctx.message}"></p>
+
+
+
+
+        </form>
+    </div>
+</div>
+</body>
+</html>

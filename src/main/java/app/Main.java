@@ -21,11 +21,15 @@ public class Main {
         Javalin app = Javalin.create(config -> {
             config.staticFiles.add("/public");
             JavalinThymeleaf.init(ThymeleafConfig.templateEngine());
-        }).start(7072);
+        }).start(7079);
 
         // Routing
         app.get("/", ctx -> CarportController.carportDropdowns(ctx, connectionPool));
-        app.get("/adresse",ctx-> ZipController.cityAndZip(ctx,connectionPool));
+        app.post("/adresse",ctx-> ZipController.cityAndZip(ctx,connectionPool));
+      //
+        // app.get("/adresse", ctx -> ctx.render("adresse.html"));
+
+
 
 
 

@@ -53,11 +53,10 @@ public class CarportController {
     }
 
     public static void makeCarport(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
-        if (ctx.formParam("shedWidth").equals("Uden redskabsrum") || ctx.formParam("shedLength").equals("Uden redskabsrum")) {
-            makeCarportWithoutShed(ctx, connectionPool);
-        } else {
-            makeCarportWithShed(ctx, connectionPool);
-        }
+
+
+        makeCarportWithShed(ctx, connectionPool);
+
     }
 
     public static void makeCarportWithoutShed(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
@@ -84,14 +83,21 @@ public class CarportController {
 
         Shed shed = new Shed(shedWidth, shedLength);
 
+
         if (ctx.formParam("roof").equals("Uden tagplader")) {
             Carport carport = new Carport(width, length, height, shed);
             ctx.sessionAttribute("carport", carport);
         } else {
+
             String roof = ctx.formParam("roof");
-            Carport carport = new Carport(width, length, height, roof ,shed);
+            Carport carport = new Carport(width, length, height, roof, shed);
+
+
+
             ctx.sessionAttribute("carport", carport);
         }
     }
+
+
 
 }

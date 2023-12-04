@@ -44,9 +44,9 @@ public class ZipMapper {
         List<City> city = new ArrayList<>();
 
         try (Connection connection = connectionPool.getConnection()) {
-            PreparedStatement topPS = connection.prepareStatement(sql);
+            PreparedStatement ps = connection.prepareStatement(sql);
 
-            ResultSet rs = topPS.executeQuery();
+            ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
                 int zip = rs.getInt("zip");
@@ -56,6 +56,7 @@ public class ZipMapper {
             }
         } catch (SQLException e) {
             throw new DatabaseException("Couldn't upload the toppings from database"+city,e );
+
         }
 
         return city;

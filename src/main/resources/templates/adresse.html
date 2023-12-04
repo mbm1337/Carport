@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,48 +7,56 @@
     <link rel="stylesheet" href="../public/stylesheet.css">
 </head>
 
-
-</head>
 <body>
 
-
 <section>
-    <form id="dropdown" action="/" method="post">
+    <form id="dropdown" action="/adresse" method="post">
 
-    <label for="fname"> navn*</label><br>
-    <input type="text" id="fname" name="navn"><br>
+        <label for="fname"> navn*</label><br>
+        <input type="text" id="fname" name="navn"><br>
 
-    <label for="Adresse">Adresse</label><br>
-    <input type="text" id="Adresse" name="Adresse"><br>
+        <label for="Adresse">Adresse</label><br>
+        <input type="text" id="Adresse" name="Adresse"><br>
 
-        <ul>
-            <li th:each="city : ${session.cities}">
-                <label th:for="${'city' + city.zip}" th:text="${city.cityName}"></label>
-                <input type="text" th:id="${'city_' + city.zip}" th:name="${'city_' + city.zip}"  th:value="${city.cityName}">
-            </li>
-        </ul>
 
-    <label for="Telefonnummer">Telefonnummer*</label><br>
-    <input type="text" id="Telefonnummer" name="Telefonnummer"><br>
+            <label for="zip">zip:</label><br>
+            <select id="zip" name="cities">
+                <option th:each="city : ${session.cities}"
+                        th:value="${city.zip}"
+                        th:text="${city.zip}"></option>
 
-    <label for="email">Email*</label><br>
-    <input type="text" id="email" name="email"><br>
-    <div>
-        <p>Kontakt</p>
-        <input type="checkbox" id="Samtykke" name="Samtykke" value="Samtykke">
-        <label for="Samtykke"> Fog må benytte de afgivne oplysninger til at kontakte mig i forbindelse med
-            tilbud på QuickByg carport*</label><br>
-    </div>
+            </select>
+        <label for="city">zip:</label><br>
+        <select id="city2" name="cities">
+            <option th:each="city : ${session.cities}"
+                    th:value="${city.zip}"
+                    th:text="${city.city}"></option>
+
+        </select>
+            <br>
+        <label for="city">City:</label><br>
+        <input type="text" id="city" name="city" ><br>
+
+
+        <label for="Telefonnummer">Telefonnummer*</label><br>
+        <input type="text" id="Telefonnummer" name="Telefonnummer"><br>
+
+        <label for="email">Email*</label><br>
+        <input type="text" id="email" name="email"><br>
+        <div>
+            <p>Kontakt</p>
+            <input type="checkbox" id="Samtykke" name="Samtykke" value="Samtykke">
+            <label for="Samtykke"> Fog må benytte de afgivne oplysninger til at kontakte mig i forbindelse med
+                tilbud på QuickByg carport*</label><br>
+        </div>
         <button type="submit">bestil tilbud</button>
-        </form>
+    </form>
     <script th:inline="javascript">
         /*<![CDATA[*/
         function updateCity() {
-            var zipInput = document.getElementById('Postnummer');
-            var cityInput = document.getElementById('By');
+            var zipInput = document.getElementById('zip');
+            var cityInput = document.getElementById('city');
 
-            // Use AJAX to fetch city based on ZIP code
-            // Replace '/getCityByZip' with your actual endpoint
             fetch('/getCityByZip?zip=' + zipInput.value)
                 .then(response => response.json())
                 .then(data => {
@@ -65,51 +72,9 @@
 <footer>
     <section class="footer">
         <table>
-            <tr>
-                <th>Kundeservice</th>
-                <th>Aktuelt</th>
-                <th>Om Fog</th>
-                <th>Med omtanke </th>
-                <td class="icon">Fog </td>
-            </tr>
-            <tr>
-                <td>Kontakt Fog</td>
-                <td>Ofte stille spørgesmål</td>
-                <td>fragt</td>
-                <td>Lån en trailer</td>
-                <td>Udlejning </td>
-                <td> Reklamation og klage </td>
-            </tr>
-            <tr>
-                <td>Mærker</td>
-                <td>Artikler</td>
-                <td>LinkIn</td>
-                <td>Instagram</td>
-                <td>Facebook </td>
-            </tr>
-            <tr>
-                <td>Åbningstider</td>
-                <td>Om Fog</td>
-                <td>Fogs Fond </td>
-                <td>PersondataPolitik </td>
-                <td>Cookies</td>
-            </tr>
-            <tr>
-                <td>CSR-Rapporter</td>
-                <td>Certificering</td>
-                <td>Whistleblowerordning</td>
-                <td>WhistleblowerPolitik</td>
-            </tr>
-            <tr>
-                <td>Johannes Fog A/S</td>
-                <td>Firskovvej 20</td>
-                <td>2800 Lyngby</td>
-                <td>CVR-nr. 16314439</td>
-            </tr>
+            <!-- Your footer content -->
         </table>
     </section>
 </footer>
-</body>
-</html>
 </body>
 </html>

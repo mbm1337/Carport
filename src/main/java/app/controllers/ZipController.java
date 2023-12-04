@@ -35,7 +35,7 @@ public class ZipController {
         int zip = Integer.parseInt(ctx.formParam("zip"));
         try {
 
-            City city = ZipMapper.getCityByZip(zip, connectionpool);
+            String city = ZipMapper.getCityByZip(zip, connectionpool);
             ctx.attribute("city", city);
             ctx.render("adresse.html");
         } catch (DatabaseException e) {

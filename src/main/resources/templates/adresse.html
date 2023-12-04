@@ -18,27 +18,18 @@
         <label for="Adresse">Adresse</label><br>
         <input type="text" id="Adresse" name="Adresse"><br>
 
-
-            <label for="zip">zip:</label><br>
-            <select id="zip" name="cities">
-                <option th:each="city : ${session.cities}"
-                        th:value="${city.zip}"
-                        th:text="${city.zip}"></option>
-
-            </select>
-        <label for="city">zip:</label><br>
-        <select id="city2" name="cities">
+        <label for="zip">ZIP:</label><br>
+        <select id="zip" name="cities" >
             <option th:each="city : ${session.cities}"
                     th:value="${city.zip}"
-                    th:text="${city.city}"></option>
+                    th:text="${city.zip}"></option>
 
         </select>
-            <br>
-        <label for="city">City:</label><br>
-        <input type="text" id="city" name="city" ><br>
+        <br>
 
 
-        <label for="Telefonnummer">Telefonnummer*</label><br>
+
+    <label for="Telefonnummer">Telefonnummer*</label><br>
         <input type="text" id="Telefonnummer" name="Telefonnummer"><br>
 
         <label for="email">Email*</label><br>
@@ -54,8 +45,9 @@
     <script th:inline="javascript">
         /*<![CDATA[*/
         function updateCity() {
-            var zipInput = document.getElementById('zip');
-            var cityInput = document.getElementById('city');
+            var zipInput = document.getElementById('zip' +
+                '');
+            var cityInput = document.getElementById('By');
 
             fetch('/getCityByZip?zip=' + zipInput.value)
                 .then(response => response.json())

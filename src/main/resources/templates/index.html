@@ -71,6 +71,11 @@
         <option th:each="length: ${#ctx.shedLength}" th:value="${length}"
                 th:text="${length}"></option>
     </select> <br>
+        <label for="comment">Leave a comment:</label>
+        <textarea id="comment" name="comment" rows="4" required></textarea>
+
+        <br>
+        <input type="submit" value="Submit Comment">
 
 
 

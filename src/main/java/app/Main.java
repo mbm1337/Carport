@@ -1,6 +1,7 @@
 package app;
 
 import app.config.ThymeleafConfig;
+import app.controllers.AdminController;
 import app.controllers.CarportController;
 import app.persistence.ConnectionPool;
 import io.javalin.Javalin;
@@ -25,6 +26,8 @@ public class Main {
         // Routing
         app.get("/", ctx -> CarportController.carportDropdowns(ctx, connectionPool));
         app.post("/carport", ctx -> CarportController.makeCarport(ctx, connectionPool));
+        app.get("/givtilbud", ctx -> AdminController.getUsersAndOrders(ctx, connectionPool));
+
 
 
 

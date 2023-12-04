@@ -49,8 +49,12 @@
             <tbody>
             <tr th:each="entry : ${usersAndOrders}">
                 <td th:text="${entry.key.id}"></td>
-                <td th:text="${entry.key.name}"></td>
-                <td th:text="${entry.key.balance}"></td>
+                <td th:text="${entry.key.firstName}"></td>
+                <td th:text="${entry.key.lastName}"></td>
+                <td th:text="${entry.key.phoneNumber}"></td>
+                <td th:text="${entry.key.address}"></td>
+                <td th:text="${entry.key.zip}"></td>
+
                 <td>
                     <table>
                         <tr th:each="order : ${entry.value}">

@@ -26,7 +26,7 @@ public class Main {
         // Routing
         app.get("/", ctx -> CarportController.carportDropdowns(ctx, connectionPool));
         app.post("/carport", ctx -> CarportController.makeCarport(ctx, connectionPool));
-        app.get("/givtilbud", ctx -> AdminController.getUsersAndOrders(ctx, connectionPool));
+        app.get("/ordre", ctx -> AdminController.getUsersAndOrders(ctx, connectionPool));
 
 
 

@@ -2,8 +2,11 @@ package app;
 
 import app.config.ThymeleafConfig;
 import app.controllers.CarportController;
+import app.controllers.OrderController;
+import app.controllers.UserController;
 import app.controllers.ZipController;
 import app.persistence.ConnectionPool;
+import app.persistence.OrderMapper;
 import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinThymeleaf;
 
@@ -26,6 +29,17 @@ public class Main {
         // Routing
         app.get("/", ctx -> CarportController.carportDropdowns(ctx, connectionPool));
         app.post("/adresse",ctx-> ZipController.cityAndZip(ctx,connectionPool));
+        app.post("/status", ctx -> OrderController.getStatus(ctx, connectionPool));
+        app.post("/login", ctx -> UserController.login(ctx, connectionPool));
+        app.get("/login", ctx -> ctx.render("login.html"));
+       // app.get("/createuser", ctx -> UserController.createuser(ctx, connectionPool));
+        app.post("/createuser", ctx -> UserController.createuser(ctx, connectionPool));
+       app.get("/createuser", ctx -> ctx.render("createuser.html"));
+
+
+
+
+
 
 
 

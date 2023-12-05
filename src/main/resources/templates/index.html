@@ -5,19 +5,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fog</title>
-    <link rel="stylesheet" href="../public/stylesheet.css">
+    <link rel="stylesheet" href="../public/css/stylesheet.css">
 </head>
 
 <body>
 <header>
-    <div>
+
+        <nav class="navigation" method="post">
+
         <a href="index.html" class="logo">Fog</a>
-        <nav class="navigation">
             <a href="/">Bolig & Design</a>
             <a href="/">Byggermaterialer</a>
             <a href="/">Kontakt</a>
+
+            <a href="/login">login</a>
+
         </nav>
-    </div>
+
 </header>
 
 <div class="text">
@@ -71,11 +75,11 @@
         <option th:each="length: ${#ctx.shedLength}" th:value="${length}"
                 th:text="${length}"></option>
     </select> <br>
-        <label for="comment">Leave a comment:</label>
-        <textarea id="comment" name="comment" rows="4" required></textarea>
+        <label for="comment">Leave a comment:</label><br>
+        <textarea id="comment" name="comment" rows="4" ></textarea>
 
         <br>
-        <input type="submit" value="Submit Comment">
+
 
 
 

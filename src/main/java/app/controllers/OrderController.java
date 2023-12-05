@@ -1,11 +1,10 @@
 package app.controllers;
 
-import app.entities.City;
 import app.entities.Order;
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
 import app.persistence.OrderMapper;
-import app.persistence.ZipMapper;
+
 import io.javalin.http.Context;
 
 public class OrderController {

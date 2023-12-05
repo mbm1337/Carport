@@ -6,8 +6,12 @@
     <title>Fog</title>
     <link rel="stylesheet" href="../public/stylesheet.css">
 </head>
+
 <body>
-<div>
+
+<section>
+
+        <div>
     <header>
         <a href="index.html" class="logo">Fog</a>
 
@@ -27,12 +31,17 @@
     <p>Enkelt byg selv-carport 3,00 x 4,80 m. med plads til 1 bil
         Carporten er åben på alle siderne, men kan lukkes efter ønske.
         Leveres med trykimprægnerede stolper og stern, samt plasttrapez tag med bundskruer.</p>
-    <p> 11.198,60 </p>
-    <p><small>pr. stk + evt. fragt</small></p>
+    <p> 11.198,60 pr. stk + evt. fragt</p>
+    <form id="zipFrom" action="/carportone" method="post">
+
+    <input type="button" for="Levering" > Levering med fragtmand <option
+        th:each="standardCarport : ${session.standardCarport}"
+        th:value="${standardCarport.shippingTime}"
+         th:text="${standardCarport.shippingTime}"> </option> hverdage <br>
     <form id="info-one-form" method="post">
         <button type="submit" class="info-btn" formaction="/">Tilføj til kurv</button>
     </form>
-
+    </section>
 <footer>
     <section id="footer">
         <table>

@@ -1,5 +1,6 @@
 package app.persistence;
 
+import app.entities.City;
 import app.entities.StandardCarport;
 import app.exceptions.DatabaseException;
 
@@ -7,6 +8,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class StandardCarportMapper {
 
@@ -36,5 +39,29 @@ public class StandardCarportMapper {
 
         return standardCarport;
     }
+    /*
+    public static List<City> citiesbyzip(ConnectionPool connectionPool) throws DatabaseException{
+
+        String sql= "SELECT zip,city_name from \"city\"";
+        List<City> city = new ArrayList<>();
+
+        try (Connection connection = connectionPool.getConnection()) {
+            PreparedStatement ps = connection.prepareStatement(sql);
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                int zip = rs.getInt("zip");
+                String by = rs.getString("city_name");
+
+                city.add(new City(zip, by));
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Couldn't upload the toppings from database"+city,e );
+
+        }
+
+        return city;
+    }*/
 }
 

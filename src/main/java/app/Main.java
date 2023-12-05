@@ -2,6 +2,7 @@ package app;
 
 import app.config.ThymeleafConfig;
 import app.controllers.CarportController;
+import app.controllers.ShippingController;
 import app.controllers.StandardCarportController;
 import app.entities.StandardCarport;
 import app.persistence.ConnectionPool;
@@ -28,7 +29,7 @@ public class Main {
         app.get("/", ctx -> CarportController.carportDropdowns(ctx, connectionPool));
         app.post("/carport", ctx -> CarportController.makeCarport(ctx, connectionPool));
 
-        app.get("/carportone", ctx -> StandardCarportController.getShippingInfoByZip(ctx, connectionPool));
+        app.get("/carportone", ctx -> ShippingController.getShippingInfoByZip(ctx, connectionPool));
 
 
 

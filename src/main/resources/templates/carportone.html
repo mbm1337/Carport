@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,41 +7,27 @@
     <link rel="stylesheet" href="../public/stylesheet.css">
 </head>
 
-<body>
+
+<tbody>
 
 <section>
 
-        <div>
-    <header>
-        <a href="index.html" class="logo">Fog</a>
-
-        <nav class="navigation">
-            <a href="/">Bolig & Design</a>
-            <a href="/">Byggermaterialer</a>
-            <a href="/">Kontakt</a>
-        </nav>
-    </header>
-</div>
 
 <div>
     <img class="carports_img" src="/public/images/carport_1.jpg" alt="Carport 1">
-    <p>Fog</p>
-    <h3>DOBBELT CARPORT 6,00X4,80 M CAR01DU UDEN MIDTERSTOLPE - FLADT TAG</h3>
-    <p>00822</p>
-    <p>Enkelt byg selv-carport 3,00 x 4,80 m. med plads til 1 bil
-        Carporten er åben på alle siderne, men kan lukkes efter ønske.
-        Leveres med trykimprægnerede stolper og stern, samt plasttrapez tag med bundskruer.</p>
-    <p> 11.198,60 pr. stk + evt. fragt</p>
-    <form id="zipFrom" action="/carportone" method="post">
 
-    <input type="button" for="Levering" > Levering med fragtmand <option
-        th:each="standardCarport : ${session.standardCarport}"
-        th:value="${standardCarport.shippingTime}"
-         th:text="${standardCarport.shippingTime}"> </option> hverdage <br>
-    <form id="info-one-form" method="post">
-        <button type="submit" class="info-btn" formaction="/">Tilføj til kurv</button>
-    </form>
+        <p>Indtast dit postnummer for at udregne leveringspris og leveringstid.</p>
+        <tr th:each="shipping : ${#ctx.shippingPrice}">
+            <td th:text="${'Pris for levering' + shippingPrice}></td>
+            <td>test</td>
+        </tr>
+
+
+
+
+
     </section>
+
 <footer>
     <section id="footer">
         <table>
@@ -63,5 +49,5 @@
     </section>
 </footer>
 
-    </body>
+    </tbody>
 </html>

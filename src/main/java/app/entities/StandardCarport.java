@@ -19,7 +19,7 @@ public class StandardCarport {
     }
 
     // Constructor for the StandardCarportMapper
-    public StandardCarport(int zip, int shippingDays, double shippingPrice) {
+    public StandardCarport(int zip, double shippingPrice) {
         this.zip = City.zip;
         this.shippingDays = shippingDays;
         this.shippingPrice = shippingPrice;

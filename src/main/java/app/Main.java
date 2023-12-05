@@ -27,6 +27,7 @@ public class Main {
         app.get("/", ctx -> CarportController.carportDropdowns(ctx, connectionPool));
         app.post("/carport", ctx -> CarportController.makeCarport(ctx, connectionPool));
         app.get("/ordre", ctx -> AdminController.getUsersAndOrders(ctx, connectionPool));
+        app.post("/tilbud/{ordernumber}", ctx -> AdminController.getOrderDetails(ctx, connectionPool));
 
 
 

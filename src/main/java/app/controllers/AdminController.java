@@ -39,24 +39,14 @@ public class AdminController {
 
     public static void getOrderDetails(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
 
-        Boolean loggedIn = ctx.sessionAttribute("status");
-        if (loggedIn != null && loggedIn) {
-            int orderNr = Integer.parseInt(ctx.pathParam("orderNr"));
 
-            List<Cupcake> orderDetail = AdminMapper.getOrderDetails(orderNr, connectionPool);
-            ctx.sessionAttribute("orderNr",orderNr);
-            ctx.attribute("orderDetail", orderDetail);
-            ctx.attribute("username", ctx.sessionAttribute("username"));
-            User user = ctx.sessionAttribute("currentUser");
-            ctx.attribute("balance", user.getBalance());
-            ctx.render("adminorderdetail.html");
-        } else {
-            ctx.redirect("/");
-        }
+
+            int orderNumber = Integer.parseInt(ctx.pathParam("ordernumber"));
+            List<Admin> orderDetail = AdminMapper.getOrderDetails(orderNumber, connectionPool);
+            ctx.sessionAttribute("ordernumber",orderNumber);
+            ctx.attribute("order", orderDetail);
+            ctx.render("tilbud.html");
+
+
     }
-
-
-
-
-
-}
+    }

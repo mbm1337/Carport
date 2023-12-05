@@ -34,29 +34,37 @@
 
     <div class="indhold-box" id="content">
         <div id = 'orderContent'>
-            <form id="orders" method="post">
-                <table>
-                    <thead>
-                    <tr>
-                        <th>Cupcake</th>
-                        <th>Antal</th>
-                        <th>Pris</th>
 
-                    <tbody>
-                    <tr th:each="cupcake : ${#ctx.orderDetail}">
-                        <td>
-                            <span th:text="${'Top: ' + cupcake.topFlavor}"></span><br>
-                            <span th:text="${'Bund: ' + cupcake.bottomFlavor}"></span>
-                        </td>
-                        <td th:text="${cupcake.amount + ' stk.'}"> </td>
-                        <td th:text="${cupcake.price + ',-'}"> </td>
-                    </tr>
-                    <td> <button type="submit" id="detail-btn" name="orderNr" formaction="/delete_order"  th:value="${orderNr}">Slet Ordre</button></td>
-                    </tbody>
-                </table>
-            </form>
+            <table border="1">
+                <tr>
+                    <th>Order ID</th>
+                    <th>Order Date</th>
+                    <th>Status</th>
+                    <th>Comments</th>
+                    <th>Customer Number</th>
+                    <th>User ID</th>
+                    <th>Order Price</th>
+                    <th>Materials ID</th>
+                    <th>Quantity Ordered</th>
+                    <th>Detail Price</th>
+                </tr>
 
-    </div>
+                <tr th:each="order : ${orderDetails}">
+                    <td th:text="${admin.orderId}"></td>
+                    <td th:text="${admin.orderDate}"></td>
+                    <td th:text="${admin.status}"></td>
+                    <td th:text="${admin.comments}"></td>
+                    <td th:text="${admin.customerNumber}"></td>
+                    <td th:text="${admin.userId}"></td>
+                    <td th:text="${admin.orderPrice}"></td>
+                    <td th:text="${admin.materialsId}"></td>
+                    <td th:text="${admin.quantityOrdered}"></td>
+                    <td th:text="${admin.detailPrice}"></td>
+                </tr>
+            </table>
+
+
+        </div>
 
 
     <footer>

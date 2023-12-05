@@ -34,7 +34,9 @@
 
     <div class="indhold-box" id="content">
         <h1>Brugere og Ordrer</h1>
+
         <table id="sortable-table">
+
             <thead>
             <tr>
                 <th onclick="sortTable(0)">ID</th>
@@ -77,12 +79,14 @@
                     </table>
                 </td>
                 <td>
-                    <form th:each="order : ${entry.value}" th:object="${order}" method="post" th:action="@{'/adminorderdetail/' + ${order.orderNr}}">
+                    <form th:each="order : ${entry.value}" th:object="${order}" method="post" th:action="@{'/tilbud/' + ${order.orderNr}}">
                         <button type="submit">Se order</button>
                     </form>
+
             </tr>
             </tbody>
         </table>
+
 
     </div>
 

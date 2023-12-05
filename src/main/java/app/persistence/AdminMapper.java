@@ -60,32 +60,49 @@ public class AdminMapper {
 
 
 
-    public static List<Cupcake> getOrderDetails(int orderNr, ConnectionPool connectionPool) {
-        List<Cupcake> orderDetails = new ArrayList<>();
-        try (Connection connection = connectionPool.getConnection()) {
-            String sql = "SELECT ctop.flavor AS top_flavor, ctop.price AS top_price, cbottom.flavor AS bottom_flavor, cbottom.price AS bottom_price, amount\n" +
-                    "FROM ordersdetails od\n" +
-                    "JOIN cupcake_top ctop ON od.top_id = ctop.id\n" +
-                    "JOIN cupcake_bottom cbottom ON od.bottom_id = cbottom.id\n" +
-                    "WHERE od.order_nr = ?";
 
-            PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setInt(1, orderNr);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                String cTopFlavor = rs.getString("top_flavor");
-                int cTopPrice = rs.getInt("top_price");
-                String cBottomFlavor = rs.getString("bottom_flavor");
-                int cBottomPrice = rs.getInt("bottom_price");
-                int amount = rs.getInt("amount");
-                Cupcake cupcake = new Cupcake(new CupcakeTop(cTopFlavor,cTopPrice), new CupcakeBottom(cBottomFlavor,cBottomPrice), amount);
-                orderDetails.add(cupcake);
+    public static List<Admin> getOrderDetails(int ordernumber, ConnectionPool connectionPool) {
+        List<Admin> orderList = new ArrayList<>();
+
+        try (Connection connection = connectionPool.getConnection()) {
+            String sql = "SELECT " +
+                    "u.id AS user_id, u.forname, u.aftername, u.email, u.zip, u.adress, u.admin, u.password, u.phone, " +
+                    "o.ordernumber, o.orderdate, o.status, o.comments, o.customernumber, o.user_id AS order_user_id, " +
+                    "o.price AS order_price, od.materials_id, od.quantityordered, od.price AS detail_price " +
+                    "FROM \"user\" u " +
+                    "JOIN orders o ON u.id = o.user_id " +
+                    "JOIN orderdetails od ON o.ordernumber = od.ordernumber " +
+                    "WHERE o.ordernumber = ?";
+
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                preparedStatement.setInt(1, ordernumber);
+
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    while (resultSet.next()) {
+                        Admin admin = new Admin();
+                        admin.setOrderId(resultSet.getInt("ordernumber"));
+                        admin.setOrderDate(resultSet.getString("orderdate"));
+                        admin.setStatus(resultSet.getString("status"));
+                        admin.setComments(resultSet.getString("comments"));
+                        admin.setCustomerNumber(resultSet.getInt("customernumber"));
+                        admin.setUserId(resultSet.getInt("user_id"));
+                        admin.setOrderPrice(resultSet.getDouble("order_price"));
+                        admin.setMaterialsId(resultSet.getInt("materials_id"));
+                        admin.setQuantityOrdered(resultSet.getInt("quantityordered"));
+                        admin.setDetailPrice(resultSet.getDouble("detail_price"));
+
+                        orderList.add(admin);
+                    }
+                }
             }
-            return orderDetails;
+
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace(); // Håndter fejl i forbindelse med databasekald
         }
+
+        return orderList;
     }
+
 
 
 

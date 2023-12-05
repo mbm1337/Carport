@@ -9,8 +9,8 @@ public class Carport {
     private int length;
     private int height;
     private Shed shed;
-
     private String roof;
+
 
     public Carport(int width, int length, int height) {
         this.id = counter++;
@@ -30,6 +30,7 @@ public class Carport {
 
     }
 
+
     public Carport(int width, int length, int height, Shed shed) {
         this.id = counter++;
         this.width = width;
@@ -46,4 +47,11 @@ public class Carport {
         this.shed = shed;
     }
 
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public void setLength(int length) {
+        this.length = length;
+    }
 }

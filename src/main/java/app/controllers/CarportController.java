@@ -65,6 +65,7 @@ public class CarportController {
 
          */
         //TODO: ctx.render("");
+
     }
 
     public static void makeCarportWithoutShed(Context ctx) {
@@ -91,14 +92,20 @@ public class CarportController {
 
         Shed shed = new Shed(shedWidth, shedLength);
 
+
         if (ctx.formParam("roof").equals("Uden tagplader")) {
             Carport carport = new Carport(width, length, 250, shed);
             ctx.sessionAttribute("carport", carport);
         } else {
+
             String roof = ctx.formParam("roof");
+
             Carport carport = new Carport(width, length, 250, roof ,shed);
+
             ctx.sessionAttribute("carport", carport);
         }
     }
+
+
 
 }

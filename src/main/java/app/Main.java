@@ -16,7 +16,7 @@ public class Main {
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance(USER, PASSWORD, URL, DB);
 
     public static void main(String[] args)  {
-// Initializing Javalin and Jetty webserver
+        // Initializing Javalin and Jetty webserver
 
         Javalin app = Javalin.create(config -> {
             config.staticFiles.add("/public");
@@ -28,10 +28,6 @@ public class Main {
         app.get("/", ctx -> CarportController.carportDropdowns(ctx, connectionPool));
         app.post("/carport", ctx -> CarportController.makeCarport(ctx, connectionPool));
         app.post("/adresse",ctx-> ZipController.cityAndZip(ctx,connectionPool));
-
-
-
-
 
 
 

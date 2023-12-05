@@ -3,51 +3,33 @@ package app.controllers;
 import app.entities.Carport;
 import app.entities.Shed;
 import app.exceptions.DatabaseException;
+import app.persistence.CarportMapper;
 import app.persistence.ConnectionPool;
 import io.javalin.http.Context;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class CarportController {
 
     public static void carportDropdowns(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
-        //TODO: Make dropdowns dynamic
 
-        ArrayList<Integer> carpotWidth = new ArrayList<>();
-        carpotWidth.add(240);
-        carpotWidth.add(300);
-        carpotWidth.add(360);
-        carpotWidth.add(420);
-        carpotWidth.add(480);
-        ArrayList<Integer> carportLength = new ArrayList<>();
-        carportLength.add(240);
-        carportLength.add(300);
-        carportLength.add(360);
-        carportLength.add(420);
-        carportLength.add(480);
-        ArrayList<String> roof = new ArrayList<>();
-        roof.add("Uden tagplader");
-        roof.add("Plasttrapezplader");
-        ArrayList<Integer> shedWidth = new ArrayList<>();
-        shedWidth.add(240);
-        shedWidth.add(300);
-        shedWidth.add(360);
-        shedWidth.add(420);
-        shedWidth.add(480);
-        ArrayList<Integer> shedLength = new ArrayList<>();
-        shedLength.add(240);
-        shedLength.add(300);
-        shedLength.add(360);
-        shedLength.add(420);
-        shedLength.add(480);
-
-
+        List<Integer> carpotWidth = CarportMapper.getCarportWidth(connectionPool);
         ctx.attribute("carportWidth", carpotWidth);
+
+        List<Integer> carportLength = CarportMapper.getCarportLength(connectionPool);
         ctx.attribute("carportLength", carportLength);
-        ctx.attribute("roof", roof);
+
+        List<Integer> shedWidth = CarportMapper.getShedWidth(connectionPool);
         ctx.attribute("shedWidth", shedWidth);
+
+        List<Integer> shedLength = CarportMapper.getShedLength(connectionPool);
         ctx.attribute("shedLength", shedLength);
+
+        List<String> roof = CarportMapper.getRoof(connectionPool);
+        ctx.attribute("roof", roof);
+
 
         ctx.render("index.html");
 

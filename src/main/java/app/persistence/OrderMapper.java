@@ -25,7 +25,7 @@ public class OrderMapper {
             }
         } catch (SQLException e) {
             String message = "Couldn't retrieve order status for user " + userId;
-            throw new DatabaseException(message, e);
+            throw new DatabaseException(message);
         }
 
         return status;

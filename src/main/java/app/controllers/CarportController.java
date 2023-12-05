@@ -55,16 +55,13 @@ public class CarportController {
 
     public static void makeCarport(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
 
-        makeCarportWithShed(ctx);
-        /*
-        if (ctx.formParam("shedWidth").equals("Uden redskabsrum") || ctx.formParam("shedLength").equals("Uden redskabsrum")) {
-            makeCarportWithoutShed(ctx, connectionPool);
+        if (ctx.formParam("shed").equals("shed")){
+            makeCarportWithShed(ctx);
         } else {
-            makeCarportWithShed(ctx, connectionPool);
+            makeCarportWithoutShed(ctx);
         }
 
-         */
-        //TODO: ctx.render("");
+         ctx.render("adresse.html");
 
     }
 

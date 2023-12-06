@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fog/address</title>
-    <link rel="stylesheet" href="../public/stylesheet.css">
+    <link rel="stylesheet" href="../public/css/stylesheet.css">
 </head>
 
 <body>
 
 <section>
-    <form id="dropdown" action="/adresse" method="post">
+    <form id="dropdown" action="/status" method="post">
 
         <label for="fname"> navn*</label><br>
         <input type="text" id="fname" name="navn"><br>
@@ -18,18 +18,19 @@
         <label for="Adresse">Adresse</label><br>
         <input type="text" id="Adresse" name="Adresse"><br>
 
-        <label for="zip">ZIP:</label><br>
-        <select id="zip" name="cities" >
-            <option th:each="city : ${session.cities}"
-                    th:value="${city.zip}"
-                    th:text="${city.zip}"></option>
-
-        </select>
-        <br>
+            <label for="zip">Postnummer:</label>
+            <input type ="text" id = "zip" name="zip" oninput="lookupCity()">
+            <label for="cityName">City:</label>
+            <input type ="text" id = "cityName" name="city" disabled = "disabled"/>
 
 
 
-    <label for="Telefonnummer">Telefonnummer*</label><br>
+        <script th:src="@{/js/zip-codes.js}"></script>
+        <script th:src="@{/js/lookup.js}"></script>
+
+
+
+        <label for="Telefonnummer">Telefonnummer*</label><br>
         <input type="text" id="Telefonnummer" name="Telefonnummer"><br>
 
         <label for="email">Email*</label><br>
@@ -42,24 +43,8 @@
         </div>
         <button type="submit">bestil tilbud</button>
     </form>
-    <script th:inline="javascript">
-        /*<![CDATA[*/
-        function updateCity() {
-            var zipInput = document.getElementById('zip' +
-                '');
-            var cityInput = document.getElementById('By');
 
-            fetch('/getCityByZip?zip=' + zipInput.value)
-                .then(response => response.json())
-                .then(data => {
-                    cityInput.value = data.city;
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-        }
-        /*]]>*/
-    </script>
+
 </section>
 <footer>
     <section class="footer">

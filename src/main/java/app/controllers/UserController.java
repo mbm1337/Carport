@@ -6,54 +6,54 @@ import app.persistence.ConnectionPool;
 import app.persistence.UserMapper;
 import io.javalin.http.Context;
 
-import java.util.Map;
-
 public class UserController {
-
     public static void login(Context ctx, ConnectionPool connectionPool) {
-        String email = ctx.formParam("email");
+        String name = ctx.formParam("username");
         String password = ctx.formParam("password");
         try {
-            boolean status = UserMapper.login(email, password, connectionPool).isAdmin();
-            User user = UserMapper.login(email, password, connectionPool);
+            boolean isadmin = UserMapper.login(name, password, connectionPool).isAdmin();
+            User user = UserMapper.login(name, password, connectionPool);
             ctx.sessionAttribute("currentUser", user);
-            ctx.sessionAttribute("email", user.getEmail());
+            ctx.sessionAttribute("username", user.getFirstName());
             ctx.sessionAttribute("status", user.isAdmin());
-            if (status) {
+            if (isadmin) {
                 ctx.redirect("/admin");
             } else {
 
-                ctx.redirect("/frontpage");
+                ctx.redirect("/index");
 
 
             }
         } catch (DatabaseException e) {
             ctx.attribute("message", e.getMessage());
-            ctx.render("index.html");
+            System.out.println(e);
+            ctx.render("login.html");
         }
     }
 
     public static void createuser(Context ctx, ConnectionPool connectionPool) {
-        String firstName = ctx.formParam("firstName");
-        String lastName = ctx.formParam("lastName");
-        int phoneNumber = Integer.parseInt(ctx.formParam("phoneNumber"));
+        String forname = ctx.formParam("forname");
+        String aftername = ctx.formParam("aftername");
         String email = ctx.formParam("email");
         int zip = Integer.parseInt(ctx.formParam("zip"));
-        String address = ctx.formParam("address");
+        String adress =(ctx.formParam("adress"));
         boolean admin = Boolean.parseBoolean(ctx.formParam("admin"));
         String password1 = ctx.formParam("password1");
         String password2 = ctx.formParam("password2");
+        int phone = Integer.parseInt(ctx.formParam("phone"));
+
 
 
         // Validering af passwords - at de to matcher
         if (password1.equals(password2)) {
             try {
-                UserMapper.createuser(firstName, lastName, phoneNumber, email, zip, address, admin, password1, connectionPool);
+                UserMapper.createuser(forname,aftername,email, zip, adress,admin,password1, phone ,connectionPool);
                 ctx.attribute("message", "Du er nu oprette. Log på for at komme i gang.");
-                ctx.render("index.html");
+                ctx.render("login.html");
 
             } catch (DatabaseException e) {
                 ctx.attribute("message", e.getMessage());
+                System.out.println(e);
                 ctx.render("createuser.html");
             }
         } else {
@@ -71,17 +71,4 @@ public class UserController {
 
 
 
-    public static void searchUser(Context ctx, ConnectionPool connectionPool) {
-        String id = ctx.queryParam("email");
-        try {
-            User user = UserMapper.searchUser(id, connectionPool);
-            ctx.attribute("user", user);
-            ctx.render("users.html");
-        } catch (DatabaseException e) {
-            ctx.attribute("Kunne Ikke Finde Brugern", e.getMessage());
-            ctx.render("users.html");
-        }
-    }
 }
-
-

@@ -1,8 +1,5 @@
 package app.controllers;
 
-import app.entities.City;
-
-import app.entities.Order;
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
 import app.persistence.OrderMapper;

@@ -5,24 +5,14 @@ public class StandardCarport {
     private String merchandiser;
     private String productName;
     private int price;
-    private int shippingDays;
-    private double shippingPrice;
-    private int zip;
+    private String description;
 
-    public StandardCarport(int id, String merchandiser, String productName, int price, int shippingDays, double shippingPrice) {
+    public StandardCarport(int id, String merchandiser, String productName, int price, String description) {
         this.id = id;
         this.merchandiser = merchandiser;
         this.productName = productName;
         this.price = price;
-        this.shippingDays = shippingDays;
-        this.shippingPrice = shippingPrice;
-    }
-
-    // Constructor for the StandardCarportMapper
-    public StandardCarport(int zip, double shippingPrice) {
-        this.zip = City.zip;
-        this.shippingDays = shippingDays;
-        this.shippingPrice = shippingPrice;
+        this.description = description;
     }
 
     public int getId() {
@@ -41,11 +31,7 @@ public class StandardCarport {
         return price;
     }
 
-    public int getShippingDays() {
-        return shippingDays;
-    }
-
-    public double getShippingPrice() {
-        return shippingPrice;
+    public String getDescription() {
+        return description;
     }
 }

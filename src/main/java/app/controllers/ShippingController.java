@@ -1,28 +1,32 @@
 package app.controllers;
 
 import app.entities.Shipping;
-import app.entities.StandardCarport;
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
 import app.persistence.ShippingMapper;
 import io.javalin.http.Context;
 
-public class ShippingController {
+import java.util.List;
 
+public class ShippingController {
+// TODO: Make a method that gets the shipping price depending on the zip code
     public static void getShippingInfoByZip(Context ctx, ConnectionPool connectionPool) {
         try {
-            int shippingPrice = Integer.parseInt(ctx.formParam("shippingPrice"));
-            Shipping shipping = ShippingMapper.getShippingInfoByZip(ctx, connectionPool);
+        String zipParam = ctx.formParam("zip");
 
-            if (shipping != null) {
-                ctx.sessionAttribute("shipping", shipping);
-                ctx.attribute("shippingPrice", shippingPrice);
-                ctx.render("carportone.html");
-            }
+        if (zipParam != null) {
+            int zipCode = Integer.parseInt(zipParam);
+            Shipping shipping = ShippingMapper.getShippingInfoByZip(zipCode, connectionPool);
 
+            ctx.sessionAttribute("shipping", shipping);
+            ctx.sessionAttribute("shippingPrice", shipping.getShippingPrice());
+            ctx.sessionAttribute("shippingTime", shipping.getShippingTime());
+         }
         } catch (DatabaseException e) {
             ctx.attribute("message", e.getMessage());
         }
+        ctx.render("carportone.html");
     }
+
 }
 

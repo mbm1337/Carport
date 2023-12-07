@@ -3,8 +3,6 @@ package app;
 import app.config.ThymeleafConfig;
 import app.controllers.CarportController;
 import app.controllers.ShippingController;
-import app.controllers.StandardCarportController;
-import app.entities.StandardCarport;
 import app.persistence.ConnectionPool;
 import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinThymeleaf;
@@ -29,10 +27,9 @@ public class Main {
         app.get("/", ctx -> CarportController.carportDropdowns(ctx, connectionPool));
         app.post("/carport", ctx -> CarportController.makeCarport(ctx, connectionPool));
 
+        //app.get("/carportone", ctx -> ctx.render("carportone.html"));
         app.get("/carportone", ctx -> ShippingController.getShippingInfoByZip(ctx, connectionPool));
-
-
-
+        app.post("/carportone", ctx -> ShippingController.getShippingInfoByZip(ctx, connectionPool));
 
 
 

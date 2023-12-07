@@ -57,4 +57,32 @@ public class AdminController {
         ctx.sessionAttribute("ordernumber",orderNumber);
             ctx.render("users.html");
         }
+
+    public static void getMaterialDetails(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+
+        int orderNumber = Integer.parseInt(ctx.pathParam("ordernumber"));
+
+        List<Admin> orderDetail = AdminMapper.getOrderDetails(orderNumber, connectionPool);
+
+        ctx.sessionAttribute("ordernumber",orderNumber);
+        ctx.attribute("admin", orderDetail);
+        ctx.render("tilbud.html");
+
+
     }
+
+
+    public static void getMaterial(Context ctx, ConnectionPool connectionPool) {
+
+            List<Material> materials = AdminMapper.getMaterials(connectionPool);
+        ctx.attribute("materials", materials);
+
+        ctx.render("materials.html");
+
+    }
+
+
+    }
+
+
+

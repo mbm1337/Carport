@@ -120,5 +120,29 @@ public class AdminMapper {
         }
     }
 
+    public static List<Material> getMaterials( ConnectionPool connectionPool) {
+        List<Material> materials = new ArrayList<>();
+        try (Connection connection = connectionPool.getConnection()) {
+            String sql = "SELECT * FROM \"materials\"";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String productName = rs.getString("productname");
+                String productType = rs.getString("producttype");
+                String productSize = rs.getString("productsize");
+                String unit = rs.getString("unit");
+                short quantityInStock = rs.getShort("quantityinstock");
+                double sellPrice = rs.getDouble("sellprice");
+                double purchasePrice = rs.getDouble("purchaseprice");
 
+                Material material = new Material(id, productName, productType, productSize,
+                        unit, quantityInStock, sellPrice, purchasePrice);
+                materials.add(material);
+            }
+            return materials;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

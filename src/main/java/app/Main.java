@@ -30,6 +30,7 @@ public class Main {
         app.post("/tilbud/{ordernumber}", ctx -> AdminController.getOrderDetails(ctx, connectionPool));
         app.get("/tilbud/{ordernumber}", ctx -> AdminController.getOrderDetails(ctx, connectionPool));
         app.post("/updateUser", ctx -> AdminController.editBalance(ctx, connectionPool));
+        app.get("/materials", ctx -> AdminController.getMaterial(ctx, connectionPool));
 
 
 

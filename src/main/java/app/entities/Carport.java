@@ -54,4 +54,12 @@ public class Carport {
     public void setLength(int length) {
         this.length = length;
     }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getLength() {
+        return length;
+    }
 }

@@ -3,50 +3,33 @@ package app.controllers;
 import app.entities.Carport;
 import app.entities.Shed;
 import app.exceptions.DatabaseException;
+import app.persistence.CarportMapper;
 import app.persistence.ConnectionPool;
 import io.javalin.http.Context;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 public class CarportController {
 
     public static void carportDropdowns(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
-        //TODO: Make dropdowns dynamic
 
-        ArrayList<Integer> width = new ArrayList<>();
-        width.add(240);
-        width.add(300);
-        width.add(360);
-        width.add(420);
-        width.add(480);
-        ArrayList<Integer> length = new ArrayList<>();
-        length.add(240);
-        length.add(300);
-        length.add(360);
-        length.add(420);
-        length.add(480);
-        ArrayList<String> roof = new ArrayList<>();
-        roof.add("Uden tagplader");
-        roof.add("Plasttrapezplader");
-        ArrayList<Integer> shedWidth = new ArrayList<>();
-        shedWidth.add(240);
-        shedWidth.add(300);
-        shedWidth.add(360);
-        shedWidth.add(420);
-        shedWidth.add(480);
-        ArrayList<Integer> shedLength = new ArrayList<>();
-        shedLength.add(240);
-        shedLength.add(300);
-        shedLength.add(360);
-        shedLength.add(420);
-        shedLength.add(480);
+        List<Integer> carpotWidth = CarportMapper.getCarportWidth(connectionPool);
+        ctx.attribute("carportWidth", carpotWidth);
 
+        List<Integer> carportLength = CarportMapper.getCarportLength(connectionPool);
+        ctx.attribute("carportLength", carportLength);
 
-        ctx.attribute("carportWidth", width);
-        ctx.attribute("carportLength", length);
-        ctx.attribute("roof", roof);
+        List<Integer> shedWidth = CarportMapper.getShedWidth(connectionPool);
         ctx.attribute("shedWidth", shedWidth);
+
+        List<Integer> shedLength = CarportMapper.getShedLength(connectionPool);
         ctx.attribute("shedLength", shedLength);
+
+        List<String> roof = CarportMapper.getRoof(connectionPool);
+        ctx.attribute("roof", roof);
+
 
         ctx.render("index.html");
 
@@ -54,30 +37,35 @@ public class CarportController {
 
     public static void makeCarport(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
 
+        if (ctx.formParam("shed").equals("shed")){
+            makeCarportWithShed(ctx);
+        } else {
+            makeCarportWithoutShed(ctx);
+        }
 
-        makeCarportWithShed(ctx, connectionPool);
+        ctx.render("adresse.html");
 
     }
 
-    public static void makeCarportWithoutShed(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
-        int width = Integer.parseInt(ctx.formParam("width"));
-        int length = Integer.parseInt(ctx.formParam("length"));
-        int height = Integer.parseInt(ctx.formParam("height"));
+    public static void makeCarportWithoutShed(Context ctx) {
+        int width = Integer.parseInt(ctx.formParam("carportWidth"));
+        int length = Integer.parseInt(ctx.formParam("carportLength"));
+        //int height = Integer.parseInt(ctx.formParam("carportHeight"));
         if (ctx.formParam("roof").equals("Uden tagplader")) {
-            Carport carport = new Carport(width, length, height);
+            Carport carport = new Carport(width, length, 250);
             ctx.sessionAttribute("carport", carport);
         } else {
             String roof = ctx.formParam("roof");
-            Carport carport = new Carport(width, length, height, roof);
+            Carport carport = new Carport(width, length, 250, roof);
             ctx.sessionAttribute("carport", carport);
         }
 
     }
 
-    public static void makeCarportWithShed(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
-        int width = Integer.parseInt(ctx.formParam("width"));
-        int length = Integer.parseInt(ctx.formParam("length"));
-        int height = Integer.parseInt(ctx.formParam("height"));
+    public static void makeCarportWithShed(Context ctx) throws DatabaseException {
+        int width = Integer.parseInt(ctx.formParam("carportWidth"));
+        int length = Integer.parseInt(ctx.formParam("carportLength"));
+        //int height = Integer.parseInt(ctx.formParam("height"));
         int shedWidth = Integer.parseInt(ctx.formParam("shedWidth"));
         int shedLength = Integer.parseInt(ctx.formParam("shedLength"));
 
@@ -85,14 +73,13 @@ public class CarportController {
 
 
         if (ctx.formParam("roof").equals("Uden tagplader")) {
-            Carport carport = new Carport(width, length, height, shed);
+            Carport carport = new Carport(width, length, 250, shed);
             ctx.sessionAttribute("carport", carport);
         } else {
 
             String roof = ctx.formParam("roof");
-            Carport carport = new Carport(width, length, height, roof, shed);
 
-
+            Carport carport = new Carport(width, length, 250, roof ,shed);
 
             ctx.sessionAttribute("carport", carport);
         }

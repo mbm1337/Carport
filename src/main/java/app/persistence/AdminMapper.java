@@ -18,7 +18,7 @@ public class AdminMapper {
         Map<User, List<Order>> usersAndOrders = new HashMap<>();
         try (Connection connection = connectionPool.getConnection())  {
             String sql = "SELECT \"user\".id, \"user\".forname, \"user\".aftername, \"user\".email, " +
-                    "\"user\".phone, \"user\".zip, \"user\".adress, " +
+                    "\"user\".phone, \"user\".zip, \"user\".address, " +
                     "orders.ordernumber, orders.user_id, orders.status, orders.price " +
                     "FROM \"user\" " +
                     "LEFT JOIN orders ON \"user\".id = orders.user_id";
@@ -34,7 +34,7 @@ public class AdminMapper {
                         rs.getString("aftername"),
                         rs.getString("phone"),
                         rs.getInt("zip"),
-                        rs.getString("adress")
+                        rs.getString("address")
 
                 );
 
@@ -66,7 +66,7 @@ public class AdminMapper {
 
         try (Connection connection = connectionPool.getConnection()) {
             String sql = "SELECT " +
-                    "u.id AS user_id, u.forname, u.aftername, u.email, u.zip, u.adress, u.admin, u.password, u.phone, " +
+                    "u.id AS user_id, u.forname, u.aftername, u.email, u.zip, u.address, u.admin, u.password, u.phone, " +
                     "o.ordernumber, o.orderdate, o.status, o.comments, o.customernumber, o.user_id AS order_user_id, " +
                     "o.price AS order_price, od.materials_id, od.quantityordered, od.price AS detail_price " +
                     "FROM \"user\" u " +
@@ -103,7 +103,22 @@ public class AdminMapper {
         return orderList;
     }
 
+    public static void updatePrice(int ordernumber, double price, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "UPDATE orders SET price = ? WHERE ordernumber = ?";
 
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setDouble(1, price);
+            ps.setInt(2, ordernumber);
+
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected != 1) {
+                throw new DatabaseException("Fejl i opdatering af top");
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Fejl i opdatering af top");
+        }
+    }
 
 
 }

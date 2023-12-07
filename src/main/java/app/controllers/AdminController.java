@@ -39,14 +39,22 @@ public class AdminController {
 
     public static void getOrderDetails(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
 
-
-
             int orderNumber = Integer.parseInt(ctx.pathParam("ordernumber"));
+
             List<Admin> orderDetail = AdminMapper.getOrderDetails(orderNumber, connectionPool);
+
             ctx.sessionAttribute("ordernumber",orderNumber);
-            ctx.attribute("order", orderDetail);
+            ctx.attribute("admin", orderDetail);
             ctx.render("tilbud.html");
 
 
     }
+
+    public static void editBalance(Context ctx,  ConnectionPool connectionPool) throws DatabaseException {
+        int orderNumber = Integer.parseInt(ctx.pathParam("ordernumber"));
+        int price = Integer.parseInt(ctx.formParam("newPrice"));
+            AdminMapper.updatePrice(orderNumber, price,connectionPool);
+        ctx.sessionAttribute("ordernumber",orderNumber);
+            ctx.render("users.html");
+        }
     }

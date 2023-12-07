@@ -28,6 +28,8 @@ public class Main {
         app.post("/carport", ctx -> CarportController.makeCarport(ctx, connectionPool));
         app.get("/ordre", ctx -> AdminController.getUsersAndOrders(ctx, connectionPool));
         app.post("/tilbud/{ordernumber}", ctx -> AdminController.getOrderDetails(ctx, connectionPool));
+        app.get("/tilbud/{ordernumber}", ctx -> AdminController.getOrderDetails(ctx, connectionPool));
+        app.post("/updateUser", ctx -> AdminController.editBalance(ctx, connectionPool));
 
 
 

@@ -2,8 +2,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <html lang="en">
 <head>
-    <title>Login - Fog</title>
-    <link rel="stylesheet" href="../public/stylesheet.css">
+
+    <title>welcome to Fogs Login</title>
+    <link rel="stylesheet" href="/css/stylesheet.css">
 </head>
 <body>
 <div class="container">
@@ -11,10 +12,10 @@
         <h2>Login</h2>
         <form method="post">
             <div class="form-group">
-                <input type="text" id="login-username" name="email" placeholder="Email" required>
+                <input type="text" id="login-username" name="username" placeholder="Email" required>
             </div>
             <div class="form-group">
-                <input type="password" id="login-password" name="password" placeholder="Kodeord" required>
+                <input type="password" id="login-password" name="password" placeholder="Password" required>
             </div>
             <button id="login-btn" type="submit"formaction="/login">Login</button>
             <p class="errormessage" th:text="${#ctx.message}"></p>
@@ -22,8 +23,11 @@
 
 
 
-        <a th:if="${#ctx.session.currentUser} == null" th:href="@{/createuser}">Opret en bruger</a>
+        <a th:if="${#ctx.session.currentUser} == null" th:href="@{/createuser}">Create account</a>
+
+
     </div>
 </div>
 </body>
 </html>
+

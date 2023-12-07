@@ -1,5 +1,6 @@
 package app.persistence;
 
+
 import app.entities.User;
 import app.exceptions.DatabaseException;
 
@@ -7,26 +8,24 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
-public class UserMapper
-{
+public class UserMapper {
 
-    public static User login(String email, String password, ConnectionPool connectionPool) throws DatabaseException
-    {
+    public static User login(String email, String password, ConnectionPool connectionPool) throws DatabaseException {
         String sql = "select * from \"user\" where email=? and password=?";
 
-        try (Connection connection = connectionPool.getConnection())
-        {
-            try (PreparedStatement ps = connection.prepareStatement(sql))
-            {
+        try (Connection connection = connectionPool.getConnection()) {
+            try (PreparedStatement ps = connection.prepareStatement(sql)) {
                 ps.setString(1, email);
                 ps.setString(2, password);
                 ResultSet rs = ps.executeQuery();
-                if (rs.next())
-                {
+                if (rs.next()) {
                     int id = rs.getInt("id");
                     boolean status = rs.getBoolean("admin");
-                    return new User(id, email, password,status);
+                    return new User (id, email, password, status);
                 } else
                 {
                     throw new DatabaseException("Fejl i login. Prøv igen.");
@@ -40,23 +39,21 @@ public class UserMapper
         }
 
     }
-
-    public static void createuser(String firstName, String lastName, int phoneNumber, String email, int zip, String address, boolean admin, String password, ConnectionPool connectionPool) throws DatabaseException
-    {
-        String sql = "insert into \"user\" (firstname, lastname, tlf, email, zip, address, admin, password) values (?,?,?,?,?,?,?,?)";
+    public static void createuser(String forname,String aftername,String email,int zip,String adress,boolean admin,String password,int phone ,ConnectionPool connectionPool) throws DatabaseException{
+        String sql = "insert into \"user\" (forname, aftername,email,zip,adress,admin,password,phone) values (?,?,?,?,?,?,?,?)";
 
         try (Connection connection = connectionPool.getConnection())
         {
             try (PreparedStatement ps = connection.prepareStatement(sql))
             {
-                ps.setString(1, firstName);
-                ps.setString(2, lastName);
-                ps.setInt(3, phoneNumber);
-                ps.setString(4, email);
-                ps.setInt(5, zip);
-                ps.setString(6, address);
-                ps.setBoolean(7, admin);
-                ps.setString(8, password);
+                ps.setString(1, forname);
+                ps.setString(2, aftername);
+                ps.setString(3, email);
+                ps.setInt(4, zip);
+                ps.setString(5, adress);
+                ps.setBoolean(6, admin);
+                ps.setString(7, password);
+                ps.setInt(8, phone);
 
                 int rowsAffected =  ps.executeUpdate();
                 if (rowsAffected != 1)
@@ -89,10 +86,10 @@ public class UserMapper
                 ResultSet resultSet = ps.executeQuery();
 
                 if (resultSet.next()) {
-
                     int id = resultSet.getInt("id");
 
-                    user = new User(id,email); // Create a User object with the retrieved email
+
+                    user = new User(id, email);
                 }
             }
         } catch (SQLException e) {
@@ -102,5 +99,4 @@ public class UserMapper
 
         return user;
     }
-
 }

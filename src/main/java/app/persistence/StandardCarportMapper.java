@@ -12,31 +12,31 @@ import java.util.List;
 
 public class StandardCarportMapper {
 
-    public static List<StandardCarport> getAllStandardCarports(ConnectionPool connectionPool) throws DatabaseException {
-        List<StandardCarport> carports = new ArrayList<>();
+    public static StandardCarport getCarportById(int id, ConnectionPool connectionPool) throws DatabaseException {
+        StandardCarport carport = null;
 
-        String sql = "SELECT id, merchandiser, productname, price, description " +
-                "FROM carports";
+        String sql = "SELECT merchandiser, productname, price, description " +
+                "FROM carports " +
+                "WHERE id = ?";
 
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement ps = connection.prepareStatement(sql)) {
+                ps.setInt(1, id);
                 ResultSet rs = ps.executeQuery();
-                while (rs.next()) {
-                    int carportId = rs.getInt("id");
+                if (rs.next()) {
                     String merchandiser = rs.getString("merchandiser");
                     String productName = rs.getString("productname");
                     int price = rs.getInt("price");
                     String description = rs.getString("description");
 
-                    StandardCarport carport = new StandardCarport(carportId, merchandiser, productName, price, description);
-                    carports.add(carport);
+                    carport = new StandardCarport(id, merchandiser, productName, price, description);
                 }
             }
         } catch (SQLException e) {
-            throw new DatabaseException("Couldn't fetch the carports from the database: " + e);
+            throw new DatabaseException("Couldn't fetch the carport from the database by ID: " + e);
         }
 
-        return carports;
+        return carport;
     }
 }
 

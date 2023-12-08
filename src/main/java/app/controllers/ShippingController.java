@@ -25,7 +25,7 @@ public class ShippingController {
         } catch (DatabaseException e) {
             ctx.attribute("message", e.getMessage());
         }
-        ctx.render("carportone.html");
+        ctx.render("carport_info.html");
     }
 
 }

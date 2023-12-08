@@ -10,8 +10,20 @@
 
 
 <tbody>
+<img class="carports_img" src="/public/images/carport_1.jpg" alt="Carport 1">
+
+<form id="info" method="post">
+
+    <tr th:each="standardCarport : ${#ctx.session.containsKey(standardCarport)}">
+        <td th:text="${#ctx.session.merchandiser}"></td>
+        <td th:text="${#ctx.session.productName}"></td>
+        <td th:text="${#ctx.session.price}"></td>
+        <td th:text="${#ctx.session.description}"></td>
+    </tr>
+</form>
+
 <form id="zip" method="post">
-    <img class="carports_img" src="/public/images/carport_1.jpg" alt="Carport 1">
+
     <tr>
         <td>
             <p>Indtast dit postnummer for at udregne leveringspris og leveringstid.</p>

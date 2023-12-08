@@ -84,7 +84,6 @@ public class AdminMapper {
                         admin.setOrderDate(resultSet.getString("orderdate"));
                         admin.setStatus(resultSet.getString("status"));
                         admin.setComments(resultSet.getString("comments"));
-                        admin.setCustomerNumber(resultSet.getInt("customernumber"));
                         admin.setUserId(resultSet.getInt("user_id"));
                         admin.setOrderPrice(resultSet.getDouble("order_price"));
                         admin.setMaterialsId(resultSet.getInt("materials_id"));

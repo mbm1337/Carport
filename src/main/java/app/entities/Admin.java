@@ -5,7 +5,6 @@ public class Admin {
     private String orderDate;
     private String status;
     private String comments;
-    private int customerNumber;
     private int userId;
     private double orderPrice;
     private int materialsId;
@@ -13,13 +12,12 @@ public class Admin {
     private double detailPrice;
 
     // Konstruktør
-    public Admin(int orderId, String orderDate, String status, String comments, int customerNumber,
+    public Admin(int orderId, String orderDate, String status, String comments,
                  int userId, double orderPrice, int materialsId, int quantityOrdered, double detailPrice) {
         this.orderId = orderId;
         this.orderDate = orderDate;
         this.status = status;
         this.comments = comments;
-        this.customerNumber = customerNumber;
         this.userId = userId;
         this.orderPrice = orderPrice;
         this.materialsId = materialsId;
@@ -65,13 +63,6 @@ public class Admin {
         this.comments = comments;
     }
 
-    public int getCustomerNumber() {
-        return customerNumber;
-    }
-
-    public void setCustomerNumber(int customerNumber) {
-        this.customerNumber = customerNumber;
-    }
 
     public int getUserId() {
         return userId;

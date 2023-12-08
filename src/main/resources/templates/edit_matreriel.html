@@ -14,6 +14,16 @@
         <form method="post" th:action="@{'/updatematerials/' + ${material.id}}" th:object="${materials}">
             <table>
                 <tr>
+                    <th>ID</th>
+                    <th>Product Name</th>
+                    <th>Product Type</th>
+                    <th>Product Size</th>
+                    <th>Unit</th>
+                    <th>Quantity in Stock</th>
+                    <th>Buy Price</th>
+                    <th>Purchase Price</th>
+                </tr>
+                <tr>
                     <td><input type="text" name="id" th:value="${material.id}" readonly="readonly" /></td>
                     <td><input type="text" name="productName" th:value="${material.productName}" /></td>
                     <td><input type="text" name="productType" th:value="${material.productType}" /></td>
@@ -24,6 +34,7 @@
                     <td><input type="text" name="purchasePrice" th:value="${material.purchasePrice}" /></td>
                 </tr>
             </table>
+
 
             <input type="submit" value="Gem ændringer">
         </form>

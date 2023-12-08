@@ -37,6 +37,7 @@ public class Main {
         app.get("/tilbud/{ordernumber}", ctx -> AdminController.getOrderDetails(ctx, connectionPool));
         app.post("/updateUser", ctx -> AdminController.editBalance(ctx, connectionPool));
         app.get("/materials", ctx -> AdminController.getMaterial(ctx, connectionPool));
+        app.post("/updatematerials/{id}", ctx -> AdminController.updateMaterial(ctx, connectionPool));
         app.post("/adresse",ctx-> ZipController.cityAndZip(ctx,connectionPool));
         app.post("/status", ctx -> OrderController.getStatus(ctx, connectionPool));
         app.post("/login", ctx -> UserController.login(ctx, connectionPool));
@@ -44,8 +45,7 @@ public class Main {
        // app.get("/createuser", ctx -> UserController.createuser(ctx, connectionPool));
         app.post("/createuser", ctx -> UserController.createuser(ctx, connectionPool));
        app.get("/createuser", ctx -> ctx.render("createuser.html"));
-
-        app.post("/edit_matreriel/{id}", ctx -> AdminController.editMaterial(ctx, connectionPool));
+          app.post("/edit_matreriel/{id}", ctx -> AdminController.editMaterial(ctx, connectionPool));
 
 
 

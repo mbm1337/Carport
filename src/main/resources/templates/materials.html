@@ -35,7 +35,7 @@
             <td th:text="${material.buyPrice}"></td>
             <td th:text="${material.purchasePrice}"></td>
             <td>
-                <form th:object="${materials}" method="post" th:action="@{'/edit_matreriel/' + ${material.id}}">
+                <form method="post" th:action="@{'/edit_matreriel/' + ${material.id}}">
                     <button type="submit">Rediger</button>
                 </form>
 

@@ -55,10 +55,16 @@ public class Material {
         this.purchasePrice = purchasePrice;
     }
 
-    // Getters and setters (if needed)
-    // ...
-
-    // Override toString() for debugging or logging purposes
+    public Material(String productName, String productType, String productSize,
+                    String unit, short quantityInStock, double buyPrice, double purchasePrice) {
+        this.productName = productName;
+        this.productType = productType;
+        this.productSize = productSize;
+        this.unit = unit;
+        this.quantityInStock = quantityInStock;
+        this.buyPrice = buyPrice;
+        this.purchasePrice = purchasePrice;
+    }
     @Override
     public String toString() {
         return "Material{" +

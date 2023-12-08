@@ -1,6 +1,7 @@
 package app.entities;
 
 public class Admin {
+    private int id;
     private int orderId;
     private String orderDate;
     private String status;
@@ -29,6 +30,11 @@ public class Admin {
 
     public Admin() {
 
+    }
+    public Admin(int id,int materialsId, String comments) {
+        this.id = id;
+        this.materialsId = materialsId;
+        this.comments = comments;
     }
 
     // Tilføj getters og setters efter behov

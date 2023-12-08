@@ -53,6 +53,9 @@ public class Main {
         app.get("/carportone", ctx -> ShippingController.getShippingInfoByZip(ctx, connectionPool));
         app.post("/carportone", ctx -> ShippingController.getShippingInfoByZip(ctx, connectionPool));
 
+        app.get("/adminCalc", ctx -> AdminController.getCalcMaterials(ctx, connectionPool));
+        //todo: app.post("/adminCalc/{id}", ctx -> AdminController.editCalcMaterials(ctx, connectionPool));
+
 
 
     }

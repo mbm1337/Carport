@@ -82,7 +82,21 @@ public class AdminController {
     }
 
 
+    public static void getCalcMaterials(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+
+                List<Admin> calcMaterials = AdminMapper.getCalcMaterials(connectionPool);
+                ctx.sessionAttribute("calcMaterials", calcMaterials);
+                ctx.render("admin_calculator.html");
+
     }
+
+
+    public static void editCalcMaterials(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+
+        }
+
+
+}
 
 
 

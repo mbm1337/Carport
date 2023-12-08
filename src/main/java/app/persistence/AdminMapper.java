@@ -145,4 +145,27 @@ public class AdminMapper {
             throw new RuntimeException(e);
         }
     }
+
+    public static List<Admin> getCalcMaterials(ConnectionPool connectionPool) {
+
+        List<Admin> calcMaterials = new ArrayList<>();
+        try (Connection connection = connectionPool.getConnection()) {
+            String sql = "SELECT * FROM public.carport_calculator";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                int materialsId = rs.getInt("material_id");
+                String comments = rs.getString("description");
+                calcMaterials.add(new Admin(id,materialsId, comments));
+            }
+            return calcMaterials;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+
+
 }

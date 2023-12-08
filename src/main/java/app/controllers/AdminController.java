@@ -92,6 +92,28 @@ public class AdminController {
 
 
     }
+
+
+    public static void addMaterial(Context ctx, ConnectionPool connectionPool) throws DatabaseException, SQLException {
+        String productName = (ctx.formParam("productName"));
+        String productType = (ctx.formParam("productType"));
+        String productSize = (ctx.formParam("productSize"));
+        String unit = (ctx.formParam("unit"));
+        short quantityInStock = (short) Integer.parseInt(ctx.formParam("quantityInStock"));
+        double buyPrice = Double.parseDouble(ctx.formParam("buyPrice"));
+        double purchasePrice = Double.parseDouble(ctx.formParam("purchasePrice"));
+
+        Material material = new Material(productName, productType, productSize, unit, quantityInStock, buyPrice, purchasePrice);
+        AdminMapper.addMaterial(material, connectionPool);
+
+        ctx.redirect("/materials");
+    }
+
+    public static void deleteMaterial(Context ctx, ConnectionPool connectionPool) throws DatabaseException, SQLException {
+        int id = Integer.parseInt(ctx.pathParam("id"));
+        AdminMapper.deleteMaterial(id, connectionPool);
+        ctx.redirect("/materials");
+    }
 }
 
 

@@ -197,4 +197,47 @@ public class AdminMapper {
         return material;
     }
 
+
+    public static Material addMaterial(Material material, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "INSERT INTO \"materials\" (productname, producttype, productsize, unit, quantityinstock, sellprice, purchaseprice) VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, material.getProductName());
+            ps.setString(2, material.getProductType());
+            ps.setString(3, material.getProductSize());
+            ps.setString(4, material.getUnit());
+            ps.setShort(5, material.getQuantityInStock());
+            ps.setDouble(6, material.getBuyPrice());
+            ps.setDouble(7, material.getPurchasePrice());
+
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected != 1) {
+                throw new DatabaseException("Fejl i opdatering af material");
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Fejl i opdatering af material");
+        }
+
+        return material;
+    }
+
+    public static Material deleteMaterial(int id, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "DELETE FROM \"materials\" WHERE id = ?";
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, id);
+
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected != 1) {
+                throw new DatabaseException("Fejl i sletning af material");
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Fejl i sletning af material");
+        }
+
+        return null;
+    }
+
 }

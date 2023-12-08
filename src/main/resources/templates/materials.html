@@ -39,6 +39,18 @@
                     <button type="submit">Rediger</button>
                 </form>
 
+
+                <form method="post" th:action="@{'/delete_matreriel/' + ${material.id}}" id="deleteForm"
+                      th:attr="onsubmit='return confirmDelete(\'' + ${material.productName} + '\')'">
+                    <input type="submit" value="Slet">
+                </form>
+
+
+
+
+
+
+
             </td>
         </tr>
 
@@ -48,9 +60,19 @@
 
 
 
+    <a href="/add_matreriel"><button type="button">tilføj nyt produkt</button></a>
 
-    </form>
   </div>
 </div>
 </body>
 </html>
+
+<script>
+    function confirmDelete(materialId) {
+        console.log('Material ID:', materialId);
+
+        var userConfirmed = confirm("Er du sikker på, at du vil slette " + materialId + "?");
+
+        return userConfirmed;
+    }
+</script>

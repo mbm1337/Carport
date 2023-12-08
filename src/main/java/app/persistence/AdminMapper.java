@@ -120,7 +120,7 @@ public class AdminMapper {
         }
     }
 
-    public static List<Material> getMaterials( ConnectionPool connectionPool) {
+    public static List<Material> getMaterials( ConnectionPool connectionPool) throws SQLException {
         List<Material> materials = new ArrayList<>();
         try (Connection connection = connectionPool.getConnection()) {
             String sql = "SELECT * FROM \"materials\"";
@@ -145,4 +145,32 @@ public class AdminMapper {
             throw new RuntimeException(e);
         }
     }
+
+    public static Material getMaterialById(int id, ConnectionPool connectionPool) throws SQLException {
+        try (Connection connection = connectionPool.getConnection()) {
+            String sql = "SELECT * FROM \"materials\" WHERE id = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                preparedStatement.setInt(1, id);
+
+                try (ResultSet rs = preparedStatement.executeQuery()) {
+                    while (rs.next()) {
+                        String productName = rs.getString("productname");
+                        String productType = rs.getString("producttype");
+                        String productSize = rs.getString("productsize");
+                        String unit = rs.getString("unit");
+                        short quantityInStock = rs.getShort("quantityinstock");
+                        double sellPrice = rs.getDouble("sellprice");
+                        double purchasePrice = rs.getDouble("purchaseprice");
+
+                        return new Material(id, productName, productType, productSize,
+                                unit, quantityInStock, sellPrice, purchasePrice);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null; // If material with the given ID is not found
+    }
+
 }

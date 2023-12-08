@@ -31,7 +31,7 @@ public class Main {
         app.get("/tilbud/{ordernumber}", ctx -> AdminController.getOrderDetails(ctx, connectionPool));
         app.post("/updateUser", ctx -> AdminController.editBalance(ctx, connectionPool));
         app.get("/materials", ctx -> AdminController.getMaterial(ctx, connectionPool));
-
+        app.post("/edit_matreriel/{id}", ctx -> AdminController.editMaterial(ctx, connectionPool));
 
 
 

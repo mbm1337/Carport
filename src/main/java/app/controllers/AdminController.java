@@ -9,6 +9,7 @@ import app.persistence.ConnectionPool;
 import app.persistence.UserMapper;
 import io.javalin.http.Context;
 
+import java.sql.SQLException;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -58,21 +59,8 @@ public class AdminController {
             ctx.render("users.html");
         }
 
-    public static void getMaterialDetails(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
 
-        int orderNumber = Integer.parseInt(ctx.pathParam("ordernumber"));
-
-        List<Admin> orderDetail = AdminMapper.getOrderDetails(orderNumber, connectionPool);
-
-        ctx.sessionAttribute("ordernumber",orderNumber);
-        ctx.attribute("admin", orderDetail);
-        ctx.render("tilbud.html");
-
-
-    }
-
-
-    public static void getMaterial(Context ctx, ConnectionPool connectionPool) {
+    public static void getMaterial(Context ctx, ConnectionPool connectionPool) throws SQLException {
 
             List<Material> materials = AdminMapper.getMaterials(connectionPool);
         ctx.attribute("materials", materials);
@@ -81,8 +69,22 @@ public class AdminController {
 
     }
 
+    public static void editMaterial(Context ctx, ConnectionPool connectionPool) throws DatabaseException, SQLException {
+        int materialId = Integer.parseInt(ctx.pathParam("id"));
+
+        // Fetch the single material based on its ID
+        Material material = AdminMapper.getMaterialById(materialId, connectionPool);
+
+        // Pass the material to the Thymeleaf template
+        ctx.attribute("material", material);
+        ctx.render("edit_matreriel.html");
+    }
+
 
     }
+
+
+
 
 
 

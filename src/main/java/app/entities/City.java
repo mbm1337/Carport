@@ -1,7 +1,7 @@
 package app.entities;
 
 public class City {
-    int zip;
+    static int zip;
     String city;
 
 

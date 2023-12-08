@@ -2,6 +2,7 @@ package app;
 
 import app.config.ThymeleafConfig;
 import app.controllers.AdminController;
+import app.controllers.ShippingController;
 import app.controllers.CarportController;
 import app.controllers.OrderController;
 import app.controllers.UserController;
@@ -48,6 +49,9 @@ public class Main {
 
 
 
+        //app.get("/carportone", ctx -> ctx.render("carportone.html"));
+        app.get("/carportone", ctx -> ShippingController.getShippingInfoByZip(ctx, connectionPool));
+        app.post("/carportone", ctx -> ShippingController.getShippingInfoByZip(ctx, connectionPool));
 
 
 

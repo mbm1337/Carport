@@ -1,6 +1,7 @@
 package app;
 
 import app.config.ThymeleafConfig;
+import app.controllers.AdminController;
 import app.controllers.CarportController;
 import app.controllers.OrderController;
 import app.controllers.UserController;
@@ -30,6 +31,12 @@ public class Main {
         // Routing
         app.get("/", ctx -> CarportController.carportDropdowns(ctx, connectionPool));
         app.post("/carport", ctx -> CarportController.makeCarport(ctx, connectionPool));
+
+        app.get("/ordre", ctx -> AdminController.getUsersAndOrders(ctx, connectionPool));
+        app.post("/tilbud/{ordernumber}", ctx -> AdminController.getOrderDetails(ctx, connectionPool));
+        app.get("/tilbud/{ordernumber}", ctx -> AdminController.getOrderDetails(ctx, connectionPool));
+        app.post("/updateUser", ctx -> AdminController.editBalance(ctx, connectionPool));
+        app.get("/materials", ctx -> AdminController.getMaterial(ctx, connectionPool));
         app.post("/adresse",ctx-> ZipController.cityAndZip(ctx,connectionPool));
         app.post("/status", ctx -> OrderController.getStatus(ctx, connectionPool));
         app.post("/login", ctx -> UserController.login(ctx, connectionPool));
@@ -37,7 +44,6 @@ public class Main {
        // app.get("/createuser", ctx -> UserController.createuser(ctx, connectionPool));
         app.post("/createuser", ctx -> UserController.createuser(ctx, connectionPool));
        app.get("/createuser", ctx -> ctx.render("createuser.html"));
-
 
 
 

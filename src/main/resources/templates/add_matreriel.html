@@ -1,47 +1,50 @@
 <!DOCTYPE html>
-
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fog</title>
-  <link rel="stylesheet" href="../public/stylesheet.css">
-</head>
+
+<div th:replace="~{fragments :: head('materials')}"></div>
+
 <body>
-<div class="container">
-  <table id="sortable-table">
-    <form method="post">
-      <table>
-        <tr>
-          <th>Product Name</th>
-          <th>Product Type</th>
-          <th>Product Size</th>
-          <th>Unit</th>
-          <th>Quantity in Stock</th>
-          <th>Buy Price</th>
-          <th>Purchase Price</th>
-        </tr>
-        <tr>
-          <td><input type="text" name="productName" /></td>
-          <td><input type="text" name="productType" /></td>
-          <td><input type="text" name="productSize"  /></td>
-          <td><input type="text" name="unit" /></td>
-          <td><input type="text" name="quantityInStock" /></td>
-          <td><input type="text" name="buyPrice"/></td>
-          <td><input type="text" name="purchasePrice" /></td>
-        </tr>
-      </table>
+
+<div id="page-container">
+  <div id="page-content">
+    <div th:replace="~{fragments :: header('materials')}"></div>
+    <div class="indhold-box" id="content">
+    <table id="sortable-table">
+
+      <form method="post">
+        <table>
+          <tr>
+            <th>Product Name</th>
+            <th>Product Type</th>
+            <th>Product Size</th>
+            <th>Unit</th>
+            <th>Quantity in Stock</th>
+            <th>Buy Price</th>
+            <th>Purchase Price</th>
+          </tr>
+          <tr>
+            <td><input type="text" name="productName" /></td>
+            <td><input type="text" name="productType" /></td>
+            <td><input type="text" name="productSize"  /></td>
+            <td><input type="text" name="unit" /></td>
+            <td><input type="text" name="quantityInStock" /></td>
+            <td><input type="text" name="buyPrice"/></td>
+            <td><input type="text" name="purchasePrice" /></td>
+          </tr>
+        </table>
 
 
-      <button type="submit" formaction="/add_matreriel">tilføj</button>
-    </form>
+        <button type="submit" formaction="/add_matreriel">tilføj</button>
+      </form>
 
 
 
-  </table>
+    </table>
 
-</div>
+
+    <div th:replace="~{fragments :: footer}"></div>
+  </div>
+  </div>
 </div>
 </body>
 </html>

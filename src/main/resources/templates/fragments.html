@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head th:fragment="head(title)">
+  <title th:text="${title}">Frontpage</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="../public/css/stylesheet.css" th:href="@{/css/stylesheet.css}" rel="stylesheet"/>
+</head>
+
+<body>
+
+<div id="page-container">
+
+  <div id="page-content">
+    <header class="css-inbqmi e1nzw0083 snipcss-ihNxt" th:fragment="header(title)">
+
+
+      <div class="css-1qkimn e1nzw0084"> <a aria-label="Logo - Frontpage" class="css-recfet e1nzw00811" href="/"><img th:src="@{/img/fogLogo.bmp}" src="../public/img/fogLogo.bmp"/></a>
+
+
+
+
+        <nav class="css-mxxhuv ep0bdet0">
+          <ul class="css-3gkfpg ep0bdet1">
+
+
+            <li id="materialer" class="menu-item"><a data-content="Materialer" href="/materials" class="css-1gx9qgy eex3fzi0" aria-expanded="false">Materialer</a></li>
+            <li><a data-content="Ordre" href="/ordre" class="css-1gx9qgy eex3fzi0" aria-expanded="false">Ordre</a></li>
+            <li><a data-content="Bolig &amp; design" href="/bolig-design" class="css-1gx9qgy eex3fzi0" aria-expanded="false">Bolig &amp; design</a></li>
+          </ul>
+
+        </nav>
+        <section class="css-17kxde3 e8tb0nm0">
+          <div class="css-17kxde3">
+            <input type="text" id="searchInput" placeholder="Søg...">
+            <button id="searchButton" onclick="search()">Søg</button>
+          </div>
+        </section>
+        <div class="css-4emdtb e1nzw00810">
+          <a href="/om-fog/forretninger" class="css-yy3si3 e1nzw0082">
+
+            <span class="css-108uwdu e1nzw0086">Find Fog</span>
+          </a>
+          <div class="css-oi30ox e1nzw0081">
+            <a href="/kurv" class="css-yy3si3 e1nzw0082">
+
+              <span class="css-108uwdu e1nzw0086">Kurv</span>
+            </a>
+          </div>
+          <button class="css-ld7dfk">
+            <img  href="/"><img th:src="@{/img/fa-bars.png}" src="../public/img/fa-bars.png" alt="Menu">
+            <div class="dropdown-content">
+              <!-- Dropdown-indhold -->
+              <a data-content="Materialer" href="/materials">Materialer</a>
+              <a data-content="Ordre" href="/ordre">Ordre</a>
+              <a href="#">Link 3</a>
+            </div>
+          </button>
+
+
+
+        </div>
+      </div>
+
+
+
+
+    </header>
+
+    <footer th:fragment="footer">
+      <a th:if="${#ctx.session.currentUser} == null" th:href="@{/createuser}">Create account</a>
+      <a th:if="${#ctx.session.currentUser} != null" th:href="@{/logout}">Logout</a>
+      <a href="/">Til forside</a>
+    </footer>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,363 @@
+
+  body {
+    font-size:100%;
+    font:inherit;
+    line-height:1;
+    font-family:Dinpro,helvetica,arial,sans-serif;
+    color:#101820;
+  }
+* {
+    box-sizing: inherit;
+}
+
+div {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+
+body {
+    line-height: 1;
+}
+
+body {
+    height: 100vh;
+    font-family: Dinpro,helvetica,arial,sans-serif;
+    background-color: #f5f5f3;
+    margin: 0;
+    color: #101820;
+}
+
+
+
+html {
+    box-sizing: border-box;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+    scroll-padding-top: 20px;
+}
+
+
+
+
+
+
+.css-1qkimn {
+    margin: 0 auto;
+    max-width: 1680px;
+    width: 100%;
+    display: grid;
+    z-index: 300;
+    position: relative;
+    grid-template-areas: "usp usp" "logo iconnav" "search search";
+    grid-template-columns: 1fr 1fr;
+}
+
+@media (min-width: 1024px){
+  .css-1qkimn {
+    grid-template-areas: "usp usp usp usp" "logo nav search iconnav" ". . . .";
+    grid-template-columns: 70px auto 1fr 140px;
+  }
+}
+
+
+
+
+.css-recfet {
+    grid-area: logo;
+    display: block;
+    line-height: 0;
+}
+
+
+
+.css-mxxhuv {
+    display: none;
+    grid-area: nav;
+}
+  /*styling for menu usynlig hvis skærm er under 1024pixel */
+@media (min-width: 1024px){
+  .css-mxxhuv {
+    display: block;
+  }
+}
+
+  .css-17kxde3 {
+      grid-area: search;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-self: flex-end;
+      align-self: center;
+      padding: 15px;
+      width: 100%;
+  }
+
+
+.css-4emdtb {
+    display: grid;
+    grid-auto-flow: column;
+    grid-area: iconnav;
+    margin-left: auto;
+}
+
+.css-inbqmi {
+    top: 0;
+    position: -webkit-sticky;
+    position: sticky;
+    z-index: 400;
+    -webkit-transition: top 0.4s ease-in-out;
+    transition: top 0.4s ease-in-out;
+    background-color: #FFFFFF;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+
+ul {
+    list-style: none;
+}
+
+
+
+@media (min-width: 1024px){
+  .css-recfet svg  {
+    height: 70px;
+    width: 70px;
+  }
+}
+
+.css-3gkfpg {
+    display: grid;
+    grid-auto-flow: column;
+    margin: 0 30px;
+    gap: 15px;
+}
+
+
+  .css-yy3si3 {
+      display: inline-flex;
+      flex-direction: column; /* Ændret til kolonneorientering */
+      align-items: center;
+      appearance: none;
+      background-color: transparent;
+      border: none; /* Fjernet border-stil */
+      border-radius: 0;
+      box-sizing: border-box;
+      color: inherit;
+      cursor: pointer;
+      flex-shrink: 0;
+      letter-spacing: 0;
+      line-height: 1;
+      margin: 0;
+      padding: 10px;
+      text-align: center;
+      height: 60px;
+      position: relative;
+      aspect-ratio: 1;
+      justify-content: center;
+      font-size: 10px;
+      text-decoration: none; /* Fjernet understregning */
+  }
+
+
+  @media (min-width: 1024px){
+  .css-yy3si3 {
+    height: 70px;
+  }
+}
+
+.css-oi30ox {
+    transform-origin: center;
+}
+
+  .css-ld7dfk {
+      display: inline-flex;
+      align-items: center;
+      appearance: none;
+      background-color: transparent;
+      border: none;
+      border-radius: 0;
+      box-sizing: border-box;
+      color: inherit;
+      cursor: pointer;
+      flex-shrink: 0;
+      letter-spacing: 0;
+      line-height: 1;
+      margin: 0;
+      padding: 10px;
+      text-align: center;
+      height: 60px;
+      position: relative;
+      aspect-ratio: 1;
+      border-bottom: 2px solid transparent;
+      width: 50px;
+      justify-content: center;
+      font-size: 10px;
+  }
+
+
+
+  /*styling for menu button synlig hvis skærm er under 1024pixel */
+
+@media (min-width: 1024px){
+  .css-ld7dfk {
+    height: 70px;
+  }
+
+  .css-ld7dfk {
+    display: none;
+  }
+}
+
+
+
+
+
+
+
+.css-yy3si3 svg  {
+    height: 25px;
+    width: 25px;
+    margin: 0 auto;
+}
+
+span {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+
+
+
+
+
+
+.css-1gx9qgy {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    text-align: center;
+    margin: auto;
+    height: 60px;
+    color: #101820;
+    font-size: 13px;
+    border-bottom: 2px solid transparent;
+    text-decoration: none;
+    line-height: 15px;
+}
+
+@media (min-width: 1024px){
+  .css-1gx9qgy {
+    height: 70px;
+  }
+}
+
+.css-1gx9qgy:after {
+    display: block;
+    content: attr(data-content);
+    height: 1px;
+    color: transparent;
+    overflow: hidden;
+    visibility: hidden;
+    font-weight: 500;
+}
+
+.css-1gx9qgy:hover {
+    color: currentcolor;
+    text-decoration: none;
+    border-bottom: 2px solid currentColor;
+}
+
+
+@media (min-width: 1024px){
+  .css-8bq568 {
+    top: 100px;
+  }
+}
+
+.css-1b84qwn svg  {
+    width: 25px;
+    height: 25px;
+    transition: transform 0.2s ease-in-out;
+}
+
+.css-uoomdt svg  {
+    width: 18px;
+    height: 18px;
+}
+
+.css-1gbgw4w {
+    display: grid;
+    gap: 30px;
+}
+
+
+
+a:hover .css-1cfecln {
+    background-size: 100% 100%;
+}
+
+a:hover .css-1cfecln, button:hover .css-1cfecln {
+    background-size: 100% 100%;
+}
+
+
+  .css-17kxde3 {
+      grid-area: search;
+      position: relative;
+      display: flex;
+      flex-direction: row; /* Ændret fra kolonne til rækkeorientering */
+      align-items: center; /* Centrerer elementer vertikalt */
+      padding: 15px;
+      width: 100%;
+  }
+
+  #searchInput {
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px 0 0 4px; /* Runde hjørner kun til venstre (toppen) af input-feltet */
+  }
+
+  #searchButton {
+      margin-left: -1px; /* Justering af marginen for at undgå overlapning og bevare den firkantede kant mellem input og knap */
+      padding: 10px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 0 4px 4px 0; /* Runde hjørner kun til højre (toppen) af knappen */
+      cursor: pointer;
+  }
+
+  #searchButton:hover {
+      background-color: #0056b3;
+  }

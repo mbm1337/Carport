@@ -41,6 +41,10 @@ public class Main {
        // app.get("/createuser", ctx -> UserController.createuser(ctx, connectionPool));
         app.post("/createuser", ctx -> UserController.createuser(ctx, connectionPool));
         app.get("/createuser", ctx -> ctx.render("createuser.html"));
+        //app.get("/carportone", ctx -> ctx.render("carportone.html"));
+        app.get("/carportone", ctx -> ShippingController.getShippingInfoByZip(ctx, connectionPool));
+        app.post("/carportone", ctx -> ShippingController.getShippingInfoByZip(ctx, connectionPool));
+
 
 
 
@@ -56,14 +60,10 @@ public class Main {
         app.get("/add_matreriel", ctx -> ctx.render("add_matreriel.html"));
         app.post("/add_matreriel", ctx -> AdminController.addMaterial(ctx, connectionPool));
         app.post("/delete_matreriel/{id}", ctx -> AdminController.deleteMaterial(ctx, connectionPool));
-        //app.get("/carportone", ctx -> ctx.render("carportone.html"));
-        app.get("/carportone", ctx -> ShippingController.getShippingInfoByZip(ctx, connectionPool));
-        app.post("/carportone", ctx -> ShippingController.getShippingInfoByZip(ctx, connectionPool));
-
         app.get("/adminCalc", ctx -> AdminController.getCalcMaterials(ctx, connectionPool));
-        app.post("/adminCalc", ctx -> AdminController.getCalcMaterials(ctx, connectionPool));
-        app.get("/adminCalc/{id}", ctx -> AdminController.getCalcMaterials(ctx, connectionPool));
-        app.post("/adminCalc/{id}", ctx -> AdminController.getCalcMaterials(ctx, connectionPool));
+        app.get("/adminCalc/{id}", ctx -> AdminController.getCalcMaterialsById(ctx, connectionPool));
+        app.post("/adminCalc/{id}", ctx -> AdminController.getCalcMaterialsById(ctx, connectionPool));
+        app.post("/adminCalc/{id}/edit", ctx -> AdminController.editCalcMaterials(ctx, connectionPool));
 
 
 

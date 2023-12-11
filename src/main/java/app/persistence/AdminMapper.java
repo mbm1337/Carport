@@ -266,8 +266,8 @@ public class AdminMapper {
 
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
-            ps.setInt(1, id);
-            ps.setInt(2, materialId);
+            ps.setInt(1, materialId);
+            ps.setInt(2, id);
 
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected != 1) {
@@ -276,5 +276,26 @@ public class AdminMapper {
         } catch (SQLException | DatabaseException e) {
             throw new DatabaseException("Fejl i opdatering af CalcMaterials");
         }
+    }
+
+    public static Admin getCalcMaterialsById(int id, ConnectionPool connectionPool) {
+
+            try (Connection connection = connectionPool.getConnection()) {
+                String sql = "SELECT * FROM public.carport_calculator WHERE id = ?";
+                try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                    preparedStatement.setInt(1, id);
+
+                    try (ResultSet rs = preparedStatement.executeQuery()) {
+                        while (rs.next()) {
+                            int materialsId = rs.getInt("material_id");
+                            String comments = rs.getString("description");
+                            return new Admin(id,materialsId, comments);
+                        }
+                    }
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            return null; // If material with the given ID is not found
     }
 }

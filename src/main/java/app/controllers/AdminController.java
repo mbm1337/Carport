@@ -113,18 +113,31 @@ public class AdminController {
         int id = Integer.parseInt(ctx.pathParam("id"));
         AdminMapper.deleteMaterial(id, connectionPool);
         ctx.redirect("/materials");
-        }
-    public static void getCalcMaterials(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+    }
+    public static void getCalcMaterials(Context ctx, ConnectionPool connectionPool) throws DatabaseException, SQLException {
 
                 List<Admin> calcMaterials = AdminMapper.getCalcMaterials(connectionPool);
                 ctx.attribute("calcMaterials", calcMaterials);
+                List<Material> materials = AdminMapper.getMaterials(connectionPool);
+                ctx.attribute("materials", materials);
                 ctx.render("admin_calculator.html");
+    }
+
+    public static void getCalcMaterialsById(Context ctx, ConnectionPool connectionPool) throws DatabaseException, SQLException {
+
+        int materialId = Integer.parseInt(ctx.pathParam("id"));
+        Admin calcMaterial = AdminMapper.getCalcMaterialsById(materialId, connectionPool);
+        ctx.attribute("calcMaterial", calcMaterial);
+        List<Material> materials = AdminMapper.getMaterials(connectionPool);
+        ctx.attribute("materials", materials);
+        ctx.render("admin_calculator_edit.html");
     }
 
     public static void editCalcMaterials(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
         int id = Integer.parseInt(ctx.pathParam("id"));
         int materialsId = Integer.parseInt(ctx.formParam("materialsId"));
         AdminMapper.updateCalcMaterials(id,materialsId, connectionPool);
+        ctx.redirect("/adminCalc");
 
         }
 

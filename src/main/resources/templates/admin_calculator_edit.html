@@ -23,20 +23,11 @@
 </div>
 
 <h1>Bestil Quick-Byg tilbud - carport med fladt tag</h1><br>
-<h3>
-    Med et specialudviklet computerprogram kan vi lynhurtigt beregne prisen og udskrive en skitsetegning på en carport indenfor vores standardprogram.
-    Tilbud og skitsetegning fremsendes med post hurtigst muligt.
-    Ved bestilling medfølger standardbyggevejledning.
-
-    Udfyld formularen omhyggeligt og klik på "Bestil tilbud".
-    Felter markeret med * SKAL udfyldes!</h3>
 
 
     <div class="container">
         <div id = 'calc-admin'>
-
-
-            <form method="post" th:action="@{'/adminCalc/' + ${admin.id} + '/edit'}" th:object="" >
+            <form method="post" th:action="@{'/adminCalc/' + ${calcMaterial.id} + '/edit'}"  >
             <table>
                 <thead>
                 <tr>
@@ -46,20 +37,44 @@
                 </thead>
                 <tbody>
                 <tr>
-                    <td><input type="text" name="materialId" th:value="admin.materialId"></td>
-                    <td th:text="${admin.comments}"></td>
+                    <td><input type="text" name="materialsId" th:value="${calcMaterial.materialsId}"></td>
+                    <td th:text="${calcMaterial.comments}"></td>
                 </tr>
             </table>
-
-
-                <button type="submit" value="Gem ændringer" </button>
+                <input type="submit" value="Gem ændringer">
             </form>
-
-
 
         </div>
     </div>
-
+    <div id="page-container">
+        <h1>Materials</h1>
+        <table id="sortable-table">
+            <thead>
+            <tr>
+            <th>ID</th>
+            <th>Product Name</th>
+            <th>Product Type</th>
+            <th>Product Size</th>
+            <th>Unit</th>
+            <th>Quantity in Stock</th>
+            <th>sales Price</th>
+            <th>Purchase Price</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="material : ${#ctx.materials}">
+            <td th:text="${material.id}"></td>
+            <td th:text="${material.productName}"></td>
+            <td th:text="${material.productType}"></td>
+            <td th:text="${material.productSize}"></td>
+            <td th:text="${material.unit}"></td>
+            <td th:text="${material.quantityInStock}"></td>
+            <td th:text="${material.buyPrice}"></td>
+            <td th:text="${material.purchasePrice}"></td>
+        </tr>
+        </tbody>
+    </table>
+    </div>
 
     <footer>
         <section id="footer">
@@ -80,7 +95,9 @@
                 </tr>
             </table>
         </section>
+
     </footer>
+
 
 </body>
 

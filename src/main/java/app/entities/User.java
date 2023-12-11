@@ -5,14 +5,14 @@ public class User {
     private int id;
     private String firstName;
     private String lastName;
-    private int phoneNumber;
+    private String phoneNumber;
     private String email;
     private int zip;
     private String address;
     private boolean admin;
     private String password;
 
-    public User(int id, String firstName, String lastName, int phoneNumber, String email, int zip, String address, boolean admin, String password) {
+    public User(int id, String firstName, String lastName, String phoneNumber, String email, int zip, String address, boolean admin, String password) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -23,6 +23,18 @@ public class User {
         this.admin = admin;
         this.password = password;
     }
+
+    public User(int id, String email, String firstName, String lastName, String phoneNumber, int zip, String address) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.zip = zip;
+        this.address = address;
+
+    }
+
 
     public User(int id, String email) {
         this.id = id;
@@ -37,6 +49,8 @@ public class User {
         this.admin = admin;
     }
 
+
+
     public int getId() {
         return id;
     }
@@ -49,7 +63,7 @@ public class User {
         return lastName;
     }
 
-    public int getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 

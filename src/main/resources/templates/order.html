@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fog</title>
+    <link rel="stylesheet" href="../public/stylesheet.css">
+</head>
+
+<body>
+<div>
+    <header>
+        <a href="index.html" class="logo">Fog</a>
+
+        <nav class="navigation">
+            <a href="/">Bolig & Design</a>
+            <a href="/">Byggermaterialer</a>
+            <a href="/">Kontakt</a>
+        </nav>
+    </header>
+</div>
+
+<h1>Bestil Quick-Byg tilbud - carport med fladt tag</h1><br>
+<h3>
+    Med et specialudviklet computerprogram kan vi lynhurtigt beregne prisen og udskrive en skitsetegning på en carport indenfor vores standardprogram.
+    Tilbud og skitsetegning fremsendes med post hurtigst muligt.
+    Ved bestilling medfølger standardbyggevejledning.
+
+    Udfyld formularen omhyggeligt og klik på "Bestil tilbud".
+    Felter markeret med * SKAL udfyldes!</h3>
+<div id = "content ">
+
+    <div class="indhold-box" id="content">
+        <h1>Brugere og Ordrer</h1>
+
+        <table id="sortable-table">
+
+            <thead>
+            <tr>
+                <th onclick="sortTable(0)">ID</th>
+                <th onclick="sortTable(1)">Email</th>
+                <th onclick="sortTable(2)">Balance</th>
+                <th onclick="sortTable(3)">Ordre Nr</th>
+                <th onclick="sortTable(4)">Ordre Status</th>
+                <th onclick="sortTable(5)">Ordre Pris</th>
+                <th onclick="sortTable(6)">Handling</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="entry : ${usersAndOrders}">
+                <td th:text="${entry.key.id}"></td>
+                <td th:text="${entry.key.firstName}"></td>
+                <td th:text="${entry.key.lastName}"></td>
+                <td th:text="${entry.key.phoneNumber}"></td>
+                <td th:text="${entry.key.address}"></td>
+                <td th:text="${entry.key.zip}"></td>
+
+                <td>
+                    <table>
+                        <tr th:each="order : ${entry.value}">
+                            <td th:text="${order.orderNr}"></td>
+                        </tr>
+                    </table>
+                </td>
+                <td>
+                    <table>
+                        <tr th:each="order : ${entry.value}">
+                            <td th:text="${order.status}"></td>
+                        </tr>
+                    </table>
+                </td>
+                <td>
+                    <table>
+                        <tr th:each="order : ${entry.value}">
+                            <td th:text="${order.price}"></td>
+                        </tr>
+                    </table>
+                </td>
+                <td>
+                    <form th:each="order : ${entry.value}" th:object="${order}" method="post" th:action="@{'/tilbud/' + ${order.orderNr}}">
+                        <button type="submit">Se order</button>
+                    </form>
+
+            </tr>
+            </tbody>
+        </table>
+
+
+    </div>
+
+
+<footer>
+    <section id="footer">
+        <table>
+            <tr>
+                <td>Kundeservice</td>
+                <td>Aktuelt</td>
+                <td>Om Fog</td>
+                <td>Om Fog</td>
+                <td>Med omtanke </td>
+            </tr>
+            <tr>
+                <td>16</td>
+                <td>14</td>
+                <td>10</td>
+                <td>Om Fog</td>
+                <td>Med omtanke </td>
+            </tr>
+        </table>
+    </section>
+</footer>
+</body>
+</html>

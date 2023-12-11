@@ -12,6 +12,7 @@ public class Carport {
     private String roof;
 
 
+
     public Carport(int width, int length, int height) {
         this.id = counter++;
         this.width = width;

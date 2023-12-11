@@ -1,6 +1,8 @@
 package app;
 
 import app.config.ThymeleafConfig;
+import app.controllers.AdminController;
+import app.controllers.ShippingController;
 import app.controllers.CarportController;
 import app.controllers.OrderController;
 import app.controllers.UserController;
@@ -20,15 +22,23 @@ public class Main {
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance(USER, PASSWORD, URL, DB);
 
     public static void main(String[] args)  {
-// Initializing Javalin and Jetty webserver
+        // Initializing Javalin and Jetty webserver
 
         Javalin app = Javalin.create(config -> {
             config.staticFiles.add("/public");
             JavalinThymeleaf.init(ThymeleafConfig.templateEngine());
-        }).start(7079);
+
+        }).start(7070);
 
         // Routing
         app.get("/", ctx -> CarportController.carportDropdowns(ctx, connectionPool));
+        app.post("/carport", ctx -> CarportController.makeCarport(ctx, connectionPool));
+
+        app.get("/ordre", ctx -> AdminController.getUsersAndOrders(ctx, connectionPool));
+        app.post("/tilbud/{ordernumber}", ctx -> AdminController.getOrderDetails(ctx, connectionPool));
+        app.get("/tilbud/{ordernumber}", ctx -> AdminController.getOrderDetails(ctx, connectionPool));
+        app.post("/updateUser", ctx -> AdminController.editBalance(ctx, connectionPool));
+        app.get("/materials", ctx -> AdminController.getMaterial(ctx, connectionPool));
         app.post("/adresse",ctx-> ZipController.cityAndZip(ctx,connectionPool));
         app.post("/status", ctx -> OrderController.getStatus(ctx, connectionPool));
         app.post("/login", ctx -> UserController.login(ctx, connectionPool));
@@ -43,14 +53,9 @@ public class Main {
 
 
 
-
-
-
-
-
-
-
-
+        //app.get("/carportone", ctx -> ctx.render("carportone.html"));
+        app.get("/carportone", ctx -> ShippingController.getShippingInfoByZip(ctx, connectionPool));
+        app.post("/carportone", ctx -> ShippingController.getShippingInfoByZip(ctx, connectionPool));
 
 
 

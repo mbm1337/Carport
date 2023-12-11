@@ -8,42 +8,49 @@
 <div id="page-container">
     <div id="page-content">
         <div th:replace="~{fragments :: header('materials')}"></div>
-        <table id="sortable-table">
-            <form method="post" th:action="@{'/updatematerials/' + ${material.id}}" th:object="${materials}">
-                <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Product Name</th>
-                    <th>Product Type</th>
-                    <th>Product Size</th>
-                    <th>Unit</th>
-                    <th>Quantity in Stock</th>
-                    <th>sales Price</th>
-                    <th>Purchase Price</th>
-                </tr>
-                </thead>
+        <form method="post" th:action="@{'/updatematerials/' + ${material.id}}" th:object="${materials}" >
+            <table  class="indhold-box">
+
                 <tbody>
-                    <tr>
-                        <td><input type="text" name="id" th:value="${material.id}" readonly="readonly" /></td>
-                        <td><input type="text" name="productName" th:value="${material.productName}" /></td>
-                        <td><input type="text" name="productType" th:value="${material.productType}" /></td>
-                        <td><input type="text" name="productSize" th:value="${material.productSize}" /></td>
-                        <td><input type="text" name="unit" th:value="${material.unit}" /></td>
-                        <td><input type="text" name="quantityInStock" th:value="${material.quantityInStock}" /></td>
-                        <td><input type="text" name="buyPrice" th:value="${material.buyPrice}" /></td>
-                        <td><input type="text" name="purchasePrice" th:value="${material.purchasePrice}" /></td>
-                    </tr>
-                    </td>
-                    </tr>
+                <tr>
+                    <td>ID:</td>
+                    <td><input type="text" name="id" th:value="${material.id}" readonly="readonly" /></td>
+                </tr>
+                <tr>
+                    <td>Product Name:</td>
+                    <td><input type="text" name="productName" th:value="${material.productName}" /></td>
+                </tr>
+                <tr>
+                    <td>Product Type:</td>
+                    <td><input type="text" name="productType" th:value="${material.productType}" /></td>
+                </tr>
+                <tr>
+                    <td>Product Size:</td>
+                    <td><input type="text" name="productSize" th:value="${material.productSize}" /></td>
+                </tr>
+                <tr>
+                    <td>Unit:</td>
+                    <td><input type="text" name="unit" th:value="${material.unit}" /></td>
+                </tr>
+                <tr>
+                    <td>Quantity in Stock:</td>
+                    <td><input type="text" name="quantityInStock" th:value="${material.quantityInStock}" /></td>
+                </tr>
+                <tr>
+                    <td>Sales Price:</td>
+                    <td><input type="text" name="buyPrice" th:value="${material.buyPrice}" /></td>
+                </tr>
+                <tr>
+                    <td>Purchase Price:</td>
+                    <td><input type="text" name="purchasePrice" th:value="${material.purchasePrice}" /></td>
+                </tr>
                 </tbody>
+            </table>
 
-                <input type="submit" value="Gem ændringer">
-            </form>
+            <button type="submit">Gem ændringer</button>
+            <a href="/materials"><button type="button">Tilbage</button></a>
+        </form>
 
-
-
-        </table>
-        <a href="/materials"><button type="button">Tilbage</button></a>
 
 
         <div th:replace="~{fragments :: footer}"></div>

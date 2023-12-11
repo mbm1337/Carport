@@ -1,5 +1,6 @@
 package app.persistence;
 
+import app.entities.CarportLength;
 import app.exceptions.DatabaseException;
 
 import java.sql.Connection;
@@ -30,16 +31,17 @@ public class CarportMapper {
     }
 
 
-    public static List<Integer> getCarportLength(ConnectionPool connectionPool) throws DatabaseException {
-        List<Integer> carportLength = new ArrayList<>();
+    public static List<CarportLength> getCarportLength(ConnectionPool connectionPool) throws DatabaseException {
+        List<CarportLength> carportLength = new ArrayList<>();
         String sql = "SELECT * FROM carport_lengths";
 
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement ps = connection.prepareStatement(sql)) {
                 ResultSet rs = ps.executeQuery();
                 while (rs.next()) {
+                    int id = rs.getInt("id");
                     int length = rs.getInt("length");
-                    carportLength.add(length);
+                    carportLength.add(new CarportLength(id, length));
                 }
             }
         } catch (SQLException e) {

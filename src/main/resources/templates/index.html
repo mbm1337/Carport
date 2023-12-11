@@ -45,8 +45,8 @@
 
         <label for="carportLength">Carport Længde: *</label> <br>
         <select id="carportLength" name="carportLength">
-            <option th:each="carportLangth: ${#ctx.carportLength}" th:value="${carportLangth}"
-                    th:text="${carportLangth}"></option>
+            <option th:each="carportLangth: ${#ctx.carportLength}" th:value="${carportLangth.length}"
+                    th:text="${carportLangth.length}"></option>
         </select> <br>
 
     <label for="roof">Carport Tag: *</label> <br>

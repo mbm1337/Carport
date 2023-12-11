@@ -1,6 +1,7 @@
 package app.controllers;
 
 import app.entities.Carport;
+import app.entities.CarportLength;
 import app.entities.Shed;
 import app.exceptions.DatabaseException;
 import app.persistence.CarportMapper;
@@ -18,7 +19,7 @@ public class CarportController {
         List<Integer> carpotWidth = CarportMapper.getCarportWidth(connectionPool);
         ctx.attribute("carportWidth", carpotWidth);
 
-        List<Integer> carportLength = CarportMapper.getCarportLength(connectionPool);
+        List<CarportLength> carportLength = CarportMapper.getCarportLength(connectionPool);
         ctx.attribute("carportLength", carportLength);
 
         List<Integer> shedWidth = CarportMapper.getShedWidth(connectionPool);

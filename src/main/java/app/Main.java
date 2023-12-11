@@ -64,6 +64,8 @@ public class Main {
         app.get("/adminCalc/{id}", ctx -> AdminController.getCalcMaterialsById(ctx, connectionPool));
         app.post("/adminCalc/{id}", ctx -> AdminController.getCalcMaterialsById(ctx, connectionPool));
         app.post("/adminCalc/{id}/edit", ctx -> AdminController.editCalcMaterials(ctx, connectionPool));
+        app.get("/carport_size", ctx -> AdminController.getDimensions(ctx, connectionPool));
+        app.post("/add_length", ctx -> AdminController.add(ctx, connectionPool));
 
 
 

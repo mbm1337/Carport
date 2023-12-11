@@ -44,7 +44,7 @@ public class Main {
         app.get("/login", ctx -> ctx.render("login.html"));
        // app.get("/createuser", ctx -> UserController.createuser(ctx, connectionPool));
         app.post("/createuser", ctx -> UserController.createuser(ctx, connectionPool));
-       app.get("/createuser", ctx -> ctx.render("createuser.html"));
+        app.get("/createuser", ctx -> ctx.render("createuser.html"));
 
 
 
@@ -54,7 +54,11 @@ public class Main {
         app.post("/carportone", ctx -> ShippingController.getShippingInfoByZip(ctx, connectionPool));
 
         app.get("/adminCalc", ctx -> AdminController.getCalcMaterials(ctx, connectionPool));
-        //todo: app.post("/adminCalc/{id}", ctx -> AdminController.editCalcMaterials(ctx, connectionPool));
+        app.post("/adminCalc", ctx -> AdminController.getCalcMaterials(ctx, connectionPool));
+        app.get("/adminCalc/{id}", ctx -> AdminController.getCalcMaterials(ctx, connectionPool));
+        app.post("/adminCalc/{id}", ctx -> AdminController.getCalcMaterials(ctx, connectionPool));
+
+
 
 
 

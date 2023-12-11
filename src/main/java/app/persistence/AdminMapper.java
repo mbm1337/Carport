@@ -67,7 +67,7 @@ public class AdminMapper {
         try (Connection connection = connectionPool.getConnection()) {
             String sql = "SELECT " +
                     "u.id AS user_id, u.forname, u.aftername, u.email, u.zip, u.address, u.admin, u.password, u.phone, " +
-                    "o.ordernumber, o.orderdate, o.status, o.comments, o.customernumber, o.user_id AS order_user_id, " +
+                    "o.ordernumber, o.orderdate, o.status, o.comments, o.user_id AS order_user_id, " +
                     "o.price AS order_price, od.materials_id, od.quantityordered, od.price AS detail_price " +
                     "FROM \"user\" u " +
                     "JOIN orders o ON u.id = o.user_id " +
@@ -84,7 +84,6 @@ public class AdminMapper {
                         admin.setOrderDate(resultSet.getString("orderdate"));
                         admin.setStatus(resultSet.getString("status"));
                         admin.setComments(resultSet.getString("comments"));
-                        admin.setCustomerNumber(resultSet.getInt("customernumber"));
                         admin.setUserId(resultSet.getInt("user_id"));
                         admin.setOrderPrice(resultSet.getDouble("order_price"));
                         admin.setMaterialsId(resultSet.getInt("materials_id"));
@@ -166,6 +165,20 @@ public class AdminMapper {
     }
 
 
+    public static void updateCalcMaterials(int id, int materialId, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "UPDATE carport_calculator SET material_id = ? WHERE id = ?";
 
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            ps.setInt(2, materialId);
 
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected != 1) {
+                throw new DatabaseException("Fejl i opdatering af CalcMaterials");
+            }
+        } catch (SQLException | DatabaseException e) {
+            throw new DatabaseException("Fejl i opdatering af CalcMaterials");
+        }
+    }
 }

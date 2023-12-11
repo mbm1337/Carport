@@ -39,6 +39,10 @@ public class Admin {
 
     // Tilføj getters og setters efter behov
 
+    public int getId() {
+        return id;
+    }
+
     public int getOrderId() {
         return orderId;
     }

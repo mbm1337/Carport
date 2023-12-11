@@ -5,6 +5,7 @@ import app.controllers.CarportController;
 import app.controllers.OrderController;
 import app.controllers.UserController;
 import app.controllers.ZipController;
+import app.entities.Carport;
 import app.persistence.ConnectionPool;
 import app.persistence.OrderMapper;
 import io.javalin.Javalin;
@@ -37,6 +38,8 @@ public class Main {
        app.get("/createuser", ctx -> ctx.render("createuser.html"));
 
 
+               Carport carport = new Carport(240,800,100);
+               carport.setLength(800);
 
 
 

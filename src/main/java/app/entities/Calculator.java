@@ -5,33 +5,77 @@ import java.util.List;
 
 public class Calculator {
     Carport carport;
-    List<Materials> material = new ArrayList<>();
+    List<Integer> material = new ArrayList<Integer>();
 
 
-    public int calculateArea() {
-        return carport.getLength() * carport.getWidth();
+    public int calculateArea(int width, int length) {
+        return width* length;
 
 
     }
 
-    public int NumberOfPosts() {
-        int distanceBetweenposts = 240;
-        int post = 0;
-
-        if (carport.getLength()-15*2 <= distanceBetweenposts) {
-            post = 2 * 2;
-        } else if (carport.getLength()-15*2 >= 240 && carport.getLength() <= 500) {
-            post = 3 * 3;
+    public int numberOfPosts(int carportlength) {
+        int distanceBetweenPosts = 240;
+        int totalpost = 0;
+        if (carportlength - 30 <= 600) {
+            totalpost = 2 * 2;
+        } else if (carportlength- 30 < 600 && carportlength <= 800) {
+            totalpost = 3 * 2;
         } else {
-            post = 4*4;
-        }
+            if (carportlength - 30 < 800) {
+                totalpost = (int) Math.ceil(carportlength/ distanceBetweenPosts );
+                totalpost= totalpost *2;
 
-        return post;
+
+                }
+            }
+
+        return totalpost;
+
+
+    }
+    public static int numberOfraft(int carportLength, int carportWidth) {
+        //spær
+
+        int numberOfRafts = (int) Math.ceil((double) carportLength / 55);
+
+
+         if (carportWidth > 600) {
+             numberOfRafts = numberOfRafts*2;
+         }
+
+        return numberOfRafts;
     }
 
-}
+
+
+    public int beamAmount(int carportLength) { //rem
+        int totalBeam =0;
+        if (carportLength <= 600) {
+             totalBeam = 2;
+        }else{
+            totalBeam =2*2;
+        }
+        return totalBeam;
+    }
+    public int numberOfScrews (){
+        return numberOfScrews();
+    }
+    public void calculateMaterialsList(int carportLength, int carportWidth) {
+
+        int numberOfPosts = numberOfPosts(carportLength);
+        material.add(numberOfPosts);
+
+        int numberOfRafts = numberOfraft(carportLength, carportWidth);
+        material.add(numberOfRafts);
+
+        int numberOfBeams = beamAmount(carportLength);
+
+        material.add(numberOfBeams);
+
+
+    }
 
 
 
-
-
+    }

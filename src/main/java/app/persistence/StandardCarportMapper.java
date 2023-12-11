@@ -13,7 +13,7 @@ import java.util.List;
 public class StandardCarportMapper {
 
     public static StandardCarport getCarportById(int id, ConnectionPool connectionPool) throws DatabaseException {
-        StandardCarport carport = null;
+        StandardCarport standardCarport = null;
 
         String sql = "SELECT merchandiser, productname, price, description " +
                 "FROM carports " +
@@ -29,14 +29,14 @@ public class StandardCarportMapper {
                     int price = rs.getInt("price");
                     String description = rs.getString("description");
 
-                    carport = new StandardCarport(id, merchandiser, productName, price, description);
+                    standardCarport = new StandardCarport(id, merchandiser, productName, price, description);
                 }
             }
         } catch (SQLException e) {
             throw new DatabaseException("Couldn't fetch the carport from the database by ID: " + e);
         }
 
-        return carport;
+        return standardCarport;
     }
 }
 

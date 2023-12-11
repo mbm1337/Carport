@@ -8,20 +8,21 @@
 </head>
 
 
-
+<table>
 <tbody>
 <img class="carports_img" src="/public/images/carport_1.jpg" alt="Carport 1">
 
-<form id="info" method="post">
+<form id="info" method="get">
 
     <tr th:each="standardCarport : ${#ctx.session.containsKey(standardCarport)}">
-        <td th:text="${#ctx.session.merchandiser}"></td>
+        <td th:text="${#ctx.session.merchandiser}">test</td>
         <td th:text="${#ctx.session.productName}"></td>
         <td th:text="${#ctx.session.price}"></td>
         <td th:text="${#ctx.session.description}"></td>
     </tr>
 </form>
 
+// Shipping info
 <form id="zip" method="post">
 
     <tr>
@@ -38,5 +39,6 @@
 </tr>
 </form>
 </tbody>
+    </table>   
 
 </html>

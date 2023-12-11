@@ -33,11 +33,7 @@ public class Main {
         app.get("/", ctx -> CarportController.carportDropdowns(ctx, connectionPool));
         app.post("/carport", ctx -> CarportController.makeCarport(ctx, connectionPool));
 
-        app.get("/ordre", ctx -> AdminController.getUsersAndOrders(ctx, connectionPool));
-        app.post("/tilbud/{ordernumber}", ctx -> AdminController.getOrderDetails(ctx, connectionPool));
-        app.get("/tilbud/{ordernumber}", ctx -> AdminController.getOrderDetails(ctx, connectionPool));
-        app.post("/updateUser", ctx -> AdminController.editBalance(ctx, connectionPool));
-        app.get("/materials", ctx -> AdminController.getMaterial(ctx, connectionPool));
+
         app.post("/adresse",ctx-> ZipController.cityAndZip(ctx,connectionPool));
         app.post("/status", ctx -> OrderController.getStatus(ctx, connectionPool));
         app.post("/login", ctx -> UserController.login(ctx, connectionPool));
@@ -48,7 +44,18 @@ public class Main {
 
 
 
+        //admin funtioner
 
+        app.post("/updateUser", ctx -> AdminController.editBalance(ctx, connectionPool));
+        app.post("/edit_matreriel/{id}", ctx -> AdminController.editMaterial(ctx, connectionPool));
+        app.get("/ordre", ctx -> AdminController.getUsersAndOrders(ctx, connectionPool));
+        app.post("/tilbud/{ordernumber}", ctx -> AdminController.getOrderDetails(ctx, connectionPool));
+        app.get("/tilbud/{ordernumber}", ctx -> AdminController.getOrderDetails(ctx, connectionPool));
+        app.get("/materials", ctx -> AdminController.getMaterial(ctx, connectionPool));
+        app.post("/updatematerials/{id}", ctx -> AdminController.updateMaterial(ctx, connectionPool));
+        app.get("/add_matreriel", ctx -> ctx.render("add_matreriel.html"));
+        app.post("/add_matreriel", ctx -> AdminController.addMaterial(ctx, connectionPool));
+        app.post("/delete_matreriel/{id}", ctx -> AdminController.deleteMaterial(ctx, connectionPool));
         //app.get("/carportone", ctx -> ctx.render("carportone.html"));
         app.get("/carportone", ctx -> ShippingController.getShippingInfoByZip(ctx, connectionPool));
         app.post("/carportone", ctx -> ShippingController.getShippingInfoByZip(ctx, connectionPool));
@@ -57,7 +64,6 @@ public class Main {
         app.post("/adminCalc", ctx -> AdminController.getCalcMaterials(ctx, connectionPool));
         app.get("/adminCalc/{id}", ctx -> AdminController.getCalcMaterials(ctx, connectionPool));
         app.post("/adminCalc/{id}", ctx -> AdminController.getCalcMaterials(ctx, connectionPool));
-
 
 
 

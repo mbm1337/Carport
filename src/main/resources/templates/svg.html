@@ -1,32 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Carport</title>
-</head>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<div th:replace="~{fragments :: head('materials')}"></div>
+
 <body>
-<!-- Direkte indlejring af SVG-kode -->
-<svg xmlns="http://www.w3.org/2000/svg">
-  <!-- Tegn stolpe 1 -->
-  <rect x="50" y="50" width="10" height="10" style="fill:none;"/>
 
-  <!-- Tegn stolpe 2 -->
-  <rect x="310" y="50" width="10" height="10" style="fill:none;"/>
+<div id="page-container">
+  <div id="page-content">
+    <div th:replace="~{fragments :: header('materials')}"></div>
+    <div class="indhold-box" id="content">
+      <svg th:utext="${svgContent}" width="1024" height=800 viewBox="0 0 1024 800"></svg>
 
-  <!-- Tegn stolpe 3 -->
-  <rect x="530" y="50" width="10" height="10" style="fill:none;"/>
 
-  <!-- Tegn stolpe 4 -->
-  <rect x="50" y="250" width="10" height="10" style="fill:none;"/>
-
-  <!-- Tegn stolpe 5 -->
-  <rect x="290" y="250" width="10" height="10" style="fill:none;"/>
-
-  <!-- Tegn stolpe 6 -->
-  <rect x="530" y="250" width="10" height="10" style="fill:none;"/>
-</svg>
-
+      <div th:replace="~{fragments :: footer}"></div>
+    </div>
+  </div>
+</div>
 </body>
 </html>

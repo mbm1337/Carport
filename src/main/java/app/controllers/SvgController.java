@@ -1,6 +1,6 @@
 package app.controllers;
 
-import app.util.SvgGenerator;
+import app.util.CarportSvgGenerator;
 import io.javalin.http.Context;
 import org.apache.batik.svggen.SVGGraphics2DIOException;
 
@@ -9,13 +9,16 @@ import java.util.Map;
 
 public class SvgController {
     public static void getSvg(Context ctx) throws SVGGraphics2DIOException {
-        String svgContent = SvgGenerator.generateSvg();
+        double length = 400;
+        double width = 200;
 
-        // Opret et map med variabler til Thymeleaf-template
+        String svgContent = CarportSvgGenerator.generateSvg(length, width);
+
+
         Map<String, Object> model = new HashMap<>();
         model.put("svgContent", svgContent);
 
-        // Brug det oprettede map til at sende variabler til Thymeleaf-template
-        ctx.render("svg.html", model);
+
+        ctx.render("/svg.html", model);
     }
 }

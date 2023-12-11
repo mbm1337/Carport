@@ -13,28 +13,19 @@ import java.util.List;
 public class MaterialMapper {
 
 
-
-
-  /*  public static void getprice(int id, ConnectionPool connectionPool) {
-        List<Order> orders = new ArrayList<>();
+    public static void getPrice(Materials material, int id, ConnectionPool connectionPool) {
         try (Connection connection = connectionPool.getConnection()) {
-            String sql = "SELECT price FROM \"materials\" WHERE id = ?";
-            PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setInt(1, id);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                int orderNr = rs.getInt("ordernumber");
-                int userId = rs.getInt("user_id");
-                String status = rs.getString("status");
-                int price = rs.getInt("price");
-                Order order = new Order(userId, status, price);
-                orders.add(order);
+            String sql = "SELECT sellprice FROM materials WHERE id = ?";
+            try (PreparedStatement ps = connection.prepareStatement(sql)) {
+                ps.setInt(1, id);
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (rs.next()) {
+                        int price = rs.getInt("sellprice");
+                    }
+                }
             }
-            return orders;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Error getting material price: " + e.getMessage(), e);
         }
     }
-
-   */
 }

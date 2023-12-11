@@ -481,6 +481,9 @@ form {
         #sortable-table td:nth-of-type(8):before { content: "Purchase Price:"; }
         #sortable-table td:nth-of-type(9):before { content: "Actions:"; }
 }
+
+
+
 #page-content {
         background-color: #FFFFFF;
         margin: 0 auto;
@@ -488,6 +491,15 @@ form {
         width: 100%;
 
 }
+#page-container {
+        text-align: center;
+}
+
+.indhold-box {
+        border-collapse: collapse;
+        width: 100%;
+}
+
 
 
 .carports_img {

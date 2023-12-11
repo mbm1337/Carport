@@ -84,7 +84,6 @@ public class AdminMapper {
                         admin.setOrderDate(resultSet.getString("orderdate"));
                         admin.setStatus(resultSet.getString("status"));
                         admin.setComments(resultSet.getString("comments"));
-                        admin.setCustomerNumber(resultSet.getInt("customernumber"));
                         admin.setUserId(resultSet.getInt("user_id"));
                         admin.setOrderPrice(resultSet.getDouble("order_price"));
                         admin.setMaterialsId(resultSet.getInt("materials_id"));
@@ -120,7 +119,7 @@ public class AdminMapper {
         }
     }
 
-    public static List<Material> getMaterials( ConnectionPool connectionPool) {
+    public static List<Material> getMaterials( ConnectionPool connectionPool) throws SQLException {
         List<Material> materials = new ArrayList<>();
         try (Connection connection = connectionPool.getConnection()) {
             String sql = "SELECT * FROM \"materials\"";
@@ -145,4 +144,100 @@ public class AdminMapper {
             throw new RuntimeException(e);
         }
     }
+
+    public static Material getMaterialById(int id, ConnectionPool connectionPool) throws SQLException {
+        try (Connection connection = connectionPool.getConnection()) {
+            String sql = "SELECT * FROM \"materials\" WHERE id = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                preparedStatement.setInt(1, id);
+
+                try (ResultSet rs = preparedStatement.executeQuery()) {
+                    while (rs.next()) {
+                        String productName = rs.getString("productname");
+                        String productType = rs.getString("producttype");
+                        String productSize = rs.getString("productsize");
+                        String unit = rs.getString("unit");
+                        short quantityInStock = rs.getShort("quantityinstock");
+                        double sellPrice = rs.getDouble("sellprice");
+                        double purchasePrice = rs.getDouble("purchaseprice");
+
+                        return new Material(id, productName, productType, productSize,
+                                unit, quantityInStock, sellPrice, purchasePrice);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null; // If material with the given ID is not found
+    }
+
+    public static Material updateMaterial(Material material, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "UPDATE \"materials\" SET productname = ?, producttype = ?, productsize = ?, unit = ?, quantityinstock = ?, sellprice = ?, purchaseprice = ? WHERE id = ?";
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, material.getProductName());
+            ps.setString(2, material.getProductType());
+            ps.setString(3, material.getProductSize());
+            ps.setString(4, material.getUnit());
+            ps.setShort(5, material.getQuantityInStock());
+            ps.setDouble(6, material.getBuyPrice());
+            ps.setDouble(7, material.getPurchasePrice());
+            ps.setInt(8, material.getId());
+
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected != 1) {
+                throw new DatabaseException("Fejl i opdatering af material");
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Fejl i opdatering af material");
+        }
+
+        return material;
+    }
+
+
+    public static Material addMaterial(Material material, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "INSERT INTO \"materials\" (productname, producttype, productsize, unit, quantityinstock, sellprice, purchaseprice) VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, material.getProductName());
+            ps.setString(2, material.getProductType());
+            ps.setString(3, material.getProductSize());
+            ps.setString(4, material.getUnit());
+            ps.setShort(5, material.getQuantityInStock());
+            ps.setDouble(6, material.getBuyPrice());
+            ps.setDouble(7, material.getPurchasePrice());
+
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected != 1) {
+                throw new DatabaseException("Fejl i opdatering af material");
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Fejl i opdatering af material");
+        }
+
+        return material;
+    }
+
+    public static Material deleteMaterial(int id, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "DELETE FROM \"materials\" WHERE id = ?";
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, id);
+
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected != 1) {
+                throw new DatabaseException("Fejl i sletning af material");
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Fejl i sletning af material");
+        }
+
+        return null;
+    }
+
 }

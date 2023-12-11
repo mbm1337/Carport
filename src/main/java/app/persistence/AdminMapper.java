@@ -67,7 +67,7 @@ public class AdminMapper {
         try (Connection connection = connectionPool.getConnection()) {
             String sql = "SELECT " +
                     "u.id AS user_id, u.forname, u.aftername, u.email, u.zip, u.address, u.admin, u.password, u.phone, " +
-                    "o.ordernumber, o.orderdate, o.status, o.comments, o.customernumber, o.user_id AS order_user_id, " +
+                    "o.ordernumber, o.orderdate, o.status, o.comments, o.user_id AS order_user_id, " +
                     "o.price AS order_price, od.materials_id, od.quantityordered, od.price AS detail_price " +
                     "FROM \"user\" u " +
                     "JOIN orders o ON u.id = o.user_id " +
@@ -240,4 +240,62 @@ public class AdminMapper {
         return null;
     }
 
+
+    public static List<Admin> getCalcMaterials(ConnectionPool connectionPool) {
+
+        List<Admin> calcMaterials = new ArrayList<>();
+        try (Connection connection = connectionPool.getConnection()) {
+            String sql = "SELECT * FROM public.carport_calculator";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                int materialsId = rs.getInt("material_id");
+                String comments = rs.getString("description");
+                calcMaterials.add(new Admin(id,materialsId, comments));
+            }
+            return calcMaterials;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    public static void updateCalcMaterials(int id, int materialId, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "UPDATE carport_calculator SET material_id = ? WHERE id = ?";
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, materialId);
+            ps.setInt(2, id);
+
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected != 1) {
+                throw new DatabaseException("Fejl i opdatering af CalcMaterials");
+            }
+        } catch (SQLException | DatabaseException e) {
+            throw new DatabaseException("Fejl i opdatering af CalcMaterials");
+        }
+    }
+
+    public static Admin getCalcMaterialsById(int id, ConnectionPool connectionPool) {
+
+            try (Connection connection = connectionPool.getConnection()) {
+                String sql = "SELECT * FROM public.carport_calculator WHERE id = ?";
+                try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                    preparedStatement.setInt(1, id);
+
+                    try (ResultSet rs = preparedStatement.executeQuery()) {
+                        while (rs.next()) {
+                            int materialsId = rs.getInt("material_id");
+                            String comments = rs.getString("description");
+                            return new Admin(id,materialsId, comments);
+                        }
+                    }
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            return null; // If material with the given ID is not found
+    }
 }

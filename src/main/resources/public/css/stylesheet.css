@@ -507,6 +507,18 @@ form {
         height: 200px;
 }
 
+.indhold-box {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+}
+
+.centered-box {
+        width: 10rem; /* or any size you want */
+        height: 5rem; /* or any size you want */
+        margin: 2rem; /* to add some space between the boxes */
+}
+
 /* Style for the contact section inside the footer */
 
 

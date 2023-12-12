@@ -13,7 +13,13 @@
 <div id="page-container">
     <h3>Carport Længder</h3>
     <table id="carportlength-table">
-      <a href="/add_carportlength"><button type="button">Tilføj ny længde</button></a>
+      <form method="post" action="/add_carportlength">
+        <div>
+          <label for="addCarportLength">Tilføj længde:</label>
+        </div>
+        <input type="text" id="addCarportLength" name="carportLength" />
+        <button type="submit">Tilføj</button>
+      </form>
       <thead>
       <tr>
         <th>ID</th>
@@ -36,7 +42,13 @@
 
   <h3>Carport Bredder</h3>
   <table id="carportwidth-table">
-    <a href="/add_carportlength"><button type="button">Tilføj ny længde</button></a>
+    <form method="post" action="/add_carportwidth">
+      <div>
+        <label for="addCarportWidth">Tilføj bredde:</label>
+      </div>
+      <input type="text" id="addCarportWidth" name="carportWidth" />
+      <button type="submit">Tilføj</button>
+    </form>
     <thead>
     <tr>
       <th>ID</th>
@@ -59,7 +71,13 @@
 
   <h3>Skur Længder</h3>
   <table id="shedtlength-table">
-    <a href="/add_shedlength"><button type="button">Tilføj ny længde</button></a>
+    <form method="post" action="/add_shedlength">
+      <div>
+        <label for="addCarportLength">Tilføj længde:</label>
+      </div>
+      <input type="text" id="addShedLength" name="shedLength" />
+      <button type="submit">Tilføj</button>
+    </form>
     <thead>
     <tr>
       <th>ID</th>
@@ -82,7 +100,13 @@
 
   <h3>Skur Bredder</h3>
   <table id="shedwidth-table">
-    <a href="/add_shedwidth"><button type="button">Tilføj ny længde</button></a>
+    <form method="post" action="/add_shedwidth">
+      <div>
+        <label for="addCarportWidth">Tilføj længde:</label>
+      </div>
+      <input type="text" id="addShedWidth" name="shedWidth" />
+      <button type="submit">Tilføj</button>
+    </form>
     <thead>
     <tr>
       <th>ID</th>
@@ -107,8 +131,6 @@
 
 </body>
 </html>
-
-
 
 
 <script>

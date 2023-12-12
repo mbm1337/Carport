@@ -142,6 +142,26 @@ public class AdminController {
         }
 
 
+    public static void getDimensions(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+        List<CarportLength> carportLength = CarportMapper.getCarportLength(connectionPool);
+        ctx.attribute("carportLength", carportLength);
+        List<CarportWidth> carportWidth = CarportMapper.getCarportWidth(connectionPool);
+        ctx.attribute("carportWidth", carportWidth);
+        List<ShedLength> shedLength = CarportMapper.getShedLength(connectionPool);
+        ctx.attribute("shedLength", shedLength);
+        List<ShedWidth> shedWidth = CarportMapper.getShedWidth(connectionPool);
+        ctx.attribute("shedWidth", shedWidth);
+        ctx.render("admin_carport_size.html");
+
+
+
+    }
+
+    public static void addCarportLength(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+        int length = Integer.parseInt(ctx.formParam("length"));
+        AdminMapper.addCarportLength(length, connectionPool);
+        ctx.redirect("/carport_size");
+    }
 }
 
 

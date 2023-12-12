@@ -1,7 +1,6 @@
 package app.controllers;
 
-import app.entities.Carport;
-import app.entities.Shed;
+import app.entities.*;
 import app.exceptions.DatabaseException;
 import app.persistence.CarportMapper;
 import app.persistence.ConnectionPool;
@@ -15,23 +14,23 @@ public class CarportController {
 
     public static void carportDropdowns(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
 
-        List<Integer> carpotWidth = CarportMapper.getCarportWidth(connectionPool);
+        List<CarportWidth> carpotWidth = CarportMapper.getCarportWidth(connectionPool);
         ctx.attribute("carportWidth", carpotWidth);
 
-        List<Integer> carportLength = CarportMapper.getCarportLength(connectionPool);
+        List<CarportLength> carportLength = CarportMapper.getCarportLength(connectionPool);
         ctx.attribute("carportLength", carportLength);
 
-        List<Integer> shedWidth = CarportMapper.getShedWidth(connectionPool);
+        List<ShedWidth> shedWidth = CarportMapper.getShedWidth(connectionPool);
         ctx.attribute("shedWidth", shedWidth);
 
-        List<Integer> shedLength = CarportMapper.getShedLength(connectionPool);
+        List<ShedLength> shedLength = CarportMapper.getShedLength(connectionPool);
         ctx.attribute("shedLength", shedLength);
 
         List<String> roof = CarportMapper.getRoof(connectionPool);
         ctx.attribute("roof", roof);
 
 
-        ctx.render("index.html");
+        ctx.render("carportbuilder.html");
 
     }
 

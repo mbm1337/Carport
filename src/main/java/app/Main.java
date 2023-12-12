@@ -68,13 +68,14 @@ public class Main {
 
         app.get("/carport_size", ctx -> AdminController.getDimensions(ctx, connectionPool));
         app.post("/add_carportlength", ctx -> AdminController.addCarportLength(ctx, connectionPool));
-        /*app.post("/add_carportwidth", ctx -> AdminController.addCarportWidth(ctx, connectionPool));
+        app.post("/add_carportwidth", ctx -> AdminController.addCarportWidth(ctx, connectionPool));
         app.post("/add_shedlength", ctx -> AdminController.addShedLength(ctx, connectionPool));
         app.post("/add_shedwidth", ctx -> AdminController.addShedWidth(ctx, connectionPool));
         app.post("/delete_carportlength/{id}", ctx -> AdminController.deleteCarportLength(ctx, connectionPool));
         app.post("/delete_carportwidth/{id}", ctx -> AdminController.deleteCarportWidth(ctx, connectionPool));
         app.post("/delete_shedlength/{id}", ctx -> AdminController.deleteShedLength(ctx, connectionPool));
-        app.post("/delete_shedwidth/{id}", ctx -> AdminController.deleteShedWidth(ctx, connectionPool));*/
+        app.post("/delete_shedwidth/{id}", ctx -> AdminController.deleteShedWidth(ctx, connectionPool));
+
 
 
 

@@ -10,19 +10,25 @@ public class UserController {
     public static void login(Context ctx, ConnectionPool connectionPool) {
         String name = ctx.formParam("username");
         String password = ctx.formParam("password");
+
         try {
-            boolean isadmin = UserMapper.login(name, password, connectionPool).isAdmin();
             User user = UserMapper.login(name, password, connectionPool);
+
+            // Set user attributes in the session
             ctx.sessionAttribute("currentUser", user);
             ctx.sessionAttribute("username", user.getFirstName());
-            ctx.sessionAttribute("status", user.isAdmin());
-            if (isadmin) {
-                ctx.redirect("/admin");
+
+            // Set a role attribute in the session
+            boolean isAdmin = user.isAdmin();
+            ctx.sessionAttribute("isAdmin", isAdmin);
+
+            // Set a flag to indicate if default user menu should be hidden
+            ctx.sessionAttribute("hideDefaultUserMenu", isAdmin);
+
+            if (isAdmin) {
+                ctx.redirect("/materials");
             } else {
-
                 ctx.redirect("/index");
-
-
             }
         } catch (DatabaseException e) {
             ctx.attribute("message", e.getMessage());

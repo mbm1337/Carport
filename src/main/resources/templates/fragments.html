@@ -18,16 +18,33 @@
 
       <div class="css-1qkimn e1nzw0084"> <a aria-label="Logo - Frontpage" class="css-recfet e1nzw00811" href="/"><img th:src="@{/img/fogLogo.bmp}" src="../public/img/fogLogo.bmp"/></a>
 
-
-
-
         <nav class="css-mxxhuv ep0bdet0">
           <ul class="css-3gkfpg ep0bdet1">
 
 
-            <li id="materialer" class="menu-item"><a data-content="Materialer" href="/materials" class="css-1gx9qgy eex3fzi0" aria-expanded="false">Materialer</a></li>
-            <li><a data-content="Ordre" href="/ordre" class="css-1gx9qgy eex3fzi0" aria-expanded="false">Ordre</a></li>
-            <li><a data-content="Bolig &amp; design" href="/bolig-design" class="css-1gx9qgy eex3fzi0" aria-expanded="false">Bolig &amp; design</a></li>
+
+            <!-- admin menu-->
+            <th:block th:if="${isAdmin}">
+              <li><a data-content="Materialer" href="/materials" class="css-1gx9qgy eex3fzi0" aria-expanded="false">Materialer</a></li>
+              <li><a data-content="Ordre" href="/ordre" class="css-1gx9qgy eex3fzi0" aria-expanded="false">Ordre</a></li>
+              <li><a data-content="Bolig &amp; design" href="/bolig-design" class="css-1gx9qgy eex3fzi0" aria-expanded="false">Bolig &amp; design</a></li>
+            </th:block>
+
+            <!-- user menu -->
+            <th:block th:if="${isUser and not isAdmin}">
+
+              <li><a data-content="Se ordre" href="/materials" class="css-1gx9qgy eex3fzi0" aria-expanded="false">Se ordre</a></li>
+              <li><a data-content="Konto" href="/ordre" class="css-1gx9qgy eex3fzi0" aria-expanded="false">Konto</a></li>
+              <li><a data-content="et eller andet" href="/bolig-design" class="css-1gx9qgy eex3fzi0" aria-expanded="false">et eller andet</a></li>
+            </th:block>
+
+            <!-- not logged in -->
+            <th:block th:unless="${isUser or isAdmin}">
+
+              <li><a data-content="Forside" href="/materials" class="css-1gx9qgy eex3fzi0" aria-expanded="false">Forside</a></li>
+              <li><a data-content="Bestil" href="/ordre" class="css-1gx9qgy eex3fzi0" aria-expanded="false">Bestil</a></li>
+              <li><a data-content="Hvem er vi &amp; design" href="/bolig-design" class="css-1gx9qgy eex3fzi0" aria-expanded="false">Hvem er vi &amp; design</a></li>
+            </th:block>
           </ul>
 
         </nav>
@@ -52,9 +69,36 @@
             <img  href="/"><img th:src="@{/img/fa-bars.png}" src="../public/img/fa-bars.png" alt="Menu">
             <div class="dropdown-content">
               <!-- Dropdown-indhold -->
-              <a data-content="Materialer" href="/materials">Materialer</a>
-              <a data-content="Ordre" href="/ordre">Ordre</a>
-              <a href="#">Link 3</a>
+
+
+
+              <th:block th:if="${isAdmin}">
+
+                <a data-content="Materialer" href="/materials">Materialer</a>
+                <a data-content="Ordre" href="/ordre">Ordre</a>
+                <a href="#">Link 3</a>
+              </th:block>
+
+              <!-- user menu -->
+              <th:block th:if="${isUser and not isAdmin}">
+                <a data-content="Konto" href="/materials">Konto</a>
+                <a data-content="Se ordre" href="/ordre">Se ordre</a>
+                <a href="#">et eller andet</a>
+
+              </th:block>
+
+              <!-- not logged in -->
+              <th:block th:unless="${isUser or isAdmin}">
+                <a data-content="Forside" href="/materials">Forside</a>
+                <a data-content="Bestil" href="/ordre">Bestil</a>
+
+
+              </th:block>
+
+
+
+
+
             </div>
           </button>
 

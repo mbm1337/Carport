@@ -4,7 +4,9 @@ import app.entities.City;
 import app.entities.Order;
 import app.exceptions.DatabaseException;
 
+
 import java.sql.*;
+
 
 public class OrderMapper {
     public static String getOrderStatusByUserId(int userId, ConnectionPool connectionPool) throws DatabaseException {
@@ -23,12 +25,12 @@ public class OrderMapper {
             }
         } catch (SQLException e) {
             String message = "Couldn't retrieve order status for user " + userId;
-            throw new DatabaseException(message, e);
+            throw new DatabaseException(message);
         }
 
         return status;
     }
-    public static void insertOrder( Order order,ConnectionPool connectionPool) throws DatabaseException {
+    public static void insertOrder(Order order, ConnectionPool connectionPool) throws DatabaseException {
         try (Connection connection = connectionPool.getConnection()) {
             String sql = "INSERT INTO \"orders\" (user_id, orderdate,status,comments,price,length,width) VALUES (?,?,?,?,?,?,?)";
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -36,7 +38,7 @@ public class OrderMapper {
             ps.setTimestamp(2, new Timestamp(System.currentTimeMillis()));
             ps.setString(3, order.getStatus());
             ps.setString(4, order.getComment());
-            ps.setInt(5, order.getPrice());
+            ps.setDouble(5, order.getPrice());
             ps.setInt(6,order.getLength());
             ps.setInt(7, order.getWidth());
 

@@ -1,27 +1,29 @@
 package app.persistence;
 
+import app.entities.*;
 import app.exceptions.DatabaseException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class CarportMapper {
 
-    public static List<Integer> getCarportWidth(ConnectionPool connectionPool) throws DatabaseException {
-        List<Integer> carportWidth = new ArrayList<>();
-        String sql = "SELECT * FROM carport_widths";
+    public static List<CarportWidth> getCarportWidth(ConnectionPool connectionPool) throws DatabaseException {
+        List<CarportWidth> carportWidth = new ArrayList<>();
+        String sql = "SELECT * FROM carport_width";
 
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement ps = connection.prepareStatement(sql)) {
                 ResultSet rs = ps.executeQuery();
                 while (rs.next()) {
+                    int id = rs.getInt("id");
                     int width = rs.getInt("width");
-                    carportWidth.add(width);
+                    carportWidth.add(new CarportWidth(id, width));
                 }
+                carportWidth.sort(Comparator.comparing(CarportWidth::getWidth));
             }
         } catch (SQLException e) {
             throw new DatabaseException("Couldn't fetch the carport width from the database");
@@ -30,35 +32,40 @@ public class CarportMapper {
     }
 
 
-    public static List<Integer> getCarportLength(ConnectionPool connectionPool) throws DatabaseException {
-        List<Integer> carportLength = new ArrayList<>();
-        String sql = "SELECT * FROM carport_lengths";
+    public static List<CarportLength> getCarportLength(ConnectionPool connectionPool) throws DatabaseException {
+        List<CarportLength> carportLength = new ArrayList<>();
+        String sql = "SELECT * FROM carport_length";
 
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement ps = connection.prepareStatement(sql)) {
                 ResultSet rs = ps.executeQuery();
                 while (rs.next()) {
+                    int id = rs.getInt("id");
                     int length = rs.getInt("length");
-                    carportLength.add(length);
+                    carportLength.add(new CarportLength(id, length));
                 }
+                carportLength.sort(Comparator.comparing(CarportLength::getLength));
             }
         } catch (SQLException e) {
             throw new DatabaseException("Couldn't fetch the carport length from the database");
         }
+
         return carportLength;
     }
 
-    public static List<Integer> getShedWidth(ConnectionPool connectionPool) throws DatabaseException {
-        List<Integer> shedWidth = new ArrayList<>();
-        String sql = "SELECT * FROM shed_widths";
+    public static List<ShedWidth> getShedWidth(ConnectionPool connectionPool) throws DatabaseException {
+        List<ShedWidth> shedWidth = new ArrayList<>();
+        String sql = "SELECT * FROM shed_width";
 
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement ps = connection.prepareStatement(sql)) {
                 ResultSet rs = ps.executeQuery();
                 while (rs.next()) {
+                    int id = rs.getInt("id");
                     int width = rs.getInt("width");
-                    shedWidth.add(width);
+                    shedWidth.add(new ShedWidth(id, width));
                 }
+                shedWidth.sort(Comparator.comparing(ShedWidth::getWidth));
             }
         } catch (SQLException e) {
             throw new DatabaseException("Couldn't fetch the shed width from the database");
@@ -66,17 +73,19 @@ public class CarportMapper {
         return shedWidth;
     }
 
-    public static List<Integer> getShedLength(ConnectionPool connectionPool) throws DatabaseException {
-        List<Integer> shedLength = new ArrayList<>();
-        String sql = "SELECT * FROM shed_lengths";
+    public static List<ShedLength> getShedLength(ConnectionPool connectionPool) throws DatabaseException {
+        List<ShedLength> shedLength = new ArrayList<>();
+        String sql = "SELECT * FROM shed_length";
 
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement ps = connection.prepareStatement(sql)) {
                 ResultSet rs = ps.executeQuery();
                 while (rs.next()) {
+                    int id = rs.getInt("id");
                     int length = rs.getInt("length");
-                    shedLength.add(length);
+                    shedLength.add(new ShedLength(id, length));
                 }
+                shedLength.sort(Comparator.comparing(ShedLength::getLength));
             }
         } catch (SQLException e) {
             throw new DatabaseException("Couldn't fetch the shed length from the database");

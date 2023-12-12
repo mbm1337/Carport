@@ -67,7 +67,7 @@ public class AdminMapper {
         try (Connection connection = connectionPool.getConnection()) {
             String sql = "SELECT " +
                     "u.id AS user_id, u.forname, u.aftername, u.email, u.zip, u.address, u.admin, u.password, u.phone, " +
-                    "o.ordernumber, o.orderdate, o.status, o.comments, o.customernumber, o.user_id AS order_user_id, " +
+                    "o.ordernumber, o.orderdate, o.status, o.comments, o.user_id AS order_user_id, " +
                     "o.price AS order_price, od.materials_id, od.quantityordered, od.price AS detail_price " +
                     "FROM \"user\" u " +
                     "JOIN orders o ON u.id = o.user_id " +
@@ -84,7 +84,6 @@ public class AdminMapper {
                         admin.setOrderDate(resultSet.getString("orderdate"));
                         admin.setStatus(resultSet.getString("status"));
                         admin.setComments(resultSet.getString("comments"));
-                        admin.setCustomerNumber(resultSet.getInt("customernumber"));
                         admin.setUserId(resultSet.getInt("user_id"));
                         admin.setOrderPrice(resultSet.getDouble("order_price"));
                         admin.setMaterialsId(resultSet.getInt("materials_id"));
@@ -120,7 +119,7 @@ public class AdminMapper {
         }
     }
 
-    public static List<Material> getMaterials( ConnectionPool connectionPool) {
+    public static List<Material> getMaterials( ConnectionPool connectionPool) throws SQLException {
         List<Material> materials = new ArrayList<>();
         try (Connection connection = connectionPool.getConnection()) {
             String sql = "SELECT * FROM \"materials\"";
@@ -143,6 +142,288 @@ public class AdminMapper {
             return materials;
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public static Material getMaterialById(int id, ConnectionPool connectionPool) throws SQLException {
+        try (Connection connection = connectionPool.getConnection()) {
+            String sql = "SELECT * FROM \"materials\" WHERE id = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                preparedStatement.setInt(1, id);
+
+                try (ResultSet rs = preparedStatement.executeQuery()) {
+                    while (rs.next()) {
+                        String productName = rs.getString("productname");
+                        String productType = rs.getString("producttype");
+                        String productSize = rs.getString("productsize");
+                        String unit = rs.getString("unit");
+                        short quantityInStock = rs.getShort("quantityinstock");
+                        double sellPrice = rs.getDouble("sellprice");
+                        double purchasePrice = rs.getDouble("purchaseprice");
+
+                        return new Material(id, productName, productType, productSize,
+                                unit, quantityInStock, sellPrice, purchasePrice);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null; // If material with the given ID is not found
+    }
+
+    public static Material updateMaterial(Material material, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "UPDATE \"materials\" SET productname = ?, producttype = ?, productsize = ?, unit = ?, quantityinstock = ?, sellprice = ?, purchaseprice = ? WHERE id = ?";
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, material.getProductName());
+            ps.setString(2, material.getProductType());
+            ps.setString(3, material.getProductSize());
+            ps.setString(4, material.getUnit());
+            ps.setShort(5, material.getQuantityInStock());
+            ps.setDouble(6, material.getBuyPrice());
+            ps.setDouble(7, material.getPurchasePrice());
+            ps.setInt(8, material.getId());
+
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected != 1) {
+                throw new DatabaseException("Fejl i opdatering af material");
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Fejl i opdatering af material");
+        }
+
+        return material;
+    }
+
+
+    public static Material addMaterial(Material material, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "INSERT INTO \"materials\" (productname, producttype, productsize, unit, quantityinstock, sellprice, purchaseprice) VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, material.getProductName());
+            ps.setString(2, material.getProductType());
+            ps.setString(3, material.getProductSize());
+            ps.setString(4, material.getUnit());
+            ps.setShort(5, material.getQuantityInStock());
+            ps.setDouble(6, material.getBuyPrice());
+            ps.setDouble(7, material.getPurchasePrice());
+
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected != 1) {
+                throw new DatabaseException("Fejl i opdatering af material");
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Fejl i opdatering af material");
+        }
+
+        return material;
+    }
+
+    public static Material deleteMaterial(int id, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "DELETE FROM \"materials\" WHERE id = ?";
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, id);
+
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected != 1) {
+                throw new DatabaseException("Fejl i sletning af material");
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Fejl i sletning af material");
+        }
+
+        return null;
+    }
+
+
+    public static List<Admin> getCalcMaterials(ConnectionPool connectionPool) {
+
+        List<Admin> calcMaterials = new ArrayList<>();
+        try (Connection connection = connectionPool.getConnection()) {
+            String sql = "SELECT * FROM public.carport_calculator";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                int materialsId = rs.getInt("material_id");
+                String comments = rs.getString("description");
+                calcMaterials.add(new Admin(id,materialsId, comments));
+            }
+            return calcMaterials;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    public static void updateCalcMaterials(int id, int materialId, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "UPDATE carport_calculator SET material_id = ? WHERE id = ?";
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, materialId);
+            ps.setInt(2, id);
+
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected != 1) {
+                throw new DatabaseException("Fejl i opdatering af CalcMaterials");
+            }
+        } catch (SQLException | DatabaseException e) {
+            throw new DatabaseException("Fejl i opdatering af CalcMaterials");
+        }
+    }
+
+    public static Admin getCalcMaterialsById(int id, ConnectionPool connectionPool) {
+
+            try (Connection connection = connectionPool.getConnection()) {
+                String sql = "SELECT * FROM public.carport_calculator WHERE id = ?";
+                try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                    preparedStatement.setInt(1, id);
+
+                    try (ResultSet rs = preparedStatement.executeQuery()) {
+                        while (rs.next()) {
+                            int materialsId = rs.getInt("material_id");
+                            String comments = rs.getString("description");
+                            return new Admin(id,materialsId, comments);
+                        }
+                    }
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            return null; // If material with the given ID is not found
+    }
+
+    public static void addCarportLength(int length, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "INSERT INTO carport_length (length) VALUES (?)";
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, length);
+
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected != 1) {
+                throw new DatabaseException("Fejl i opdatering af carport length");
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Fejl i opdatering af carport length");
+        }
+    }
+
+    public static void addCarportWidth(int width, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "INSERT INTO carport_width (width) VALUES (?)";
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, width);
+
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected != 1) {
+                throw new DatabaseException("Fejl i opdatering af carport width");
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Fejl i opdatering af carport width");
+        }
+    }
+
+    public static void addShedLength(int length, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "INSERT INTO shed_length (length) VALUES (?)";
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, length);
+
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected != 1) {
+                throw new DatabaseException("Fejl i opdatering af shed length");
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Fejl i opdatering af shed length");
+        }
+    }
+
+    public static void addShedWidth(int width, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "INSERT INTO shed_width (width) VALUES (?)";
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, width);
+
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected != 1) {
+                throw new DatabaseException("Fejl i opdatering af shed width");
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Fejl i opdatering af shed width");
+        }
+    }
+
+    public static void deleteCarportLength(int id, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "DELETE FROM carport_length WHERE id = ?";
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, id);
+
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected != 1) {
+                throw new DatabaseException("Fejl i sletning af carport length");
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Fejl i sletning af carport length");
+        }
+    }
+
+    public static void deleteCarportWidth(int id, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "DELETE FROM carport_width WHERE id = ?";
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, id);
+
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected != 1) {
+                throw new DatabaseException("Fejl i sletning af carport width");
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Fejl i sletning af carport width");
+        }
+    }
+
+    public static void deleteShedLength(int id, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "DELETE FROM shed_length WHERE id = ?";
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, id);
+
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected != 1) {
+                throw new DatabaseException("Fejl i sletning af shed length");
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Fejl i sletning af shed length");
+        }
+    }
+
+    public static void deleteShedWidth(int id, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "DELETE FROM shed_width WHERE id = ?";
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, id);
+
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected != 1) {
+                throw new DatabaseException("Fejl i sletning af shed width");
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Fejl i sletning af shed width");
         }
     }
 }

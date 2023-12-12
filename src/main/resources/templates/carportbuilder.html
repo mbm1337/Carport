@@ -40,13 +40,13 @@
     <label for ="carportWidth" >Carport Bredde: *</label> <br>
     <select id="carportWidth" name="carportWidth">
         <option th:each="carportWidth: ${#ctx.carportWidth}" th:value="${carportWidth}"
-                th:text="${carportWidth}"></option>
+                th:text="${carportWidth.width}"></option>
     </select> <br>
 
         <label for="carportLength">Carport Længde: *</label> <br>
         <select id="carportLength" name="carportLength">
-            <option th:each="carportLangth: ${#ctx.carportLength}" th:value="${carportLangth}"
-                    th:text="${carportLangth}"></option>
+            <option th:each="carportLength: ${#ctx.carportLength}" th:value="${carportLength}"
+                    th:text="${carportLength.length}"></option>
         </select> <br>
 
     <label for="roof">Carport Tag: *</label> <br>
@@ -71,13 +71,13 @@
         <label for="shedWidth">Redskabsrum bredde:</label> <br>
         <select id="shedWidth" name="shedWidth">
         <option th:each="shedWidth: ${#ctx.shedWidth}" th:value="${shedWidth}"
-                th:text="${shedWidth}"></option>
+                th:text="${shedWidth.width}"></option>
         </select> <br>
 
         <label for="shedLength">Redskabsrum Længde:</label> <br>
         <select id="shedLength" name="shedLength">
-        <option th:each="length: ${#ctx.shedLength}" th:value="${length}"
-                th:text="${length}"></option>
+        <option th:each="shedLength: ${#ctx.shedLength}" th:value="${length}"
+                th:text="${shedLength.length}"></option>
         </select> <br>
         </div>
 

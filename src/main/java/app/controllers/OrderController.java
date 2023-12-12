@@ -1,24 +1,20 @@
 package app.controllers;
 
-import app.entities.*;
+import app.entities.Calculator;
+import app.entities.Carport;
+import app.entities.Order;
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
+import app.persistence.MaterialMapper;
 import app.persistence.OrderMapper;
 
-import app.persistence.UserMapper;
 import io.javalin.http.Context;
-
-import java.util.ArrayList;
-import java.util.List;
-
-
-
 
 public class OrderController {
     public static void getStatus(Context ctx, ConnectionPool connectionpool) {
         try {
             int userId = Integer.parseInt(ctx.formParam("userid"));
-            String order = OrderMapper.getOrderStatusByUserId(userId, connectionpool);
+            String order= OrderMapper.getOrderStatusByUserId(userId, connectionpool);
 
             ctx.attribute("status", order);
             ctx.render("status.html");
@@ -26,10 +22,7 @@ public class OrderController {
             ctx.attribute("error", "We couldn't track your order: " + e.getMessage());
             ctx.render("status.html");
         }
-
-
     }
-
     public static void insertingAnOrder(Context ctx, ConnectionPool connectionpool) throws DatabaseException {
 
         Carport carport = ctx.sessionAttribute("carport");
@@ -38,12 +31,15 @@ public class OrderController {
         int length = Integer.parseInt(ctx.formParam("carportLength"));
         int shedWidth = Integer.parseInt(ctx.formParam("shedWidth"));
         int shedLength = Integer.parseInt(ctx.formParam("shedLength"));
-      //  int price = Integer.parseInt(ctx.formParam("price"));
 
-        Order order = new Order("paid",comment,100,length,width);
-        try {
+        double total = calculatePrice(ctx, connectionpool);
+         Order order = new Order("under process",  total,  length,  width,  comment);
+
+
+
+            try {
             OrderMapper.insertOrder(order, connectionpool);
-            ctx.render("order.html");
+            ctx.render("price.html");
 
         } catch (NumberFormatException | DatabaseException e) {
             ctx.attribute("we couldnt save the order " + e.getMessage());
@@ -52,4 +48,43 @@ public class OrderController {
 
 
     }
-}
+        public static double calculatePrice(Context ctx, ConnectionPool connectionPool) {
+            Calculator calc = new Calculator();
+            Carport carport = ctx.sessionAttribute("carport");
+            int width = Integer.parseInt(ctx.formParam("carportWidth"));
+            int length = Integer.parseInt(ctx.formParam("carportLength"));
+
+            int spær600 = MaterialMapper.getPrice(9, connectionPool);
+            int spær480 = MaterialMapper.getPrice(10, connectionPool);
+            int posts = MaterialMapper.getPrice(12, connectionPool);
+
+            int numberOfPosts = calc.numberOfPosts(length);
+            int numberOfBeams = calc.beamAmount(length);
+            int numberOfRafts = calc.numberOfRaft(length, width);
+
+            int totalPostsCost = numberOfPosts * posts;
+
+            int totalRaft;
+            if (numberOfRafts >= 480) {
+                totalRaft = numberOfRafts * spær480;
+            } else {
+                totalRaft = numberOfRafts * spær600;
+            }
+
+            int totalBeam;
+            if (numberOfBeams >= 480) {
+                totalBeam = numberOfBeams * spær480;
+            } else {
+                totalBeam = numberOfBeams * spær600;
+            }
+
+            int totalPrice = totalPostsCost + totalRaft + totalBeam;
+
+            ctx.attribute("totalPrice", totalPrice);
+            carport = ctx.sessionAttribute("carport");
+
+            return totalPrice;
+        }
+
+
+    }

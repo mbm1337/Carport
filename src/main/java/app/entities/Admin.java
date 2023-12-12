@@ -1,11 +1,11 @@
 package app.entities;
 
 public class Admin {
+    private int id;
     private int orderId;
     private String orderDate;
     private String status;
     private String comments;
-    private int customerNumber;
     private int userId;
     private double orderPrice;
     private int materialsId;
@@ -13,13 +13,12 @@ public class Admin {
     private double detailPrice;
 
     // Konstruktør
-    public Admin(int orderId, String orderDate, String status, String comments, int customerNumber,
+    public Admin(int orderId, String orderDate, String status, String comments,
                  int userId, double orderPrice, int materialsId, int quantityOrdered, double detailPrice) {
         this.orderId = orderId;
         this.orderDate = orderDate;
         this.status = status;
         this.comments = comments;
-        this.customerNumber = customerNumber;
         this.userId = userId;
         this.orderPrice = orderPrice;
         this.materialsId = materialsId;
@@ -30,8 +29,17 @@ public class Admin {
     public Admin() {
 
     }
+    public Admin(int id,int materialsId, String comments) {
+        this.id = id;
+        this.materialsId = materialsId;
+        this.comments = comments;
+    }
 
     // Tilføj getters og setters efter behov
+
+    public int getId() {
+        return id;
+    }
 
     public int getOrderId() {
         return orderId;
@@ -65,13 +73,6 @@ public class Admin {
         this.comments = comments;
     }
 
-    public int getCustomerNumber() {
-        return customerNumber;
-    }
-
-    public void setCustomerNumber(int customerNumber) {
-        this.customerNumber = customerNumber;
-    }
 
     public int getUserId() {
         return userId;

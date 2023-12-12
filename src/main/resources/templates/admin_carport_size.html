@@ -1,14 +1,119 @@
 <!DOCTYPE html>
+
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<html lang="da">
+<html lang="en">
 <head>
-  <title>Login - Fog</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fog</title>
   <link rel="stylesheet" href="../public/stylesheet.css">
 </head>
 <body>
-<div class="container">
 
-  </div>
+<div id="page-container">
+    <h3>Carport Længder</h3>
+    <table id="carportlength-table">
+      <a href="/add_carportlength"><button type="button">Tilføj ny længde</button></a>
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Længde</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="length : ${#ctx.carportLength}">
+        <td th:text="${length.id}"></td>
+        <td th:text="${length.length}"></td>
+        <td>
+          <form method="post" th:action="@{'/delete_carportlength/' + ${length.id}}" id="deleteFormCarportLength"
+                th:attr="onsubmit='return confirmDelete(\'' + ${length.length} + '\')'">
+            <button type="submit">Slet</button>
+          </form>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+  <h3>Carport Bredder</h3>
+  <table id="carportwidth-table">
+    <a href="/add_carportlength"><button type="button">Tilføj ny længde</button></a>
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Bredde</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="width : ${#ctx.carportWidth}">
+      <td th:text="${width.id}"></td>
+      <td th:text="${width.width}"></td>
+      <td>
+        <form method="post" th:action="@{'/delete_carportlength/' + ${width.id}}" id="deleteFormCarportWidth"
+              th:attr="onsubmit='return confirmDelete(\'' + ${width.width} + '\')'">
+          <button type="submit">Slet</button>
+        </form>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <h3>Skur Længder</h3>
+  <table id="shedtlength-table">
+    <a href="/add_shedlength"><button type="button">Tilføj ny længde</button></a>
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Længde</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="length : ${#ctx.shedLength}">
+      <td th:text="${length.id}"></td>
+      <td th:text="${length.length}"></td>
+      <td>
+        <form method="post" th:action="@{'/delete_shedlength/' + ${length.id}}" id="deleteFormShedLength"
+              th:attr="onsubmit='return confirmDelete(\'' + ${length.length} + '\')'">
+          <button type="submit">Slet</button>
+        </form>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <h3>Skur Bredder</h3>
+  <table id="shedwidth-table">
+    <a href="/add_shedwidth"><button type="button">Tilføj ny længde</button></a>
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Bredde</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="width : ${#ctx.shedWidth}">
+      <td th:text="${width.id}"></td>
+      <td th:text="${width.width}"></td>
+      <td>
+        <form method="post" th:action="@{'/delete_shedwidth/' + ${width.id}}" id="deleteForm"
+              th:attr="onsubmit='return confirmDelete(\'' + ${width.width} + '\')'">
+          <button type="submit">Slet</button>
+        </form>
+      </td>
+    </tr>
+    </tbody>
+  </table>
 </div>
+
+
 </body>
 </html>
+
+
+
+
+<script>
+  function confirmDelete(id) {
+    console.log('Material ID:', id);
+    return confirm("Er du sikker på, at du vil slette " + id + "?");
+  }
+</script>

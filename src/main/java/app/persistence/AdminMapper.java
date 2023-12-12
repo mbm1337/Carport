@@ -298,4 +298,20 @@ public class AdminMapper {
             }
             return null; // If material with the given ID is not found
     }
+
+    public static void addCarportLength(int length, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "INSERT INTO carport_length (length) VALUES (?)";
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, length);
+
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected != 1) {
+                throw new DatabaseException("Fejl i opdatering af carport length");
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Fejl i opdatering af carport length");
+        }
+    }
 }

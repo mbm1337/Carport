@@ -9,8 +9,8 @@ import java.util.Map;
 
 public class SvgController {
     public static void getSvg(Context ctx) throws SVGGraphics2DIOException {
-        double length = 400;
-        double width = 200;
+        double length = 800;
+        double width = 300;
 
         String svgContent = CarportSvgGenerator.generateSvg(length, width);
 

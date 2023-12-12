@@ -70,6 +70,6 @@ public class CarportSvgGenerator {
 
         // Tegn remmen vandret langs den samlede længde
         svgGraphics2D.drawLine(0, remY, (int) length, remY);
-        svgGraphics2D.drawLine(0, (int) (remY + width), (int) length, (int) (remY+width));
+        svgGraphics2D.drawLine(0, (int) (remY + width-10), (int) length, (int) (remY+width-10));
     }
 }

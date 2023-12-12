@@ -45,6 +45,13 @@ public class Main {
         app.get("/carportone", ctx -> ShippingController.getShippingInfoByZip(ctx, connectionPool));
         app.post("/carportone", ctx -> ShippingController.getShippingInfoByZip(ctx, connectionPool));
 
+        app.post("/insertingAnOrder", ctx -> OrderController.insertingAnOrder(ctx, connectionPool));
+        app.get("/insertingAnOrder", ctx -> ctx.render("order.html"));
+        app.post("/calculatePrice", ctx -> OrderController.calculatePrice(ctx, connectionPool));
+
+
+
+
 
 
 
@@ -64,6 +71,7 @@ public class Main {
         app.get("/adminCalc/{id}", ctx -> AdminController.getCalcMaterialsById(ctx, connectionPool));
         app.post("/adminCalc/{id}", ctx -> AdminController.getCalcMaterialsById(ctx, connectionPool));
         app.post("/adminCalc/{id}/edit", ctx -> AdminController.editCalcMaterials(ctx, connectionPool));
+
 
 
         app.get("/carport_size", ctx -> AdminController.getDimensions(ctx, connectionPool));

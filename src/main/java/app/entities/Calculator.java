@@ -9,73 +9,46 @@ public class Calculator {
 
 
     public int calculateArea(int width, int length) {
-        return width* length;
-
-
+        return width * length;
     }
 
-    public int numberOfPosts(int carportlength) {
+    public int numberOfPosts(int carportLength) {
         int distanceBetweenPosts = 240;
-        int totalpost = 0;
-        if (carportlength - 30 <= 600) {
-            totalpost = 2 * 2;
-        } else if (carportlength- 30 < 600 && carportlength <= 800) {
-            totalpost = 3 * 2;
+        int totalPosts = 0;
+
+        if (carportLength - 30 <= 600) {
+            totalPosts = 4; // Assuming 2 posts on each side
+        } else if (carportLength - 30 <= 800) {
+            totalPosts = 6; // Assuming 3 posts on each side
         } else {
-            if (carportlength - 30 < 800) {
-                totalpost = (int) Math.ceil(carportlength/ distanceBetweenPosts );
-                totalpost= totalpost *2;
+            totalPosts = (int) Math.ceil((carportLength - 30) / distanceBetweenPosts) * 2;
+        }
 
-
-                }
-            }
-
-        return totalpost;
-
-
+        return totalPosts;
     }
-    public static int numberOfraft(int carportLength, int carportWidth) {
-        //spær
 
+    public static int numberOfRafts(int carportLength, int carportWidth) {
         int numberOfRafts = (int) Math.ceil((double) carportLength / 55);
 
-
-         if (carportWidth > 600) {
-             numberOfRafts = numberOfRafts*2;
-         }
+        if (carportWidth > 600) {
+            numberOfRafts *= 2;
+        }
 
         return numberOfRafts;
     }
 
-
-
-    public int beamAmount(int carportLength) { //rem
-        int totalBeam =0;
-        if (carportLength <= 600) {
-             totalBeam = 2;
-        }else{
-            totalBeam =2*2;
-        }
-        return totalBeam;
+    public int beamAmount(int carportLength) {
+        return (carportLength <= 600) ? 2 : 4; // Assuming 2 beams for carportLength <= 600, else 4
     }
-    public int numberOfScrews (){
-        return numberOfScrews();
+
+    public int numberOfScrews() {
+        // Provide the implementation for the number of screws calculation
+        return 0;
     }
+
     public void calculateMaterialsList(int carportLength, int carportWidth) {
-
-        int numberOfPosts = numberOfPosts(carportLength);
-        material.add(numberOfPosts);
-
-        int numberOfRafts = numberOfraft(carportLength, carportWidth);
-        material.add(numberOfRafts);
-
-        int numberOfBeams = beamAmount(carportLength);
-
-        material.add(numberOfBeams);
-
-
+        material.add(numberOfPosts(carportLength));
+        material.add(numberOfRafts(carportLength, carportWidth));
+        material.add(beamAmount(carportLength));
     }
-
-
-
-    }
+}

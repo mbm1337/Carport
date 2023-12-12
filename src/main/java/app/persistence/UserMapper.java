@@ -39,8 +39,8 @@ public class UserMapper {
         }
 
     }
-    public static void createuser(String forname,String aftername,String email,int zip,String adress,boolean admin,String password,int phone ,ConnectionPool connectionPool) throws DatabaseException{
-        String sql = "insert into \"user\" (forname, aftername,email,zip,adress,admin,password,phone) values (?,?,?,?,?,?,?,?)";
+    public static void createuser(String forname,String aftername,String email,int zip,String address,boolean admin,String password,int phone ,ConnectionPool connectionPool) throws DatabaseException{
+        String sql = "insert into \"user\" (forname, aftername,email,zip,address,admin,password,phone) values (?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection connection = connectionPool.getConnection())
         {
@@ -50,7 +50,7 @@ public class UserMapper {
                 ps.setString(2, aftername);
                 ps.setString(3, email);
                 ps.setInt(4, zip);
-                ps.setString(5, adress);
+                ps.setString(5, address);
                 ps.setBoolean(6, admin);
                 ps.setString(7, password);
                 ps.setInt(8, phone);

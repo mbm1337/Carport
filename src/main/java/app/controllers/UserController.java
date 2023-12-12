@@ -36,7 +36,7 @@ public class UserController {
         String aftername = ctx.formParam("aftername");
         String email = ctx.formParam("email");
         int zip = Integer.parseInt(ctx.formParam("zip"));
-        String adress =(ctx.formParam("adress"));
+        String adress =(ctx.formParam("address"));
         boolean admin = Boolean.parseBoolean(ctx.formParam("admin"));
         String password1 = ctx.formParam("password1");
         String password2 = ctx.formParam("password2");

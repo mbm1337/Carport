@@ -1,6 +1,6 @@
 package app.persistence;
 
-import app.entities.CarportLength;
+import app.entities.*;
 import app.exceptions.DatabaseException;
 
 import java.sql.Connection;
@@ -12,16 +12,17 @@ import java.util.List;
 
 public class CarportMapper {
 
-    public static List<Integer> getCarportWidth(ConnectionPool connectionPool) throws DatabaseException {
-        List<Integer> carportWidth = new ArrayList<>();
-        String sql = "SELECT * FROM carport_widths";
+    public static List<CarportWidth> getCarportWidth(ConnectionPool connectionPool) throws DatabaseException {
+        List<CarportWidth> carportWidth = new ArrayList<>();
+        String sql = "SELECT * FROM carport_width";
 
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement ps = connection.prepareStatement(sql)) {
                 ResultSet rs = ps.executeQuery();
                 while (rs.next()) {
+                    int id = rs.getInt("id");
                     int width = rs.getInt("width");
-                    carportWidth.add(width);
+                    carportWidth.add(new CarportWidth(id, width));
                 }
             }
         } catch (SQLException e) {
@@ -40,7 +41,7 @@ public class CarportMapper {
                 ResultSet rs = ps.executeQuery();
                 while (rs.next()) {
                     int id = rs.getInt("id");
-                    int length = rs.getInt("length");
+                    int length = rs.getInt("lengths");
                     carportLength.add(new CarportLength(id, length));
                 }
             }
@@ -50,16 +51,17 @@ public class CarportMapper {
         return carportLength;
     }
 
-    public static List<Integer> getShedWidth(ConnectionPool connectionPool) throws DatabaseException {
-        List<Integer> shedWidth = new ArrayList<>();
-        String sql = "SELECT * FROM shed_widths";
+    public static List<ShedWidth> getShedWidth(ConnectionPool connectionPool) throws DatabaseException {
+        List<ShedWidth> shedWidth = new ArrayList<>();
+        String sql = "SELECT * FROM shed_width";
 
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement ps = connection.prepareStatement(sql)) {
                 ResultSet rs = ps.executeQuery();
                 while (rs.next()) {
+                    int id = rs.getInt("id");
                     int width = rs.getInt("width");
-                    shedWidth.add(width);
+                    shedWidth.add(new ShedWidth(id, width));
                 }
             }
         } catch (SQLException e) {
@@ -68,16 +70,17 @@ public class CarportMapper {
         return shedWidth;
     }
 
-    public static List<Integer> getShedLength(ConnectionPool connectionPool) throws DatabaseException {
-        List<Integer> shedLength = new ArrayList<>();
+    public static List<ShedLength> getShedLength(ConnectionPool connectionPool) throws DatabaseException {
+        List<ShedLength> shedLength = new ArrayList<>();
         String sql = "SELECT * FROM shed_lengths";
 
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement ps = connection.prepareStatement(sql)) {
                 ResultSet rs = ps.executeQuery();
                 while (rs.next()) {
-                    int length = rs.getInt("length");
-                    shedLength.add(length);
+                    int id = rs.getInt("id");
+                    int length = rs.getInt("lengths");
+                    shedLength.add(new ShedLength(id, length));
                 }
             }
         } catch (SQLException e) {

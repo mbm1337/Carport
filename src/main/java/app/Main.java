@@ -30,7 +30,7 @@ public class Main {
         }).start(7070);
 
         // Routing
-        app.get("/", ctx -> CarportController.carportDropdowns(ctx, connectionPool));
+        app.get("/byg-selv", ctx -> CarportController.carportDropdowns(ctx, connectionPool));
         app.post("/carport", ctx -> CarportController.makeCarport(ctx, connectionPool));
 
 
@@ -64,8 +64,17 @@ public class Main {
         app.get("/adminCalc/{id}", ctx -> AdminController.getCalcMaterialsById(ctx, connectionPool));
         app.post("/adminCalc/{id}", ctx -> AdminController.getCalcMaterialsById(ctx, connectionPool));
         app.post("/adminCalc/{id}/edit", ctx -> AdminController.editCalcMaterials(ctx, connectionPool));
+
+
         app.get("/carport_size", ctx -> AdminController.getDimensions(ctx, connectionPool));
-        app.post("/add_length", ctx -> AdminController.add(ctx, connectionPool));
+        app.post("/add_carportlength", ctx -> AdminController.addCarportLength(ctx, connectionPool));
+        /*app.post("/add_carportwidth", ctx -> AdminController.addCarportWidth(ctx, connectionPool));
+        app.post("/add_shedlength", ctx -> AdminController.addShedLength(ctx, connectionPool));
+        app.post("/add_shedwidth", ctx -> AdminController.addShedWidth(ctx, connectionPool));
+        app.post("/delete_carportlength/{id}", ctx -> AdminController.deleteCarportLength(ctx, connectionPool));
+        app.post("/delete_carportwidth/{id}", ctx -> AdminController.deleteCarportWidth(ctx, connectionPool));
+        app.post("/delete_shedlength/{id}", ctx -> AdminController.deleteShedLength(ctx, connectionPool));
+        app.post("/delete_shedwidth/{id}", ctx -> AdminController.deleteShedWidth(ctx, connectionPool));*/
 
 
 

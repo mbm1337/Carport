@@ -5,41 +5,79 @@ import org.apache.batik.svggen.SVGGraphics2DIOException;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 
+import java.awt.*;
 import java.io.StringWriter;
 
 public class SvgGenerator {
-    public static String generateSvg() throws SVGGraphics2DIOException {
-        // Opret en DOM-implementering og et Document-objekt
+
+    public static String generateSvg(double length, double width) throws SVGGraphics2DIOException {
         DOMImplementation domImpl = org.apache.batik.dom.GenericDOMImplementation.getDOMImplementation();
         Document document = domImpl.createDocument("http://www.w3.org/2000/svg", "svg", null);
 
-        // Opret en SVGGraphics2D fra Document
         SVGGraphics2D svgGraphics2D = new SVGGraphics2D(document);
 
-        // Tegn stolpe 1
-        svgGraphics2D.drawRect(50, 50, 10, 10);
 
-        // Tegn stolpe 2
-        svgGraphics2D.drawRect(310, 50, 10, 10);
-
-        // Tegn stolpe 3
-        svgGraphics2D.drawRect(530, 50, 10, 10);
-
-        // Tegn stolpe 4
-        svgGraphics2D.drawRect(50, 250, 10, 10);
-
-        // Tegn stolpe 5
-        svgGraphics2D.drawRect(290, 250, 10, 10);
-
-        // Tegn stolpe 6
-        svgGraphics2D.drawRect(530, 250, 10, 10);
+        drawStolpe(svgGraphics2D, length, width);
+        drawRem(svgGraphics2D, length, width);
 
 
-        // Konverter SVGGraphics2D til SVG-streng
+
         StringWriter writer = new StringWriter();
         svgGraphics2D.stream(writer, true);
-        String svgString = writer.toString();
-
-        return svgString;
+        return writer.toString();
     }
+
+    private static void drawStolpe(SVGGraphics2D svgGraphics2D, double length, double width) {
+        int stolpebrede = 10; // Bredde af stolper
+        int afstanmellomstolper = 240;
+        int hojde= 270; // Højde af stolper
+        int antalstolper = Math.max(2, (int) Math.ceil(length / afstanmellomstolper));
+
+        // Beregn startposition for stolper
+        int start = (int) (100); // Start stolper 1 meter efter spær
+        int end = (int) (length-10); // Slut stolper ved carportens slutning
+
+        // Beregn afstand mellem stolper
+        int distanceBetweenPosts = (end - start) / (antalstolper - 1);
+
+        // Tegn stolper langs længden med afstand mellem dem
+        for (int i = 0; i < antalstolper; i++) {
+            int x = start + i * distanceBetweenPosts;
+            svgGraphics2D.drawRect(x, 50, stolpebrede, hojde);
+
+            // Konverter længden til en streng
+            String lengthText = String.valueOf(distanceBetweenPosts);
+
+            // Få FontMetrics for det aktuelle skrifttype
+            FontMetrics fontMetrics = svgGraphics2D.getFontMetrics(new Font("Arial", Font.PLAIN, 12)); // Tilpas skrifttypen og størrelsen efter behov
+
+            // Beregn bredden af teksten
+            int textWidth = fontMetrics.stringWidth(lengthText);
+
+            // Tegn tekst over stolpen, så den er centralt placeret
+            svgGraphics2D.drawString(lengthText, x + (stolpebrede - textWidth) / 2, 45);
+        }
+    }
+
+
+
+    private static void drawRem(SVGGraphics2D svgGraphics2D, double length, double width) {
+        int remY = 40; // Afstand fra toppen af stolperne til remmen
+
+        // Tegn remmen vandret langs den samlede længde
+        svgGraphics2D.drawRect(0, remY, (int) length, 10);
+
+        // Konverter længden til en streng
+        String lengthText = String.valueOf(length);
+
+        // Få FontMetrics for det aktuelle skrifttype
+        FontMetrics fontMetrics = svgGraphics2D.getFontMetrics(new Font("Arial", Font.PLAIN, 12)); // Tilpas skrifttypen og størrelsen efter behov
+
+        // Beregn bredden af teksten
+        int textWidth = fontMetrics.stringWidth(lengthText);
+
+        // Tegn tekst over remmen, så den er centralt placeret
+        svgGraphics2D.drawString(lengthText, (int) (length - textWidth) / 2, remY - 5);
+    }
+
 }

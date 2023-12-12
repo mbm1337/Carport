@@ -28,7 +28,7 @@ public class CarportSvgGenerator {
     }
 
     private static void drawStolpe(SVGGraphics2D svgGraphics2D, double length, double width) {
-        int stolpebrede = 10; // Bredde af stolper
+        int stolpebrede = 15; // Bredde af stolper
         int afstanmellomstolper = 240;
         int antalstolper = Math.max(2, (int) Math.ceil(length / afstanmellomstolper));
 
@@ -66,10 +66,12 @@ public class CarportSvgGenerator {
 
     private static void drawRem(SVGGraphics2D svgGraphics2D, double length, double width) {
 
-        int remY = 55; // Afstand fra toppen af stolperne til remmen
+        int remY = 50; // Afstand fra toppen af stolperne til remmen
 
         // Tegn remmen vandret langs den samlede længde
-        svgGraphics2D.drawLine(0, remY, (int) length, remY);
-        svgGraphics2D.drawLine(0, (int) (remY + width-10), (int) length, (int) (remY+width-10));
+        svgGraphics2D.drawRect(0, remY, (int) length+3, 10);
+        svgGraphics2D.drawRect(0, (int) (remY + width-10), (int) length+3,10);
     }
+
+
 }

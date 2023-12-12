@@ -72,10 +72,6 @@ public class Main {
         app.post("/delete_shedwidth/{id}", ctx -> AdminController.deleteShedWidth(ctx, connectionPool));*/
 
 
-
-        //app.get("/carportone", ctx -> ctx.render("carportone.html"));
-        app.get("/carportone", ctx -> ShippingController.getShippingInfoByZip(ctx, connectionPool));
-        app.post("/carportone", ctx -> ShippingController.getShippingInfoByZip(ctx, connectionPool));
         app.get("/svg", SvgController::getSvg);
 
     }

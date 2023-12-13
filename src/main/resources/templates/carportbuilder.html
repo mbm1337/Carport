@@ -1,130 +1,78 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fog</title>
-    <link rel="stylesheet" href="../public/css/stylesheet.css">
-</head>
+
+<div th:replace="~{fragments :: head('Byg-selv')}"></div>
 
 <body>
-<header>
 
-        <nav class="navigation" method="post">
+<div id="page-container">
+    <div id="page-content">
+        <div th:replace="~{fragments :: header('Byg-selv')}"></div>
+        <div class="indhold-box" id="content">
+            <div>
+                <h1>Bestil Quick-Byg tilbud - carport med fladt tag</h1>
+                <h3>
+                    Med et specialudviklet computerprogram kan vi lynhurtigt beregne prisen og udskrive en skitsetegning
+                    på en carport indenfor vores standardprogram.
+                    Tilbud og skitsetegning fremsendes med post hurtigst muligt.
+                    Ved bestilling medfølger standardbyggevejledning.
 
-        <a href="index.html" class="logo">Fog</a>
-            <a href="/">Bolig & Design</a>
-            <a href="/">Byggermaterialer</a>
-            <a href="/">Kontakt</a>
+                    Udfyld formularen omhyggeligt og klik på "Bestil tilbud".
+                    Felter markeret med * SKAL udfyldes!</h3> <br>
 
-            <a href="/login">login</a>
+                <form id="order" method="post">
+                    <label for="carportWidth">Carport Bredde: *</label> <br>
+                    <select id="carportWidth" name="carportWidth">
+                        <option th:each="carportWidth: ${#ctx.carportWidth}" th:value="${carportWidth}"
+                                th:text="${carportWidth.width}"></option>
+                    </select> <br>
 
-        </nav>
+                    <label for="carportLength">Carport Længde: *</label> <br>
+                    <select id="carportLength" name="carportLength">
+                        <option th:each="carportLength: ${#ctx.carportLength}" th:value="${carportLength}"
+                                th:text="${carportLength.length}"></option>
+                    </select> <br>
 
-</header>
+                    <label for="roof">Carport Tag: *</label> <br>
+                    <select id="roof" name="roof">
+                        <option th:each="roof: ${#ctx.roof}" th:value="${roof}"
+                                th:text="${roof}"></option>
+                    </select> <br>
+                    <h3>Redskabsrum:</h3>
+                    <input type="radio" onclick="hideShed()" id="noShed" name="shed" value="noShed" checked/>
+                    <label for="noShed">Uden redskabsrum</label> <br>
+                    <input type="radio" onclick="showShed()" id="shed" name="shed" value="shed"/>
+                    <label for="shed">Med redskabsrum</label> <br>
+                    <div id="shedContent" style="display: none">
+                        <label for="shedWidth">Redskabsrum bredde:</label> <br>
+                        <select id="shedWidth" name="shedWidth">
+                            <option th:each="shedWidth: ${#ctx.shedWidth}" th:value="${shedWidth}"
+                                    th:text="${shedWidth.width}"></option>
+                        </select> <br>
+                        <label for="shedLength">Redskabsrum Længde:</label> <br>
+                        <select id="shedLength" name="shedLength">
+                            <option th:each="shedLength: ${#ctx.shedLength}" th:value="${length}"
+                                    th:text="${shedLength.length}"></option>
+                        </select> <br>
+                    </div> <br>
+                    <script>
 
-<h1>Bestil Quick-Byg tilbud - carport med fladt tag</h1><br>
-<h3>
-    Med et specialudviklet computerprogram kan vi lynhurtigt beregne prisen og udskrive en skitsetegning på en carport indenfor vores standardprogram.
-    Tilbud og skitsetegning fremsendes med post hurtigst muligt.
-    Ved bestilling medfølger standardbyggevejledning.
+                        function showShed() {
+                            var x = document.getElementById("shedContent");
+                            x.style.display = "block";
+                        }
 
-    Udfyld formularen omhyggeligt og klik på "Bestil tilbud".
-    Felter markeret med * SKAL udfyldes!</h3>
-<div id = "content ">
-<div class = "dropdownMenu">
-
-    <form id="order" method="post">
-
-    <label for ="carportWidth" >Carport Bredde: *</label> <br>
-    <select id="carportWidth" name="carportWidth">
-        <option th:each="carportWidth: ${#ctx.carportWidth}" th:value="${carportWidth}"
-                th:text="${carportWidth.width}"></option>
-    </select> <br>
-
-        <label for="carportLength">Carport Længde: *</label> <br>
-        <select id="carportLength" name="carportLength">
-            <option th:each="carportLength: ${#ctx.carportLength}" th:value="${carportLength}"
-                    th:text="${carportLength.length}"></option>
-        </select> <br>
-
-    <label for="roof">Carport Tag: *</label> <br>
-    <select id="roof" name="roof">
-        <option th:each="roof: ${#ctx.roof}" th:value="${roof}"
-                th:text="${roof}"></option>
-    </select> <br>
-
-
-
-   <p>Redskabsrum</p>
-
-        <input type="radio" onclick="hideShed()" id="noShed" name="shed" value="noShed" checked />
-        <label for="noShed">Uden redskabsrum</label><br>
-        <input type="radio" onclick="showShed()" id="shed" name="shed" value="shed"/>
-        <label for="shed">Med redskabsrum</label><br>
-
-
-        <div id="shedContent" style="display: none">
-        <p>NB! Der skal beregnes 15 cm tagudhæng på hver side af redskabsrummet*</p>
-
-        <label for="shedWidth">Redskabsrum bredde:</label> <br>
-        <select id="shedWidth" name="shedWidth">
-        <option th:each="shedWidth: ${#ctx.shedWidth}" th:value="${shedWidth}"
-                th:text="${shedWidth.width}"></option>
-        </select> <br>
-
-        <label for="shedLength">Redskabsrum Længde:</label> <br>
-        <select id="shedLength" name="shedLength">
-        <option th:each="shedLength: ${#ctx.shedLength}" th:value="${length}"
-                th:text="${shedLength.length}"></option>
-        </select> <br>
-        </div>
-
-        <script>
-
-        function showShed() {
-        var x = document.getElementById("shedContent");
-        x.style.display = "block";
-        }
-
-        function hideShed() {
-        var x = document.getElementById("shedContent");
-        x.style.display = "none";
-        }
-
-
-        </script>
-
-
-
-
-    <button id="order-btn" type="submit" formaction="/carport">Videre</button>
-    </form>
-
-
+                        function hideShed() {
+                            var x = document.getElementById("shedContent");
+                            x.style.display = "none";
+                        }
+                    </script>
+                    <button id="order-btn" type="submit" formaction="/carport">Videre</button> <br>
+                </form>
+            </div> <br>
+        </div> <br>
+        <div th:replace="~{fragments :: footer}"></div>
     </div>
 </div>
-
-<footer>
-    <section id="footer">
-        <table>
-        <tr>
-            <td>Kundeservice</td>
-            <td>Aktuelt</td>
-            <td>Om Fog</td>
-            <td>Om Fog</td>
-            <td>Med omtanke </td>
-        </tr>
-        <tr>
-            <td>16</td>
-            <td>14</td>
-            <td>10</td>
-            <td>Om Fog</td>
-            <td>Med omtanke </td>
-        </tr>
-        </table>
-    </section>
-</footer>
 </body>
 </html>

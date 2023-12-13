@@ -1,19 +1,14 @@
 package app.persistence;
 
-import app.entities.Materials;
-import app.entities.Order;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class MaterialMapper {
 
 
-    public static void getPrice(Materials material, int id, ConnectionPool connectionPool) {
+    public static  int getPrice(int id, ConnectionPool connectionPool) {
         try (Connection connection = connectionPool.getConnection()) {
             String sql = "SELECT sellprice FROM materials WHERE id = ?";
             try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -27,5 +22,6 @@ public class MaterialMapper {
         } catch (SQLException e) {
             throw new RuntimeException("Error getting material price: " + e.getMessage(), e);
         }
+        return id;
     }
 }

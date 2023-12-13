@@ -20,7 +20,7 @@
                     Udfyld formularen omhyggeligt og klik på "Bestil tilbud".
                     Felter markeret med * SKAL udfyldes!</h3> <br>
 
-                <form id="order" method="post">
+                <form id="order" method="post" action="/adresse">
                     <label for="carportWidth">Carport Bredde: *</label> <br>
                     <select id="carportWidth" name="carportWidth">
                         <option th:each="carportWidth: ${#ctx.carportWidth}" th:value="${carportWidth}"
@@ -67,7 +67,7 @@
                             x.style.display = "none";
                         }
                     </script>
-                    <button id="order-btn" type="submit" formaction="/carport">Videre</button> <br>
+                    <button id="order-btn" type="submit" >Videre</button> <br>
                 </form>
             </div> <br>
         </div> <br>

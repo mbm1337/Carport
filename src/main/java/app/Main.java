@@ -13,12 +13,8 @@ import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinThymeleaf;
 
 public class Main {
-    private static final String USER = "postgres";
-    private static final String PASSWORD = "gruppeg";
-    private static final String URL = "jdbc:postgresql://46.101.146.168:5432/%s?currentSchema=public";
-    private static final String DB = "carport";
-
-    private static final ConnectionPool connectionPool = ConnectionPool.getInstance(USER, PASSWORD, URL, DB);
+    
+    private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
 
     public static void main(String[] args)  {
         // Initializing Javalin and Jetty webserver

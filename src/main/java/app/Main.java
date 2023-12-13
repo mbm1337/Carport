@@ -30,6 +30,8 @@ public class Main {
         }).start(7070);
 
         // Routing
+        app.get("/", ctx -> ctx.render("index.html"));
+        app.post("/byg-selv", ctx -> CarportController.carportDropdowns(ctx, connectionPool));
         app.get("/byg-selv", ctx -> CarportController.carportDropdowns(ctx, connectionPool));
         app.post("/carport", ctx -> CarportController.makeCarport(ctx, connectionPool));
 
@@ -38,19 +40,12 @@ public class Main {
         app.post("/status", ctx -> OrderController.getStatus(ctx, connectionPool));
         app.post("/login", ctx -> UserController.login(ctx, connectionPool));
         app.get("/login", ctx -> ctx.render("login.html"));
-       // app.get("/createuser", ctx -> UserController.createuser(ctx, connectionPool));
+        // app.get("/createuser", ctx -> UserController.createuser(ctx, connectionPool));
         app.post("/createuser", ctx -> UserController.createuser(ctx, connectionPool));
         app.get("/createuser", ctx -> ctx.render("createuser.html"));
         //app.get("/carportone", ctx -> ctx.render("carportone.html"));
         app.get("/carportone", ctx -> ShippingController.getShippingInfoByZip(ctx, connectionPool));
         app.post("/carportone", ctx -> ShippingController.getShippingInfoByZip(ctx, connectionPool));
-
-        app.post("/insertingAnOrder", ctx -> OrderController.insertingAnOrder(ctx, connectionPool));
-        app.get("/insertingAnOrder", ctx -> ctx.render("order.html"));
-        app.post("/calculatePrice", ctx -> OrderController.calculatePrice(ctx, connectionPool));
-
-
-
 
 
 
@@ -71,9 +66,6 @@ public class Main {
         app.get("/adminCalc/{id}", ctx -> AdminController.getCalcMaterialsById(ctx, connectionPool));
         app.post("/adminCalc/{id}", ctx -> AdminController.getCalcMaterialsById(ctx, connectionPool));
         app.post("/adminCalc/{id}/edit", ctx -> AdminController.editCalcMaterials(ctx, connectionPool));
-
-
-
         app.get("/carport_size", ctx -> AdminController.getDimensions(ctx, connectionPool));
         app.post("/add_carportlength", ctx -> AdminController.addCarportLength(ctx, connectionPool));
         app.post("/add_carportwidth", ctx -> AdminController.addCarportWidth(ctx, connectionPool));

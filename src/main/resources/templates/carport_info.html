@@ -10,35 +10,39 @@
 
 <table>
 <tbody>
-<img class="carports_img" src="/public/images/carport_1.jpg" alt="Carport 1">
+<div th:each="standardCarport : ${standardCarport}">
 
-<form id="info" method="get">
+<!-- This should take the carports images and assign each image to the correct carport id -->
+<img class="carports_img" th:src="@{'/public/images/carport_' + ${standardCarport.id} + '.jpg'}" alt='Carports' />
 
-    <tr th:each="standardCarport : ${#ctx.session.containsKey(standardCarport)}">
-        <td th:text="${#ctx.session.merchandiser}">test</td>
-        <td th:text="${#ctx.session.productName}"></td>
-        <td th:text="${#ctx.session.price}"></td>
-        <td th:text="${#ctx.session.description}"></td>
+<form id="info" method="post">
+    <tr th:each="standardCarport : ${standardCarport}">
+        <td th:text="${standardCarport.merchandiser}">test</td>
+        <td th:text="${standardCarport.productname}"></td>
+        <td th:text="${standardCarport.price}"></td>
+        <td th:text="${standardCarport.description}"></td>
     </tr>
 </form>
-
-// Shipping info
-<form id="zip" method="post">
 
     <tr>
         <td>
-            <p>Indtast dit postnummer for at udregne leveringspris og leveringstid.</p>
-
-            <input  type="text" name="zip" placeholder="Postnummer">
-            <button type="submit" formaction="/carportone">Beregn</button>
+            <form id="zip" method="post">
+                <p>Indtast dit postnummer for at udregne leveringspris og leveringstid.</p>
+                <input  type="text" name="zip" placeholder="Postnummer">
+                <div>
+                <button type="submit">Beregn</button>
+                </div>
+            </form>
         </td>
     </tr>
+</div>
     <tr th:each="shipping : ${#ctx.session.containsKey(shipping)}">
-    <td th:text="${'Leveringspris: ' + #ctx.session.shippingPrice + ',-'}"></td>
-    <td th:text="${'Leveringstid: ' + #ctx.session.shippingTime + ' hverdage'}"></td>
-</tr>
-</form>
-</tbody>
-    </table>   
+    <td th:text="${'Leveringspris: ' + #ctx.shippingPrice + ',-'}"></td>
+    <td th:text="${'Leveringstid: ' + #ctx.shippingTime + ' hverdage'}"></td>
+    </tr>
+
+
+    </tbody>
+</table>
 
 </html>

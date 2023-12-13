@@ -29,11 +29,13 @@ public class Main {
         app.get("/", ctx -> CarportController.carportDropdowns(ctx, connectionPool));
         app.post("/carport", ctx -> CarportController.makeCarport(ctx, connectionPool));
 
-        //app.get("/carport_info", ctx -> ctx.render("carport_info.html"));
-        //app.get("/carport_info", ctx -> ShippingController.getShippingInfoByZip(ctx, connectionPool));
-        //app.post("/carport_info", ctx -> ShippingController.getShippingInfoByZip(ctx, connectionPool));
+        //app.get("/carport_info/{id}/{zip}", ctx -> ShippingController.getShippingInfoByZip(ctx, connectionPool));
+        app.get("/carport_info/{id}", ctx -> ShippingController.getShippingInfoByZip(ctx, connectionPool));
+        app.post("/carport_info/{id}", ctx -> ShippingController.getShippingInfoByZip(ctx, connectionPool));
+        app.post("/carport_info", ctx -> ShippingController.getShippingInfoByZip(ctx, connectionPool));
 
-        app.get("/carport_info/{id}", ctx -> StandardCarportController.getStandardCarport(ctx, connectionPool));
-        //app.post("/carport_info", ctx -> StandardCarportController.getStandardCarport(ctx, connectionPool));
+        app.get("/carports", ctx -> StandardCarportController.getStandardCarportsForFrontPage(ctx, connectionPool));
+        //app.get("/carport_info/{id}", ctx -> StandardCarportController.getStandardCarport(ctx, connectionPool));
+        //app.post("/carport_info/{id}", ctx -> StandardCarportController.getStandardCarport(ctx, connectionPool));
     }
 }

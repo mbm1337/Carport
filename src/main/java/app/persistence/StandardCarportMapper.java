@@ -38,5 +38,31 @@ public class StandardCarportMapper {
 
         return standardCarport;
     }
+
+    public static List<StandardCarport> getAllCarports(ConnectionPool connectionPool) throws DatabaseException {
+        List<StandardCarport> allCarports = new ArrayList<>();
+
+        String sql = "SELECT id, merchandiser, productname, price, description FROM carports";
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String merchandiser = rs.getString("merchandiser");
+                String productName = rs.getString("productname");
+                int price = rs.getInt("price");
+                String description = rs.getString("description");
+
+                allCarports.add(new StandardCarport(id, merchandiser, productName, price, description));
+            }
+
+        } catch (SQLException e) {
+            throw new DatabaseException("Couldn't fetch carports from the database: " + e.getMessage());
+        }
+
+        return allCarports;
+    }
 }
 

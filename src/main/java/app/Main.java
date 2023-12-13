@@ -30,6 +30,8 @@ public class Main {
         }).start(7070);
 
         // Routing
+        app.get("/", ctx -> ctx.render("index.html"));
+        app.post("/byg-selv", ctx -> CarportController.carportDropdowns(ctx, connectionPool));
         app.get("/byg-selv", ctx -> CarportController.carportDropdowns(ctx, connectionPool));
         app.post("/carport", ctx -> CarportController.makeCarport(ctx, connectionPool));
 
@@ -64,8 +66,6 @@ public class Main {
         app.get("/adminCalc/{id}", ctx -> AdminController.getCalcMaterialsById(ctx, connectionPool));
         app.post("/adminCalc/{id}", ctx -> AdminController.getCalcMaterialsById(ctx, connectionPool));
         app.post("/adminCalc/{id}/edit", ctx -> AdminController.editCalcMaterials(ctx, connectionPool));
-
-
         app.get("/carport_size", ctx -> AdminController.getDimensions(ctx, connectionPool));
         app.post("/add_carportlength", ctx -> AdminController.addCarportLength(ctx, connectionPool));
         app.post("/add_carportwidth", ctx -> AdminController.addCarportWidth(ctx, connectionPool));

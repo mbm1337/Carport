@@ -1,6 +1,7 @@
 package app.persistence;
 
-import app.entities.City;
+import app.entities.Material;
+import app.util.Calculator;
 import app.entities.Order;
 import app.exceptions.DatabaseException;
 
@@ -30,7 +31,7 @@ public class OrderMapper {
 
         return status;
     }
-    public static int insertOrder(Order order, ConnectionPool connectionPool) throws DatabaseException {
+    public static int insertOrder(Order order,double totalPrice, ConnectionPool connectionPool) throws DatabaseException {
         int newOrderId =0;
         try (Connection connection = connectionPool.getConnection()) {
             String sql = "INSERT INTO \"orders\" (user_id, orderdate,status,comments,price,length,width) VALUES (?,?,?,?,?,?,?)";
@@ -39,7 +40,7 @@ public class OrderMapper {
             ps.setTimestamp(2, new Timestamp(System.currentTimeMillis()));
             ps.setString(3, order.getStatus());
             ps.setString(4, order.getComment());
-            ps.setDouble(5, order.getPrice());
+            ps.setDouble(5, totalPrice);
             ps.setInt(6,order.getLength());
             ps.setInt(7, order.getWidth());
 
@@ -58,21 +59,18 @@ public class OrderMapper {
         }
 
     }
-    public static void createOrderDetailsDatabase(int newOrderId, int quanittyordered, int price, int materials_id, ConnectionPool connectionPool) throws DatabaseException {
+    public static void createOrderDetailsDatabase(int newOrderId, Order order, int id, int quantityordered, ConnectionPool connectionPool) throws DatabaseException {
         try (Connection connection = connectionPool.getConnection()) {
-            String sql = "INSERT INTO \"ordersdetails\" (ordernumber, quantityordered, price, materials_id) VALUES (?, ?, ?, ?)";
+            String sql = "INSERT INTO \"orderdetails\" (ordernumber, quantityordered, price, materials_id) VALUES (?, ?, ?, ?)";
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, newOrderId);
-            ps.setInt(2, quanittyordered);
-            ps.setInt(3, price);
-            ps.setInt(4, materials_id);
+            ps.setInt(2, quantityordered);
+            ps.setDouble(3, order.getPrice());
+            ps.setInt(4, id);
             ps.executeUpdate();
         } catch (SQLException e) {
             String msg = "Der er sket en fejl. Prøv igen";
             throw new DatabaseException(msg);
         }
     }
-
-
-
 }

@@ -1,5 +1,7 @@
 package app.persistence;
 
+import app.entities.Material;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,12 +18,14 @@ public class MaterialMapper {
                 try (ResultSet rs = ps.executeQuery()) {
                     if (rs.next()) {
                         int price = rs.getInt("sellprice");
+                        return price;
                     }
                 }
+
             }
         } catch (SQLException e) {
             throw new RuntimeException("Error getting material price: " + e.getMessage(), e);
         }
-        return id;
+        return 0;
     }
 }

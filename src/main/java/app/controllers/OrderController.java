@@ -6,6 +6,7 @@ import app.persistence.ConnectionPool;
 import app.persistence.MaterialMapper;
 import app.persistence.OrderMapper;
 
+import app.util.Calculator;
 import io.javalin.http.Context;
 
 import java.util.ArrayList;
@@ -24,21 +25,32 @@ public class OrderController {
             ctx.render("status.html");
         }
     }
-    public static void insertingAnOrder(Context ctx, ConnectionPool connectionpool, double total, int length, int width) throws DatabaseException {
-        Carport carport = ctx.sessionAttribute("carport");
-        User user = ctx.sessionAttribute("currentUser");
-        Order order = new Order("under process", total, length, width);
-
+    public static void insertingAnOrder(int totalPrice, Context ctx, ConnectionPool connectionpool) throws DatabaseException {
         try {
-           int neworderId = OrderMapper.insertOrder(order, connectionpool);
-         //  OrderMapper.createOrderDetailsDatabase();
+            List<Material> materials = ctx.sessionAttribute("quantityordered");
+
+            String comments = ctx.formParam("comments");
+            Carport carport = ctx.sessionAttribute("carport");
+            User user = ctx.sessionAttribute("currentUser");
+            Order order = new Order("under process", user.getId(), carport.getLength(), carport.getWidth(), comments);
+            int newOrderId = OrderMapper.insertOrder(order, totalPrice,connectionpool);
+
+
+            // Loop through the materials list and create order details
+            for (Material material : materials) {
+                OrderMapper.createOrderDetailsDatabase(newOrderId, order ,material.getId(), material.getQuantityordered(), connectionpool);
+            }
+
             ctx.render("price.html");
 
         } catch (NumberFormatException | DatabaseException e) {
-            ctx.attribute("we couldnt save the order " + e.getMessage());
+            // Handle errors
+            e.printStackTrace();
+            ctx.attribute("error_message", "We couldn't save the order: " + e.getMessage());
             ctx.render("adresse.html");
         }
     }
+
 
     public static double calculatePrice(Context ctx, ConnectionPool connectionPool) {
         List<Material> materials = new ArrayList<>();
@@ -74,14 +86,20 @@ public class OrderController {
         }
 
         int totalPrice = totalPostsCost + totalRaft + totalBeam;
+        materials.add(new Material(9,numberOfBeams));
+        materials.add(new Material(10, numberOfRafts));
+        materials.add(new Material(12, numberOfPosts));
 
+
+        ctx.sessionAttribute("quantityordered", materials);
 
         try {
-            OrderController.insertingAnOrder(ctx, connectionPool, totalPrice, length, width);
+            OrderController.insertingAnOrder(totalPrice,ctx, connectionPool);
         } catch (DatabaseException e) {
             // Handle exception if needed
             e.printStackTrace();
         }
+
 
         return totalPrice;
     }

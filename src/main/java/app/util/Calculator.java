@@ -1,4 +1,6 @@
-package app.entities;
+package app.util;
+
+import app.entities.Carport;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -57,11 +57,11 @@ public class Main {
 
         //admin funtioner
 
-        app.post("/updateUser", ctx -> AdminController.editBalance(ctx, connectionPool));
+
         app.post("/edit_matreriel/{id}", ctx -> AdminController.editMaterial(ctx, connectionPool));
         app.get("/ordre", ctx -> AdminController.getUsersAndOrders(ctx, connectionPool));
-        app.post("/tilbud/{ordernumber}", ctx -> AdminController.getOrderDetails(ctx, connectionPool));
-        app.get("/tilbud/{ordernumber}", ctx -> AdminController.getOrderDetails(ctx, connectionPool));
+
+
         app.get("/materials", ctx -> AdminController.getMaterial(ctx, connectionPool));
         app.post("/updatematerials/{id}", ctx -> AdminController.updateMaterial(ctx, connectionPool));
         app.get("/add_matreriel", ctx -> ctx.render("add_matreriel.html"));

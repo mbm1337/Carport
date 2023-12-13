@@ -23,7 +23,7 @@ public class UserController {
             if (isAdmin) {
                 ctx.redirect("/admin");
             } else {
-                ctx.redirect("/index");
+                ctx.redirect("/");
             }
         } catch (DatabaseException e) {
             ctx.attribute("message", e.getMessage());

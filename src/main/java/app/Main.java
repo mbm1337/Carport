@@ -31,7 +31,7 @@ public class Main {
         app.post("/carport", ctx -> CarportController.makeCarport(ctx, connectionPool));
 
 
-        app.post("/adresse",ctx-> ZipController.cityAndZip(ctx,connectionPool));
+        //app.post("/adresse",ctx-> ZipController.cityAndZip(ctx,connectionPool));
         app.post("/status", ctx -> OrderController.getStatus(ctx, connectionPool));
         app.post("/login", ctx -> UserController.login(ctx, connectionPool));
         app.get("/login", ctx -> ctx.render("login.html"));
@@ -41,9 +41,9 @@ public class Main {
         //app.get("/carportone", ctx -> ctx.render("carportone.html"));
         app.get("/carportone", ctx -> ShippingController.getShippingInfoByZip(ctx, connectionPool));
         app.post("/carportone", ctx -> ShippingController.getShippingInfoByZip(ctx, connectionPool));
-        app.get("/insertingAnOrder", ctx -> OrderController.insertingAnOrder(ctx, connectionPool));
+        app.post("/price", ctx -> OrderController.insertingAnOrder(ctx, connectionPool));
         app.post("/insertingAnOrder", ctx -> ctx.render("price.html"));
-        app.post("/calculatePrice", ctx -> OrderController.calculatePrice(ctx, connectionPool));
+        app.post("/adresse", ctx -> OrderController.calculatePrice(ctx, connectionPool));
 
 
 

@@ -30,14 +30,13 @@ public class OrderController {
     public static void insertingAnOrder(Context ctx, ConnectionPool connectionpool) throws DatabaseException {
 
         Carport carport = ctx.sessionAttribute("carport");
-        String comment = ctx.formParam("comment");
         int width = Integer.parseInt(ctx.formParam("carportWidth"));
         int length = Integer.parseInt(ctx.formParam("carportLength"));
         int shedWidth = Integer.parseInt(ctx.formParam("shedWidth"));
         int shedLength = Integer.parseInt(ctx.formParam("shedLength"));
 
         double total = calculatePrice(ctx, connectionpool);
-         Order order = new Order("under process",  total,  length,  width,  comment);
+         Order order = new Order("under process",  total,  length,  width);
 
 
 

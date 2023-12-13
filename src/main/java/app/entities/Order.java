@@ -13,6 +13,8 @@ public class Order {
     private int width;
     private String comment;
 
+
+
     public int getLength() {
         return length;
     }
@@ -32,12 +34,11 @@ public class Order {
         this.price = price;
     }
 
-    public Order(String status, double price, int length, int width, String comment) {
+    public Order(String status, double price, int length, int width) {
         this.status = status;
         this.price = price;
         this.length = length;
         this.width = width;
-        this.comment = comment;
     }
 
     public Order(int userId, String status, int price) {

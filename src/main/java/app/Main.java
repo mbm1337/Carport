@@ -1,12 +1,7 @@
 package app;
 
 import app.config.ThymeleafConfig;
-import app.controllers.AdminController;
-import app.controllers.ShippingController;
-import app.controllers.CarportController;
-import app.controllers.OrderController;
-import app.controllers.UserController;
-import app.controllers.ZipController;
+import app.controllers.*;
 import app.persistence.ConnectionPool;
 import app.persistence.OrderMapper;
 import io.javalin.Javalin;
@@ -78,7 +73,7 @@ public class Main {
 
 
 
-
+        app.get("/svg", SvgController::getSvg);
 
     }
 }

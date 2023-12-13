@@ -30,7 +30,8 @@ public class OrderMapper {
 
         return status;
     }
-    public static void insertOrder(Order order, ConnectionPool connectionPool) throws DatabaseException {
+    public static int insertOrder(Order order, ConnectionPool connectionPool) throws DatabaseException {
+        int newOrderId =0;
         try (Connection connection = connectionPool.getConnection()) {
             String sql = "INSERT INTO \"orders\" (user_id, orderdate,status,comments,price,length,width) VALUES (?,?,?,?,?,?,?)";
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -43,17 +44,25 @@ public class OrderMapper {
             ps.setInt(7, order.getWidth());
 
             int rs = ps.executeUpdate();
+            ResultSet generatedKeys = ps.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                newOrderId = generatedKeys.getInt(1);
+            }
+
+            return newOrderId;
+
+
         } catch (SQLException e) {
             String msg = "Der skete en fejl. Kan ikke oprette en ordre";
             throw new DatabaseException(msg);
         }
 
     }
-    public static void createOrderDetailsDatabase(int ordernumber, int quanittyordered, int price, int materials_id, ConnectionPool connectionPool) throws DatabaseException {
+    public static void createOrderDetailsDatabase(int newOrderId, int quanittyordered, int price, int materials_id, ConnectionPool connectionPool) throws DatabaseException {
         try (Connection connection = connectionPool.getConnection()) {
             String sql = "INSERT INTO \"ordersdetails\" (ordernumber, quantityordered, price, materials_id) VALUES (?, ?, ?, ?)";
             PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setInt(1, ordernumber);
+            ps.setInt(1, newOrderId);
             ps.setInt(2, quanittyordered);
             ps.setInt(3, price);
             ps.setInt(4, materials_id);

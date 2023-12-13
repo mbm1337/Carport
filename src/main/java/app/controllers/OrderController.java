@@ -30,7 +30,8 @@ public class OrderController {
         Order order = new Order("under process", total, length, width);
 
         try {
-            OrderMapper.insertOrder(order, connectionpool);
+           int neworderId = OrderMapper.insertOrder(order, connectionpool);
+         //  OrderMapper.createOrderDetailsDatabase();
             ctx.render("price.html");
 
         } catch (NumberFormatException | DatabaseException e) {

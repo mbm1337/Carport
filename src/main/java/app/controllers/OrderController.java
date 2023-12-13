@@ -2,6 +2,7 @@ package app.controllers;
 
 import app.entities.Calculator;
 import app.entities.Carport;
+import app.entities.Material;
 import app.entities.Order;
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
@@ -9,6 +10,9 @@ import app.persistence.MaterialMapper;
 import app.persistence.OrderMapper;
 
 import io.javalin.http.Context;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class OrderController {
     public static void getStatus(Context ctx, ConnectionPool connectionpool) {
@@ -49,6 +53,8 @@ public class OrderController {
 
     }
         public static double calculatePrice(Context ctx, ConnectionPool connectionPool) {
+            List<Material>materials = new ArrayList<>();
+
             Calculator calc = new Calculator();
             Carport carport = ctx.sessionAttribute("carport");
             int width = Integer.parseInt(ctx.formParam("carportWidth"));

@@ -23,13 +23,13 @@
                 <form id="order" method="post" action="/adresse">
                     <label for="carportWidth">Carport Bredde: *</label> <br>
                     <select id="carportWidth" name="carportWidth">
-                        <option th:each="carportWidth: ${#ctx.carportWidth}" th:value="${carportWidth}"
+                        <option th:each="carportWidth: ${#ctx.carportWidth}" th:value="${carportWidth.width}"
                                 th:text="${carportWidth.width}"></option>
                     </select> <br>
 
                     <label for="carportLength">Carport Længde: *</label> <br>
                     <select id="carportLength" name="carportLength">
-                        <option th:each="carportLength: ${#ctx.carportLength}" th:value="${carportLength}"
+                        <option th:each="carportLength: ${#ctx.carportLength}" th:value="${carportLength.length}"
                                 th:text="${carportLength.length}"></option>
                     </select> <br>
 
@@ -39,9 +39,9 @@
                                 th:text="${roof}"></option>
                     </select> <br>
                     <h3>Redskabsrum:</h3>
-                    <input type="radio" onclick="hideShed()" id="noShed" name="shed" value="noShed" checked/>
+                    <input type="radio" onclick="hideShed()" id="noShed" name="shed" th:value="noShed" checked/>
                     <label for="noShed">Uden redskabsrum</label> <br>
-                    <input type="radio" onclick="showShed()" id="shed" name="shed" value="shed"/>
+                    <input type="radio" onclick="showShed()" id="shed" name="shed" th:value="shed"/>
                     <label for="shed">Med redskabsrum</label> <br>
                     <div id="shedContent" style="display: none">
                         <label for="shedWidth">Redskabsrum bredde:</label> <br>

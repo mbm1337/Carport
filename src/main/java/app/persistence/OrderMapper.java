@@ -43,11 +43,6 @@ public class OrderMapper {
             ps.setInt(7, order.getWidth());
 
             int rs = ps.executeUpdate();
-            /*ResultSet generatedKeys = ps.getGeneratedKeys();
-            if (generatedKeys.next()) {
-                 generatedKeys.getInt(1);
-            }
-*/
         } catch (SQLException e) {
             String msg = "Der skete en fejl. Kan ikke oprette en ordre";
             throw new DatabaseException(msg);

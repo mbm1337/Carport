@@ -15,17 +15,24 @@ import java.util.List;
 public class UserMapper {
 
     public static User login(String email, String password, ConnectionPool connectionPool) throws DatabaseException {
-        String sql = "select * from \"user\" where email=? and password=?";
+        String sql = "SELECT * FROM \"user\" WHERE email=? AND password=?";
 
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement ps = connection.prepareStatement(sql)) {
                 ps.setString(1, email);
                 ps.setString(2, password);
                 ResultSet rs = ps.executeQuery();
+
                 if (rs.next()) {
                     int id = rs.getInt("id");
-                    boolean status = rs.getBoolean("admin");
-                    return new User (id, email, password, status);
+                    String firstName = rs.getString("forname");
+                    String lastName = rs.getString("aftername");
+                    String phoneNumber = rs.getString("phone");
+                    int zip = rs.getInt("zip");
+                    String address = rs.getString("address");
+                    boolean admin = rs.getBoolean("admin");
+
+                    return new User(id, firstName, lastName, phoneNumber, email, zip, address, admin, password);
                 } else
                 {
                     throw new DatabaseException("Fejl i login. Prøv igen.");

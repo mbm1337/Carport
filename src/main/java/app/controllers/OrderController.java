@@ -1,9 +1,6 @@
 package app.controllers;
 
-import app.entities.Calculator;
-import app.entities.Carport;
-import app.entities.Material;
-import app.entities.Order;
+import app.entities.*;
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
 import app.persistence.MaterialMapper;
@@ -27,20 +24,12 @@ public class OrderController {
             ctx.render("status.html");
         }
     }
-    public static void insertingAnOrder(Context ctx, ConnectionPool connectionpool) throws DatabaseException {
-
+    public static void insertingAnOrder(Context ctx, ConnectionPool connectionpool, double total, int length, int width) throws DatabaseException {
         Carport carport = ctx.sessionAttribute("carport");
-        int width = Integer.parseInt(ctx.formParam("carportWidth"));
-        int length = Integer.parseInt(ctx.formParam("carportLength"));
-        int shedWidth = Integer.parseInt(ctx.formParam("shedWidth"));
-        int shedLength = Integer.parseInt(ctx.formParam("shedLength"));
+        User user = ctx.sessionAttribute("currentUser");
+        Order order = new Order("under process", total, length, width);
 
-        double total = calculatePrice(ctx, connectionpool);
-         Order order = new Order("under process",  total,  length,  width);
-
-
-
-            try {
+        try {
             OrderMapper.insertOrder(order, connectionpool);
             ctx.render("price.html");
 
@@ -48,48 +37,54 @@ public class OrderController {
             ctx.attribute("we couldnt save the order " + e.getMessage());
             ctx.render("adresse.html");
         }
-
-
     }
-        public static double calculatePrice(Context ctx, ConnectionPool connectionPool) {
-            List<Material>materials = new ArrayList<>();
 
-            Calculator calc = new Calculator();
-            Carport carport = ctx.sessionAttribute("carport");
-            int width = Integer.parseInt(ctx.formParam("carportWidth"));
-            int length = Integer.parseInt(ctx.formParam("carportLength"));
+    public static double calculatePrice(Context ctx, ConnectionPool connectionPool) {
+        List<Material> materials = new ArrayList<>();
 
-            int spær600 = MaterialMapper.getPrice(9, connectionPool);
-            int spær480 = MaterialMapper.getPrice(10, connectionPool);
-            int posts = MaterialMapper.getPrice(12, connectionPool);
+        Calculator calc = new Calculator();
+        Carport carport = ctx.sessionAttribute("carport");
 
-            int numberOfPosts = calc.numberOfPosts(length);
-            int numberOfBeams = calc.beamAmount(length);
-            int numberOfRafts = calc.numberOfRaft(length, width);
+        int spaer600 = MaterialMapper.getPrice(9, connectionPool);
+        int spaer480 = MaterialMapper.getPrice(10, connectionPool);
+        int posts = MaterialMapper.getPrice(12, connectionPool);
 
-            int totalPostsCost = numberOfPosts * posts;
+        int length = carport.getLength();  // Hent længde fra session
+        int width = carport.getWidth();    // Hent bredde fra session
 
-            int totalRaft;
-            if (numberOfRafts >= 480) {
-                totalRaft = numberOfRafts * spær480;
-            } else {
-                totalRaft = numberOfRafts * spær600;
-            }
+        int numberOfPosts = calc.numberOfPosts(length);
+        int numberOfBeams = calc.beamAmount(length);
+        int numberOfRafts = calc.numberOfRaft(length, width);
 
-            int totalBeam;
-            if (numberOfBeams >= 480) {
-                totalBeam = numberOfBeams * spær480;
-            } else {
-                totalBeam = numberOfBeams * spær600;
-            }
+        int totalPostsCost = numberOfPosts * posts;
 
-            int totalPrice = totalPostsCost + totalRaft + totalBeam;
-
-            ctx.attribute("totalPrice", totalPrice);
-            carport = ctx.sessionAttribute("carport");
-
-            return totalPrice;
+        int totalRaft;
+        if (numberOfRafts >= 480) {
+            totalRaft = numberOfRafts * spaer480;
+        } else {
+            totalRaft = numberOfRafts * spaer600;
         }
 
+        int totalBeam;
+        if (numberOfBeams >= 480) {
+            totalBeam = numberOfBeams * spaer480;
+        } else {
+            totalBeam = numberOfBeams * spaer600;
+        }
 
+        int totalPrice = totalPostsCost + totalRaft + totalBeam;
+
+
+        try {
+            OrderController.insertingAnOrder(ctx, connectionPool, totalPrice, length, width);
+        } catch (DatabaseException e) {
+            // Handle exception if needed
+            e.printStackTrace();
+        }
+
+        return totalPrice;
     }
+
+}
+
+

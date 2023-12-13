@@ -14,19 +14,14 @@ public class UserController {
         try {
             User user = UserMapper.login(name, password, connectionPool);
 
-            // Set user attributes in the session
             ctx.sessionAttribute("currentUser", user);
             ctx.sessionAttribute("username", user.getFirstName());
-
-            // Set a role attribute in the session
             boolean isAdmin = user.isAdmin();
             ctx.sessionAttribute("isAdmin", isAdmin);
-
-            // Set a flag to indicate if default user menu should be hidden
             ctx.sessionAttribute("hideDefaultUserMenu", isAdmin);
 
             if (isAdmin) {
-                ctx.redirect("/materials");
+                ctx.redirect("/admin");
             } else {
                 ctx.redirect("/index");
             }

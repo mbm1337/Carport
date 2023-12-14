@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="../public/stylesheet.css">
 </head>
 
+<div th:replace="~{fragments :: head('carports')}"></div>
+
 <body>
 <div>
     <header>
@@ -22,7 +24,7 @@
 
 <div th:each="allCarports : ${allCarports}">
     <!-- This should take the carports images and assign each image to the correct carport id -->
-    <img class="carports_img" th:src="@{'/public/images/carport_' + ${allCarports.id} + '.jpg'}" alt='Carports' />
+    <img class="carports_img" th:src="@{'/images/carport_' + ${allCarports.id} + '.jpg'}" alt='Carports' />
 
     <tr>
         <td th:text="${allCarports.merchandiser}">test</td>
@@ -34,25 +36,7 @@
     </tr>
 </div>
 
-<footer>
-    <section id="footer">
-        <table>
-            <tr>
-                <td>Kundeservice</td>
-                <td>Aktuelt</td>
-                <td>Om Fog</td>
-                <td>Om Fog</td>
-                <td>Med omtanke </td>
-            </tr>
-            <tr>
-                <td>16</td>
-                <td>14</td>
-                <td>10</td>
-                <td>Om Fog</td>
-                <td>Med omtanke </td>
-            </tr>
-        </table>
-    </section>
-</footer>
+<div th:replace="~{fragments :: footer}"></div>
+
 </body>
 </html>

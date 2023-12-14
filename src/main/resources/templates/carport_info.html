@@ -6,24 +6,16 @@
     <title>Fog</title>
     <link rel="stylesheet" href="../public/stylesheet.css">
 </head>
-<body>
-<div>
-    <header>
-        <a href="index.html" class="logo">Fog</a>
 
-        <nav class="navigation">
-            <a href="/">Bolig & Design</a>
-            <a href="/">Byggermaterialer</a>
-            <a href="/">Kontakt</a>
-        </nav>
-    </header>
-</div>
+<div th:replace="~{fragments :: head('carport_info')}"></div>
+
+<body>
 <table>
     <tbody>
 <tr th:each="standardCarport : ${standardCarport}">
     <td>
         <!-- This should take the carports images and assign each image to the correct carport id -->
-        <img class="carports_img" th:src="@{'/public/images/carport_' + ${standardCarport.id} + '.jpg'}" alt='Carports' />
+        <img class="carports_img" th:src="@{'/images/carport_' + ${standardCarport.id} + '.jpg'}" alt='Carports' />
     </td>
 
     <tr th:each="standardCarport : ${standardCarport}">
@@ -44,27 +36,9 @@
         </tbody>
     </table>
 
-    <footer>
-        <section id="footer">
-            <table>
-                <tr>
-                    <td>Kundeservice</td>
-                    <td>Aktuelt</td>
-                    <td>Om Fog</td>
-                    <td>Om Fog</td>
-                    <td>Med omtanke </td>
-                </tr>
-                <tr>
-                    <td>16</td>
-                    <td>14</td>
-                    <td>10</td>
-                    <td>Om Fog</td>
-                    <td>Med omtanke </td>
-                </tr>
-            </table>
-        </section>
-    </footer>
+    <div th:replace="~{fragments :: footer}"></div>
 </div>
+
 </body>
 
 </html>

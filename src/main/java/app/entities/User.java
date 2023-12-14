@@ -82,6 +82,9 @@ public class User {
         return password;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
     // ... other getter methods ...
 
     @Override

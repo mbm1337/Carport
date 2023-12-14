@@ -46,9 +46,11 @@ public class OrderController {
             boolean admin = Boolean.parseBoolean(ctx.formParam("admin"));
 
             if (user == null) {
+                user=new User(0,navn,efternavn,phone,mail,zip,adresse,admin,password);
+                int userID= UserMapper.createUserGenerated(user,connectionpool);
+                userid = userID;
 
-                    user=new User(userid,navn,efternavn,phone,mail,zip,adresse,admin,password);
-                    int userID= UserMapper.createUserGenerated(user,connectionpool);
+
 
             }
 

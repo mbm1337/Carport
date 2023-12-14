@@ -5,9 +5,6 @@ import app.entities.User;
 import app.exceptions.DatabaseException;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 public class UserMapper {
 
@@ -98,7 +95,7 @@ public class UserMapper {
     }
 
     public static int createUserGenerated(User user, ConnectionPool connectionPool) throws DatabaseException {
-        int newUserId = 0;
+          int newUserId = 0;
 
         try (Connection connection = connectionPool.getConnection()) {
             String sql = "INSERT INTO \"user\" (forname, aftername, email, zip, address, admin, password, phone) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";

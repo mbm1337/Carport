@@ -29,3 +29,5 @@ public class MaterialMapper {
         return 0;
     }
 }
+//en stolbe et beslag og 10 skruer
+//et spær 2 beslag og 20 skruer

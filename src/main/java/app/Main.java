@@ -22,7 +22,7 @@ public class Main {
             config.staticFiles.add("/public");
             JavalinThymeleaf.init(ThymeleafConfig.templateEngine());
 
-        }).start(7070);
+        }).start(7079);
 
         // Routing
         app.get("/", ctx -> ctx.render("index.html"));

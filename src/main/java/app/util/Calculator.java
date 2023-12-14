@@ -1,6 +1,8 @@
 package app.util;
 
 import app.entities.Carport;
+import org.apache.batik.svggen.SVGGraphics2D;
+import org.apache.bcel.generic.ARETURN;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,22 +14,23 @@ import java.util.List;
 
 
         public int calculateArea(int width, int length) {
-            return width* length;
+            return width * length;
 
 
         }
 
         public int numberOfPosts(int carportlength) {
             int distanceBetweenPosts = 240;
+
             int totalpost = 0;
             if (carportlength - 30 <= 600) {
                 totalpost = 2 * 2;
-            } else if (carportlength- 30 < 600 && carportlength <= 800) {
+            } else if (carportlength - 30 < 600 && carportlength <= 800) {
                 totalpost = 3 * 2;
             } else {
                 if (carportlength - 30 < 800) {
-                    totalpost = (int) Math.ceil(carportlength/ distanceBetweenPosts );
-                    totalpost= totalpost *2;
+                    totalpost = (int) Math.ceil(carportlength / distanceBetweenPosts);
+                    totalpost = totalpost * 2;
 
 
                 }
@@ -37,17 +40,23 @@ import java.util.List;
 
 
         }
-        public int numberOfRaft(int carportLength, int carportWidth) {
-            int distanceBetweenRafts = 55;
 
-            int numberOfRafts = carportLength / distanceBetweenRafts;
+        public static int spaerAmount(int carportLength) {
+            //spær
 
-            if (carportLength % distanceBetweenRafts != 0) {
-                numberOfRafts++;
+            int numberOfRafts = (int) Math.ceil((double) carportLength / 55);
+
+
+            if( carportLength > 600) {
+                numberOfRafts = (numberOfRafts*2);
             }
 
             return numberOfRafts;
         }
+
+
+
+
 
 
         public static int beamAmount(int carportLength) {
@@ -64,25 +73,43 @@ import java.util.List;
             return numberOfrem + additionalRem;
         }
 
-        public int numberOfScrews (){
-            return numberOfScrews();
-        }
-        public void calculateMaterialsList(int carportLength, int carportWidth) {
-
-            int numberOfPosts = numberOfPosts(carportLength);
-            material.add(numberOfPosts);
-
-            int numberOfRafts = numberOfRaft(carportLength, carportWidth);
-            material.add(numberOfRafts);
-
-            int numberOfBeams = beamAmount(carportLength);
-
-            material.add(numberOfBeams);
-
-
+        public int screwPost(int carportLength) {
+            int screwsPerPost = 10;
+            int totalPosts = numberOfPosts(carportLength);
+            return totalPosts * screwsPerPost;
         }
 
+        public int screwSpaer(int length, int width) {
+            int screwsPerPost = 20;
+            int totalPosts = spaerAmount(length);
+            return totalPosts * screwsPerPost;
+        }
+
+        public int beslagPost(int length) {
+            int numberOfposts = numberOfPosts(length);
+
+            int beslagPost = numberOfposts;
 
 
-    }
+            return beslagPost;
+        }
+
+
+
+
+
+     public int beslagspaer(int length){
+
+             int numberOfbeslag = spaerAmount(length);
+
+             numberOfbeslag *= 2;
+
+             return numberOfbeslag;
+         }
+
+
+
+     }
+//en stolbe et beslag og 10 skruer
+//et spær 2 beslag og 20 skruer
 

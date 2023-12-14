@@ -1,8 +1,6 @@
 package app.util;
 
 import app.entities.Carport;
-import org.apache.batik.svggen.SVGGraphics2D;
-import org.apache.bcel.generic.ARETURN;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,7 +77,7 @@ import java.util.List;
             return totalPosts * screwsPerPost;
         }
 
-        public int screwSpaer(int length, int width) {
+        public int screwSpaer(int length) {
             int screwsPerPost = 20;
             int totalPosts = spaerAmount(length);
             return totalPosts * screwsPerPost;

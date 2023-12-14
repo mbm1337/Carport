@@ -45,13 +45,14 @@ public class OrderController {
 
             boolean admin = Boolean.parseBoolean(ctx.formParam("admin"));
 
+            User currentUser = ctx.sessionAttribute("currentUser");
             if (user == null) {
-                user=new User(0,navn,efternavn,phone,mail,zip,adresse,admin,password);
-                int userID= UserMapper.createUserGenerated(user,connectionpool);
+                user = new User(0, navn, efternavn, phone, mail, zip, adresse, admin, password);
+                int userID = UserMapper.createUserGenerated(user, connectionpool);
                 userid = userID;
 
-
-
+            }   else {
+                userid = user.getId();
             }
 
             Order order = new Order("under process", userid, carport.getLength(), carport.getWidth(), comments);
@@ -81,9 +82,10 @@ public class OrderController {
 
         int spaer600 = MaterialMapper.getPrice(9, connectionPool);
         int spaer480 = MaterialMapper.getPrice(10, connectionPool);
-        int posts = MaterialMapper.getPrice(12, connectionPool);
+        int priceOfposts = MaterialMapper.getPrice(12, connectionPool);
         int length = carport.getLength();  // Hent længde fra session
         int width = carport.getWidth();    // Hent bredde fra session
+
         int screwsPerPerPost =MaterialMapper.getPrice(22,connectionPool);
         int screwPerSpaer = MaterialMapper.getPrice(22,connectionPool);
         int beslagPerPost = MaterialMapper.getPrice(20,connectionPool);
@@ -92,32 +94,41 @@ public class OrderController {
 
         int numberOfPosts = calc.numberOfPosts(length);
         int numberOfBeams = calc.beamAmount(length);
-        int numberOfRafts = calc.spaerAmount(length);
+        int numberOfspaer = calc.spaerAmount(length);
+        int numberPerscrewPost = calc.screwPost(length);
+        int numberScrewPerSpaer = calc.screwSpaer(length);
+        int numberBeslagPerPost = calc.beslagPost(length);
+        int numberBeslagPerSpaer = calc.beslagspaer(length);
 
-        int totalPostsCost = numberOfPosts * posts;
+        int totalPostsCost = numberOfPosts * priceOfposts;
+        int totalScrewPerPost = numberOfPosts*numberPerscrewPost;
+        int totalScrewPerSPaer =numberOfspaer*numberScrewPerSpaer;
+        int totalBeslagPerPost = beslagPerPost*numberBeslagPerPost;
+        int totalBeslagPerSpaer = beslagPerSpaer*numberBeslagPerSpaer;
+
 
         int totalRaft;
-        if (numberOfRafts >= 480) {
-            totalRaft = numberOfRafts * spaer480;
+        if (length <= 480) {
+            totalRaft = numberOfspaer * spaer480;
         } else {
-            totalRaft = numberOfRafts * spaer600;
+            totalRaft = numberOfspaer * spaer600;
         }
 
         int totalBeam;
-        if (numberOfBeams >= 480) {
+        if (length <= 480) {
             totalBeam = numberOfBeams * spaer480;
         } else {
             totalBeam = numberOfBeams * spaer600;
         }
 
-        int totalPrice = totalPostsCost + totalRaft + totalBeam;
+        int totalPrice = totalPostsCost + totalRaft + totalBeam+totalScrewPerPost+totalBeslagPerPost+totalScrewPerSPaer+totalBeslagPerSpaer;
         materials.add(new Material(9,numberOfBeams));
-        materials.add(new Material(10, numberOfRafts));
+        materials.add(new Material(10, numberOfspaer));
         materials.add(new Material(12, numberOfPosts));
-        materials.add(new Material(22,screwsPerPerPost));
-        materials.add(new Material(22,screwPerSpaer));
-        materials.add(new Material(20,beslagPerPost));
-        materials.add(new Material(20,beslagPerSpaer));
+        materials.add(new Material(22,numberPerscrewPost));
+        materials.add(new Material(22,numberScrewPerSpaer));
+        materials.add(new Material(20,numberBeslagPerPost));
+        materials.add(new Material(20,numberOfspaer));
 
 
 

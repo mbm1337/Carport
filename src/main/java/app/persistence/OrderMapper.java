@@ -54,6 +54,8 @@ public class OrderMapper {
 
 
         } catch (SQLException e) {
+            e.printStackTrace();
+
             String msg = "Der skete en fejl. Kan ikke oprette en ordre";
             throw new DatabaseException(msg);
         }

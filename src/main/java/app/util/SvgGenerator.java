@@ -8,7 +8,9 @@ import org.w3c.dom.Document;
 import java.awt.*;
 import java.io.StringWriter;
 
-public class SvgGenerator {
+public class
+
+SvgGenerator {
 
     public static String generateSvg(double length, double width) throws SVGGraphics2DIOException {
         DOMImplementation domImpl = org.apache.batik.dom.GenericDOMImplementation.getDOMImplementation();

@@ -17,6 +17,7 @@ public class ConnectionPool {
     private static final String DEFAULT_URL = System.getenv("DBC_CONNECTION_STRING_STARTCODE");
     private static final String DEFAULT_DB = System.getenv("JDBC_DB");
 
+
     public static ConnectionPool instance = null;
     public static HikariDataSource ds = null;
 

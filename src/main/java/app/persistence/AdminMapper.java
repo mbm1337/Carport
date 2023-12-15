@@ -25,7 +25,6 @@ public class AdminMapper {
 
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
-
             while (rs.next()) {
                 User user = new User(
                         rs.getInt("id"),      // Brugerens ID

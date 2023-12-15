@@ -10,6 +10,16 @@ public class Material {
     private double buyPrice;
     private double purchasePrice;
 
+    private int quantityordered;
+
+    public Material(int id, int quantityordered) {
+
+        this.id = id;
+        this.quantityordered = quantityordered;
+
+
+    }
+
     public int getId() {
         return id;
     }
@@ -36,6 +46,11 @@ public class Material {
 
     public double getBuyPrice() {
         return buyPrice;
+    }
+
+
+    public int getQuantityordered() {
+        return quantityordered;
     }
 
     public double getPurchasePrice() {
@@ -76,6 +91,7 @@ public class Material {
                 ", quantityInStock=" + quantityInStock +
                 ", buyPrice=" + buyPrice +
                 ", purchasePrice=" + purchasePrice +
+                ", quantityordered=" + quantityordered +
                 '}';
     }
 }

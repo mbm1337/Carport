@@ -31,7 +31,7 @@ public class AdminMapper {
                         rs.getString("email"), // Brugerens email
                         rs.getString("forname"),
                         rs.getString("aftername"),
-                        rs.getString("phone"),
+                        rs.getInt("phone"),
                         rs.getInt("zip"),
                         rs.getString("address")
 

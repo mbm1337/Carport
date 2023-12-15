@@ -1,6 +1,5 @@
 package app.controllers;
 
-import app.entities.Carport;
 import app.entities.City;
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
@@ -8,7 +7,6 @@ import app.persistence.ZipMapper;
 import io.javalin.http.Context;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 

@@ -6,7 +6,6 @@ import app.entities.User;
 import app.exceptions.DatabaseException;
 import app.persistence.AdminMapper;
 import app.persistence.ConnectionPool;
-import app.persistence.UserMapper;
 import io.javalin.http.Context;
 
 import java.sql.SQLException;
@@ -59,11 +58,20 @@ public class AdminController {
 
 
     public static void getMaterial(Context ctx, ConnectionPool connectionPool) throws SQLException {
+        boolean isAdmin = false;
+        boolean isUser = false;
+
+        // Tjek om sessionen er tilgængelig
+        User currentUser = ctx.sessionAttribute("currentUser");
+        if (currentUser != null) {
+            isAdmin = currentUser.isAdmin();
+            isUser = true;
+        }
 
         List<Material> materials = AdminMapper.getMaterials(connectionPool);
         ctx.attribute("materials", materials);
 
-        ctx.render("materials.html");
+        ctx.render("materials.html", Map.of("isAdmin", isAdmin, "isUser", isUser));
 
     }
 

@@ -6,7 +6,6 @@ import app.entities.User;
 import app.exceptions.DatabaseException;
 import app.persistence.AdminMapper;
 import app.persistence.ConnectionPool;
-import app.persistence.UserMapper;
 import io.javalin.http.Context;
 
 import java.sql.SQLException;

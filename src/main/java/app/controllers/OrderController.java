@@ -9,7 +9,6 @@ import app.persistence.OrderMapper;
 import app.persistence.UserMapper;
 import app.util.Calculator;
 import io.javalin.http.Context;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;

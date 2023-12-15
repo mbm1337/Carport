@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<div th:replace="~{fragments :: head('materials')}"></div>
+
+<body>
+
+<div id="page-container">
+    <div id="page-content">
+        <div th:replace="~{fragments :: header('materials')}"></div>
+        <h1>Materials</h1>
+    <table id="sortable-table">
+        <a href="/add_matreriel"><button type="button">tilføj nyt produkt</button></a>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Product Name</th>
+            <th>Product Type</th>
+            <th>Product Size</th>
+            <th>Unit</th>
+            <th>Quantity in Stock</th>
+            <th>sales Price</th>
+            <th>Purchase Price</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="material : ${#ctx.materials}">
+            <td th:text="${material.id}"></td>
+            <td th:text="${material.productName}"></td>
+            <td th:text="${material.productType}"></td>
+            <td th:text="${material.productSize}"></td>
+            <td th:text="${material.unit}"></td>
+            <td th:text="${material.quantityInStock}"></td>
+            <td th:text="${material.buyPrice}"></td>
+            <td th:text="${material.purchasePrice}"></td>
+            <td>
+                <form method="post" th:action="@{'/edit_matreriel/' + ${material.id}}">
+                    <button type="submit">Rediger</button>
+                </form>
+                <form method="post" th:action="@{'/delete_matreriel/' + ${material.id}}" id="deleteForm"
+                      th:attr="onsubmit='return confirmDelete(\'' + ${material.productName} + '\')'">
+                    <button type="submit">Slet</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+
+        <div th:replace="~{fragments :: footer}"></div>
+    </div>
+</div>
+</body>
+</html>
+
+
+
+
+<script>
+    function confirmDelete(materialId) {
+        console.log('Material ID:', materialId);
+
+        var userConfirmed = confirm("Er du sikker på, at du vil slette " + materialId + "?");
+
+        return userConfirmed;
+    }
+</script>

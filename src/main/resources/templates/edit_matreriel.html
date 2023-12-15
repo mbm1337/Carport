@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<div th:replace="~{fragments :: head('materials')}"></div>
+
+<body>
+
+<div id="page-container">
+    <div id="page-content">
+        <div th:replace="~{fragments :: header('materials')}"></div>
+        <form method="post" th:action="@{'/updatematerials/' + ${material.id}}" th:object="${materials}" >
+            <table  class="indhold-box">
+
+                <tbody>
+                <tr>
+                    <td>ID:</td>
+                    <td><input type="text" name="id" th:value="${material.id}" readonly="readonly" /></td>
+                </tr>
+                <tr>
+                    <td>Product Name:</td>
+                    <td><input type="text" name="productName" th:value="${material.productName}" /></td>
+                </tr>
+                <tr>
+                    <td>Product Type:</td>
+                    <td><input type="text" name="productType" th:value="${material.productType}" /></td>
+                </tr>
+                <tr>
+                    <td>Product Size:</td>
+                    <td><input type="text" name="productSize" th:value="${material.productSize}" /></td>
+                </tr>
+                <tr>
+                    <td>Unit:</td>
+                    <td><input type="text" name="unit" th:value="${material.unit}" /></td>
+                </tr>
+                <tr>
+                    <td>Quantity in Stock:</td>
+                    <td><input type="text" name="quantityInStock" th:value="${material.quantityInStock}" /></td>
+                </tr>
+                <tr>
+                    <td>Sales Price:</td>
+                    <td><input type="text" name="buyPrice" th:value="${material.buyPrice}" /></td>
+                </tr>
+                <tr>
+                    <td>Purchase Price:</td>
+                    <td><input type="text" name="purchasePrice" th:value="${material.purchasePrice}" /></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <button type="submit">Gem ændringer</button>
+            <a href="/materials"><button type="button">Tilbage</button></a>
+        </form>
+
+
+
+        <div th:replace="~{fragments :: footer}"></div>
+    </div>
+</div>
+</body>
+</html>

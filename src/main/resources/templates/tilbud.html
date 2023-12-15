@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<div th:replace="~{fragments :: head('materials')}"></div>
+
+<body>
+
+<div id="page-container">
+    <div id="page-content">
+        <div th:replace="~{fragments :: header('materials')}"></div>
+        <table id="sortable-table">
+            <div id = 'orderContent'>
+
+                <table border="1">
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Order Date</th>
+                        <th>Status</th>
+                        <th>Comments</th>
+                        <th>User ID</th>
+                        <th>Order Price</th>
+                        <th>Materials ID</th>
+                        <th>Quantity Ordered</th>
+                        <th>Detail Price</th>
+                    </tr>
+
+                    <tr th:each="admin : ${#ctx.admin}">
+                        <td th:text="${admin.orderId}"></td>
+                        <td th:text="${admin.orderDate}"></td>
+                        <td th:text="${admin.status}"></td>
+                        <td th:text="${admin.comments}"></td>
+                        <td th:text="${admin.userId}"></td>
+                        <td th:text="${admin.orderPrice}"></td>
+                        <td th:text="${admin.materialsId}"></td>
+                        <td th:text="${admin.quantityOrdered}"></td>
+                        <td th:text="${admin.detailPrice}"></td>
+                    </tr>
+                </table>
+
+                <form method="post" action="/updateUser">
+                    <div>
+                        <label for="newBalance">Nyt saldo:</label>
+                    </div>
+                    <input type="text" id="newBalance" name="newPrice" th:value="${#ctx.admin[0].orderPrice}" />
+                    <button type="submit">Gem ændringer</button>
+                </form>
+
+
+            </div>
+        </table>
+
+
+        <div th:replace="~{fragments :: footer}"></div>
+    </div>
+</div>
+</body>
+</html>

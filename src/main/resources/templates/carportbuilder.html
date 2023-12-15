@@ -20,7 +20,7 @@
                     Udfyld formularen omhyggeligt og klik på "Bestil tilbud".
                     Felter markeret med * SKAL udfyldes!</h3> <br>
 
-                <form id="order" method="post" action="/adresse">
+                <form id="order" method="post" action="/carport">
                     <label for="carportWidth">Carport Bredde: *</label> <br>
                     <select id="carportWidth" name="carportWidth">
                         <option th:each="carportWidth: ${#ctx.carportWidth}" th:value="${carportWidth.width}"
@@ -51,12 +51,12 @@
                     <div id="shedContent" style="display: none">
                         <label for="shedWidth">Redskabsrum bredde:</label> <br>
                         <select id="shedWidth" name="shedWidth">
-                            <option th:each="shedWidth: ${#ctx.shedWidth}" th:value="${shedWidth}"
+                            <option th:each="shedWidth: ${#ctx.shedWidth}" th:value="${shedWidth.width}"
                                     th:text="${shedWidth.width}"></option>
                         </select> <br>
                         <label for="shedLength">Redskabsrum Længde:</label> <br>
                         <select id="shedLength" name="shedLength">
-                            <option th:each="shedLength: ${#ctx.shedLength}" th:value="${length}"
+                            <option th:each="shedLength: ${#ctx.shedLength}" th:value="${shedLength.length}"
                                     th:text="${shedLength.length}"></option>
                         </select> <br>
                     </div> <br>

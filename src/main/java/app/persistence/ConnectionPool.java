@@ -12,11 +12,11 @@ import java.util.logging.Logger;
  * Singleton pattern applied to handling a Hikari ConnectionPool
  */
 public class ConnectionPool {
-    // TODO: Change default access credentials for MySql server as needed below:
-    private static final String DEFAULT_USER = "";
-    private static final String DEFAULT_PASSWORD = "";
-    private static final String DEFAULT_URL = "";
-    private static final String DEFAULT_DB = "";
+    private static final String DEFAULT_USER = System.getenv("JDBC_USER");
+    private static final String DEFAULT_PASSWORD = System.getenv("JDBC_PASSWORD");
+    private static final String DEFAULT_URL = System.getenv("DBC_CONNECTION_STRING_STARTCODE");
+    private static final String DEFAULT_DB = System.getenv("JDBC_DB");
+
 
     public static ConnectionPool instance = null;
     public static HikariDataSource ds = null;

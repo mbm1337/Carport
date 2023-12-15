@@ -15,12 +15,8 @@ import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinThymeleaf;
 
 public class Main {
-    private static final String USER = "";
-    private static final String PASSWORD = "";
-    private static final String URL = "";
-    private static final String DB = "";
-
-    private static final ConnectionPool connectionPool = ConnectionPool.getInstance(USER, PASSWORD, URL, DB);
+    
+    private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
 
     public static void main(String[] args)  {
         // Initializing Javalin and Jetty webserver

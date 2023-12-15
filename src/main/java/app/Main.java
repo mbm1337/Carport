@@ -1,6 +1,8 @@
 package app;
 
 import app.config.ThymeleafConfig;
+
+import app.controllers.*;
 import app.controllers.AdminController;
 import app.controllers.ShippingController;
 import app.controllers.StandardCarportController;
@@ -71,6 +73,8 @@ public class Main {
         app.post("/delete_carportwidth/{id}", ctx -> AdminController.deleteCarportWidth(ctx, connectionPool));
         app.post("/delete_shedlength/{id}", ctx -> AdminController.deleteShedLength(ctx, connectionPool));
         app.post("/delete_shedwidth/{id}", ctx -> AdminController.deleteShedWidth(ctx, connectionPool));
+
+        app.get("/svg", SvgController::getSvg);
 
     }
 }

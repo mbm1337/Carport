@@ -35,9 +35,7 @@ public class Main {
         app.get("/byg-selv", ctx -> CarportController.carportDropdowns(ctx, connectionPool));
         app.post("/carport", ctx -> CarportController.makeCarport(ctx, connectionPool));
         //app.post("/adresse",ctx-> ZipController.cityAndZip(ctx,connectionPool));
-
         app.post("/adresse",ctx-> ZipController.cityAndZip(ctx,connectionPool));
-
         app.post("/status", ctx -> OrderController.getStatus(ctx, connectionPool));
         app.post("/login", ctx -> UserController.login(ctx, connectionPool));
         app.get("/login", ctx -> ctx.render("login.html"));
@@ -49,11 +47,12 @@ public class Main {
         app.post("/carportone", ctx -> ShippingController.getShippingInfoByZip(ctx, connectionPool));
         app.post("/price", ctx -> OrderController.calculatePrice(ctx, connectionPool));
         app.post("/insertingAnOrder", ctx -> ctx.render("price.html"));
-        app.post("/adresse", ctx -> CarportController.makeCarport(ctx, connectionPool));
         app.get("/carports", ctx -> StandardCarportController.getStandardCarportsForFrontPage(ctx, connectionPool));
         app.post("/carport_info/{id}", ctx -> StandardCarportController.getStandardCarport(ctx, connectionPool));
         app.post("/shipping_cal", ctx -> ShippingController.getShippingInfoByZip(ctx, connectionPool));
         app.get("/shipping_cal", ctx -> ShippingController.getShippingInfoByZip(ctx, connectionPool));
+        app.get("/svg", SvgController::getSvg);
+
 
         //admin funtioner
 
@@ -81,7 +80,7 @@ public class Main {
         app.post("/delete_shedlength/{id}", ctx -> AdminController.deleteShedLength(ctx, connectionPool));
         app.post("/delete_shedwidth/{id}", ctx -> AdminController.deleteShedWidth(ctx, connectionPool));
 
-        app.get("/svg", SvgController::getSvg);
+
 
     }
 }

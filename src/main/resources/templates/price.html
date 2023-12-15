@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Order Confirmation</title>
+</head>
+<body>
+<h1>Order Confirmation</h1>
+
+<p>Order Details:</p>
+<ul>
+  <li>Carport Width: <span th:text="${width}"></span></li>
+  <li>Carport Length: <span th:text="${length}"></span></li>
+  <li>Total Price: <span th:text="${totalprice}"></span></li>
+</ul>
+
+<p>Materials:</p>
+<ul>
+  <li th:each="material : ${materials}">
+    <span th:text="${material.name}"></span>: <span th:text="${material.quantity}"></span>
+  </li>
+</ul>
+
+</body>
+</html>

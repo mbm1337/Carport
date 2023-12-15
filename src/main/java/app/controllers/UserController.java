@@ -10,19 +10,20 @@ public class UserController {
     public static void login(Context ctx, ConnectionPool connectionPool) {
         String name = ctx.formParam("username");
         String password = ctx.formParam("password");
+
         try {
-            boolean isadmin = UserMapper.login(name, password, connectionPool).isAdmin();
             User user = UserMapper.login(name, password, connectionPool);
+
             ctx.sessionAttribute("currentUser", user);
             ctx.sessionAttribute("username", user.getFirstName());
-            ctx.sessionAttribute("status", user.isAdmin());
-            if (isadmin) {
+            boolean isAdmin = user.isAdmin();
+            ctx.sessionAttribute("isAdmin", isAdmin);
+            ctx.sessionAttribute("hideDefaultUserMenu", isAdmin);
+
+            if (isAdmin) {
                 ctx.redirect("/admin");
             } else {
-
-                ctx.redirect("/index");
-
-
+                ctx.redirect("/");
             }
         } catch (DatabaseException e) {
             ctx.attribute("message", e.getMessage());
@@ -36,7 +37,7 @@ public class UserController {
         String aftername = ctx.formParam("aftername");
         String email = ctx.formParam("email");
         int zip = Integer.parseInt(ctx.formParam("zip"));
-        String adress =(ctx.formParam("adress"));
+        String adress =(ctx.formParam("address"));
         boolean admin = Boolean.parseBoolean(ctx.formParam("admin"));
         String password1 = ctx.formParam("password1");
         String password2 = ctx.formParam("password2");

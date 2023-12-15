@@ -1,18 +1,17 @@
 package app.entities;
 
-
 public class User {
     private int id;
     private String firstName;
     private String lastName;
-    private String phoneNumber;
+    private int phoneNumber; // Changed to int
     private String email;
     private int zip;
     private String address;
     private boolean admin;
     private String password;
 
-    public User(int id, String firstName, String lastName, String phoneNumber, String email, int zip, String address, boolean admin, String password) {
+    public User(int id, String firstName, String lastName, int phoneNumber, String email, int zip, String address, boolean admin, String password) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -24,7 +23,7 @@ public class User {
         this.password = password;
     }
 
-    public User(int id, String email, String firstName, String lastName, String phoneNumber, int zip, String address) {
+    public User(int id, String email, String firstName, String lastName, int phoneNumber, int zip, String address) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -32,9 +31,7 @@ public class User {
         this.email = email;
         this.zip = zip;
         this.address = address;
-
     }
-
 
     public User(int id, String email) {
         this.id = id;
@@ -49,8 +46,6 @@ public class User {
         this.admin = admin;
     }
 
-
-
     public int getId() {
         return id;
     }
@@ -63,7 +58,7 @@ public class User {
         return lastName;
     }
 
-    public String getPhoneNumber() {
+    public int getPhoneNumber() {
         return phoneNumber;
     }
 
@@ -86,6 +81,11 @@ public class User {
     public String getPassword() {
         return password;
     }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    // ... other getter methods ...
 
     @Override
     public String toString() {

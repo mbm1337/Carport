@@ -1,19 +1,24 @@
 package app;
 
 import app.config.ThymeleafConfig;
+
 import app.controllers.*;
+import app.controllers.AdminController;
+import app.controllers.ShippingController;
+import app.controllers.StandardCarportController;
+import app.entities.StandardCarport;
+import app.controllers.CarportController;
+import app.controllers.OrderController;
+import app.controllers.UserController;
+import app.controllers.ZipController;
 import app.persistence.ConnectionPool;
 import app.persistence.OrderMapper;
 import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinThymeleaf;
 
 public class Main {
-    private static final String USER = "";
-    private static final String PASSWORD = "gruppeg";
-    private static final String URL = "jdbc:postgresql://46.101.146.168:5432/%s?currentSchema=public";
-    private static final String DB = "carport";
-
-    private static final ConnectionPool connectionPool = ConnectionPool.getInstance(USER, PASSWORD, URL, DB);
+    
+    private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
 
     public static void main(String[] args)  {
         // Initializing Javalin and Jetty webserver
@@ -29,9 +34,8 @@ public class Main {
         app.post("/byg-selv", ctx -> CarportController.carportDropdowns(ctx, connectionPool));
         app.get("/byg-selv", ctx -> CarportController.carportDropdowns(ctx, connectionPool));
         app.post("/carport", ctx -> CarportController.makeCarport(ctx, connectionPool));
-
-
         //app.post("/adresse",ctx-> ZipController.cityAndZip(ctx,connectionPool));
+        app.post("/adresse",ctx-> ZipController.cityAndZip(ctx,connectionPool));
         app.post("/status", ctx -> OrderController.getStatus(ctx, connectionPool));
         app.post("/login", ctx -> UserController.login(ctx, connectionPool));
         app.get("/login", ctx -> ctx.render("login.html"));
@@ -43,10 +47,11 @@ public class Main {
         app.post("/carportone", ctx -> ShippingController.getShippingInfoByZip(ctx, connectionPool));
         app.post("/price", ctx -> OrderController.calculatePrice(ctx, connectionPool));
         app.post("/insertingAnOrder", ctx -> ctx.render("price.html"));
-        app.post("/adresse", ctx -> CarportController.makeCarport(ctx, connectionPool));
-
-
-
+        app.get("/carports", ctx -> StandardCarportController.getStandardCarportsForFrontPage(ctx, connectionPool));
+        app.post("/carport_info/{id}", ctx -> StandardCarportController.getStandardCarport(ctx, connectionPool));
+        app.post("/shipping_cal", ctx -> ShippingController.getShippingInfoByZip(ctx, connectionPool));
+        app.get("/shipping_cal", ctx -> ShippingController.getShippingInfoByZip(ctx, connectionPool));
+        app.get("/svg", SvgController::getSvg);
 
 
         //admin funtioner
@@ -76,8 +81,6 @@ public class Main {
         app.post("/delete_shedwidth/{id}", ctx -> AdminController.deleteShedWidth(ctx, connectionPool));
 
 
-
-        app.get("/svg", SvgController::getSvg);
 
     }
 }

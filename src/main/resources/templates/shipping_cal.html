@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fog</title>
+    <link rel="stylesheet" href="../public/stylesheet.css">
+</head>
+
+<div>
+    <header>
+        <a href="index.html" class="logo">Fog</a>
+
+        <nav class="navigation">
+            <a href="/">Bolig & Design</a>
+            <a href="/">Byggermaterialer</a>
+            <a href="/">Kontakt</a>
+        </nav>
+    </header>
+</div>
+
+<tbody>
+<tr>
+    <td>
+        <form id="zip" method="post">
+            <p>Indtast dit postnummer for at udregne leveringspris og leveringstid.</p>
+            <input  type="text" name="zip" placeholder="Postnummer">
+            <div>
+                <button type="submit">Beregn</button>
+            </div>
+        </form>
+    </td>
+</tr>
+
+<tr th:each="shipping : ${#ctx.session.containsKey(shipping)}">
+    <td th:text="${'Leveringspris: ' + #ctx.shippingPrice + ',-'}"></td>
+    <td th:text="${'Leveringstid: ' + #ctx.shippingTime + ' hverdage'}"></td>
+</tr>
+
+<footer>
+    <section id="footer">
+        <table>
+            <tr>
+                <td>Kundeservice</td>
+                <td>Aktuelt</td>
+                <td>Om Fog</td>
+                <td>Om Fog</td>
+                <td>Med omtanke </td>
+            </tr>
+            <tr>
+                <td>16</td>
+                <td>14</td>
+                <td>10</td>
+                <td>Om Fog</td>
+                <td>Med omtanke </td>
+            </tr>
+        </table>
+    </section>
+</footer>
+</tbody>
+</html>

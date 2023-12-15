@@ -1,6 +1,5 @@
 package app.entities;
 
-import java.util.logging.XMLFormatter;
 
 public class Carport {
     private int id;

@@ -1,19 +1,24 @@
 package app;
 
 import app.config.ThymeleafConfig;
+
 import app.controllers.*;
+import app.controllers.AdminController;
+import app.controllers.ShippingController;
+import app.controllers.StandardCarportController;
+import app.entities.StandardCarport;
+import app.controllers.CarportController;
+import app.controllers.OrderController;
+import app.controllers.UserController;
+import app.controllers.ZipController;
 import app.persistence.ConnectionPool;
 import app.persistence.OrderMapper;
 import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinThymeleaf;
 
 public class Main {
-    private static final String USER = "postgres";
-    private static final String PASSWORD = "gruppeg";
-    private static final String URL = "jdbc:postgresql://46.101.146.168:5432/%s?currentSchema=public";
-    private static final String DB = "carport";
-
-    private static final ConnectionPool connectionPool = ConnectionPool.getInstance(USER, PASSWORD, URL, DB);
+    
+    private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
 
     public static void main(String[] args)  {
         // Initializing Javalin and Jetty webserver
@@ -25,10 +30,10 @@ public class Main {
         }).start(7070);
 
         // Routing
+        app.get("/", ctx -> ctx.render("index.html"));
+        app.post("/byg-selv", ctx -> CarportController.carportDropdowns(ctx, connectionPool));
         app.get("/byg-selv", ctx -> CarportController.carportDropdowns(ctx, connectionPool));
         app.post("/carport", ctx -> CarportController.makeCarport(ctx, connectionPool));
-
-
         app.post("/adresse",ctx-> ZipController.cityAndZip(ctx,connectionPool));
         app.post("/status", ctx -> OrderController.getStatus(ctx, connectionPool));
         app.post("/login", ctx -> UserController.login(ctx, connectionPool));
@@ -39,10 +44,10 @@ public class Main {
         //app.get("/carportone", ctx -> ctx.render("carportone.html"));
         app.get("/carportone", ctx -> ShippingController.getShippingInfoByZip(ctx, connectionPool));
         app.post("/carportone", ctx -> ShippingController.getShippingInfoByZip(ctx, connectionPool));
-
-
-
-
+        app.get("/carports", ctx -> StandardCarportController.getStandardCarportsForFrontPage(ctx, connectionPool));
+        app.post("/carport_info/{id}", ctx -> StandardCarportController.getStandardCarport(ctx, connectionPool));
+        app.post("/shipping_cal", ctx -> ShippingController.getShippingInfoByZip(ctx, connectionPool));
+        app.get("/shipping_cal", ctx -> ShippingController.getShippingInfoByZip(ctx, connectionPool));
         //admin funtioner
 
         app.post("/updateUser", ctx -> AdminController.editBalance(ctx, connectionPool));
@@ -59,18 +64,15 @@ public class Main {
         app.get("/adminCalc/{id}", ctx -> AdminController.getCalcMaterialsById(ctx, connectionPool));
         app.post("/adminCalc/{id}", ctx -> AdminController.getCalcMaterialsById(ctx, connectionPool));
         app.post("/adminCalc/{id}/edit", ctx -> AdminController.editCalcMaterials(ctx, connectionPool));
-
-
         app.get("/carport_size", ctx -> AdminController.getDimensions(ctx, connectionPool));
         app.post("/add_carportlength", ctx -> AdminController.addCarportLength(ctx, connectionPool));
-        /*app.post("/add_carportwidth", ctx -> AdminController.addCarportWidth(ctx, connectionPool));
+        app.post("/add_carportwidth", ctx -> AdminController.addCarportWidth(ctx, connectionPool));
         app.post("/add_shedlength", ctx -> AdminController.addShedLength(ctx, connectionPool));
         app.post("/add_shedwidth", ctx -> AdminController.addShedWidth(ctx, connectionPool));
         app.post("/delete_carportlength/{id}", ctx -> AdminController.deleteCarportLength(ctx, connectionPool));
         app.post("/delete_carportwidth/{id}", ctx -> AdminController.deleteCarportWidth(ctx, connectionPool));
         app.post("/delete_shedlength/{id}", ctx -> AdminController.deleteShedLength(ctx, connectionPool));
-        app.post("/delete_shedwidth/{id}", ctx -> AdminController.deleteShedWidth(ctx, connectionPool));*/
-
+        app.post("/delete_shedwidth/{id}", ctx -> AdminController.deleteShedWidth(ctx, connectionPool));
 
         app.get("/svg", SvgController::getSvg);
 

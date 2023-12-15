@@ -1,13 +1,14 @@
 package app.entities;
 
 public class StandardCarport {
+
     private int id;
     private String merchandiser;
     private String productName;
     private int price;
     private String description;
 
-    public StandardCarport(int id, String merchandiser, String productName, int price, String description) {
+    public StandardCarport(int id, String merchandiser, String productName, int price, String description)  {
         this.id = id;
         this.merchandiser = merchandiser;
         this.productName = productName;

@@ -158,8 +158,50 @@ public class AdminController {
     }
 
     public static void addCarportLength(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
-        int length = Integer.parseInt(ctx.formParam("length"));
+        int length = Integer.parseInt(ctx.formParam("carportLength"));
         AdminMapper.addCarportLength(length, connectionPool);
+        ctx.redirect("/carport_size");
+    }
+
+    public static void addCarportWidth(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+        int width = Integer.parseInt(ctx.formParam("carportWidth"));
+        AdminMapper.addCarportWidth(width, connectionPool);
+        ctx.redirect("/carport_size");
+    }
+
+    public static void addShedLength(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+        int length = Integer.parseInt(ctx.formParam("shedLength"));
+        AdminMapper.addShedLength(length, connectionPool);
+        ctx.redirect("/carport_size");
+    }
+
+    public static void addShedWidth(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+        int width = Integer.parseInt(ctx.formParam("shedWidth"));
+        AdminMapper.addShedWidth(width, connectionPool);
+        ctx.redirect("/carport_size");
+    }
+
+    public static void deleteCarportLength(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+        int id = Integer.parseInt(ctx.pathParam("id"));
+        AdminMapper.deleteCarportLength(id, connectionPool);
+        ctx.redirect("/carport_size");
+    }
+
+    public static void deleteCarportWidth(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+        int id = Integer.parseInt(ctx.pathParam("id"));
+        AdminMapper.deleteCarportWidth(id, connectionPool);
+        ctx.redirect("/carport_size");
+    }
+
+    public static void deleteShedLength(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+        int id = Integer.parseInt(ctx.pathParam("id"));
+        AdminMapper.deleteShedLength(id, connectionPool);
+        ctx.redirect("/carport_size");
+    }
+
+    public static void deleteShedWidth(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+        int id = Integer.parseInt(ctx.pathParam("id"));
+        AdminMapper.deleteShedWidth(id, connectionPool);
         ctx.redirect("/carport_size");
     }
 }

@@ -25,7 +25,6 @@ public class AdminMapper {
 
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
-
             while (rs.next()) {
                 User user = new User(
                         rs.getInt("id"),      // Brugerens ID
@@ -312,6 +311,118 @@ public class AdminMapper {
             }
         } catch (SQLException e) {
             throw new DatabaseException("Fejl i opdatering af carport length");
+        }
+    }
+
+    public static void addCarportWidth(int width, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "INSERT INTO carport_width (width) VALUES (?)";
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, width);
+
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected != 1) {
+                throw new DatabaseException("Fejl i opdatering af carport width");
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Fejl i opdatering af carport width");
+        }
+    }
+
+    public static void addShedLength(int length, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "INSERT INTO shed_length (length) VALUES (?)";
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, length);
+
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected != 1) {
+                throw new DatabaseException("Fejl i opdatering af shed length");
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Fejl i opdatering af shed length");
+        }
+    }
+
+    public static void addShedWidth(int width, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "INSERT INTO shed_width (width) VALUES (?)";
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, width);
+
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected != 1) {
+                throw new DatabaseException("Fejl i opdatering af shed width");
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Fejl i opdatering af shed width");
+        }
+    }
+
+    public static void deleteCarportLength(int id, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "DELETE FROM carport_length WHERE id = ?";
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, id);
+
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected != 1) {
+                throw new DatabaseException("Fejl i sletning af carport length");
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Fejl i sletning af carport length");
+        }
+    }
+
+    public static void deleteCarportWidth(int id, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "DELETE FROM carport_width WHERE id = ?";
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, id);
+
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected != 1) {
+                throw new DatabaseException("Fejl i sletning af carport width");
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Fejl i sletning af carport width");
+        }
+    }
+
+    public static void deleteShedLength(int id, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "DELETE FROM shed_length WHERE id = ?";
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, id);
+
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected != 1) {
+                throw new DatabaseException("Fejl i sletning af shed length");
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Fejl i sletning af shed length");
+        }
+    }
+
+    public static void deleteShedWidth(int id, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "DELETE FROM shed_width WHERE id = ?";
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, id);
+
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected != 1) {
+                throw new DatabaseException("Fejl i sletning af shed width");
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Fejl i sletning af shed width");
         }
     }
 }

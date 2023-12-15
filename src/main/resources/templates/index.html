@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<div th:replace="~{fragments :: head('Fog')}"></div>
+
+<body>
+
+<div id="page-container">
+    <div id="page-content">
+        <div th:replace="~{fragments :: header('Fog')}"></div>
+        <div class="indhold-box" id="content">
+            <div class="nav">
+                <div class="centered-box">
+                    <form method="post">
+                    <button class="nav-link" type="submit" formaction="/carports">Standard carporte</button>
+                    </form>
+                </div> <br>
+                <div class="centered-box">
+                    <form method="post">
+                    <button class="nav-link" type="submit" formaction="/byg-selv">Byg-selv carport</button>
+                    </form>
+                </div> <br>
+            </div> <br>
+        </div>
+    </div>
+    <div th:replace="~{fragments :: footer}"></div>
+</div>
+
+</body>
+</html>

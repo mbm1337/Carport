@@ -81,7 +81,7 @@ class UserMapperTest {
         assertNotNull(user);
         assertEquals(1, user.getId());
     }
-    
+
 
 
 }

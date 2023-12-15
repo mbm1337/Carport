@@ -1,10 +1,9 @@
 package testDB.app.persistence;
 
-import app.persistence.AdminMapper;
-import app.persistence.ConnectionPool;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import testDB.app.Database;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -71,6 +70,6 @@ class AdminMapperTest {
 
     }
 
-    
+
 
 }

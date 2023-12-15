@@ -1,4 +1,4 @@
-package testDB.app.persistence;
+package testDB.app;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

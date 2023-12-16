@@ -40,6 +40,8 @@ public class CarportController {
         }
 
          ctx.render("adresse.html");
+        Carport carport = ctx.sessionAttribute("carport");
+        MailSenderController.sendCarportDetailsEmail(carport, "fog.carports@gmail.com");
 
     }
 
@@ -54,6 +56,8 @@ public class CarportController {
             String roof = ctx.formParam("roof");
             Carport carport = new Carport(width, length, 250, roof);
             ctx.sessionAttribute("carport", carport);
+
+
         }
 
     }
@@ -78,6 +82,8 @@ public class CarportController {
             Carport carport = new Carport(width, length, 250, roof ,shed);
 
             ctx.sessionAttribute("carport", carport);
+
+
         }
     }
 

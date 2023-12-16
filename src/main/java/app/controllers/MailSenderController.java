@@ -13,7 +13,7 @@ import jakarta.mail.internet.MimeMessage;
 
 public class MailSenderController {
 
-    //TODO: 1. Make an email for admin with the measures from customers 2. when ever theere is an status on the customer order. 3. confirm email on customer order??
+    
     public static void sendCarportDetailsEmail(Carport carport, String emailRecipient) {
         // Provide recipient's email ID
         String to = "fog.carports@gmail.com"; // fog.carports@gmail.com is the test mail

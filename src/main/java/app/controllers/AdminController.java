@@ -14,13 +14,13 @@ import java.util.List;
 import java.util.Map;
 
 public class AdminController {
-
+    static Map<User, List<Order>> usersAndOrders;
     public static void getUsersAndOrders(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
 
 
         Map<User, List<Order>> usersAndOrders = AdminMapper.getUsersAndOrders(connectionPool);
         ctx.attribute("usersAndOrders", usersAndOrders);
-        ctx.render("order.html");
+        ctx.render("adminordre.html");
 
         usersAndOrders.forEach((user, orders) -> {
             orders.sort(Comparator.comparing(Order::getStatus));
@@ -29,7 +29,7 @@ public class AdminController {
         // Send de sorteret data til skabelonen
         ctx.attribute("usersAndOrders", usersAndOrders);
 
-        ctx.render("order.html");
+        ctx.render("adminordre.html");
 
 
     }
@@ -40,7 +40,7 @@ public class AdminController {
         int orderNumber = Integer.parseInt(ctx.pathParam("ordernumber"));
 
         List<Admin> orderDetail = AdminMapper.getOrderDetails(orderNumber, connectionPool);
-
+        ctx.attribute("usersAndOrders", usersAndOrders);
         ctx.sessionAttribute("ordernumber", orderNumber);
         ctx.attribute("admin", orderDetail);
         ctx.render("tilbud.html");

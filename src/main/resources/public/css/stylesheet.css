@@ -519,6 +519,7 @@ form {
         margin: 2rem; /* to add some space between the boxes */
 }
 
-/* Style for the contact section inside the footer */
 
-
+.user-box, .order-box, .material-box {
+        margin: 10px; /* Add margin for spacing */
+}

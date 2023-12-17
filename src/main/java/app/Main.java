@@ -17,7 +17,7 @@ import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinThymeleaf;
 
 public class Main {
-    
+
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
 
     public static void main(String[] args)  {
@@ -58,7 +58,7 @@ public class Main {
 
         app.post("/updateUser", ctx -> AdminController.editBalance(ctx, connectionPool));
         app.post("/edit_matreriel/{id}", ctx -> AdminController.editMaterial(ctx, connectionPool));
-        app.get("/ordre", ctx -> AdminController.getUsersAndOrders(ctx, connectionPool));
+        app.get("/adminordre", ctx -> AdminController.getUsersAndOrders(ctx, connectionPool));
         app.post("/tilbud/{ordernumber}", ctx -> AdminController.getOrderDetails(ctx, connectionPool));
         app.get("/tilbud/{ordernumber}", ctx -> AdminController.getOrderDetails(ctx, connectionPool));
         app.get("/materials", ctx -> AdminController.getMaterial(ctx, connectionPool));

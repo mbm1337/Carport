@@ -16,12 +16,13 @@ public class AdminMapper {
 
     public static Map<User, List<Order>> getUsersAndOrders(ConnectionPool connectionPool) {
         Map<User, List<Order>> usersAndOrders = new HashMap<>();
-        try (Connection connection = connectionPool.getConnection())  {
+        try (Connection connection = connectionPool.getConnection()) {
             String sql = "SELECT \"user\".id, \"user\".forname, \"user\".aftername, \"user\".email, " +
                     "\"user\".phone, \"user\".zip, \"user\".address, " +
-                    "orders.ordernumber, orders.user_id, orders.status, orders.price " +
+                    "orders.ordernumber, orders.orderdate, orders.user_id, orders.status, orders.comments, orders.price, orders.length ,orders.width  " +
                     "FROM \"user\" " +
-                    "LEFT JOIN orders ON \"user\".id = orders.user_id";
+                    "JOIN orders ON orders.user_id = \"user\".id " +
+                    "ORDER BY \"user\".id, orders.ordernumber"; // Add JOIN and ORDER BY clauses
 
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -34,14 +35,17 @@ public class AdminMapper {
                         rs.getInt("phone"),
                         rs.getInt("zip"),
                         rs.getString("address")
-
                 );
 
                 Order order = new Order(
                         rs.getInt("ordernumber"),
                         rs.getInt("user_id"),  // Ordrens nummer
                         rs.getString("status"), // Ordrens status
-                        rs.getInt("price")      // Ordrens pris
+                        rs.getInt("price"),      // Ordrens pris
+                        rs.getInt("length"),
+                        rs.getInt("width"),
+                        rs.getString("comments"),
+                        rs.getString("orderdate")
                 );
 
                 if (!usersAndOrders.containsKey(user)) {
@@ -60,26 +64,39 @@ public class AdminMapper {
 
 
 
-    public static List<Admin> getOrderDetails(int ordernumber, ConnectionPool connectionPool) {
+
+
+    public static List<Admin> getOrderDetails(int orderNumber, ConnectionPool connectionPool) {
         List<Admin> orderList = new ArrayList<>();
 
         try (Connection connection = connectionPool.getConnection()) {
             String sql = "SELECT " +
                     "u.id AS user_id, u.forname, u.aftername, u.email, u.zip, u.address, u.admin, u.password, u.phone, " +
                     "o.ordernumber, o.orderdate, o.status, o.comments, o.user_id AS order_user_id, " +
-                    "o.price AS order_price, od.length, od.width, od.materials_id, od.quantityordered, od.price AS detail_price " +
+                    "o.price AS order_price, od.materials_id, od.quantityordered, od.price AS detail_price, " +
+                    "m.productname, m.producttype, m.productsize, m.unit, m.quantityinstock, m.sellprice, m.purchaseprice " +
                     "FROM \"user\" u " +
                     "JOIN orders o ON u.id = o.user_id " +
                     "JOIN orderdetails od ON o.ordernumber = od.ordernumber " +
+                    "JOIN materials m ON od.materials_id = m.id " +
                     "WHERE o.ordernumber = ?";
 
-
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-                preparedStatement.setInt(1, ordernumber);
+                preparedStatement.setInt(1, orderNumber);
 
                 try (ResultSet resultSet = preparedStatement.executeQuery()) {
                     while (resultSet.next()) {
                         Admin admin = new Admin();
+
+                        admin.setForname(resultSet.getString("forname"));
+                        admin.setAftername(resultSet.getString("aftername"));
+                        admin.setUserEmail(resultSet.getString("email"));
+                        admin.setZip(resultSet.getInt("zip"));
+                        admin.setAddress(resultSet.getString("address"));
+                        admin.setAdmin(resultSet.getBoolean("admin"));
+                        admin.setPassword(resultSet.getString("password"));
+                        admin.setPhone(resultSet.getInt("phone"));
+
                         admin.setOrderId(resultSet.getInt("ordernumber"));
                         admin.setOrderDate(resultSet.getString("orderdate"));
                         admin.setStatus(resultSet.getString("status"));
@@ -89,8 +106,15 @@ public class AdminMapper {
                         admin.setMaterialsId(resultSet.getInt("materials_id"));
                         admin.setQuantityOrdered(resultSet.getInt("quantityordered"));
                         admin.setDetailPrice(resultSet.getDouble("detail_price"));
-                        admin.setLength(resultSet.getInt("length"));
-                        admin.setWidth(resultSet.getInt("width"));
+
+                        // Material details
+                        admin.setProductName(resultSet.getString("productname"));
+                        admin.setProductType(resultSet.getString("producttype"));
+                        admin.setProductSize(resultSet.getString("productsize"));
+                        admin.setUnit(resultSet.getString("unit"));
+                        admin.setQuantityInStock(resultSet.getInt("quantityinstock"));
+                        admin.setSellPrice(resultSet.getDouble("sellprice"));
+                        admin.setPurchasePrice(resultSet.getDouble("purchaseprice"));
 
                         orderList.add(admin);
                     }
@@ -98,11 +122,12 @@ public class AdminMapper {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace(); // Håndter fejl i forbindelse med databasekald
+            e.printStackTrace(); // Handle database call errors
         }
 
         return orderList;
     }
+
 
     public static void updatePrice(int ordernumber, double price, ConnectionPool connectionPool) throws DatabaseException {
         String sql = "UPDATE orders SET price = ? WHERE ordernumber = ?";
@@ -171,7 +196,7 @@ public class AdminMapper {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return null; // If material with the given ID is not found
+        return null;
     }
 
     public static Material updateMaterial(Material material, ConnectionPool connectionPool) throws DatabaseException {

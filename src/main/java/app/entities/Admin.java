@@ -11,6 +11,8 @@ public class Admin {
     private int materialsId;
     private int quantityOrdered;
     private double detailPrice;
+    private int length;
+    private int width;
 
     // Konstruktør
     public Admin(int orderId, String orderDate, String status, String comments,
@@ -112,5 +114,21 @@ public class Admin {
 
     public void setDetailPrice(double detailPrice) {
         this.detailPrice = detailPrice;
+    }
+
+    public int getLength() {
+        return length;
+    }
+
+    public void setLength(int length) {
+        this.length = length;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
     }
 }

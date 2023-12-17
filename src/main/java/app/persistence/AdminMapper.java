@@ -67,11 +67,12 @@ public class AdminMapper {
             String sql = "SELECT " +
                     "u.id AS user_id, u.forname, u.aftername, u.email, u.zip, u.address, u.admin, u.password, u.phone, " +
                     "o.ordernumber, o.orderdate, o.status, o.comments, o.user_id AS order_user_id, " +
-                    "o.price AS order_price, od.materials_id, od.quantityordered, od.price AS detail_price " +
+                    "o.price AS order_price, od.length, od.width, od.materials_id, od.quantityordered, od.price AS detail_price " +
                     "FROM \"user\" u " +
                     "JOIN orders o ON u.id = o.user_id " +
                     "JOIN orderdetails od ON o.ordernumber = od.ordernumber " +
                     "WHERE o.ordernumber = ?";
+
 
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                 preparedStatement.setInt(1, ordernumber);
@@ -88,6 +89,8 @@ public class AdminMapper {
                         admin.setMaterialsId(resultSet.getInt("materials_id"));
                         admin.setQuantityOrdered(resultSet.getInt("quantityordered"));
                         admin.setDetailPrice(resultSet.getDouble("detail_price"));
+                        admin.setLength(resultSet.getInt("length"));
+                        admin.setWidth(resultSet.getInt("width"));
 
                         orderList.add(admin);
                     }

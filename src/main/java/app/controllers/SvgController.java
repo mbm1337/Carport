@@ -1,5 +1,7 @@
 package app.controllers;
 
+import app.entities.Admin;
+import app.entities.Carport;
 import app.util.CarportSvgGenerator;
 import app.util.SvgGenerator;
 import io.javalin.http.Context;
@@ -10,8 +12,11 @@ import java.util.Map;
 
 public class SvgController {
     public static void getSvg(Context ctx) throws SVGGraphics2DIOException {
-        double length = 780;
-        double width = 300;
+
+        Admin admin = ctx.sessionAttribute("carport");
+
+        double length = admin.getLength();  // Hent længde fra session
+        double width = admin.getWidth();    // Hent bredde fra session
 
         String svgContent = CarportSvgGenerator.generateSvg(length, width);
         String svgContent2 = SvgGenerator.generateSvg(length, width);

@@ -14,7 +14,7 @@ import jakarta.mail.internet.MimeMessage;
 public class MailSenderController {
 
     
-    public static void sendCarportDetailsEmail(Carport carport, String emailRecipient) {
+    public static void sendCarportDetailsEmail(Carport carport, String emailRecipient, String userName, int userPhoneNumber) {
         // Provide recipient's email ID
         String to = "fog.carports@gmail.com"; // fog.carports@gmail.com is the test mail
         // Provide sender's email ID (your Gmail email address)
@@ -46,7 +46,7 @@ public class MailSenderController {
             // Set email subject field
             message.setSubject("A new carport has been ordered!");
             // Construct the email body
-            String emailBody = sendOrderToSeller(carport);
+            String emailBody = sendOrderToSeller(carport, userName, userPhoneNumber);
             // Set the content of the email message
             message.setText(emailBody);
             // Send the email message
@@ -57,21 +57,23 @@ public class MailSenderController {
         }
     }
 
-    private static String sendOrderToSeller(Carport carport) {
+    private static String sendOrderToSeller(Carport carport, String userName, int userPhoneNumber) {
 
         StringBuilder builder = new StringBuilder();
 
         // send information about the carport to the email body
-        builder.append("Carport Details:\n");
-        builder.append("Width: ").append(carport.getWidth()).append("\n");
-        builder.append("Length: ").append(carport.getLength()).append("\n");
-        builder.append("Roof: ").append(carport.getRoof()).append("\n");
+        builder.append("Carport Detaljer:\n");
+        builder.append("Navn: ").append(userName).append("\n");
+        builder.append("Telefon nummer: ").append(userPhoneNumber).append("\n");
+        builder.append("Bredde: ").append(carport.getWidth()).append("\n");
+        builder.append("Længde: ").append(carport.getLength()).append("\n");
+        builder.append("Tag: ").append(carport.getRoof()).append("\n");
 
         // Check if the carport includes a shed
         if (carport.getShed() != null) {
             // If a shed is included, append its details to the email body
-            builder.append("Shed Width: ").append(carport.getShed().getWidth()).append("\n");
-            builder.append("Shed Length: ").append(carport.getShed().getLength());
+            builder.append("Skur bredde: ").append(carport.getShed().getWidth()).append("\n");
+            builder.append("Skur længde: ").append(carport.getShed().getLength());
         }
 
         // Return the complete email body as a string

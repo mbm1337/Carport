@@ -40,8 +40,6 @@ public class CarportController {
         }
 
          ctx.render("adresse.html");
-        Carport carport = ctx.sessionAttribute("carport");
-        MailSenderController.sendCarportDetailsEmail(carport, "fog.carports@gmail.com");
 
     }
 

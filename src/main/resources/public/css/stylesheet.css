@@ -523,3 +523,8 @@ form {
 .user-box, .order-box, .material-box {
         margin: 10px; /* Add margin for spacing */
 }
+
+
+@media screen and (min-width: 0px) and (max-width: 450px) {
+        #svg-box { display: none; }
+}

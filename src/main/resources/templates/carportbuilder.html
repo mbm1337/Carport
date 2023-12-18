@@ -23,8 +23,8 @@
                 <form id="order" method="post" action="/carport">
                     <label for="carportWidth">Carport Bredde: *</label> <br>
                     <select id="carportWidth" name="carportWidth">
-                        <option th:each="carportWidth: ${#ctx.carportWidth}" th:value="${carportWidth.width}"
-
+                        <option th:each="carportWidth: ${#ctx.carportWidth}"
+                                th:value="${carportWidth.width}"
                                 th:text="${carportWidth.width}"></option>
                     </select> <br>
 

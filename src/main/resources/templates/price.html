@@ -8,18 +8,22 @@
 <h1>Order Confirmation</h1>
 
 <p>Order Details:</p>
-<ul>
-  <li>Carport Width: <span th:text="${width}"></span></li>
-  <li>Carport Length: <span th:text="${length}"></span></li>
-  <li>Total Price: <span th:text="${totalprice}"></span></li>
+<ul  class="right" method="post">
+
+  <li>Carport Width: <span th:text="${#ctx.width}"></span></li>
+  <li>Carport Length: <span th:text="${#ctx.length}"></span>
+
 </ul>
 
 <p>Materials:</p>
 <ul>
-  <li th:each="material : ${materials}">
-    <span th:text="${material.name}"></span>: <span th:text="${material.quantity}"></span>
+  <li th:each="material : ${session.quantityordered}">
+    Product Name: <span th:text="${material.productName}"></span>
+    Quantity Ordered: <span th:text="${material.quantityordered}"></span>
   </li>
+  <li>Total Price: <span th:text="${session.totalprice+ 'kr'}"></span></li>
 </ul>
+
 
 </body>
 </html>

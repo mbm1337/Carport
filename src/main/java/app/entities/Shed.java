@@ -7,10 +7,17 @@ public class Shed {
     private int length;
 
 
-
     public Shed(int width, int length) {
         this.id = counter++;
         this.width = width;
         this.length = length;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getLength() {
+        return length;
     }
 }

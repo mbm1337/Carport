@@ -42,6 +42,9 @@ public class OrderController {
             String password = ctx.formParam("telefonNummer");
             String comments = ctx.formParam("comments");
 
+
+            MailSenderController.sendCarportDetailsEmail(carport, "fog.carports@gmail.com", navn, phone);
+
             boolean admin = Boolean.parseBoolean(ctx.formParam("admin"));
 
             User currentUser = ctx.sessionAttribute("currentUser");

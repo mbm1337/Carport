@@ -26,10 +26,10 @@ public class StandardCarportMapper {
                 if (rs.next()) {
                     String merchandiser = rs.getString("merchandiser");
                     String productName = rs.getString("productname");
-                    int price = rs.getInt("price");
+                    int carportPrice = rs.getInt("price");
                     String description = rs.getString("description");
 
-                    standardCarport = new StandardCarport(id, merchandiser, productName, price, description);
+                    standardCarport = new StandardCarport(id, merchandiser, productName, carportPrice, description);
                 }
             }
         } catch (SQLException e) {
@@ -38,6 +38,7 @@ public class StandardCarportMapper {
 
         return standardCarport;
     }
+
 
     public static List<StandardCarport> getAllCarports(ConnectionPool connectionPool) throws DatabaseException {
         List<StandardCarport> allCarports = new ArrayList<>();
@@ -52,10 +53,10 @@ public class StandardCarportMapper {
                 int id = rs.getInt("id");
                 String merchandiser = rs.getString("merchandiser");
                 String productName = rs.getString("productname");
-                int price = rs.getInt("price");
+                int carportPrice = rs.getInt("price");
                 String description = rs.getString("description");
 
-                allCarports.add(new StandardCarport(id, merchandiser, productName, price, description));
+                allCarports.add(new StandardCarport(id, merchandiser, productName, carportPrice, description));
             }
 
         } catch (SQLException e) {

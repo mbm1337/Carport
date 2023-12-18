@@ -11,11 +11,15 @@
 <ul>
     <li>Carport Width: <span th:text="${width}"></span></li>
     <li>Carport Length: <span th:text="${length}"></span></li>
-    <li>Shed Width: <span th:text="${shedWidth}"></span></li>
-    <li>Shed Length: <span th:text="${shedLength}"></span></li>
-    <li>Total Price: <span th:text="${total}"></span></li>
+    <li>Total Price: <span th:text="${totalprice}"></span></li>
 </ul>
 
-<!-- Add any additional content as needed -->
+<p>Materials:</p>
+<ul>
+    <li th:each="material : ${materials}">
+        <span th:text="${material.name}"></span>: <span th:text="${material.quantity}"></span>
+    </li>
+</ul>
+
 </body>
 </html>

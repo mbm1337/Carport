@@ -17,8 +17,7 @@ public class OrderController {
     public static void getStatus(Context ctx, ConnectionPool connectionpool) {
         try {
             int userId = Integer.parseInt(ctx.formParam("userid"));
-            String order= OrderMapper.getOrderStatusByUserId(userId, connectionpool);
-
+            String order = OrderMapper.getOrderStatusByUserId(userId, connectionpool);
             ctx.attribute("status", order);
             ctx.render("status.html");
         } catch (NumberFormatException | DatabaseException e) {
@@ -26,6 +25,7 @@ public class OrderController {
             ctx.render("status.html");
         }
     }
+
     public static void insertingAnOrder(int totalPrice, Context ctx, ConnectionPool connectionpool) throws DatabaseException {
         try {
             List<Material> materials = ctx.sessionAttribute("quantityordered");
@@ -50,7 +50,7 @@ public class OrderController {
                 int userID = UserMapper.createUserGenerated(user, connectionpool);
                 userid = userID;
 
-            }   else {
+            } else {
                 userid = user.getId();
             }
 
@@ -73,7 +73,7 @@ public class OrderController {
     }
 
 
-    public static double calculatePrice( Context ctx, ConnectionPool connectionPool) {
+    public static double calculatePrice(Context ctx, ConnectionPool connectionPool) {
         List<Material> materials = new ArrayList<>();
 
         Calculator calc = new Calculator();
@@ -85,10 +85,10 @@ public class OrderController {
         int length = carport.getLength();  // Hent længde fra session
         int width = carport.getWidth();    // Hent bredde fra session
 
-        int screwsPerPerPost =MaterialMapper.getPrice(22,connectionPool);
-        int screwPerSpaer = MaterialMapper.getPrice(22,connectionPool);
-        int beslagPerPost = MaterialMapper.getPrice(20,connectionPool);
-        int beslagPerSpaer =   MaterialMapper.getPrice(20,connectionPool);
+        int screwsPerPerPost = MaterialMapper.getPrice(22, connectionPool);
+        int screwPerSpaer = MaterialMapper.getPrice(22, connectionPool);
+        int beslagPerPost = MaterialMapper.getPrice(20, connectionPool);
+        int beslagPerSpaer = MaterialMapper.getPrice(20, connectionPool);
 
 
         int numberOfPosts = calc.numberOfPosts(length);
@@ -100,10 +100,10 @@ public class OrderController {
         int numberBeslagPerSpaer = calc.beslagspaer(length);
 
         int totalPostsCost = numberOfPosts * priceOfposts;
-        int totalScrewPerPost = numberOfPosts*numberPerscrewPost;
-        int totalScrewPerSPaer =numberOfspaer*numberScrewPerSpaer;
-        int totalBeslagPerPost = beslagPerPost*numberBeslagPerPost;
-        int totalBeslagPerSpaer = beslagPerSpaer*numberBeslagPerSpaer;
+        int totalScrewPerPost = numberOfPosts * numberPerscrewPost;
+        int totalScrewPerSPaer = numberOfspaer * numberScrewPerSpaer;
+        int totalBeslagPerPost = beslagPerPost * numberBeslagPerPost;
+        int totalBeslagPerSpaer = beslagPerSpaer * numberBeslagPerSpaer;
 
 
         int totalRaft;
@@ -120,24 +120,24 @@ public class OrderController {
             totalBeam = numberOfBeams * spaer600;
         }
 
-        int totalPrice = totalPostsCost + totalRaft + totalBeam+totalScrewPerPost+totalBeslagPerPost+totalScrewPerSPaer+totalBeslagPerSpaer;
-        materials.add(new Material(9,numberOfBeams));
-        materials.add(new Material(10, numberOfspaer));
-        materials.add(new Material(12, numberOfPosts));
-        materials.add(new Material(22,numberPerscrewPost));
-        materials.add(new Material(22,numberScrewPerSpaer));
-        materials.add(new Material(20,numberBeslagPerPost));
-        materials.add(new Material(20,numberOfspaer));
+        int totalPrice = totalPostsCost + totalRaft + totalBeam + totalScrewPerPost + totalBeslagPerPost + totalScrewPerSPaer + totalBeslagPerSpaer;
+
+        materials.add(new Material(9, "Spaer", numberOfBeams));
+        materials.add(new Material(10, "Raft", numberOfspaer));
+        materials.add(new Material(12, "Posts", numberOfPosts));
+        materials.add(new Material(22, "ScrewPerPost", numberPerscrewPost));
+        materials.add(new Material(22, "ScrewPerSpaer", numberScrewPerSpaer));
+        materials.add(new Material(20, "BeslagPerPost", numberBeslagPerPost));
+        materials.add(new Material(20, "BeslagPerSpaer", numberOfspaer));
 
 
-
-
-
+        ctx.sessionAttribute("carport", carport);
+        ctx.attribute("length", length);
+        ctx.attribute("width", width);
         ctx.sessionAttribute("quantityordered", materials);
-        ctx.attribute(String.valueOf(totalPrice),"totalprice");
-
+        ctx.sessionAttribute("totalprice", totalPrice);
         try {
-            OrderController.insertingAnOrder(totalPrice,ctx, connectionPool);
+            OrderController.insertingAnOrder(totalPrice, ctx, connectionPool);
         } catch (DatabaseException e) {
             // Handle exception if needed
             e.printStackTrace();
@@ -147,6 +147,19 @@ public class OrderController {
         return totalPrice;
     }
 
+    public static void getOrders(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+
+        User user = ctx.sessionAttribute("currentUser");
+        if (user != null) {
+            List<Order> orders = OrderMapper.getOrders(user.getId(), connectionPool);
+            ctx.attribute("username", ctx.sessionAttribute("username"));
+            ctx.attribute("orders", orders);
+            ctx.render("seOrder.html");
+        }else{
+            ctx.render("index.html");
+        }
+
+
+    }
+
 }
-
-

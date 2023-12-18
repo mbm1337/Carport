@@ -72,14 +72,17 @@ public class AdminMapper {
         try (Connection connection = connectionPool.getConnection()) {
             String sql = "SELECT " +
                     "u.id AS user_id, u.forname, u.aftername, u.email, u.zip, u.address, u.admin, u.password, u.phone, " +
-                    "o.ordernumber, o.orderdate, o.status,o.length,o.width, o.comments, o.user_id AS order_user_id, " +
+                    "o.ordernumber, o.orderdate, o.status, o.length, o.width, o.comments, o.user_id AS order_user_id, " +
                     "o.price AS order_price, od.materials_id, od.quantityordered, " +
-                    "m.productname, m.producttype, m.productsize, m.unit, m.quantityinstock, m.sellprice, m.purchaseprice " +
+                    "m.productname, m.producttype, m.productsize, m.unit, m.quantityinstock, m.sellprice, m.purchaseprice, " +
+                    "hs.order_id AS shed_order_id, hs.length AS shed_length, hs.width AS shed_width, hs.side AS shed_side " +
                     "FROM \"user\" u " +
                     "JOIN orders o ON u.id = o.user_id " +
                     "JOIN orderdetails od ON o.ordernumber = od.ordernumber " +
                     "JOIN materials m ON od.materials_id = m.id " +
+                    "LEFT JOIN has_shed hs ON o.ordernumber = hs.order_id " +  // Assuming LEFT JOIN, change it based on your requirements
                     "WHERE o.ordernumber = ?";
+
 
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                 preparedStatement.setInt(1, orderNumber);
@@ -116,6 +119,12 @@ public class AdminMapper {
                         admin.setQuantityInStock(resultSet.getInt("quantityinstock"));
                         admin.setSellPrice(resultSet.getDouble("sellprice"));
                         admin.setPurchasePrice(resultSet.getDouble("purchaseprice"));
+
+
+                        // Shed details
+                        admin.setShedLength(resultSet.getInt("shed_length"));
+                        admin.setShedWidth(resultSet.getInt("shed_width"));
+                        admin.setShedSide(resultSet.getBoolean("shed_side"));
 
                         orderList.add(admin);
                     }

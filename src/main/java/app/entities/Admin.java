@@ -27,6 +27,36 @@ public class Admin {
     private String address;
     private boolean isAdmin;
 
+    private double ShedLength;
+    private double ShedWidth;
+
+    public double getShedLength() {
+        return ShedLength;
+    }
+
+    public void setShedLength(double shedLength) {
+        ShedLength = shedLength;
+    }
+
+    public double getShedWidth() {
+        return ShedWidth;
+    }
+
+    public void setShedWidth(double shedWidth) {
+        ShedWidth = shedWidth;
+    }
+
+    public boolean isShedSide() {
+        return ShedSide;
+    }
+
+    public void setShedSide(boolean shedSide) {
+        ShedSide = shedSide;
+    }
+
+    private boolean ShedSide;
+
+
     public String getUserEmail() {
         return userEmail;
     }
@@ -303,5 +333,6 @@ public class Admin {
     public void setPurchasePrice(double purchasePrice) {
         this.purchasePrice = purchasePrice;
     }
+
 
 }

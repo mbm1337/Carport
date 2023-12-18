@@ -42,7 +42,7 @@
                                 th:text="${roof}"></option>
                     </select> <br>
                     <h3>Redskabsrum:</h3>
-                  
+
                     <input type="radio" onclick="hideShed()" id="noShed" name="shed" th:value="noShed" checked/>
                     <label for="noShed">Uden redskabsrum</label> <br>
                     <input type="radio" onclick="showShed()" id="shed" name="shed" th:value="shed"/>
@@ -58,7 +58,19 @@
                         <select id="shedLength" name="shedLength">
                             <option th:each="shedLength: ${#ctx.shedLength}" th:value="${shedLength.length}"
                                     th:text="${shedLength.length}"></option>
+
                         </select> <br>
+
+                        <label>
+                            redskabsrum højre side i carporten
+                            <input type="checkbox" name="shedside" value="true">
+                        </label>
+                        <label>
+                            redskabsrum venstre side i carporten
+                            <input type="checkbox" name="shedside" value="false">
+                        </label>
+
+
                     </div> <br>
                     <script>
 

@@ -92,7 +92,7 @@ public class CarportSvgGenerator {
         int shedEndY = 50 + shedHeight; // Adjust the shed height as needed
 
         // Draw the shed
-        svgGraphics2D.drawRect(shedStartX, 50, (int) length / 3, (int) 150); // Draw the rectangular shed
+       // svgGraphics2D.drawRect(shedStartX, 50, (int) length / 3, (int) 150); // Draw the rectangular shed
 
         // Optionally, draw shed posts
         svgGraphics2D.drawRect(shedStartX, 50, stolpebrede, stolpebrede); // Draw shed post on the left side

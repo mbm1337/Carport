@@ -99,43 +99,32 @@
                             <p>Pris </p>
                             <input type="email" th:value="${admin.orderPrice}" readonly="readonly">
                         </div>
+                    </div>
+                    <div class="order-list">
+                        <p>Order</p>
+                        <div class="main">
+                            <div class="material-box">
+                                <h2>Material Details</h2>
+                                <table>
+                                    <thead>
+                                    <tr>
+                                        <th>Material ID</th>
+                                        <th>Quantity Ordered</th>
+                                        <th>Product Name</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
 
-
-
-                        <div class="order-list">
-                            <p>Order</p>
-                            <div class="main">
-                                <div class="material-box">
-                                    <h2>Material Details</h2>
-                                    <table>
-                                        <thead>
-                                        <tr>
-                                            <th>Material ID</th>
-                                            <th>Quantity Ordered</th>
-                                            <th>Product Name</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-
-                                        <tr th:each="admin : ${#ctx.admin}">
-                                            <td th:text="${admin.materialsId}"></td>
-                                            <td th:text="${admin.quantityOrdered}"></td>
-                                            <td th:text="${admin.productName}"></td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
+                                    <tr th:each="admin : ${#ctx.admin}">
+                                        <td th:text="${admin.materialsId}"></td>
+                                        <td th:text="${admin.quantityOrdered}"></td>
+                                        <td th:text="${admin.productName}"></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
-
-
-
-
-
-
-
                     </div>
-
 
                     <form method="post" action="/updatePrice">
                         <div>

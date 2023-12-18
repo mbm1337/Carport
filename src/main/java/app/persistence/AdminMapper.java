@@ -455,4 +455,7 @@ public class AdminMapper {
             throw new DatabaseException("Fejl i sletning af shed width");
         }
     }
+
+    public static void updatePrice(String updatePrice, ConnectionPool connectionPool) {
+    }
 }

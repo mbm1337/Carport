@@ -51,11 +51,10 @@ public class AdminController {
     }
 
     public static void editBalance(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
-        int orderNumber = Integer.parseInt(ctx.pathParam("ordernumber"));
-        int price = Integer.parseInt(ctx.formParam("newPrice"));
-        AdminMapper.updatePrice(orderNumber, price, connectionPool);
-        ctx.sessionAttribute("ordernumber", orderNumber);
-        ctx.render("users.html");
+        double updatePrice = Double.parseDouble(ctx.formParam("newPrice"));
+        int id = Integer.parseInt(ctx.formParam("orderId"));
+    AdminMapper.updatePrice(id,updatePrice, connectionPool);
+        ctx.redirect("/tilbud/"+id);
     }
 
 

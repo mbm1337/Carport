@@ -56,7 +56,7 @@ public class Main {
 
         //admin funtioner
 
-        app.post("/updateUser", ctx -> AdminController.editBalance(ctx, connectionPool));
+        app.post("/updatePrice", ctx -> AdminController.editBalance(ctx, connectionPool));
         app.post("/edit_matreriel/{id}", ctx -> AdminController.editMaterial(ctx, connectionPool));
         app.get("/adminordre", ctx -> AdminController.getUsersAndOrders(ctx, connectionPool));
         app.post("/tilbud/{ordernumber}", ctx -> AdminController.getOrderDetails(ctx, connectionPool));

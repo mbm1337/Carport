@@ -72,7 +72,7 @@ public class AdminMapper {
         try (Connection connection = connectionPool.getConnection()) {
             String sql = "SELECT " +
                     "u.id AS user_id, u.forname, u.aftername, u.email, u.zip, u.address, u.admin, u.password, u.phone, " +
-                    "o.ordernumber, o.orderdate, o.status, o.comments, o.user_id AS order_user_id, " +
+                    "o.ordernumber, o.orderdate, o.status,o.length,o.width, o.comments, o.user_id AS order_user_id, " +
                     "o.price AS order_price, od.materials_id, od.quantityordered, od.price AS detail_price, " +
                     "m.productname, m.producttype, m.productsize, m.unit, m.quantityinstock, m.sellprice, m.purchaseprice " +
                     "FROM \"user\" u " +
@@ -106,6 +106,8 @@ public class AdminMapper {
                         admin.setMaterialsId(resultSet.getInt("materials_id"));
                         admin.setQuantityOrdered(resultSet.getInt("quantityordered"));
                         admin.setDetailPrice(resultSet.getDouble("detail_price"));
+                        admin.setLength(resultSet.getInt("length"));
+                        admin.setWidth(resultSet.getInt("width"));
 
                         // Material details
                         admin.setProductName(resultSet.getString("productname"));

@@ -7,6 +7,7 @@ import app.exceptions.DatabaseException;
 import app.persistence.AdminMapper;
 import app.persistence.ConnectionPool;
 import io.javalin.http.Context;
+import org.apache.batik.svggen.SVGGraphics2DIOException;
 
 import java.sql.SQLException;
 import java.util.Comparator;
@@ -35,15 +36,16 @@ public class AdminController {
     }
 
 
-    public static void getOrderDetails(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+    public static void getOrderDetails(Context ctx, ConnectionPool connectionPool) throws DatabaseException, SVGGraphics2DIOException {
 
         int orderNumber = Integer.parseInt(ctx.pathParam("ordernumber"));
 
         List<Admin> orderDetail = AdminMapper.getOrderDetails(orderNumber, connectionPool);
-        ctx.attribute("usersAndOrders", usersAndOrders);
         ctx.sessionAttribute("ordernumber", orderNumber);
         ctx.attribute("admin", orderDetail);
-        ctx.render("tilbud.html");
+
+        SvgController.getSvg(ctx, connectionPool);
+
 
 
     }

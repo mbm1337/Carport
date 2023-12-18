@@ -530,3 +530,8 @@ form {
         margin: 0 auto;
 }
 
+
+
+.user-box, .order-box, .material-box {
+        margin: 10px; /* Add margin for spacing */
+}

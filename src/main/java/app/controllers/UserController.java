@@ -69,4 +69,5 @@ public class UserController {
         ctx.req().getSession().invalidate();
         ctx.render("index.html");
     }
+
 }

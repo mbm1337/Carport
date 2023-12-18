@@ -7,6 +7,7 @@ import app.exceptions.DatabaseException;
 import app.persistence.AdminMapper;
 import app.persistence.ConnectionPool;
 import io.javalin.http.Context;
+import org.apache.batik.svggen.SVGGraphics2DIOException;
 
 import java.sql.SQLException;
 import java.util.Comparator;
@@ -14,13 +15,13 @@ import java.util.List;
 import java.util.Map;
 
 public class AdminController {
-
+    static Map<User, List<Order>> usersAndOrders;
     public static void getUsersAndOrders(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
 
 
         Map<User, List<Order>> usersAndOrders = AdminMapper.getUsersAndOrders(connectionPool);
         ctx.attribute("usersAndOrders", usersAndOrders);
-        ctx.render("order.html");
+        ctx.render("adminordre.html");
 
         usersAndOrders.forEach((user, orders) -> {
             orders.sort(Comparator.comparing(Order::getStatus));
@@ -29,31 +30,31 @@ public class AdminController {
         // Send de sorteret data til skabelonen
         ctx.attribute("usersAndOrders", usersAndOrders);
 
-        ctx.render("order.html");
+        ctx.render("adminordre.html");
 
 
     }
 
 
-    public static void getOrderDetails(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+    public static void getOrderDetails(Context ctx, ConnectionPool connectionPool) throws DatabaseException, SVGGraphics2DIOException {
 
         int orderNumber = Integer.parseInt(ctx.pathParam("ordernumber"));
 
         List<Admin> orderDetail = AdminMapper.getOrderDetails(orderNumber, connectionPool);
-
         ctx.sessionAttribute("ordernumber", orderNumber);
         ctx.attribute("admin", orderDetail);
-        ctx.render("tilbud.html");
+
+        SvgController.getSvg(ctx, connectionPool);
+
 
 
     }
 
     public static void editBalance(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
-        int orderNumber = Integer.parseInt(ctx.pathParam("ordernumber"));
-        int price = Integer.parseInt(ctx.formParam("newPrice"));
-        AdminMapper.updatePrice(orderNumber, price, connectionPool);
-        ctx.sessionAttribute("ordernumber", orderNumber);
-        ctx.render("users.html");
+        double updatePrice = Double.parseDouble(ctx.formParam("newPrice"));
+        int id = Integer.parseInt(ctx.formParam("orderId"));
+    AdminMapper.updatePrice(id,updatePrice, connectionPool);
+        ctx.redirect("/tilbud/"+id);
     }
 
 

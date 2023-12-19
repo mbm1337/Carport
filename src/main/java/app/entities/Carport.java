@@ -9,7 +9,10 @@ public class Carport {
     private int height;
     private Shed shed;
     private String roof;
+
     private boolean shedside;
+
+
 
 
     public boolean isShedside() {
@@ -84,4 +87,13 @@ public class Carport {
     public int getLength() {
         return length;
     }
+
+    public String getRoof() {
+        return roof;
+    }
+
+    public Shed getShed() {
+        return shed;
+    }
+
 }

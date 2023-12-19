@@ -1,42 +1,34 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fog</title>
-    <link rel="stylesheet" href="../public/stylesheet.css">
-</head>
 
-<div th:replace="~{fragments :: head('carports')}"></div>
+<div th:replace="~{fragments :: head('Carports')}"></div>
+
 
 <body>
-<div>
-    <header>
-        <a href="index.html" class="logo">Fog</a>
 
-        <nav class="navigation">
-            <a href="/">Bolig & Design</a>
-            <a href="/">Byggermaterialer</a>
-            <a href="/">Kontakt</a>
-        </nav>
-    </header>
-</div>
-
-<div th:each="allCarports : ${allCarports}">
-    <!-- This should take the carports images and assign each image to the correct carport id -->
-    <img class="carports_img" th:src="@{'/images/carport_' + ${allCarports.id} + '.jpg'}" alt='Carports' />
-
-    <tr>
-        <td th:text="${allCarports.merchandiser}">test</td>
-        <td th:text="${allCarports.productName}"></td>
-        <td th:text="${allCarports.price}"><small>pr. stk + evt. fragt</small></td>
-        <form method="post" th:action="@{'/carport_info/' + ${allCarports.id}}">
-        <button type="submit" class="info-btn">Se mere info</button>
+<div th:replace="~{fragments :: header('Carports')}"></div>
+<div class="carports-container">
+    <div th:each="allCarports : ${allCarports}" class="carport-item">
+        <img class="carports_img" th:src="@{'/images/carport_' + ${allCarports.id} + '.jpg'}" alt='Carports' />
+        <table class="carport-info">
+            <tr>
+                <td class="carport-text" th:text="${allCarports.merchandiser}"></td>
+            </tr>
+            <tr>
+                <td class="carport-text" th:text="${allCarports.productName}"></td>
+            </tr>
+            <tr>
+                <td class="carport-text" th:text="${allCarports.carportPrice} + ' pr. stk + evt. fragt'"></td>
+            </tr>
+        </table>
+        <form method="post" th:action="@{'/carport_info/' + ${allCarports.id}}" class="carport-form">
+            <button type="submit" class="info-btn">Se mere info</button>
         </form>
-    </tr>
+    </div>
 </div>
-
 <div th:replace="~{fragments :: footer}"></div>
 
 </body>
+
+
 </html>

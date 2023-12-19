@@ -11,6 +11,7 @@ public class Shed {
         return width;
     }
 
+
     public void setWidth(int width) {
         this.width = width;
     }
@@ -32,9 +33,11 @@ public class Shed {
     }
 
     public Shed(int width, int length, boolean shedside) {
+
         this.id = counter++;
         this.width = width;
         this.length = length;
         this.shedside = shedside;
     }
+
 }

@@ -1,44 +1,40 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fog</title>
-    <link rel="stylesheet" href="../public/stylesheet.css">
-</head>
 
-<div th:replace="~{fragments :: head('carport_info')}"></div>
+<div th:replace="~{fragments :: head('Carport_info')}"></div>
 
 <body>
-<table>
-    <tbody>
-<tr th:each="standardCarport : ${standardCarport}">
-    <td>
-        <!-- This should take the carports images and assign each image to the correct carport id -->
+
+<div th:replace="~{fragments :: header('Carport_info')}"></div>
+<div id="carports-info-container">
+    <div th:each="standardCarport : ${standardCarport}" id="carport-info-id">
         <img class="carports_img" th:src="@{'/images/carport_' + ${standardCarport.id} + '.jpg'}" alt='Carports' />
-    </td>
-
-    <tr th:each="standardCarport : ${standardCarport}">
-        <td th:text="${standardCarport.merchandiser}"></td>
-        <td th:text="${standardCarport.productname}"></td>
-        <td th:text="${standardCarport.price}"></td>
-        <td th:text="${standardCarport.description}"></td>
-    <td>
-
-
-    <form th:action="@{'/shipping_cal'}" method="post">
-        <input type="hidden" name="carportId" />
-        <p>Beregn leveringstid og leveringspris:</p>
-        <button type="submit">Klik her</button>
+        <table>
+            <tr>
+                <td class="carport-text" th:text="${standardCarport.merchandiser}"></td>
+            </tr>
+            <tr>
+                <td class="carport-text" th:text="${standardCarport.productName}"></td>
+            </tr>
+            <tr>
+                <td class="carport-text" th:text="${standardCarport.carportPrice} + ' pr. stk + evt. fragt'"></td>
+            </tr>
+            <tr>
+                <td class="carport-text" th:text="${standardCarport.description}"></td>
+            </tr>
+            <tr>
+                <td class="carport-form">
+                    <form th:action="@{'/shipping_cal'}" method="post">
+                        <input type="hidden" name="carportId" />
+                        <p>Beregn leveringstid og leveringspris:</p>
+                        <button type="submit">Klik her</button>
                     </form>
                 </td>
             </tr>
-        </tbody>
-    </table>
-
-    <div th:replace="~{fragments :: footer}"></div>
+        </table>
+    </div>
 </div>
 
+<div th:replace="~{fragments :: footer}"></div>
 </body>
-
 </html>

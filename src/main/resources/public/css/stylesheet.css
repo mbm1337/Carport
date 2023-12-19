@@ -523,6 +523,67 @@ form {
 .user-box, .order-box, .material-box {
         margin: 10px; /* Add margin for spacing */
 }
+.carports-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        align-items: flex-start;
+        margin-top: 50px;
+}
+
+.carport-item {
+        margin: 10px;
+        text-align: center;
+        width: 400px; /* Adjust width as needed */
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Box shadow styling */
+        padding: 20px;
+}
+
+.carports_img {
+        max-width: 100%;
+        max-height: 100%;
+}
+
+.carport-info {
+        width: 100%;
+        margin-top: 10px;
+}
+
+.carport-text {
+        /* Additional styling for text if needed */
+}
+
+.carport-form {
+        margin-top: 10px;
+}
+
+#carports-info-container {
+        justify-content: center;
+}
+
+#carport-info-id {
+        margin: 10px auto;
+        text-align: center;
+        width: 1000px;
+}
+
+#cal-btn {
+        margin-top: 10px;
+        margin-bottom: 10px;
+}
+
+.spacer-row td {
+        height: 20px;
+}
+
+
+
+
+
+
+
+/* Style for the contact section inside the footer */
+>>>>>>> main
 
 
 @media screen and (min-width: 0px) and (max-width: 450px) {

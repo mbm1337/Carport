@@ -81,7 +81,9 @@ public class AdminMapper {
                     "JOIN orders o ON u.id = o.user_id " +
                     "JOIN orderdetails od ON o.ordernumber = od.ordernumber " +
                     "JOIN materials m ON od.materials_id = m.id " +
+
                     "LEFT JOIN has_shed hs ON o.ordernumber = hs.order_id " +  // Assuming LEFT JOIN, change it based on your requirements
+
                     "WHERE o.ordernumber = ?";
 
 
@@ -106,6 +108,10 @@ public class AdminMapper {
                         admin.setComments(resultSet.getString("comments"));
                         admin.setUserId(resultSet.getInt("user_id"));
                         admin.setOrderPrice(resultSet.getDouble("order_price"));
+
+                        admin.setMaterialsId(resultSet.getInt("materials_id"));
+                        admin.setQuantityOrdered(resultSet.getInt("quantityordered"));
+
 
 
                         admin.setLength(resultSet.getInt("length"));

@@ -1,6 +1,5 @@
-package app.entities;
 
-import app.entities.Calculator;
+import app.util.Calculator;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 

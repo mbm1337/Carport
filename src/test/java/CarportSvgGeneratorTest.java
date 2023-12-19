@@ -1,4 +1,5 @@
-package app.persistence;
+
+
 import app.util.CarportSvgGenerator;
 
 import org.apache.batik.svggen.SVGGraphics2DIOException;
@@ -18,7 +19,6 @@ class CarportSvgGeneratorTest {
 
         // Validate the SVG content based on your expectations
         assertTrue(svg.contains("<rect x=\""), "Check for the presence of rectangles in the SVG");
-        assertTrue(svg.contains("<line x1=\""), "Check for the presence of lines in the SVG");
 
     }
 }

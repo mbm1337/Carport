@@ -27,7 +27,6 @@ class AdminMapperTest {
     private final static String TESTDB = "carport_test";
     private static ConnectionPool connectionPool;
 
-    private static AdminMapper adminMapper;
 
     @BeforeAll
     public static void setUpClass(){
@@ -40,7 +39,7 @@ class AdminMapperTest {
             e.printStackTrace();
         }
 
-        adminMapper = new AdminMapper();
+
     }
 
 
@@ -108,20 +107,19 @@ class AdminMapperTest {
 
     @Test
     void getOrderDetails() throws SQLException {
-        List<Admin> orderDetails = adminMapper.getOrderDetails(1, connectionPool);
-        assertEquals(1, orderDetails.size());
-        assertEquals(1, orderDetails.get(0).getOrderId());
-        assertEquals("2011-01-01", orderDetails.get(0).getOrderDate());
-        assertEquals("Ordered", orderDetails.get(0).getStatus());
-        assertEquals("comment1", orderDetails.get(0).getComments());
-        assertEquals(11111, orderDetails.get(0).getOrderPrice());
-        assertEquals(1, orderDetails.get(0).getUserId());
+        Admin orderDetails = AdminMapper.getOrderDetails(1, connectionPool);
+        assertEquals(1, orderDetails.getOrderId());
+        assertEquals("2011-01-01", orderDetails.getOrderDate());
+        assertEquals("Ordered", orderDetails.getStatus());
+        assertEquals("comment1", orderDetails.getComments());
+        assertEquals(11111, orderDetails.getOrderPrice());
+        assertEquals(1, orderDetails.getUserId());
         }
 
     @Test
     void getUsersAndOrders() throws SQLException {
 
-        Map<User, List<Order>> usersAndOrders = adminMapper.getUsersAndOrders(connectionPool);
+        Map<User, List<Order>> usersAndOrders = AdminMapper.getUsersAndOrders(connectionPool);
         assertEquals(3, usersAndOrders.size());
         Set<User> userkeys = usersAndOrders.keySet();
         // get user with id 1 in userkeys

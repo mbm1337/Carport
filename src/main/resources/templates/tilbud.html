@@ -11,7 +11,7 @@
         <div class="container">
             <div class="user-box">
                 <div class="porduct-order-agile">
-                    <div th:each="admin, rowStat : ${#ctx.admin}" th:if="${#vars['rowStat'].index == 0}" class="user-details">
+                    <div  class="user-details">
 
                         <div class="main">
                             <div class="form-left-to-w3l">
@@ -46,7 +46,7 @@
                             </div>
                             <div class="form-left-to-w3l">
                                 <p>By</p>
-                                <input type="text" name="name" value="By" readonly="readonly" />
+                                <input type="text" name="name" th:value="${city}" readonly="readonly" />
                                 <div class="clear"></div>
                             </div>
                         </div>
@@ -130,8 +130,8 @@
                         <div>
                             <label for="newPrice">Nyt saldo:</label>
                         </div>
-                        <input type="text" id="newPrice" name="newPrice" th:value="${#ctx.admin[0].orderPrice}" />
-                        <input type="hidden" id="orderId" name="orderId" th:value="${#ctx.admin[0].orderId}" />
+                        <input type="text" id="newPrice" name="newPrice" th:value="${#ctx.admin.orderPrice}" />
+                        <input type="hidden" id="orderId" name="orderId" th:value="${#ctx.admin.orderId}" />
                         <button type="submit">Gem ændringer</button>
                     </form>
 

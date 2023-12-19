@@ -56,9 +56,12 @@ public class AdminController {
         }
         int orderNumber = Integer.parseInt(ctx.pathParam("ordernumber"));
 
-        List<Admin> orderDetail = AdminMapper.getOrderDetails(orderNumber, connectionPool);
+        Admin admin = AdminMapper.getOrderDetails(orderNumber, connectionPool);
+
         ctx.sessionAttribute("ordernumber", orderNumber);
-        ctx.attribute("admin", orderDetail);
+        ctx.attribute("city",ZipMapper.getCityByZip(admin.getZip(), connectionPool));
+
+        ctx.attribute("admin", admin);
 
         SvgController.getSvg(ctx, connectionPool);
 

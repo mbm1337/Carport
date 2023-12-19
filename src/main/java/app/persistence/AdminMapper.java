@@ -66,9 +66,8 @@ public class AdminMapper {
 
 
 
-    public static List<Admin> getOrderDetails(int orderNumber, ConnectionPool connectionPool) {
-        List<Admin> orderList = new ArrayList<>();
-
+    public static Admin getOrderDetails(int orderNumber, ConnectionPool connectionPool) {
+        Admin admin = new Admin();
         try (Connection connection = connectionPool.getConnection()) {
             String sql = "SELECT " +
                     "u.id AS user_id, u.forname, u.aftername, u.email, u.zip, u.address, u.admin, u.password, u.phone, " +
@@ -89,7 +88,7 @@ public class AdminMapper {
 
                 try (ResultSet resultSet = preparedStatement.executeQuery()) {
                     while (resultSet.next()) {
-                        Admin admin = new Admin();
+
 
                         admin.setForname(resultSet.getString("forname"));
                         admin.setAftername(resultSet.getString("aftername"));
@@ -126,7 +125,7 @@ public class AdminMapper {
                         admin.setShedWidth(resultSet.getInt("shed_width"));
                         admin.setShedSide(resultSet.getBoolean("shed_side"));
 
-                        orderList.add(admin);
+
                     }
                 }
             }
@@ -135,7 +134,7 @@ public class AdminMapper {
             e.printStackTrace(); // Handle database call errors
         }
 
-        return orderList;
+        return admin;
     }
 
 

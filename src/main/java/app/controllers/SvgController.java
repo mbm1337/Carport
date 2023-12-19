@@ -17,11 +17,11 @@ public class SvgController {
         int orderNumber = Integer.parseInt(ctx.pathParam("ordernumber"));
 
         // Fetch the order details from the database based on orderNumber
-        List<Admin> orderDetail = AdminMapper.getOrderDetails(orderNumber, connectionPool);
+        Admin admin = AdminMapper.getOrderDetails(orderNumber, connectionPool);
 
-        if (orderDetail != null) {
-            double length = orderDetail.get(0).getLength();
-            double width =  orderDetail.get(0).getWidth();
+        if (admin != null) {
+            double length = admin.getLength();
+            double width =  admin.getWidth();
 
             String svgContent = CarportSvgGenerator.generateSvg(length, width);
             String svgContent2 = SvgGenerator.generateSvg(length, width);

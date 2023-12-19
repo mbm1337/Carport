@@ -33,9 +33,13 @@ public class SvgController {
         if (admin != null) {
             double length = admin.getLength();
             double width =  admin.getWidth();
+            double skurDybde = admin.getShedLength();
+            double skurBrede =  admin.getShedWidth();
+            boolean skur = admin.isShedSide();
 
-            String svgContent = CarportSvgGenerator.generateSvg(length, width);
-            String svgContent2 = SvgGenerator.generateSvg(length, width);
+
+            String svgContent = CarportSvgGenerator.generateSvg(length, width, skurDybde, skurBrede, skur);
+            String svgContent2 = SvgGenerator.generateSvg(length, width, skurDybde);
 
             Map<String, Object> model = new HashMap<>();
             model.put("svgContent", svgContent);

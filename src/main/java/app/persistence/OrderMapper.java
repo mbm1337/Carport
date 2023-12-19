@@ -92,4 +92,11 @@ public class OrderMapper {
         }
     }
 
+
+    public static void deleteOrder(){
+
+
+
+    }
+
 }

@@ -38,7 +38,7 @@ public class AdminController {
         // Send de sorteret data til skabelonen
         ctx.attribute("usersAndOrders", usersAndOrders);
 
-        ctx.render("adminordre.html");
+        ctx.render("adminordre.html", Map.of("isAdmin", isAdmin, "isUser", isUser));
 
 
     }

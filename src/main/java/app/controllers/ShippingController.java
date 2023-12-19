@@ -6,8 +6,6 @@ import app.persistence.ConnectionPool;
 import app.persistence.ShippingMapper;
 import io.javalin.http.Context;
 
-import java.util.List;
-
 public class ShippingController {
     public static void getShippingInfoByZip(Context ctx, ConnectionPool connectionPool) {
         try {

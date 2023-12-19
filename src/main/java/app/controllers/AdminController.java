@@ -1,13 +1,8 @@
 package app.controllers;
 import app.entities.*;
 import app.persistence.*;
-import app.entities.Order;
-import app.entities.User;
 import app.exceptions.DatabaseException;
-import app.persistence.AdminMapper;
-import app.persistence.ConnectionPool;
 import io.javalin.http.Context;
-
 import java.sql.SQLException;
 import java.util.Comparator;
 import java.util.List;

@@ -1,8 +1,8 @@
 package app.entities;
 
 public class City {
-    int zip;
-    String city;
+    private int zip;
+     private String city;
 
 
     public City(int zip, String city) {
@@ -22,9 +22,6 @@ public class City {
         return city;
     }
 
-    public void setCity(String city) {
-        this.city = city;
-    }
 
     @Override
     public String toString() {

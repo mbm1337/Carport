@@ -1,18 +1,8 @@
 package app;
 
 import app.config.ThymeleafConfig;
-
 import app.controllers.*;
-import app.controllers.AdminController;
-import app.controllers.ShippingController;
-import app.controllers.StandardCarportController;
-import app.entities.StandardCarport;
-import app.controllers.CarportController;
-import app.controllers.OrderController;
-import app.controllers.UserController;
-import app.controllers.ZipController;
 import app.persistence.ConnectionPool;
-import app.persistence.OrderMapper;
 import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinThymeleaf;
 

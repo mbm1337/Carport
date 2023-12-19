@@ -5,7 +5,6 @@ import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
 import app.persistence.MaterialMapper;
 import app.persistence.OrderMapper;
-
 import app.persistence.UserMapper;
 import app.util.Calculator;
 import io.javalin.http.Context;

@@ -4,7 +4,7 @@ public class User {
     private int id;
     private String firstName;
     private String lastName;
-    private int phoneNumber; // Changed to int
+    private int phoneNumber;
     private String email;
     private int zip;
     private String address;
@@ -38,7 +38,7 @@ public class User {
         this.email = email;
     }
 
-    // constructor for login method in UserMapper
+
     public User(int id, String firstName, String lastName, boolean admin) {
         this.id = id;
         this.firstName = firstName;
@@ -85,7 +85,7 @@ public class User {
     public void setId(int id) {
         this.id = id;
     }
-    // ... other getter methods ...
+
 
     @Override
     public String toString() {

@@ -12,10 +12,11 @@ public class Material {
 
     private int quantityordered;
 
-    public Material(int id, int quantityordered) {
+    public Material(int id,String productName,int quantityordered) {
 
         this.id = id;
         this.quantityordered = quantityordered;
+        this.productName = productName;
 
 
     }

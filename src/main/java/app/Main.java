@@ -2,11 +2,15 @@ package app;
 
 import app.config.ThymeleafConfig;
 import app.controllers.*;
+
 import app.persistence.ConnectionPool;
 import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinThymeleaf;
 
+
+
 public class Main {
+
 
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
 
@@ -31,6 +35,7 @@ public class Main {
         app.post("/createuser", ctx -> UserController.createuser(ctx, connectionPool));
         app.get("/createuser", ctx -> ctx.render("createuser.html"));
         app.post("/price", ctx -> OrderController.calculatePrice(ctx, connectionPool));
+        app.get("/price", ctx -> ctx.render("price.html"));
         app.post("/insertingAnOrder", ctx -> ctx.render("price.html"));
         app.post("/carports", ctx -> StandardCarportController.getStandardCarportsForFrontPage(ctx, connectionPool));
         app.get("/carports", ctx -> StandardCarportController.getStandardCarportsForFrontPage(ctx, connectionPool));

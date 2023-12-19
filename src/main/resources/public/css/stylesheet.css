@@ -116,7 +116,7 @@ html {
 
 .css-inbqmi {
         top: 0;
-        position: -webkit-sticky;
+
         position: sticky;
         z-index: 400;
         -webkit-transition: top 0.4s ease-in-out;
@@ -422,6 +422,7 @@ button {
         border: none;
         border-radius: 4px;
         cursor: pointer;
+        margin : 30px;
 }
 
 button:hover {
@@ -519,6 +520,18 @@ form {
         margin: 2rem; /* to add some space between the boxes */
 }
 
+.input {
+        padding: 50px 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: center;
+        width: 30%;
+        border: 1px solid lightgrey;
+        margin: 0 auto;
+}
+
+
 
 .user-box, .order-box, .material-box {
         margin: 10px; /* Add margin for spacing */
@@ -583,7 +596,6 @@ form {
 
 
 /* Style for the contact section inside the footer */
->>>>>>> main
 
 
 @media screen and (min-width: 0px) and (max-width: 450px) {

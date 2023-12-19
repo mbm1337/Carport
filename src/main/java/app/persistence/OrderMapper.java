@@ -1,10 +1,12 @@
 package app.persistence;
+
 import app.entities.Shed;
 import app.entities.Order;
 import app.exceptions.DatabaseException;
 
-
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class OrderMapper {
@@ -29,7 +31,7 @@ public class OrderMapper {
 
         return status;
     }
-    public static int insertOrder(Order order,double totalPrice, ConnectionPool connectionPool) throws DatabaseException {
+    public static int insertOrder(Order order, double totalPrice, ConnectionPool connectionPool) throws DatabaseException {
         int newOrderId =0;
         try (Connection connection = connectionPool.getConnection()) {
             String sql = "INSERT INTO \"orders\" (user_id, orderdate,status,comments,price,length,width) VALUES (?,?,?,?,?,?,?)";
@@ -73,6 +75,27 @@ public class OrderMapper {
         }
     }
 
+    public static List<Order> getOrders(int id, ConnectionPool connectionPool) {
+        List<Order> orders = new ArrayList<>();
+        try (Connection connection = connectionPool.getConnection()) {
+            String sql = "SELECT * FROM \"orders\" WHERE user_id = ?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int orderNr = rs.getInt("ordernumber");
+                int userId = rs.getInt("user_id");
+                String status = rs.getString("status");
+                int price = rs.getInt("price");
+                Order order = new Order(orderNr, userId, status, price);
+                orders.add(order);
+            }
+            return orders;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
     public static void createOrdershedDatabase(int newOrderId, Shed shed, ConnectionPool connectionPool) throws DatabaseException {
         try (Connection connection = connectionPool.getConnection()) {
@@ -95,5 +118,4 @@ public class OrderMapper {
 
 
     }
-
 }

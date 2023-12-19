@@ -19,6 +19,7 @@ public class CarportSvgGenerator {
         drawStolpe(svgGraphics2D, length, width);
         drawSpaer(svgGraphics2D, length, width);
         drawRem(svgGraphics2D, length, width);
+        //drawShed(svgGraphics2D, length, width, true);
 
 
 
@@ -72,6 +73,32 @@ public class CarportSvgGenerator {
         svgGraphics2D.drawRect(0, remY, (int) length+3, 10);
         svgGraphics2D.drawRect(0, (int) (remY + width-10), (int) length+3,10);
     }
+
+
+    private static void drawShed(SVGGraphics2D svgGraphics2D, double length, double width, boolean startFromRight) {
+        int shedHeight = 150; // Set the height of the shed
+        int stolpebrede = 15;
+        // Find the position of the last post
+        int lastPostPosition = (int) (100 + (Math.ceil(length / 240) - 1) * 240);
+
+        int shedStartX;
+        if (startFromRight) {
+            shedStartX = lastPostPosition - (int) length / 3; // Start the shed from the right side
+        } else {
+            shedStartX = lastPostPosition; // Start the shed from the left side
+        }
+
+        int shedEndX = shedStartX + (int) length / 2; // Adjust the shed length as needed
+        int shedEndY = 50 + shedHeight; // Adjust the shed height as needed
+
+        // Draw the shed
+       // svgGraphics2D.drawRect(shedStartX, 50, (int) length / 3, (int) 150); // Draw the rectangular shed
+
+        // Optionally, draw shed posts
+        svgGraphics2D.drawRect(shedStartX, 50, stolpebrede, stolpebrede); // Draw shed post on the left side
+        svgGraphics2D.drawRect(shedEndX - stolpebrede, 50, stolpebrede, stolpebrede); // Draw shed post on the right side
+    }
+
 
 
 }

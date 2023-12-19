@@ -1,5 +1,5 @@
 package app.persistence;
-
+import app.entities.Shed;
 import app.entities.Order;
 import app.exceptions.DatabaseException;
 
@@ -61,16 +61,39 @@ public class OrderMapper {
     }
     public static void createOrderDetailsDatabase(int newOrderId, Order order, int id, int quantityordered, ConnectionPool connectionPool) throws DatabaseException {
         try (Connection connection = connectionPool.getConnection()) {
-            String sql = "INSERT INTO \"orderdetails\" (ordernumber, quantityordered, price, materials_id) VALUES (?, ?, ?, ?)";
+            String sql = "INSERT INTO \"orderdetails\" (ordernumber, quantityordered, materials_id) VALUES (?, ?, ?)";
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, newOrderId);
             ps.setInt(2, quantityordered);
-            ps.setDouble(3, order.getPrice());
-            ps.setInt(4, id);
+            ps.setInt(3, id);
             ps.executeUpdate();
         } catch (SQLException e) {
             String msg = "Der er sket en fejl. Prøv igen";
             throw new DatabaseException(msg);
         }
     }
+
+
+    public static void createOrdershedDatabase(int newOrderId, Shed shed, ConnectionPool connectionPool) throws DatabaseException {
+        try (Connection connection = connectionPool.getConnection()) {
+            String sql = "INSERT INTO \"has_shed\" (order_id, length, width,side) VALUES (?, ?, ?,?)";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, newOrderId);
+            ps.setInt(2, shed.getLength());
+            ps.setInt(3, shed.getWidth());
+            ps.setBoolean(4, shed.isShedside());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            String msg = "Der er sket en fejl. Prøv igen";
+            throw new DatabaseException(msg);
+        }
+    }
+
+
+    public static void deleteOrder(){
+
+
+
+    }
+
 }

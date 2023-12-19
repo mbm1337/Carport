@@ -24,12 +24,10 @@ public class Main {
         app.post("/byg-selv", ctx -> CarportController.carportDropdowns(ctx, connectionPool));
         app.get("/byg-selv", ctx -> CarportController.carportDropdowns(ctx, connectionPool));
         app.post("/carport", ctx -> CarportController.makeCarport(ctx, connectionPool));
-        //app.post("/adresse",ctx-> ZipController.cityAndZip(ctx,connectionPool));
         app.post("/adresse",ctx-> ZipController.cityAndZip(ctx,connectionPool));
         app.post("/status", ctx -> OrderController.getStatus(ctx, connectionPool));
         app.post("/login", ctx -> UserController.login(ctx, connectionPool));
         app.get("/login", ctx -> ctx.render("login.html"));
-        // app.get("/createuser", ctx -> UserController.createuser(ctx, connectionPool));
         app.post("/createuser", ctx -> UserController.createuser(ctx, connectionPool));
         app.get("/createuser", ctx -> ctx.render("createuser.html"));
         app.post("/price", ctx -> OrderController.calculatePrice(ctx, connectionPool));

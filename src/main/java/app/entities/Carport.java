@@ -9,10 +9,19 @@ public class Carport {
     private int height;
     private Shed shed;
     private String roof;
-    private ShedLength shedLength;
-    private ShedWidth shedWidth;
+
+    private boolean shedside;
 
 
+
+
+    public boolean isShedside() {
+        return shedside;
+    }
+
+    public void setShedside(boolean shedside) {
+        this.shedside = shedside;
+    }
 
     public Carport(int width, int length, int height) {
         this.id = counter++;
@@ -53,6 +62,16 @@ public class Carport {
         this.shed = shed;
     }
 
+    public Carport(int width, int length, int height, boolean shedside, Shed shed) {
+
+        this.id = counter++;
+        this.width = width;
+        this.length = length;
+        this.height = height;
+        this.shed = shed;
+        this.shedside = shedside;
+    }
+
     public void setWidth(int width) {
         this.width = width;
     }
@@ -77,11 +96,4 @@ public class Carport {
         return shed;
     }
 
-    public ShedLength getShedLength() {
-        return shedLength;
-    }
-
-    public ShedWidth getShedWidth() {
-        return shedWidth;
-    }
 }

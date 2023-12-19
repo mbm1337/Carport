@@ -8,49 +8,136 @@
 <div id="page-container">
     <div id="page-content">
         <div th:replace="~{fragments :: header('materials')}"></div>
-        <table id="sortable-table">
-            <div id = 'orderContent'>
+        <div class="container">
+            <div class="user-box">
+                <div class="porduct-order-agile">
+                    <div  class="user-details">
 
-                <table border="1">
-                    <tr>
-                        <th>Order ID</th>
-                        <th>Order Date</th>
-                        <th>Status</th>
-                        <th>Comments</th>
-                        <th>User ID</th>
-                        <th>Order Price</th>
-                        <th>Materials ID</th>
-                        <th>Quantity Ordered</th>
-                        <th>Detail Price</th>
-                    </tr>
+                        <div class="main">
+                            <div class="form-left-to-w3l">
+                                <p>First Name</p>
+                                <input type="text" name="name" th:value="${admin.forname}" readonly="readonly" />
+                                <div class="clear"></div>
+                            </div>
+                            <div class="form-left-to-w3l">
+                                <p>Last Name</p>
+                                <input type="text" name="name" th:value="${admin.aftername}" readonly="readonly" />
+                                <div class="clear"></div>
+                            </div>
+                        </div>
+                        <div class="main">
+                            <div class="form-left-to-w3l">
+                                <p>Email</p>
+                                <input type="text" name="name" th:value="${admin.userEmail}" readonly="readonly" />
+                                <div class="clear"></div>
+                            </div>
+                            <div class="form-left-to-w3l">
+                                <p>Phone</p>
+                                <input type="text" name="name" th:value="${admin.phone}" readonly="readonly" />
+                                <div class="clear"></div>
+                            </div>
 
-                    <tr th:each="admin : ${#ctx.admin}">
-                        <td th:text="${admin.orderId}"></td>
-                        <td th:text="${admin.orderDate}"></td>
-                        <td th:text="${admin.status}"></td>
-                        <td th:text="${admin.comments}"></td>
-                        <td th:text="${admin.userId}"></td>
-                        <td th:text="${admin.orderPrice}"></td>
-                        <td th:text="${admin.materialsId}"></td>
-                        <td th:text="${admin.quantityOrdered}"></td>
-                        <td th:text="${admin.detailPrice}"></td>
-                    </tr>
-                </table>
+                        </div>
+                        <div class="main">
+                            <div class="form-left-to-w3l">
+                                <p>Address</p>
+                                <input type="text" name="name" th:value="${admin.address}" readonly="readonly" />
+                                <div class="clear"></div>
+                            </div>
+                            <div class="form-left-to-w3l">
+                                <p>By</p>
+                                <input type="text" name="name" th:value="${city}" readonly="readonly" />
+                                <div class="clear"></div>
+                            </div>
+                        </div>
+                        <div class="main">
+                            <div class="form-left-to-w3l">
+                                <p>Post Nr.</p>
+                                <input type="text" name="name" th:value="${admin.zip}" readonly="readonly" />
+                                <div class="clear"></div>
+                            </div>
+                            <div class="form-left-to-w3l">
+                                <p>Region</p>
+                                <input type="text" name="name" value="region" readonly="readonly" />
+                                <div class="clear"></div>
+                            </div>
+                        </div>
 
-                <form method="post" action="/updateUser">
-                    <div>
-                        <label for="newBalance">Nyt saldo:</label>
+                        <div class="main">
+                            <div class="form-left-to-w3l">
+                                <p>Carport længde</p>
+                                <input type="text" name="name" th:value="${admin.length}" readonly="readonly" />
+                                <div class="clear"></div>
+                            </div>
+                            <div class="form-left-to-w3l">
+                                <p>Carport brede</p>
+                                <input type="text" name="name" th:value="${admin.width}" readonly="readonly" />
+                                <div class="clear"></div>
+                            </div>
+                        </div>
+
+
+                        <div class="main">
+                            <div class="form-left-to-w3l">
+                                <p>Order Date</p>
+                                <input type="text" name="name" th:value="${admin.orderDate}" readonly="readonly" />
+                                <div class="clear"></div>
+                            </div>
+                            <div class="form-left-to-w3l">
+                                <p>Status</p>
+                                <input type="text" name="name" th:value="${admin.status}" readonly="readonly" />
+                                <div class="clear"></div>
+                            </div>
+                        </div>
+
+                        <p>kommentar </p>
+                        <div class="comment-box">
+                            <textarea rows="4" readonly="readonly" th:text="${admin.comments}">
+</textarea>
+                        </div>
+                        <div class="form-group">
+                            <p>Pris </p>
+                            <input type="email" th:value="${admin.orderPrice}" readonly="readonly">
+                        </div>
                     </div>
-                    <input type="text" id="newBalance" name="newPrice" th:value="${#ctx.admin[0].orderPrice}" />
-                    <button type="submit">Gem ændringer</button>
-                </form>
+                    <div class="order-list">
+                        <p>Order</p>
+                        <div class="main">
+                            <div class="material-box">
+                                <h2>Material Details</h2>
+                                <table>
+                                    <thead>
+                                    <tr>
+                                        <th>Material ID</th>
+                                        <th>Quantity Ordered</th>
+                                        <th>Product Name</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
 
+                                    <tr th:each="admin : ${#ctx.adminList}">
+                                        <td th:text="${admin.materialsId}"></td>
+                                        <td th:text="${admin.quantityOrdered}"></td>
+                                        <td th:text="${admin.productName}"></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
 
+                    <form method="post" action="/updatePrice">
+                        <div>
+                            <label for="newPrice">Nyt saldo:</label>
+                        </div>
+                        <input type="text" id="newPrice" name="newPrice" th:value="${#ctx.admin.orderPrice}" />
+                        <input type="hidden" id="orderId" name="orderId" th:value="${#ctx.admin.orderId}" />
+                        <button type="submit">Gem ændringer</button>
+                    </form>
+
+                </div>
             </div>
-        </table>
-
-
-        <div th:replace="~{fragments :: footer}"></div>
+        </div>
     </div>
 </div>
 </body>

@@ -677,3 +677,22 @@ select.form-control {
         transition: all 0.5s ease-in-out;
         box-sizing: border-box;
 }
+
+
+.dropdown {
+        position: relative;
+        display: inline-block;
+}
+
+.dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        left: -160px;
+        z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+        display: block;
+}

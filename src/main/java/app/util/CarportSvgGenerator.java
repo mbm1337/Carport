@@ -19,7 +19,7 @@ public class CarportSvgGenerator {
         drawStolpe(svgGraphics2D, length, width);
         drawSpaer(svgGraphics2D, length, width);
         drawRem(svgGraphics2D, length, width);
-        //drawShed(svgGraphics2D, length, width, true);
+        drawShed(svgGraphics2D, length, width, false);
 
 
 
@@ -43,8 +43,8 @@ public class CarportSvgGenerator {
         // Tegn stolper langs længden med afstand mellem dem
         for (int i = 0; i < antalstolper; i++) {
             int x = start + i * distanceBetweenPosts;
-            svgGraphics2D.drawRect(x, 50, stolpebrede, stolpebrede);
-            svgGraphics2D.drawRect(x, (int) (50 + width - stolpebrede), stolpebrede, stolpebrede);
+            svgGraphics2D.drawRect(x, 100, stolpebrede, stolpebrede);
+            svgGraphics2D.drawRect(x, (int) (0 + width - stolpebrede), stolpebrede, stolpebrede);
         }
     }
 
@@ -53,7 +53,7 @@ public class CarportSvgGenerator {
         int antalspaer = Math.max(2, (int) Math.ceil(length / afstanmellemspaer));
 
         // Beregn startposition for spær
-        int start =0;
+        int start = 0;
 
         // Beregn afstand mellem spær
         int distanceBetweenSpaer = (int) ((length - start) / (antalspaer - 1));
@@ -61,44 +61,49 @@ public class CarportSvgGenerator {
         // Tegn spærene langs længden med afstand mellem dem
         for (int i = 0; i < antalspaer; i++) {
             int x = start + i * distanceBetweenSpaer;
-            svgGraphics2D.drawLine(x, 50, x, (int) (50 + width));
+            int spaerWidth = 5; // Ændr bredden efter behov
+            int spaerHeight = (int) width;
+
+            svgGraphics2D.drawRect(x, 50, spaerWidth, spaerHeight);
         }
     }
 
     private static void drawRem(SVGGraphics2D svgGraphics2D, double length, double width) {
 
-        int remY = 50; // Afstand fra toppen af stolperne til remmen
+        int remY = 0; // Afstand fra toppen af stolperne til remmen
 
         // Tegn remmen vandret langs den samlede længde
-        svgGraphics2D.drawRect(0, remY, (int) length+3, 10);
+        svgGraphics2D.drawRect(0, 100, (int) length+3, 10);
         svgGraphics2D.drawRect(0, (int) (remY + width-10), (int) length+3,10);
     }
 
 
     private static void drawShed(SVGGraphics2D svgGraphics2D, double length, double width, boolean startFromRight) {
-        int shedHeight = 150; // Set the height of the shed
-        int stolpebrede = 15;
-        // Find the position of the last post
-        int lastPostPosition = (int) (100 + (Math.ceil(length / 240) - 1) * 240);
+        int shedWidth = 50; // Bredden af skuret
+        int shedHeight = 70; // Højden af skuret
 
-        int shedStartX;
+        int shedX; // X-positionen for skuret
+        int shedY; // Y-positionen for skuret
+
+        // Beregn startposition for skuret baseret på parameteren startFromRight
         if (startFromRight) {
-            shedStartX = lastPostPosition - (int) length / 3; // Start the shed from the right side
+            shedX = (int) (length - shedWidth);
         } else {
-            shedStartX = lastPostPosition; // Start the shed from the left side
+            shedX = 0;
         }
 
-        int shedEndX = shedStartX + (int) length / 2; // Adjust the shed length as needed
-        int shedEndY = 50 + shedHeight; // Adjust the shed height as needed
+        // Beregn Y-positionen for skuret - top eller bund af carporten
+        if (startFromRight) {
+            shedX = 100; // Toppen af carporten
+        } else {
+            shedX = (int) (width - shedHeight); // Bund af carporten
+        }
 
-        // Draw the shed
-       // svgGraphics2D.drawRect(shedStartX, 50, (int) length / 3, (int) 150); // Draw the rectangular shed
-
-        // Optionally, draw shed posts
-        svgGraphics2D.drawRect(shedStartX, 50, stolpebrede, stolpebrede); // Draw shed post on the left side
-        svgGraphics2D.drawRect(shedEndX - stolpebrede, 50, stolpebrede, stolpebrede); // Draw shed post on the right side
+        // Tegn skuret
+        svgGraphics2D.drawRect(shedX, shedX, shedWidth, shedHeight);
     }
 
-
-
 }
+
+
+

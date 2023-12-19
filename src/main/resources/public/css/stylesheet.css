@@ -189,6 +189,10 @@ ul {
 .css-oi30ox {
         transform-origin: center;
 }
+.css-oi30ox img {
+        width: 20px; /* Juster bredden efter behov */
+}
+
 
 .css-ld7dfk {
         display: inline-block;

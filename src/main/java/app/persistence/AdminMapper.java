@@ -73,7 +73,7 @@ public class AdminMapper {
             String sql = "SELECT " +
                     "u.id AS user_id, u.forname, u.aftername, u.email, u.zip, u.address, u.admin, u.password, u.phone, " +
                     "o.ordernumber, o.orderdate, o.status,o.length,o.width, o.comments, o.user_id AS order_user_id, " +
-                    "o.price AS order_price, od.materials_id, od.quantityordered, od.price AS detail_price, " +
+                    "o.price AS order_price, od.materials_id, od.quantityordered, " +
                     "m.productname, m.producttype, m.productsize, m.unit, m.quantityinstock, m.sellprice, m.purchaseprice " +
                     "FROM \"user\" u " +
                     "JOIN orders o ON u.id = o.user_id " +
@@ -105,7 +105,6 @@ public class AdminMapper {
                         admin.setOrderPrice(resultSet.getDouble("order_price"));
                         admin.setMaterialsId(resultSet.getInt("materials_id"));
                         admin.setQuantityOrdered(resultSet.getInt("quantityordered"));
-                        admin.setDetailPrice(resultSet.getDouble("detail_price"));
                         admin.setLength(resultSet.getInt("length"));
                         admin.setWidth(resultSet.getInt("width"));
 

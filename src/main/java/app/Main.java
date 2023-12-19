@@ -52,6 +52,15 @@ public class Main {
         app.post("/shipping_cal", ctx -> ShippingController.getShippingInfoByZip(ctx, connectionPool));
         app.get("/shipping_cal", ctx -> ShippingController.getShippingInfoByZip(ctx, connectionPool));
         app.get("/svg/{ordernumber}",ctx -> SvgController.getSvg(ctx, connectionPool));
+        app.get("/order",ctx -> OrderController.getOrders(ctx, connectionPool));
+        app.post("/order",ctx -> OrderController.getOrders(ctx, connectionPool));
+        app.get("/showOrderDetails/{ordernumber}", ctx -> OrderController.showOrderDetails(ctx, connectionPool));
+        app.post("/showOrderDetails",ctx -> ctx.render("mymaterial.html"));
+        app.post("/updateuser", ctx -> UserController.updateUser(ctx, connectionPool));
+        app.get("/updateuser",ctx->ctx.render("usersetting.html"));
+
+
+
 
 
         //admin funtioner

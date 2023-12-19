@@ -10,6 +10,24 @@ public class User {
     private String address;
     private boolean admin;
     private String password;
+    private int orderId;
+    private String orderDate;
+    private String status;
+    private String comments;
+    private int userId;
+    private double orderPrice;
+    private int materialsId;
+    private int quantityOrdered;
+    private double detailPrice;
+    private int length;
+    private int width;
+    private String productName;
+    private String productType;
+    private String productSize;
+    private String unit;
+    private int quantityInStock;
+    private double sellPrice;
+    private double purchasePrice;
 
     public User(int id, String firstName, String lastName, int phoneNumber, String email, int zip, String address, boolean admin, String password) {
         this.id = id;
@@ -44,6 +62,82 @@ public class User {
         this.firstName = firstName;
         this.lastName = lastName;
         this.admin = admin;
+    }
+
+    public User() {
+
+    }
+
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
+    }
+
+    public void setOrderDate(String orderDate) {
+        this.orderDate = orderDate;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public void setOrderPrice(double orderPrice) {
+        this.orderPrice = orderPrice;
+    }
+
+    public void setMaterialsId(int materialsId) {
+        this.materialsId = materialsId;
+    }
+
+    public void setQuantityOrdered(int quantityOrdered) {
+        this.quantityOrdered = quantityOrdered;
+    }
+
+    public void setDetailPrice(double detailPrice) {
+        this.detailPrice = detailPrice;
+    }
+
+    public void setLength(int length) {
+        this.length = length;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public void setProductType(String productType) {
+        this.productType = productType;
+    }
+
+    public void setProductSize(String productSize) {
+        this.productSize = productSize;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+
+    public void setQuantityInStock(int quantityInStock) {
+        this.quantityInStock = quantityInStock;
+    }
+
+    public void setSellPrice(double sellPrice) {
+        this.sellPrice = sellPrice;
+    }
+
+    public void setPurchasePrice(double purchasePrice) {
+        this.purchasePrice = purchasePrice;
     }
 
     public int getId() {
@@ -85,7 +179,39 @@ public class User {
     public void setId(int id) {
         this.id = id;
     }
-    // ... other getter methods ...
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setPhoneNumber(int phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setZip(int zip) {
+        this.zip = zip;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+// ... other getter methods ...
 
     @Override
     public String toString() {
@@ -101,4 +227,6 @@ public class User {
                 ", password='" + password + '\'' +
                 '}';
     }
+
+
 }

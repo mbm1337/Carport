@@ -1,11 +1,78 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>order</title>
-    <p>Your order is confirmed</p>
-</head>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" href="../public/css/stylesheet.css">
+
+<div th:replace="~{fragments :: head('materials')}"></div>
+
 <body>
 
+<div id="page-container">
+    <div id="page-content">
+        <div th:replace="~{fragments :: header('materials')}"></div>
+        <div class="container">
+
+            <div class="user-box">
+                <h2>User Information</h2>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>User ID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>User Email</th>
+                        <th>ZIP Code</th>
+                        <th>Address</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:with="user=${session.currentUser}">
+                        <td th:text="${user.id}"></td>
+                        <td th:text="${user.firstname}"></td>
+                        <td th:text="${user.lastname}"></td>
+                        <td th:text="${user.phoneNumber}"></td>
+                        <td th:text="${user.zip}"></td>
+                        <td th:text="${user.address}"></td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="orders-box">
+                <h2>Orders</h2>
+
+                    <table border="1">
+
+                    <thead>
+                    <tr>
+                        <th>User ID</th>
+                        <th>Status</th>
+                        <th>Price</th>
+                        <th>Order Number</th>
+                        <th>Show Details</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="order : ${#ctx.orders}">
+                        <td th:text="${order.userId}"></td>
+                        <td th:text="${order.status}"></td>
+                        <td th:text="${order.price}"></td>
+                        <td th:text="${order.orderNr}"></td>
+                        <td th:if="${order.status == 'paid'}">
+                            <p th:if="${order.status == 'paid'}">
+                                <a th:href="@{/showOrderDetails/__${order.orderNr}__}">Show order details</a>
+                            </p>
+
+                    </tr>
+                    </tbody>
+                </table>
+                <a th:href="@{/updateuser}">User Settings</a>
+
+            </div>
+
+        </div>
+    </div>
+</div>
 </body>
 </html>

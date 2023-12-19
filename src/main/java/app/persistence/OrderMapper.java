@@ -1,7 +1,10 @@
 package app.persistence;
 
 
+import app.entities.Admin;
 import app.entities.Order;
+import app.entities.OrderDetail;
+import app.entities.User;
 import app.exceptions.DatabaseException;
 
 import java.sql.*;
@@ -31,8 +34,9 @@ public class OrderMapper {
 
         return status;
     }
+
     public static int insertOrder(Order order, double totalPrice, ConnectionPool connectionPool) throws DatabaseException {
-        int newOrderId =0;
+        int newOrderId = 0;
         try (Connection connection = connectionPool.getConnection()) {
             String sql = "INSERT INTO \"orders\" (user_id, orderdate,status,comments,price,length,width) VALUES (?,?,?,?,?,?,?)";
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -41,7 +45,7 @@ public class OrderMapper {
             ps.setString(3, order.getStatus());
             ps.setString(4, order.getComment());
             ps.setDouble(5, totalPrice);
-            ps.setInt(6,order.getLength());
+            ps.setInt(6, order.getLength());
             ps.setInt(7, order.getWidth());
 
             int rs = ps.executeUpdate();
@@ -61,6 +65,7 @@ public class OrderMapper {
         }
 
     }
+
     public static void createOrderDetailsDatabase(int newOrderId, Order order, int id, int quantityordered, ConnectionPool connectionPool) throws DatabaseException {
         try (Connection connection = connectionPool.getConnection()) {
             String sql = "INSERT INTO \"orderdetails\" (ordernumber, quantityordered, price, materials_id) VALUES (?, ?, ?, ?)";
@@ -75,6 +80,7 @@ public class OrderMapper {
             throw new DatabaseException(msg);
         }
     }
+
     public static List<Order> getOrders(int id, ConnectionPool connectionPool) {
         List<Order> orders = new ArrayList<>();
         try (Connection connection = connectionPool.getConnection()) {
@@ -95,4 +101,42 @@ public class OrderMapper {
             throw new RuntimeException(e);
         }
     }
-}
+
+
+
+        public static List<OrderDetail> getOrderDetailsWithProduct(int ordernumber, ConnectionPool connectionPool) throws DatabaseException {
+            List<OrderDetail> orderDetails = new ArrayList<>();
+
+            String sql = "SELECT " +
+                    "od.ordernumber, od.quantityordered, od.materials_id, " +
+                    "m.productname " +
+                    "FROM \"orderdetails\" od " +
+                    "JOIN \"materials\" m ON od.materials_id = m.id " +
+                    "WHERE od.ordernumber = ?";
+
+            try (Connection connection = connectionPool.getConnection();
+                 PreparedStatement ps = connection.prepareStatement(sql)) {
+
+                ps.setInt(1, ordernumber);
+
+                try (ResultSet rs = ps.executeQuery()) {
+                    while (rs.next()) {
+                        int orderNumber = rs.getInt("ordernumber");
+                        int quantityOrdered = rs.getInt("quantityordered");
+
+                        int materialsId = rs.getInt("materials_id");
+                        String productName = rs.getString("productname");
+
+                        OrderDetail orderDetail = new OrderDetail(orderNumber, quantityOrdered, materialsId, productName);
+                        orderDetails.add(orderDetail);
+                    }
+                }
+            } catch (SQLException e) {
+                String message = "Couldn't retrieve order details for order " + ordernumber;
+                throw new DatabaseException(message);
+            }
+
+            return orderDetails;
+        }
+
+    }

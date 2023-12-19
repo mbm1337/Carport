@@ -41,6 +41,7 @@ public class AdminController {
         int orderNumber = Integer.parseInt(ctx.pathParam("ordernumber"));
 
         List<Admin> orderDetail = AdminMapper.getOrderDetails(orderNumber, connectionPool);
+
         ctx.sessionAttribute("ordernumber", orderNumber);
         ctx.attribute("admin", orderDetail);
 

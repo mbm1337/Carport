@@ -1,4 +1,4 @@
-package app.persistence;
+package mockito.app.persistence;
 
 import app.entities.*;
 import app.exceptions.DatabaseException;
@@ -31,6 +31,7 @@ public class CarportMapperTest {
 
     @BeforeEach
     void setUp() throws SQLException {
+
         MockitoAnnotations.initMocks(this);
         when(connectionPool.getConnection()).thenReturn(connection);
         when(connection.prepareStatement(anyString())).thenReturn(ps);

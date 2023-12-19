@@ -1,5 +1,7 @@
-package app.persistence;
+package mockito.app.persistence;
 
+import app.persistence.ConnectionPool;
+import app.persistence.StandardCarportMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -49,7 +51,7 @@ class StandardCarportMapperTest {
         assertNotNull(carport);
         assertEquals("Test Merchandiser", carport.getMerchandiser());
         assertEquals("Test Product", carport.getProductName());
-        assertEquals(1000, carport.getPrice());
+        assertEquals(1000, carport.getCarportPrice());
         assertEquals("Test Description", carport.getDescription());
     }
 
@@ -69,11 +71,11 @@ class StandardCarportMapperTest {
         assertEquals(2, carports.size());
         assertEquals("Test Merchandiser 1", carports.get(0).getMerchandiser());
         assertEquals("Test Product 1", carports.get(0).getProductName());
-        assertEquals(1000, carports.get(0).getPrice());
+        assertEquals(1000, carports.get(0).getCarportPrice());
         assertEquals("Test Description 1", carports.get(0).getDescription());
         assertEquals("Test Merchandiser 2", carports.get(1).getMerchandiser());
         assertEquals("Test Product 2", carports.get(1).getProductName());
-        assertEquals(2000, carports.get(1).getPrice());
+        assertEquals(2000, carports.get(1).getCarportPrice());
         assertEquals("Test Description 2", carports.get(1).getDescription());
     }
 

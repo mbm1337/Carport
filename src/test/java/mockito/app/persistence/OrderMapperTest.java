@@ -1,6 +1,8 @@
-package app.persistence;
+package mockito.app.persistence;
 
 import app.exceptions.DatabaseException;
+import app.persistence.ConnectionPool;
+import app.persistence.OrderMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;

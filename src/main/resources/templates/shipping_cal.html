@@ -1,61 +1,40 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fog</title>
-    <link rel="stylesheet" href="../public/stylesheet.css">
-</head>
 
-<div>
-    <header>
-        <a href="index.html" class="logo">Fog</a>
+<div th:replace="~{fragments :: head('shipping_cal')}"></div>
 
-        <nav class="navigation">
-            <a href="/">Bolig & Design</a>
-            <a href="/">Byggermaterialer</a>
-            <a href="/">Kontakt</a>
-        </nav>
-    </header>
-</div>
+<body>
 
-<tbody>
-<tr>
-    <td>
-        <form id="zip" method="post">
-            <p>Indtast dit postnummer for at udregne leveringspris og leveringstid.</p>
-            <input  type="text" name="zip" placeholder="Postnummer">
-            <div>
-                <button type="submit">Beregn</button>
-            </div>
-        </form>
-    </td>
-</tr>
+<div th:replace="~{fragments :: header('shipping_cal')}"></div>
 
-<tr th:each="shipping : ${#ctx.session.containsKey(shipping)}">
-    <td th:text="${'Leveringspris: ' + #ctx.shippingPrice + ',-'}"></td>
-    <td th:text="${'Leveringstid: ' + #ctx.shippingTime + ' hverdage'}"></td>
-</tr>
+<table>
+    <tbody>
+        <tr>
+            <td>
+                <form id="zip" method="post">
+                    <p>Indtast dit postnummer for at udregne leveringspris og leveringstid.</p>
+                    <input type="text" name="zip" placeholder="Postnummer">
+                    <div id="cal-btn">
+                        <button type="submit">Beregn</button>
+                    </div>
+                </form>
+            </td>
+        </tr>
 
-<footer>
-    <section id="footer">
-        <table>
-            <tr>
-                <td>Kundeservice</td>
-                <td>Aktuelt</td>
-                <td>Om Fog</td>
-                <td>Om Fog</td>
-                <td>Med omtanke </td>
+            <tr th:each="shipping : ${#ctx.session.containsKey(shipping)}">
+                <td th:text="${'Leveringspris: ' + (#ctx.shippingPrice != null ? #ctx.shippingPrice : 0) + ',-'}"></td>
             </tr>
-            <tr>
-                <td>16</td>
-                <td>14</td>
-                <td>10</td>
-                <td>Om Fog</td>
-                <td>Med omtanke </td>
+            <tr th:each="shipping : ${#ctx.session.containsKey(shipping)}">
+                <td th:text="${'Leveringstid: ' + (#ctx.shippingTime != null ? #ctx.shippingTime : 0) + ' hverdage'}"></td>
             </tr>
-        </table>
-    </section>
-</footer>
-</tbody>
+
+        <tr class="spacer-row">
+            <td></td>
+        </tr>
+    </tbody>
+</table>
+
+
+<div th:replace="~{fragments :: footer}"></div>
+</body>
 </html>

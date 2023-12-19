@@ -1,4 +1,4 @@
-package app.persistence;
+package mockito.app.persistence;
 
 import app.entities.City;
 import app.exceptions.DatabaseException;

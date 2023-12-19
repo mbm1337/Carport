@@ -66,27 +66,32 @@ public class AdminMapper {
 
 
 
-    public static List<Admin> getOrderDetails(int orderNumber, ConnectionPool connectionPool) {
-        List<Admin> orderList = new ArrayList<>();
+    public static Admin getOrderDetails(int orderNumber, ConnectionPool connectionPool) {
+        Admin admin = new Admin();
+        List<Admin> adminList = new ArrayList<>();
 
         try (Connection connection = connectionPool.getConnection()) {
             String sql = "SELECT " +
                     "u.id AS user_id, u.forname, u.aftername, u.email, u.zip, u.address, u.admin, u.password, u.phone, " +
-                    "o.ordernumber, o.orderdate, o.status,o.length,o.width, o.comments, o.user_id AS order_user_id, " +
+                    "o.ordernumber, o.orderdate, o.status, o.length, o.width, o.comments, o.user_id AS order_user_id, " +
                     "o.price AS order_price, od.materials_id, od.quantityordered, " +
-                    "m.productname, m.producttype, m.productsize, m.unit, m.quantityinstock, m.sellprice, m.purchaseprice " +
+                    "m.productname, m.producttype, m.productsize, m.unit, m.quantityinstock, m.sellprice, m.purchaseprice, " +
+                    "hs.order_id AS shed_order_id, hs.length AS shed_length, hs.width AS shed_width, hs.side AS shed_side " +
                     "FROM \"user\" u " +
                     "JOIN orders o ON u.id = o.user_id " +
                     "JOIN orderdetails od ON o.ordernumber = od.ordernumber " +
                     "JOIN materials m ON od.materials_id = m.id " +
+
+                    "LEFT JOIN has_shed hs ON o.ordernumber = hs.order_id " +  // Assuming LEFT JOIN, change it based on your requirements
+
                     "WHERE o.ordernumber = ?";
+
 
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                 preparedStatement.setInt(1, orderNumber);
 
                 try (ResultSet resultSet = preparedStatement.executeQuery()) {
                     while (resultSet.next()) {
-                        Admin admin = new Admin();
 
                         admin.setForname(resultSet.getString("forname"));
                         admin.setAftername(resultSet.getString("aftername"));
@@ -103,22 +108,34 @@ public class AdminMapper {
                         admin.setComments(resultSet.getString("comments"));
                         admin.setUserId(resultSet.getInt("user_id"));
                         admin.setOrderPrice(resultSet.getDouble("order_price"));
+
                         admin.setMaterialsId(resultSet.getInt("materials_id"));
                         admin.setQuantityOrdered(resultSet.getInt("quantityordered"));
+
+
+
                         admin.setLength(resultSet.getInt("length"));
                         admin.setWidth(resultSet.getInt("width"));
 
-                        // Material details
-                        admin.setProductName(resultSet.getString("productname"));
-                        admin.setProductType(resultSet.getString("producttype"));
-                        admin.setProductSize(resultSet.getString("productsize"));
-                        admin.setUnit(resultSet.getString("unit"));
-                        admin.setQuantityInStock(resultSet.getInt("quantityinstock"));
-                        admin.setSellPrice(resultSet.getDouble("sellprice"));
-                        admin.setPurchasePrice(resultSet.getDouble("purchaseprice"));
+                        // Shed details
+                        admin.setShedLength(resultSet.getInt("shed_length"));
+                        admin.setShedWidth(resultSet.getInt("shed_width"));
+                        admin.setShedSide(resultSet.getBoolean("shed_side"));
 
-                        orderList.add(admin);
+                        // Material details
+                        Admin adminMaterial = new Admin();
+                        adminMaterial.setQuantityOrdered(resultSet.getInt("quantityordered"));
+                        adminMaterial.setMaterialsId(resultSet.getInt("materials_id"));
+                        adminMaterial.setProductName(resultSet.getString("productname"));
+                        adminMaterial.setProductType(resultSet.getString("producttype"));
+                        adminMaterial.setProductSize(resultSet.getString("productsize"));
+                        adminMaterial.setUnit(resultSet.getString("unit"));
+                        adminMaterial.setQuantityInStock(resultSet.getInt("quantityinstock"));
+                        adminMaterial.setSellPrice(resultSet.getDouble("sellprice"));
+                        adminMaterial.setPurchasePrice(resultSet.getDouble("purchaseprice"));
+                        adminList.add(adminMaterial);
                     }
+
                 }
             }
 
@@ -126,7 +143,8 @@ public class AdminMapper {
             e.printStackTrace(); // Handle database call errors
         }
 
-        return orderList;
+        admin.setAdminList(adminList);
+        return admin;
     }
 
 

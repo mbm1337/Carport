@@ -1,4 +1,4 @@
-package app.persistence;
+package mockito.app.persistence;
 
 import app.persistence.ConnectionPool;
 import app.persistence.MaterialMapper;

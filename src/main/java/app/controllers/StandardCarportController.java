@@ -5,9 +5,7 @@ import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
 import app.persistence.StandardCarportMapper;
 import io.javalin.http.Context;
-
 import java.util.List;
-import java.util.Objects;
 
 public class StandardCarportController {
 

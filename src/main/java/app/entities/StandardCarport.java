@@ -5,14 +5,14 @@ public class StandardCarport {
     private int id;
     private String merchandiser;
     private String productName;
-    private int price;
+    private int carportPrice;
     private String description;
 
-    public StandardCarport(int id, String merchandiser, String productName, int price, String description)  {
+    public StandardCarport(int id, String merchandiser, String productName, int carportPrice, String description)  {
         this.id = id;
         this.merchandiser = merchandiser;
         this.productName = productName;
-        this.price = price;
+        this.carportPrice = carportPrice;
         this.description = description;
     }
 
@@ -28,8 +28,8 @@ public class StandardCarport {
         return productName;
     }
 
-    public int getPrice() {
-        return price;
+    public int getCarportPrice() {
+        return carportPrice;
     }
 
     public String getDescription() {

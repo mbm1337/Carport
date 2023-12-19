@@ -25,9 +25,10 @@
 
             <!-- admin menu-->
             <th:block th:if="${isAdmin}">
-              <li><a data-content="Materialer" href="/materials" class="css-1gx9qgy eex3fzi0" aria-expanded="false">Materialer</a></li>
-              <li><a data-content="Ordre" href="/ordre" class="css-1gx9qgy eex3fzi0" aria-expanded="false">Ordre</a></li>
-              <li><a data-content="Bolig &amp; design" href="/bolig-design" class="css-1gx9qgy eex3fzi0" aria-expanded="false">Bolig &amp; design</a></li>
+              <li><a data-content="Ændre Materialer" href="/materials" class="css-1gx9qgy eex3fzi0" aria-expanded="false">Ændre Materialer</a></li>
+              <li><a data-content="Se Ordre" href="/adminordre" class="css-1gx9qgy eex3fzi0" aria-expanded="false">Se Ordre</a></li>
+              <li><a data-content="Carport bygge matrieler" href="/adminCalc" class="css-1gx9qgy eex3fzi0" aria-expanded="false">Carport bygge matrieler</a></li>
+              <li><a data-content="Carport bygge størelse" href="/carport_size" class="css-1gx9qgy eex3fzi0" aria-expanded="false">Carport bygge størelse</a></li>
             </th:block>
 
             <!-- user menu -->
@@ -51,7 +52,7 @@
         <section class="css-17kxde3 e8tb0nm0">
           <div class="css-17kxde3">
             <input type="text" id="searchInput" placeholder="Søg...">
-            <button id="searchButton" onclick="search()">Søg</button>
+            <button id="searchButton" onclick="searchcontent()">Søg</button>
           </div>
         </section>
         <div class="css-4emdtb e1nzw00810">

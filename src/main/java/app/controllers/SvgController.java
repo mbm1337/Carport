@@ -1,30 +1,55 @@
 package app.controllers;
 
+import app.entities.Admin;
+import app.entities.User;
+import app.persistence.AdminMapper;
+import app.persistence.ConnectionPool;
 import app.util.CarportSvgGenerator;
 import app.util.SvgGenerator;
 import io.javalin.http.Context;
 import org.apache.batik.svggen.SVGGraphics2DIOException;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class SvgController {
-    public static void getSvg(Context ctx) throws SVGGraphics2DIOException {
-        double length = 780;
-        double width = 300;
+    public static void getSvg(Context ctx, ConnectionPool connectionPool) throws SVGGraphics2DIOException {
+        boolean isAdmin = false;
+        boolean isUser = false;
 
-        String svgContent = CarportSvgGenerator.generateSvg(length, width);
-        String svgContent2 = SvgGenerator.generateSvg(length, width);
+        // Tjek om sessionen er tilgængelig
+        User currentUser = ctx.sessionAttribute("currentUser");
+        if (currentUser != null) {
+            isAdmin = currentUser.isAdmin();
+            isUser = true;
+        }
 
+        int orderNumber = Integer.parseInt(ctx.pathParam("ordernumber"));
 
-        Map<String, Object> model = new HashMap<>();
-        model.put("svgContent", svgContent);
+        // Fetch the order details from the database based on orderNumber
+        Admin admin = AdminMapper.getOrderDetails(orderNumber, connectionPool);
 
-        Map<String, Object> model2 = new HashMap<>();
-        model.put("svgContent2", svgContent2);
+        if (admin != null) {
+            double length = admin.getLength();
+            double width =  admin.getWidth();
 
+            String svgContent = CarportSvgGenerator.generateSvg(length, width);
+            String svgContent2 = SvgGenerator.generateSvg(length, width);
 
-        ctx.render("/svg.html", model);
-        ctx.render("/svg.html", model2);
+            Map<String, Object> model = new HashMap<>();
+            model.put("svgContent", svgContent);
+
+            Map<String, Object> model2 = new HashMap<>();
+            model2.put("svgContent2", svgContent2);
+
+            ctx.render("/tilbud.html",  Map.of("isAdmin", isAdmin, "isUser", isUser));
+            ctx.render("/tilbud.html", model);
+            ctx.render("/tilbud.html", model2);
+        } else {
+            // Handle the case where OrderDetail is not found for the provided orderNumber
+            ctx.result("OrderDetail not found for the provided orderNumber");
+        }
     }
+
 }

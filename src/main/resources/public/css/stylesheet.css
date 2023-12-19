@@ -116,7 +116,7 @@ html {
 
 .css-inbqmi {
         top: 0;
-        position: -webkit-sticky;
+
         position: sticky;
         z-index: 400;
         -webkit-transition: top 0.4s ease-in-out;
@@ -519,6 +519,7 @@ form {
         height: 5rem; /* or any size you want */
         margin: 2rem; /* to add some space between the boxes */
 }
+
 .input {
         padding: 50px 20px;
         display: flex;
@@ -530,3 +531,149 @@ form {
         margin: 0 auto;
 }
 
+
+
+.user-box, .order-box, .material-box {
+        margin: 10px; /* Add margin for spacing */
+}
+.carports-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        align-items: flex-start;
+        margin-top: 50px;
+}
+
+.carport-item {
+        margin: 10px;
+        text-align: center;
+        width: 400px; /* Adjust width as needed */
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Box shadow styling */
+        padding: 20px;
+}
+
+.carports_img {
+        max-width: 100%;
+        max-height: 100%;
+}
+
+.carport-info {
+        width: 100%;
+        margin-top: 10px;
+}
+
+.carport-text {
+        /* Additional styling for text if needed */
+}
+
+.carport-form {
+        margin-top: 10px;
+}
+
+#carports-info-container {
+        justify-content: center;
+}
+
+#carport-info-id {
+        margin: 10px auto;
+        text-align: center;
+        width: 1000px;
+}
+
+#cal-btn {
+        margin-top: 10px;
+        margin-bottom: 10px;
+}
+
+.spacer-row td {
+        height: 20px;
+}
+
+
+
+
+
+
+
+/* Style for the contact section inside the footer */
+
+
+@media screen and (min-width: 0px) and (max-width: 450px) {
+        #svg-box { display: none; }
+}
+
+
+.card {
+        box-shadow: 0 20px 27px 0 rgb(0 0 0 / 5%);
+}
+.card {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        word-wrap: break-word;
+        background-color: #fff;
+        background-clip: border-box;
+        border: 0 solid rgba(0,0,0,.125);
+        border-radius: 1rem;
+}
+.text-reset {
+        --bs-text-opacity: 1;
+        color: inherit!important;
+}
+a {
+        color: #5465ff;
+        text-decoration: none;
+}
+
+
+.main {
+        display: flex;
+        justify-content: space-between;
+}
+
+.form-left-to-w3l,
+.form-order {
+        flex-basis: 100%;
+}
+
+.porduct-order-agile {
+        width: 50%;
+        padding: 2.5em 3em 3em;
+        margin: 0em auto;
+        background: #fff;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-left-to-w3l input[type="text"],
+select.form-control {
+        width: 100%;
+        color: #000;
+        outline: none;
+        font-size: 14px;
+        padding: .6em 1em;
+        margin: 10px 0px 9px;
+        border: 1px solid #000;
+        background: rgb(255, 255, 255);
+        transition: all 0.5s ease-in-out;
+        box-sizing: border-box;
+}
+
+.comment-box {
+        width: 100%; /* Gør boksen 100% bredde af dens container */
+        margin-top: 20px; /* Tilføj lidt topmargin for at adskille den fra de andre elementer */
+}
+
+.comment-box textarea {
+        width: 100%; /* Gør tekstområdet inden i kommentarboksen 100% bredt */
+        color: #000;
+        outline: none;
+        font-size: 14px;
+        padding: .6em 1em;
+        margin: 10px 0px 9px;
+        border: 1px solid #000;
+        background: rgb(255, 255, 255);
+        transition: all 0.5s ease-in-out;
+        box-sizing: border-box;
+}

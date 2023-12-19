@@ -13,6 +13,7 @@ public class Order {
     private int length;
     private int width;
     private String comment;
+   private String orderdate;
 
     public Order(String status, int userId, int length, int width, String comments) {
 
@@ -21,6 +22,19 @@ public class Order {
         this.comment = comments;
         this.length = length;
         this.width = width;
+    }
+
+
+    public Order(int ordernumber, int userId, String status, int price, int length, int width, String comments, String orderdate) {
+this.orderNr = ordernumber;
+        this.userId = userId;
+        this.status = status;
+        this.comment = comments;
+        this.length = length;
+        this.width = width;
+        this.orderdate = orderdate;
+        this.price = price;
+
     }
 
 

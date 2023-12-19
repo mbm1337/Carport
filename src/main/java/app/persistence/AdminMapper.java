@@ -16,12 +16,13 @@ public class AdminMapper {
 
     public static Map<User, List<Order>> getUsersAndOrders(ConnectionPool connectionPool) {
         Map<User, List<Order>> usersAndOrders = new HashMap<>();
-        try (Connection connection = connectionPool.getConnection())  {
+        try (Connection connection = connectionPool.getConnection()) {
             String sql = "SELECT \"user\".id, \"user\".forname, \"user\".aftername, \"user\".email, " +
                     "\"user\".phone, \"user\".zip, \"user\".address, " +
-                    "orders.ordernumber, orders.user_id, orders.status, orders.price " +
+                    "orders.ordernumber, orders.orderdate, orders.user_id, orders.status, orders.comments, orders.price, orders.length ,orders.width  " +
                     "FROM \"user\" " +
-                    "LEFT JOIN orders ON \"user\".id = orders.user_id";
+                    "JOIN orders ON orders.user_id = \"user\".id " +
+                    "ORDER BY \"user\".id, orders.ordernumber"; // Add JOIN and ORDER BY clauses
 
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -34,14 +35,17 @@ public class AdminMapper {
                         rs.getInt("phone"),
                         rs.getInt("zip"),
                         rs.getString("address")
-
                 );
 
                 Order order = new Order(
                         rs.getInt("ordernumber"),
                         rs.getInt("user_id"),  // Ordrens nummer
                         rs.getString("status"), // Ordrens status
-                        rs.getInt("price")      // Ordrens pris
+                        rs.getInt("price"),      // Ordrens pris
+                        rs.getInt("length"),
+                        rs.getInt("width"),
+                        rs.getString("comments"),
+                        rs.getString("orderdate")
                 );
 
                 if (!usersAndOrders.containsKey(user)) {
@@ -60,46 +64,89 @@ public class AdminMapper {
 
 
 
-    public static List<Admin> getOrderDetails(int ordernumber, ConnectionPool connectionPool) {
-        List<Admin> orderList = new ArrayList<>();
+
+
+    public static Admin getOrderDetails(int orderNumber, ConnectionPool connectionPool) {
+        Admin admin = new Admin();
+        List<Admin> adminList = new ArrayList<>();
 
         try (Connection connection = connectionPool.getConnection()) {
             String sql = "SELECT " +
                     "u.id AS user_id, u.forname, u.aftername, u.email, u.zip, u.address, u.admin, u.password, u.phone, " +
-                    "o.ordernumber, o.orderdate, o.status, o.comments, o.user_id AS order_user_id, " +
-                    "o.price AS order_price, od.materials_id, od.quantityordered, od.price AS detail_price " +
+                    "o.ordernumber, o.orderdate, o.status, o.length, o.width, o.comments, o.user_id AS order_user_id, " +
+                    "o.price AS order_price, od.materials_id, od.quantityordered, " +
+                    "m.productname, m.producttype, m.productsize, m.unit, m.quantityinstock, m.sellprice, m.purchaseprice, " +
+                    "hs.order_id AS shed_order_id, hs.length AS shed_length, hs.width AS shed_width, hs.side AS shed_side " +
                     "FROM \"user\" u " +
                     "JOIN orders o ON u.id = o.user_id " +
                     "JOIN orderdetails od ON o.ordernumber = od.ordernumber " +
+                    "JOIN materials m ON od.materials_id = m.id " +
+
+                    "LEFT JOIN has_shed hs ON o.ordernumber = hs.order_id " +  // Assuming LEFT JOIN, change it based on your requirements
+
                     "WHERE o.ordernumber = ?";
 
+
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-                preparedStatement.setInt(1, ordernumber);
+                preparedStatement.setInt(1, orderNumber);
 
                 try (ResultSet resultSet = preparedStatement.executeQuery()) {
                     while (resultSet.next()) {
-                        Admin admin = new Admin();
+
+                        admin.setForname(resultSet.getString("forname"));
+                        admin.setAftername(resultSet.getString("aftername"));
+                        admin.setUserEmail(resultSet.getString("email"));
+                        admin.setZip(resultSet.getInt("zip"));
+                        admin.setAddress(resultSet.getString("address"));
+                        admin.setAdmin(resultSet.getBoolean("admin"));
+                        admin.setPassword(resultSet.getString("password"));
+                        admin.setPhone(resultSet.getInt("phone"));
+
                         admin.setOrderId(resultSet.getInt("ordernumber"));
                         admin.setOrderDate(resultSet.getString("orderdate"));
                         admin.setStatus(resultSet.getString("status"));
                         admin.setComments(resultSet.getString("comments"));
                         admin.setUserId(resultSet.getInt("user_id"));
                         admin.setOrderPrice(resultSet.getDouble("order_price"));
+
                         admin.setMaterialsId(resultSet.getInt("materials_id"));
                         admin.setQuantityOrdered(resultSet.getInt("quantityordered"));
-                        admin.setDetailPrice(resultSet.getDouble("detail_price"));
 
-                        orderList.add(admin);
+
+
+                        admin.setLength(resultSet.getInt("length"));
+                        admin.setWidth(resultSet.getInt("width"));
+
+                        // Shed details
+                        admin.setShedLength(resultSet.getInt("shed_length"));
+                        admin.setShedWidth(resultSet.getInt("shed_width"));
+                        admin.setShedSide(resultSet.getBoolean("shed_side"));
+
+                        // Material details
+                        Admin adminMaterial = new Admin();
+                        adminMaterial.setQuantityOrdered(resultSet.getInt("quantityordered"));
+                        adminMaterial.setMaterialsId(resultSet.getInt("materials_id"));
+                        adminMaterial.setProductName(resultSet.getString("productname"));
+                        adminMaterial.setProductType(resultSet.getString("producttype"));
+                        adminMaterial.setProductSize(resultSet.getString("productsize"));
+                        adminMaterial.setUnit(resultSet.getString("unit"));
+                        adminMaterial.setQuantityInStock(resultSet.getInt("quantityinstock"));
+                        adminMaterial.setSellPrice(resultSet.getDouble("sellprice"));
+                        adminMaterial.setPurchasePrice(resultSet.getDouble("purchaseprice"));
+                        adminList.add(adminMaterial);
                     }
+
                 }
             }
 
         } catch (SQLException e) {
-            e.printStackTrace(); // Håndter fejl i forbindelse med databasekald
+            e.printStackTrace(); // Handle database call errors
         }
 
-        return orderList;
+        admin.setAdminList(adminList);
+        return admin;
     }
+
 
     public static void updatePrice(int ordernumber, double price, ConnectionPool connectionPool) throws DatabaseException {
         String sql = "UPDATE orders SET price = ? WHERE ordernumber = ?";
@@ -168,7 +215,7 @@ public class AdminMapper {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return null; // If material with the given ID is not found
+        return null;
     }
 
     public static Material updateMaterial(Material material, ConnectionPool connectionPool) throws DatabaseException {
@@ -424,5 +471,8 @@ public class AdminMapper {
         } catch (SQLException e) {
             throw new DatabaseException("Fejl i sletning af shed width");
         }
+    }
+
+    public static void updatePrice(String updatePrice, ConnectionPool connectionPool) {
     }
 }

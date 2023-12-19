@@ -5,7 +5,6 @@ import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
 import app.persistence.MaterialMapper;
 import app.persistence.OrderMapper;
-
 import app.persistence.UserMapper;
 import app.util.Calculator;
 import io.javalin.http.Context;
@@ -30,6 +29,7 @@ public class OrderController {
         try {
             List<Material> materials = ctx.sessionAttribute("quantityordered");
             int userid = 0;
+            Shed shed = ctx.sessionAttribute("shed");
 
             Carport carport = ctx.sessionAttribute("carport");
             User user = ctx.sessionAttribute("currentUser");
@@ -41,6 +41,9 @@ public class OrderController {
             String mail = ctx.formParam("email");
             String password = ctx.formParam("telefonNummer");
             String comments = ctx.formParam("comments");
+
+
+            MailSenderController.sendCarportDetailsEmail(carport, "fog.carports@gmail.com", navn, phone);
 
             boolean admin = Boolean.parseBoolean(ctx.formParam("admin"));
 
@@ -59,6 +62,9 @@ public class OrderController {
 
             for (Material material : materials) {
                 OrderMapper.createOrderDetailsDatabase(newOrderId, order, material.getId(), material.getQuantityordered(), connectionpool);
+            }
+            if (shed != null) {
+                OrderMapper.createOrdershedDatabase(newOrderId, shed, connectionpool);
             }
 
             ctx.render("price.html");

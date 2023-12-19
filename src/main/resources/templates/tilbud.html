@@ -115,7 +115,7 @@
                                     </thead>
                                     <tbody>
 
-                                    <tr th:each="admin : ${#ctx.admin}">
+                                    <tr th:each="admin : ${#ctx.adminList}">
                                         <td th:text="${admin.materialsId}"></td>
                                         <td th:text="${admin.quantityOrdered}"></td>
                                         <td th:text="${admin.productName}"></td>

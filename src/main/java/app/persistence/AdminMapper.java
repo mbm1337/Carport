@@ -68,6 +68,8 @@ public class AdminMapper {
 
     public static Admin getOrderDetails(int orderNumber, ConnectionPool connectionPool) {
         Admin admin = new Admin();
+        List<Admin> adminList = new ArrayList<>();
+
         try (Connection connection = connectionPool.getConnection()) {
             String sql = "SELECT " +
                     "u.id AS user_id, u.forname, u.aftername, u.email, u.zip, u.address, u.admin, u.password, u.phone, " +
@@ -89,7 +91,6 @@ public class AdminMapper {
                 try (ResultSet resultSet = preparedStatement.executeQuery()) {
                     while (resultSet.next()) {
 
-
                         admin.setForname(resultSet.getString("forname"));
                         admin.setAftername(resultSet.getString("aftername"));
                         admin.setUserEmail(resultSet.getString("email"));
@@ -105,28 +106,30 @@ public class AdminMapper {
                         admin.setComments(resultSet.getString("comments"));
                         admin.setUserId(resultSet.getInt("user_id"));
                         admin.setOrderPrice(resultSet.getDouble("order_price"));
-                        admin.setMaterialsId(resultSet.getInt("materials_id"));
-                        admin.setQuantityOrdered(resultSet.getInt("quantityordered"));
+
+
                         admin.setLength(resultSet.getInt("length"));
                         admin.setWidth(resultSet.getInt("width"));
-
-                        // Material details
-                        admin.setProductName(resultSet.getString("productname"));
-                        admin.setProductType(resultSet.getString("producttype"));
-                        admin.setProductSize(resultSet.getString("productsize"));
-                        admin.setUnit(resultSet.getString("unit"));
-                        admin.setQuantityInStock(resultSet.getInt("quantityinstock"));
-                        admin.setSellPrice(resultSet.getDouble("sellprice"));
-                        admin.setPurchasePrice(resultSet.getDouble("purchaseprice"));
-
 
                         // Shed details
                         admin.setShedLength(resultSet.getInt("shed_length"));
                         admin.setShedWidth(resultSet.getInt("shed_width"));
                         admin.setShedSide(resultSet.getBoolean("shed_side"));
 
-
+                        // Material details
+                        Admin adminMaterial = new Admin();
+                        adminMaterial.setQuantityOrdered(resultSet.getInt("quantityordered"));
+                        adminMaterial.setMaterialsId(resultSet.getInt("materials_id"));
+                        adminMaterial.setProductName(resultSet.getString("productname"));
+                        adminMaterial.setProductType(resultSet.getString("producttype"));
+                        adminMaterial.setProductSize(resultSet.getString("productsize"));
+                        adminMaterial.setUnit(resultSet.getString("unit"));
+                        adminMaterial.setQuantityInStock(resultSet.getInt("quantityinstock"));
+                        adminMaterial.setSellPrice(resultSet.getDouble("sellprice"));
+                        adminMaterial.setPurchasePrice(resultSet.getDouble("purchaseprice"));
+                        adminList.add(adminMaterial);
                     }
+
                 }
             }
 
@@ -134,6 +137,7 @@ public class AdminMapper {
             e.printStackTrace(); // Handle database call errors
         }
 
+        admin.setAdminList(adminList);
         return admin;
     }
 

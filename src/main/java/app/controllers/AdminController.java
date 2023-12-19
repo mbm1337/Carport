@@ -62,6 +62,7 @@ public class AdminController {
         ctx.attribute("city",ZipMapper.getCityByZip(admin.getZip(), connectionPool));
 
         ctx.attribute("admin", admin);
+        ctx.attribute("adminList",admin.getAdminList());
 
         SvgController.getSvg(ctx, connectionPool);
 

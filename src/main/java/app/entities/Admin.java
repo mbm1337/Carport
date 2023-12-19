@@ -1,5 +1,8 @@
 package app.entities;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Admin {
     private int id;
     private int orderId;
@@ -29,6 +32,16 @@ public class Admin {
 
     private double ShedLength;
     private double ShedWidth;
+
+    public List<Admin> getAdminList() {
+        return adminList;
+    }
+
+    public void setAdminList(List<Admin> adminList) {
+        this.adminList = adminList;
+    }
+
+    List<Admin> adminList;
 
     public double getShedLength() {
         return ShedLength;
@@ -170,6 +183,7 @@ public class Admin {
     }
 
     public Admin() {
+        adminList = new ArrayList<>();
 
     }
     public Admin(int id,int materialsId, String comments) {

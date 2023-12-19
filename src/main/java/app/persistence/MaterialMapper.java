@@ -1,6 +1,5 @@
 package app.persistence;
 
-import app.entities.Material;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -29,5 +28,3 @@ public class MaterialMapper {
         return 0;
     }
 }
-//en stolbe et beslag og 10 skruer
-//et spær 2 beslag og 20 skruer

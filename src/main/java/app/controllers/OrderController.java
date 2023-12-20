@@ -33,6 +33,7 @@ public class OrderController {
         try {
             List<Material> materials = ctx.sessionAttribute("quantityordered");
             int userid = 0;
+            Shed shed = ctx.sessionAttribute("shed");
 
             Carport carport = ctx.sessionAttribute("carport");
             User user = ctx.sessionAttribute("currentUser");
@@ -45,6 +46,9 @@ public class OrderController {
             String password = ctx.formParam("telefonNummer");
             String comments = ctx.formParam("comments");
 
+
+            MailSenderController.sendCarportDetailsEmail(carport, "fog.carports@gmail.com", navn, phone);
+
             boolean admin = Boolean.parseBoolean(ctx.formParam("admin"));
 
             User currentUser = ctx.sessionAttribute("currentUser");
@@ -53,7 +57,7 @@ public class OrderController {
                 int userID = UserMapper.createUserGenerated(user, connectionpool);
                 userid = userID;
 
-            } else {
+            }   else {
                 userid = user.getId();
             }
 
@@ -62,6 +66,9 @@ public class OrderController {
 
             for (Material material : materials) {
                 OrderMapper.createOrderDetailsDatabase(newOrderId, order, material.getId(), material.getQuantityordered(), connectionpool);
+            }
+            if (shed != null) {
+                OrderMapper.createOrdershedDatabase(newOrderId, shed, connectionpool);
             }
 
             ctx.render("price.html");

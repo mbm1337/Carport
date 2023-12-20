@@ -5,18 +5,12 @@ import app.exceptions.DatabaseException;
 import app.persistence.*;
 import app.util.Calculator;
 import io.javalin.http.Context;
+import org.apache.batik.svggen.SVGGraphics2DIOException;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class OrderController {
-
-
-    private static int beslagId = 20;
-
-
-
-
     public static void getStatus(Context ctx, ConnectionPool connectionpool) {
         try {
             int userId = Integer.parseInt(ctx.formParam("userid"));
@@ -33,6 +27,7 @@ public class OrderController {
         try {
             List<Material> materials = ctx.sessionAttribute("quantityordered");
             int userid = 0;
+            Shed shed = ctx.sessionAttribute("shed");
 
             Carport carport = ctx.sessionAttribute("carport");
             User user = ctx.sessionAttribute("currentUser");
@@ -44,6 +39,9 @@ public class OrderController {
             String mail = ctx.formParam("email");
             String password = ctx.formParam("telefonNummer");
             String comments = ctx.formParam("comments");
+
+
+            MailSenderController.sendCarportDetailsEmail(carport, "fog.carports@gmail.com", navn, phone);
 
             boolean admin = Boolean.parseBoolean(ctx.formParam("admin"));
 
@@ -62,6 +60,9 @@ public class OrderController {
 
             for (Material material : materials) {
                 OrderMapper.createOrderDetailsDatabase(newOrderId, order, material.getId(), material.getQuantityordered(), connectionpool);
+            }
+            if (shed != null) {
+                OrderMapper.createOrdershedDatabase(newOrderId, shed, connectionpool);
             }
 
             ctx.render("price.html");
@@ -90,8 +91,8 @@ public class OrderController {
 
         int screwsPerPerPost = MaterialMapper.getPrice(22, connectionPool);
         int screwPerSpaer = MaterialMapper.getPrice(22, connectionPool);
-        int beslagPerPost = MaterialMapper.getPrice(beslagId, connectionPool);
-        int beslagPerSpaer = MaterialMapper.getPrice(beslagId, connectionPool);
+        int beslagPerPost = MaterialMapper.getPrice(20, connectionPool);
+        int beslagPerSpaer = MaterialMapper.getPrice(20, connectionPool);
 
 
         int numberOfPosts = calc.numberOfPosts(length);
@@ -153,30 +154,33 @@ public class OrderController {
     public static void getOrders(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
 
         User user = ctx.sessionAttribute("currentUser");
-
         if (user != null) {
             List<Order> orders = OrderMapper.getOrders(user.getId(), connectionPool);
-
+            ctx.attribute("username", ctx.sessionAttribute("username"));
             ctx.attribute("orders", orders);
             ctx.render("order.html");
-        } else {
+        }else{
             ctx.render("index.html");
         }
-    }
 
-    public static void showOrderDetails(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
-        int orderNumber = Integer.parseInt(ctx.pathParam("ordernumber"));
 
-        List<OrderDetail> orderDetail = OrderMapper.getOrderDetailsWithProduct(orderNumber, connectionPool);
-        ctx.sessionAttribute("ordernumber", orderNumber);
-        ctx.attribute("user", orderDetail);
-        ctx.render("mymaterial.html");
     }
 
     public static void deleteOrder(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
         int orderId = Integer.parseInt(ctx.pathParam("orderId"));
         OrderMapper.deleteOrderDatabase(orderId, connectionPool);
         ctx.redirect("/adminordre");
+    }
+
+
+    public static void showOrderDetails(Context ctx, ConnectionPool connectionPool) throws DatabaseException, SVGGraphics2DIOException {
+        int orderNumber = Integer.parseInt(ctx.pathParam("ordernumber"));
+
+        List<OrderDetail> orderDetail = OrderMapper.getOrderDetailsWithProduct(orderNumber, connectionPool);
+        ctx.sessionAttribute("ordernumber", orderNumber);
+        ctx.attribute("user", orderDetail);
+        SvgController.getSvg(ctx, connectionPool);
+        ctx.render("mymaterial.html");
     }
 
 }

@@ -41,7 +41,7 @@ public class OrderController {
 
 
             MailSenderController.sendCarportDetailsEmail(carport, "fog.carports@gmail.com", navn, phone);
-
+            MailSenderController.sendDetailsToCustomer(carport, mail, navn, phone, mail);
             boolean admin = Boolean.parseBoolean(ctx.formParam("admin"));
 
             User currentUser = ctx.sessionAttribute("currentUser");

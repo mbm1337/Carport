@@ -132,10 +132,17 @@ public class MailSenderController {
         builder.append("Tusind tak for din bestilling! Vi har nu oprettet en bruger til dig, så du kan se din ordre status:\n");
         builder.append("Email: ").append(userEmail).append("\n");
         builder.append("Kodeord: ").append(userPhoneNumber).append("\n");
-        builder.append("Detaljer på din carport::\n");
+        builder.append("Detaljer på din carport:\n");
         builder.append("Bredde: ").append(carport.getWidth()).append("\n");
         builder.append("Længde: ").append(carport.getLength()).append("\n");
         builder.append("Tag: ").append(carport.getRoof()).append("\n");
+
+        // Check if the carport includes a shed
+        if (carport.getShed() != null) {
+            // If a shed is included, append its details to the email body
+            builder.append("Skur bredde: ").append(carport.getShed().getWidth()).append("\n");
+            builder.append("Skur længde: ").append(carport.getShed().getLength());
+        }
 
 
         // Return the complete email body as a string

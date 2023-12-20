@@ -71,7 +71,7 @@ public class AdminController {
 
             SvgController.getSvg(ctx, connectionPool);
 
-            ctx.render("adminordre.html", Map.of("isAdmin", isAdmin, "isUser", isUser));
+            ctx.render("tilbud.html", Map.of("isAdmin", isAdmin, "isUser", isUser));
 
         }else {
             ctx.redirect("/");

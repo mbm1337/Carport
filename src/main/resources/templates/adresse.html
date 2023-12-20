@@ -1,63 +1,60 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fog/address</title>
-    <link rel="stylesheet" href="../public/css/stylesheet.css">
-</head>
+
+<div th:replace="~{fragments :: head('materials')}"></div>
 
 <body>
 
-<section>
-    <form class="input" action="/price" method="post">
+<div id="page-container">
+    <div id="page-content">
+        <div th:replace="~{fragments :: header('materials')}"></div>
+        <div class="indhold-box" id="content">
+            <div id="page-container">
+                <section>
+                    <form class="input" action="/price" method="post">
 
-        <label class = "" for="navn"> navn*</label><br>
-        <input type="text" id="navn" name="navn"><br>
+                        <label class = "" for="navn"> Fornavn:</label><br>
+                        <input type="text" id="navn" name="navn"><br>
 
-        <label for="efternavn"> efternavn*</label><br>
-        <input type="text" id="efternavn" name="efternavn"><br>
+                        <label for="efternavn"> Efternavn:</label><br>
+                        <input type="text" id="efternavn" name="efternavn"><br>
 
-        <label for="adresse">Adresse</label><br>
-        <input type="text" id="adresse" name="adresse"><br>
+                        <label for="adresse">Adresse:</label><br>
+                        <input type="text" id="adresse" name="adresse"><br>
 
-            <label for="zip">Postnummer:</label><br>
-            <input type ="text" id = "zip" name="zip" oninput="lookupCity()"><br>
+                        <label for="zip">Postnummer:</label><br>
+                        <input type ="number" id = "zip" name="zip" oninput="lookupCity()"><br>
 
-            <label for="cityName">City:</label><br>
-            <input type ="text" id = "cityName" name="city" disabled = "disabled"/><br>
-
-
-
-        <script th:src="@{/js/zip-codes.js}"></script>
-        <script th:src="@{/js/lookup.js}"></script>
+                        <label for="cityName">By:</label><br>
+                        <input type ="text" id = "cityName" name="city" disabled = "disabled"/><br>
 
 
 
-        <label for="telefonNummer">Telefonnummer*</label><br>
-        <input type="text" id="telefonNummer" name="telefonNummer"><br>
+                        <script th:src="@{/js/zip-codes.js}"></script>
+                        <script th:src="@{/js/lookup.js}"></script>
 
-        <label for="email">Email*</label><br>
-        <input type="text" id="email" name="email"><br>
 
-        <label for="comments">comments</label><br>
-        <input type="text" id="comments" name="comments"><br>
-        <div>
-            <p>*Kontakt</p>
-            <input type="checkbox" id="Samtykke" name="Samtykke" value="Samtykke">
-            <label for="Samtykke"> Fog må benytte de afgivne oplysninger til at kontakte mig i forbindelse med
-                tilbud på QuickByg carport*</label><br>
+
+                        <label for="telefonNummer">Telefonnummer:</label><br>
+                        <input type="number" id="telefonNummer" name="telefonNummer"><br>
+
+                        <label for="email">Email:</label><br>
+                        <input type="text" id="email" name="email"><br>
+
+                        <label for="comments">Kommentar:</label><br>
+                        <input type="text" id="comments" name="comments"><br>
+                        <div>
+                            <input type="checkbox" id="Samtykke" name="Samtykke" value="Samtykke" required>
+                            <label for="Samtykke"> Fog må benytte de afgivne oplysninger til at kontakte mig i forbindelse med
+                                tilbud på QuickByg carport*</label><br>
+                        </div>
+                        <button class = "button "type="submit">Bestil tilbud</button>
+                    </form>
+                </section>
+            </div>
         </div>
-        <button class = "button "type="submit">bestil tilbud</button>
-    </form>
-
-
-</section>
-<footer>
-    <section class="footer">
-        <table>
-        </table>
-    </section>
-</footer>
+        <div th:replace="~{fragments :: footer}"></div>
+    </div>
+</div>
 </body>
 </html>

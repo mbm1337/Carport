@@ -21,12 +21,12 @@ import java.util.List;
             int distanceBetweenPosts = 240;
 
             int totalpost = 0;
-            if (carportlength - 30 <= 600) {
+            if (carportlength  <= 500) {
                 totalpost = 2 * 2;
-            } else if (carportlength - 30 < 600 && carportlength <= 800) {
+            } else if (carportlength >= 600 && carportlength <= 800) {
                 totalpost = 3 * 2;
             } else {
-                if (carportlength - 30 < 800) {
+                if (carportlength  > 800) {
                     totalpost = (int) Math.ceil(carportlength / distanceBetweenPosts);
                     totalpost = totalpost * 2;
 
@@ -45,17 +45,19 @@ import java.util.List;
             int numberOfRafts = (int) Math.ceil((double) carportLength / 55);
 
 
-            if( carportLength > 600) {
-                numberOfRafts = (numberOfRafts*2);
-            }
+            if (carportLength > 600) {
+                if (carportLength > 600) {
+                    int extraLength = carportLength - 600;
+                    int x = numberOfRafts * extraLength;
+                    int additionalSpaer = (int) Math.ceil((double) x / 600);
+                    int totalspaer = numberOfRafts + additionalSpaer;
 
+                }
+
+
+            }
             return numberOfRafts;
         }
-
-
-
-
-
 
         public static int beamAmount(int carportLength) {
             int numberOfrem = 2;
@@ -93,21 +95,14 @@ import java.util.List;
         }
 
 
+        public int beslagspaer(int length) {
+
+            int numberOfbeslag = spaerAmount(length);
+
+            numberOfbeslag *= 2;
+
+            return numberOfbeslag;
+        }
 
 
-
-     public int beslagspaer(int length){
-
-             int numberOfbeslag = spaerAmount(length);
-
-             numberOfbeslag *= 2;
-
-             return numberOfbeslag;
-         }
-
-
-
-     }
-//en stolbe et beslag og 10 skruer
-//et spær 2 beslag og 20 skruer
-
+    }

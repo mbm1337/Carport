@@ -1,10 +1,7 @@
 package app.persistence;
 
 
-import app.entities.Admin;
-import app.entities.Order;
-import app.entities.OrderDetail;
-import app.entities.User;
+import app.entities.*;
 import app.exceptions.DatabaseException;
 
 import java.sql.*;
@@ -103,7 +100,6 @@ public class OrderMapper {
     }
 
 
-
         public static List<OrderDetail> getOrderDetailsWithProduct(int ordernumber, ConnectionPool connectionPool) throws DatabaseException {
             List<OrderDetail> orderDetails = new ArrayList<>();
 
@@ -164,6 +160,21 @@ public class OrderMapper {
 
         } catch (SQLException e) {
             String msg = "Der er sket en fejl under sletning af ordre. Prøv igen";
+            throw new DatabaseException(msg);
+        }
+    }
+
+    public static void createOrdershedDatabase(int newOrderId, Shed shed, ConnectionPool connectionPool) throws DatabaseException {
+        try (Connection connection = connectionPool.getConnection()) {
+            String sql = "INSERT INTO \"has_shed\" (order_id, length, width,side) VALUES (?, ?, ?,?)";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, newOrderId);
+            ps.setInt(2, shed.getLength());
+            ps.setInt(3, shed.getWidth());
+            ps.setBoolean(4, shed.isShedside());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            String msg = "Der er sket en fejl. Prøv igen";
             throw new DatabaseException(msg);
         }
     }

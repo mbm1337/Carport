@@ -1,16 +1,22 @@
 package app;
 
 import app.config.ThymeleafConfig;
-import app.controllers.*;
 
+import app.controllers.*;
+import app.controllers.AdminController;
+import app.controllers.ShippingController;
+import app.controllers.StandardCarportController;
+import app.entities.StandardCarport;
+import app.controllers.CarportController;
+import app.controllers.OrderController;
+import app.controllers.UserController;
+import app.controllers.ZipController;
 import app.persistence.ConnectionPool;
+import app.persistence.OrderMapper;
 import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinThymeleaf;
 
-
-
 public class Main {
-
 
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
 
@@ -28,26 +34,37 @@ public class Main {
         app.post("/byg-selv", ctx -> CarportController.carportDropdowns(ctx, connectionPool));
         app.get("/byg-selv", ctx -> CarportController.carportDropdowns(ctx, connectionPool));
         app.post("/carport", ctx -> CarportController.makeCarport(ctx, connectionPool));
+        //app.post("/adresse",ctx-> ZipController.cityAndZip(ctx,connectionPool));
         app.post("/adresse",ctx-> ZipController.cityAndZip(ctx,connectionPool));
         app.post("/status", ctx -> OrderController.getStatus(ctx, connectionPool));
         app.post("/login", ctx -> UserController.login(ctx, connectionPool));
-        //app.get("/login", ctx -> ctx.render("login.html"));
+        app.get("/login", ctx -> ctx.render("login.html"));
+
         app.post("/createuser", ctx -> UserController.createuser(ctx, connectionPool));
         app.get("/createuser", ctx -> ctx.render("createuser.html"));
+        //app.get("/carportone", ctx -> ctx.render("carportone.html"));
+        app.get("/carportone", ctx -> ShippingController.getShippingInfoByZip(ctx, connectionPool));
+        app.post("/carportone", ctx -> ShippingController.getShippingInfoByZip(ctx, connectionPool));
         app.post("/price", ctx -> OrderController.calculatePrice(ctx, connectionPool));
-        app.get("/price", ctx -> ctx.render("price.html"));
         app.post("/insertingAnOrder", ctx -> ctx.render("price.html"));
-        app.post("/carports", ctx -> StandardCarportController.getStandardCarportsForFrontPage(ctx, connectionPool));
         app.get("/carports", ctx -> StandardCarportController.getStandardCarportsForFrontPage(ctx, connectionPool));
-        app.get("/carport_info/{id}", ctx -> StandardCarportController.getStandardCarport(ctx, connectionPool));
         app.post("/carport_info/{id}", ctx -> StandardCarportController.getStandardCarport(ctx, connectionPool));
         app.post("/shipping_cal", ctx -> ShippingController.getShippingInfoByZip(ctx, connectionPool));
         app.get("/shipping_cal", ctx -> ShippingController.getShippingInfoByZip(ctx, connectionPool));
         app.get("/svg/{ordernumber}",ctx -> SvgController.getSvg(ctx, connectionPool));
+        app.get("/order",ctx -> OrderController.getOrders(ctx, connectionPool));
+        app.post("/order",ctx -> OrderController.getOrders(ctx, connectionPool));
+        app.get("/showOrderDetails/{ordernumber}", ctx -> OrderController.showOrderDetails(ctx, connectionPool));
+        app.post("/showOrderDetails",ctx -> ctx.render("mymaterial.html"));
+        app.post("/updateuser", ctx -> UserController.updateUser(ctx, connectionPool));
+        app.get("/updateuser",ctx->ctx.render("usersetting.html"));
+
+
+
 
 
         //admin funtioner
-        app.get("/admin", ctx -> ctx.render("admin.html"));
+
         app.post("/updatePrice", ctx -> AdminController.editBalance(ctx, connectionPool));
         app.post("/edit_matreriel/{id}", ctx -> AdminController.editMaterial(ctx, connectionPool));
         app.get("/adminordre", ctx -> AdminController.getUsersAndOrders(ctx, connectionPool));

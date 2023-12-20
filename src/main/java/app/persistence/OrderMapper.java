@@ -139,6 +139,10 @@ public class OrderMapper {
             return orderDetails;
         }
 
+
+
+
+
     public static void deleteOrderDatabase(int orderId, ConnectionPool connectionPool) throws DatabaseException {
         try (Connection connection = connectionPool.getConnection()) {
             // Slet fra "orderdetails" tabel først
@@ -167,7 +171,5 @@ public class OrderMapper {
             throw new DatabaseException(msg);
         }
     }
-
-    du en rigtig nar
 
 }

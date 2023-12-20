@@ -74,6 +74,7 @@ public class Main {
 
         app.get("/test", ctx -> ctx.render("logingtest.html"));
         app.get("/logout", ctx -> UserController.logout(ctx));
+        app.post("/delete_order/{orderId}", ctx -> OrderController.deleteOrder(ctx, connectionPool));
 
 
 

@@ -122,4 +122,29 @@ public class UserMapper {
             throw new DatabaseException(message);
         }
     }
-}
+    // UserMapper.java
+
+
+        public static void updateUser(int userId, String firstName , String lastName, String address, int zip,int phone,String password ,ConnectionPool connectionPool) throws DatabaseException {
+            try (Connection connection = connectionPool.getConnection()) {
+                String sql = "UPDATE \"user\"  SET forname = ?, aftername = ?, address = ?, zip = ?, phone = ?, password = ? WHERE id = ?";
+                try (PreparedStatement ps = connection.prepareStatement(sql)) {
+                    ps.setString(1, firstName);
+                    ps.setString(2, lastName);
+                    ps.setString(3, address);
+                    ps.setInt(4, zip);
+                    ps.setInt(5, phone);
+                    ps.setString(6, password);
+                    ps.setInt(7, userId);
+                    int rowsaffected =ps.executeUpdate();
+
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+                throw new DatabaseException("Error updating user information");
+            }
+return;
+        }
+
+    }
+

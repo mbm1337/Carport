@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <html lang="en">
-<head>
 
     <title>welcome to Fogs Login</title>
     <link rel="stylesheet" href="../public/css/stylesheet.css">
+    <div th:replace="~{fragments :: head('materials')}"></div>
 
-</head>
-<body>
+
+
+    <body>
 <div class="container">
     <div class="login-box">
+        <div th:replace="~{fragments :: header('materials')}"></div>
+
         <h2>Login</h2>
         <form  class = login method="post">
             <div class="form-group">
@@ -20,11 +23,13 @@
             </div>
             <button id="login-btn" type="submit"formaction="/login">Login</button>
             <p class="errormessage" th:text="${#ctx.message}"></p>
+
         </form>
 
 
 
         <a th:if="${#ctx.session.currentUser} == null" th:href="@{/createuser}">Create account</a>
+
 
 
     </div>

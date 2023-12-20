@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Details</title>
+</head>
+<body>
+<h1>Order Details</h1>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>Material ID</th>
+        <th>Quantity Ordered</th>
+        <th>Product Name</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user : ${#ctx.user}">
+        <td th:text="${user.materialsId}"></td>
+        <td th:text="${user.quantityOrdered}"></td>
+        <td th:text="${user.productName}"></td>
+    </tr>
+    </tbody>
+</table>
+<div class="svg-container">
+    <svg th:utext="${svgContent}" width="1024" height=800 viewBox="0 0 800 800"></svg>
+    <svg th:utext="${svgContent2}" width="1024" height=800 viewBox="0 0 800 800"></svg>
+</div>
+</body>
+</html>

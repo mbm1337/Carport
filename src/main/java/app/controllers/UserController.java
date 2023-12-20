@@ -28,7 +28,7 @@ public class UserController {
         } catch (DatabaseException e) {
             ctx.attribute("message", e.getMessage());
             System.out.println(e);
-            ctx.render("login.html");
+            ctx.render("fragments.html");
         }
     }
 

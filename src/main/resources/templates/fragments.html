@@ -61,10 +61,25 @@
             <span class="css-108uwdu e1nzw0086">Find Fog</span>
           </a>
           <div class="css-oi30ox e1nzw0081">
-            <a href="/kurv" class="css-yy3si3 e1nzw0082">
-
-              <span class="css-108uwdu e1nzw0086">Kurv</span>
+            <a th:if="${#ctx.session.currentUser} != null" class="css-yy3si3 e1nzw0082" th:href="@{/logout}">
+              <img th:src="@{/img/4400629.png}" src="../public/img/4400629.png"alt="Logout"> Logout
             </a>
+
+            <div class="dropdown">
+              <a th:if="${#ctx.session.currentUser} == null" class="css-yy3si3 e1nzw0082" onclick="toggleDropdown()">
+                <img th:src="@{/img/login.jpg}" src="../public/img/login.jpg}" alt="Login"> Login
+              </a>
+
+              <div class="dropdown-content"><br>
+                <form  class = login method="post">
+                  <input type="text" id="login-username" name="username" placeholder="Email" required>
+                  <input type="password" id="login-password" name="password" placeholder="Password" required>
+                  <p class="errormessage" th:text="${#ctx.message}"></p>
+                  <button id="login-btn" type="submit"formaction="/login">Login</button>
+                </form>
+              </div>
+            </div>
+
           </div>
           <button class="css-ld7dfk">
             <img  href="/"><img th:src="@{/img/fa-bars.png}" src="../public/img/fa-bars.png" alt="Menu">

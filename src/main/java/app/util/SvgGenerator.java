@@ -12,7 +12,7 @@ public class
 
 SvgGenerator {
 
-    public static String generateSvg(double length, double width) throws SVGGraphics2DIOException {
+    public static String generateSvg(double length, double width,double skurDybde) throws SVGGraphics2DIOException {
         DOMImplementation domImpl = org.apache.batik.dom.GenericDOMImplementation.getDOMImplementation();
         Document document = domImpl.createDocument("http://www.w3.org/2000/svg", "svg", null);
 
@@ -21,7 +21,7 @@ SvgGenerator {
 
         drawStolpe(svgGraphics2D, length, width);
         drawRem(svgGraphics2D, length, width);
-
+        drawShed(svgGraphics2D,length, width, skurDybde);
 
 
         StringWriter writer = new StringWriter();
@@ -81,5 +81,35 @@ SvgGenerator {
         // Tegn tekst over remmen, så den er centralt placeret
         svgGraphics2D.drawString(lengthText, (int) (length - textWidth) / 2, remY - 5);
     }
+
+    private static void drawShed(SVGGraphics2D svgGraphics2D, double length, double width, double skurDybde) {
+        int afstanmellemplanker = 17;
+        int antalspaer = Math.max(2, (int) Math.ceil(skurDybde / afstanmellemplanker));
+
+        // Beregn startposition for spær fra modsatte side
+        int start = (int) (length - skurDybde - 10); // Start ved tolpens sidste position fra modsatte side
+
+        // Beregn afstand mellem spær
+        int distanceBetweenSpaer = (int) ((skurDybde) / (antalspaer - 1));
+
+        // Beregn bredden af spærene
+        int plankeBrede = 15; // Ændr bredden efter behov
+
+        // Tegn spærene langs længden med afstand mellem dem
+        for (int i = 0; i < antalspaer; i++) {
+            int x = start + i * distanceBetweenSpaer;
+            int spaerHeight = 270;
+
+
+
+            if ( skurDybde >= 1) {
+                svgGraphics2D.drawRect(x, 50, plankeBrede, spaerHeight);
+            }
+        }
+    }
+
+
+
+
 
 }

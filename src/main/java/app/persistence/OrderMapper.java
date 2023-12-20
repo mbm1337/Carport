@@ -118,7 +118,6 @@ public class OrderMapper {
                  PreparedStatement ps = connection.prepareStatement(sql)) {
 
                 ps.setInt(1, ordernumber);
-
                 try (ResultSet rs = ps.executeQuery()) {
                     while (rs.next()) {
                         int orderNumber = rs.getInt("ordernumber");
@@ -126,6 +125,7 @@ public class OrderMapper {
 
                         int materialsId = rs.getInt("materials_id");
                         String productName = rs.getString("productname");
+
 
                         OrderDetail orderDetail = new OrderDetail(orderNumber, quantityOrdered, materialsId, productName);
                         orderDetails.add(orderDetail);
@@ -139,4 +139,33 @@ public class OrderMapper {
             return orderDetails;
         }
 
+    public static void deleteOrderDatabase(int orderId, ConnectionPool connectionPool) throws DatabaseException {
+        try (Connection connection = connectionPool.getConnection()) {
+            // Slet fra "orderdetails" tabel først
+            String deleteDetailsSQL = "DELETE FROM \"orderdetails\" WHERE ordernumber = ?";
+            try (PreparedStatement psDetails = connection.prepareStatement(deleteDetailsSQL)) {
+                psDetails.setInt(1, orderId);
+                psDetails.executeUpdate();
+            }
+
+            // Slet fra "has_shed" tabel
+            String deleteShedSQL = "DELETE FROM \"has_shed\" WHERE order_id = ?";
+            try (PreparedStatement psShed = connection.prepareStatement(deleteShedSQL)) {
+                psShed.setInt(1, orderId);
+                psShed.executeUpdate();
+            }
+
+            // Slet fra "orders" tabel
+            String deleteOrdersSQL = "DELETE FROM \"orders\" WHERE ordernumber = ?";
+            try (PreparedStatement psOrders = connection.prepareStatement(deleteOrdersSQL)) {
+                psOrders.setInt(1, orderId);
+                psOrders.executeUpdate();
+            }
+
+        } catch (SQLException e) {
+            String msg = "Der er sket en fejl under sletning af ordre. Prøv igen";
+            throw new DatabaseException(msg);
+        }
     }
+
+}

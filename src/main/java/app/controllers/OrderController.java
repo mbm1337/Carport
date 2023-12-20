@@ -3,7 +3,6 @@ package app.controllers;
 import app.entities.*;
 import app.exceptions.DatabaseException;
 import app.persistence.*;
-
 import app.util.Calculator;
 import io.javalin.http.Context;
 
@@ -172,6 +171,12 @@ public class OrderController {
         ctx.sessionAttribute("ordernumber", orderNumber);
         ctx.attribute("user", orderDetail);
         ctx.render("mymaterial.html");
+    }
+
+    public static void deleteOrder(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+        int orderId = Integer.parseInt(ctx.pathParam("orderId"));
+        OrderMapper.deleteOrderDatabase(orderId, connectionPool);
+        ctx.redirect("/adminordre");
     }
 
 }

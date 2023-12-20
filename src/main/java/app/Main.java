@@ -39,7 +39,7 @@ public class Main {
         app.post("/status", ctx -> OrderController.getStatus(ctx, connectionPool));
         app.post("/login", ctx -> UserController.login(ctx, connectionPool));
         app.get("/login", ctx -> ctx.render("login.html"));
-        // app.get("/createuser", ctx -> UserController.createuser(ctx, connectionPool));
+
         app.post("/createuser", ctx -> UserController.createuser(ctx, connectionPool));
         app.get("/createuser", ctx -> ctx.render("createuser.html"));
         //app.get("/carportone", ctx -> ctx.render("carportone.html"));
@@ -88,6 +88,12 @@ public class Main {
         app.post("/delete_carportwidth/{id}", ctx -> AdminController.deleteCarportWidth(ctx, connectionPool));
         app.post("/delete_shedlength/{id}", ctx -> AdminController.deleteShedLength(ctx, connectionPool));
         app.post("/delete_shedwidth/{id}", ctx -> AdminController.deleteShedWidth(ctx, connectionPool));
+
+        app.get("/test", ctx -> ctx.render("logingtest.html"));
+        app.get("/logout", ctx -> UserController.logout(ctx));
+        app.post("/delete_order/{orderId}", ctx -> OrderController.deleteOrder(ctx, connectionPool));
+
+
 
 
 

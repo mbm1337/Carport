@@ -20,6 +20,8 @@
                     Udfyld formularen omhyggeligt og klik på "Bestil tilbud".
                     Felter markeret med * SKAL udfyldes!</h3> <br>
 
+                <p class="error" th:text="${#ctx.error}"></p>
+
                 <form id="order" method="post" action="/carport">
                     <label for="carportWidth">Carport Bredde: *</label> <br>
                     <select id="carportWidth" name="carportWidth">

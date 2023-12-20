@@ -97,24 +97,6 @@ public class OrderMapper {
     }
 
 
-    public static void createOrdershedDatabase(int newOrderId, Shed shed, ConnectionPool connectionPool) throws DatabaseException {
-        try (Connection connection = connectionPool.getConnection()) {
-            String sql = "INSERT INTO \"has_shed\" (order_id, length, width,side) VALUES (?, ?, ?,?)";
-            PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setInt(1, newOrderId);
-            ps.setInt(2, shed.getLength());
-            ps.setInt(3, shed.getWidth());
-            ps.setBoolean(4, shed.isShedside());
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            String msg = "Der er sket en fejl. Prøv igen";
-            throw new DatabaseException(msg);
-        }
-    }
-
-
-
-
     public static void deleteOrderDatabase(int orderId, ConnectionPool connectionPool) throws DatabaseException {
         try (Connection connection = connectionPool.getConnection()) {
             // Slet fra "orderdetails" tabel først
@@ -140,6 +122,21 @@ public class OrderMapper {
 
         } catch (SQLException e) {
             String msg = "Der er sket en fejl under sletning af ordre. Prøv igen";
+            throw new DatabaseException(msg);
+        }
+    }
+
+    public static void createOrdershedDatabase(int newOrderId, Shed shed, ConnectionPool connectionPool) throws DatabaseException {
+        try (Connection connection = connectionPool.getConnection()) {
+            String sql = "INSERT INTO \"has_shed\" (order_id, length, width,side) VALUES (?, ?, ?,?)";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, newOrderId);
+            ps.setInt(2, shed.getLength());
+            ps.setInt(3, shed.getWidth());
+            ps.setBoolean(4, shed.isShedside());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            String msg = "Der er sket en fejl. Prøv igen";
             throw new DatabaseException(msg);
         }
     }

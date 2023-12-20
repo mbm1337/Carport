@@ -10,13 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OrderController {
-
-
-    private static int beslagId = 20;
-
-
-
-
     public static void getStatus(Context ctx, ConnectionPool connectionpool) {
         try {
             int userId = Integer.parseInt(ctx.formParam("userid"));
@@ -57,7 +50,7 @@ public class OrderController {
                 int userID = UserMapper.createUserGenerated(user, connectionpool);
                 userid = userID;
 
-            }   else {
+            } else {
                 userid = user.getId();
             }
 
@@ -97,8 +90,8 @@ public class OrderController {
 
         int screwsPerPerPost = MaterialMapper.getPrice(22, connectionPool);
         int screwPerSpaer = MaterialMapper.getPrice(22, connectionPool);
-        int beslagPerPost = MaterialMapper.getPrice(beslagId, connectionPool);
-        int beslagPerSpaer = MaterialMapper.getPrice(beslagId, connectionPool);
+        int beslagPerPost = MaterialMapper.getPrice(20, connectionPool);
+        int beslagPerSpaer = MaterialMapper.getPrice(20, connectionPool);
 
 
         int numberOfPosts = calc.numberOfPosts(length);
@@ -160,24 +153,16 @@ public class OrderController {
     public static void getOrders(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
 
         User user = ctx.sessionAttribute("currentUser");
-
         if (user != null) {
             List<Order> orders = OrderMapper.getOrders(user.getId(), connectionPool);
-
+            ctx.attribute("username", ctx.sessionAttribute("username"));
             ctx.attribute("orders", orders);
-            ctx.render("order.html");
-        } else {
+            ctx.render("seOrder.html");
+        }else{
             ctx.render("index.html");
         }
-    }
 
-    public static void showOrderDetails(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
-        int orderNumber = Integer.parseInt(ctx.pathParam("ordernumber"));
 
-        List<OrderDetail> orderDetail = OrderMapper.getOrderDetailsWithProduct(orderNumber, connectionPool);
-        ctx.sessionAttribute("ordernumber", orderNumber);
-        ctx.attribute("user", orderDetail);
-        ctx.render("mymaterial.html");
     }
 
     public static void deleteOrder(Context ctx, ConnectionPool connectionPool) throws DatabaseException {

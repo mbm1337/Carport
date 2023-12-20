@@ -167,9 +167,24 @@ public class OrderController {
     }
 
     public static void deleteOrder(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
-        int orderId = Integer.parseInt(ctx.pathParam("orderId"));
+        boolean isAdmin = false;
+        boolean isUser = false;
+
+        // Tjek om sessionen er tilgængelig
+        User currentUser = ctx.sessionAttribute("currentUser");
+        if (currentUser != null) {
+            isAdmin = currentUser.isAdmin();
+            isUser = true;
+
+            int orderId = Integer.parseInt(ctx.pathParam("orderId"));
         OrderMapper.deleteOrderDatabase(orderId, connectionPool);
         ctx.redirect("/adminordre");
+        }else {
+            ctx.redirect("/");
+        }
+
+
+
     }
 
 

@@ -31,9 +31,18 @@ public class AdminController {
         });
 
         // Send de sorteret data til skabelonen
-        ctx.attribute("usersAndOrders", usersAndOrders);
 
-        ctx.render("adminordre.html", Map.of("isAdmin", isAdmin, "isUser", isUser));
+        Boolean loggedIn = ctx.sessionAttribute("isAdmin");
+        if (loggedIn != null && loggedIn) {
+
+            ctx.attribute("usersAndOrders", usersAndOrders);
+
+            ctx.render("adminordre.html", Map.of("isAdmin", isAdmin, "isUser", isUser));
+
+        } else {
+            ctx.redirect("/");
+        }
+
 
 
     }
@@ -54,12 +63,19 @@ public class AdminController {
         Admin admin = AdminMapper.getOrderDetails(orderNumber, connectionPool);
 
         ctx.sessionAttribute("ordernumber", orderNumber);
-        ctx.attribute("city",ZipMapper.getCityByZip(admin.getZip(), connectionPool));
 
-        ctx.attribute("admin", admin);
-        ctx.attribute("adminList",admin.getAdminList());
+        Boolean loggedIn = ctx.sessionAttribute("isAdmin");
+        if (loggedIn != null && loggedIn) {
+            ctx.attribute("city",ZipMapper.getCityByZip(admin.getZip(), connectionPool));
 
-        SvgController.getSvg(ctx, connectionPool);
+            ctx.attribute("admin", admin);
+            ctx.attribute("adminList",admin.getAdminList());
+
+            SvgController.getSvg(ctx, connectionPool);
+        } else {
+            ctx.redirect("/");
+        }
+
 
 
 
@@ -78,7 +94,15 @@ public class AdminController {
         double updatePrice = Double.parseDouble(ctx.formParam("newPrice"));
         int id = Integer.parseInt(ctx.formParam("orderId"));
     AdminMapper.updatePrice(id,updatePrice, connectionPool);
-        ctx.redirect("/tilbud/"+id);
+        Boolean loggedIn = ctx.sessionAttribute("isAdmin");
+        if (loggedIn != null && loggedIn) {
+
+            ctx.redirect("/tilbud/"+id);
+
+        } else {
+            ctx.redirect("/");
+        }
+
     }
 
 
@@ -112,8 +136,16 @@ public class AdminController {
         }
         int materialId = Integer.parseInt(ctx.pathParam("id"));
         Material material = AdminMapper.getMaterialById(materialId, connectionPool);
-        ctx.attribute("material", material);
-        ctx.render("edit_matreriel.html", Map.of("isAdmin", isAdmin, "isUser", isUser));
+        Boolean loggedIn = ctx.sessionAttribute("isAdmin");
+        if (loggedIn != null && loggedIn) {
+
+            ctx.attribute("material", material);
+            ctx.render("edit_matreriel.html", Map.of("isAdmin", isAdmin, "isUser", isUser));
+
+        } else {
+            ctx.redirect("/");
+        }
+
     }
 
     public static void updateMaterial(Context ctx, ConnectionPool connectionPool) throws DatabaseException, SQLException {

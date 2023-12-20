@@ -40,7 +40,6 @@ public class OrderController {
             String password = ctx.formParam("telefonNummer");
             String comments = ctx.formParam("comments");
 
-
             MailSenderController.sendCarportDetailsEmail(carport, "fog.carports@gmail.com", navn, phone);
 
             boolean admin = Boolean.parseBoolean(ctx.formParam("admin"));
@@ -50,9 +49,10 @@ public class OrderController {
                 user = new User(0, navn, efternavn, phone, mail, zip, adresse, admin, password);
                 int userID = UserMapper.createUserGenerated(user, connectionpool);
                 userid = userID;
-
+                MailSenderController.sendDetailsToCustomerWithoutLogin(carport, mail, navn, phone, mail);
             } else {
                 userid = user.getId();
+                MailSenderController.sendDetailsToCustomerWithLogin(carport, mail, navn);
             }
 
             Order order = new Order("under process", userid, carport.getLength(), carport.getWidth(), comments);

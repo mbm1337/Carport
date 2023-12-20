@@ -39,7 +39,7 @@ public class CarportController {
             makeCarportWithoutShed(ctx);
         }
 
-         ctx.render("adresse.html");
+
 
     }
 
@@ -47,45 +47,37 @@ public class CarportController {
         int width = Integer.parseInt(ctx.formParam("carportWidth"));
         int length = Integer.parseInt(ctx.formParam("carportLength"));
         //int height = Integer.parseInt(ctx.formParam("carportHeight"));
-        if (ctx.formParam("roof").equals("Uden tagplader")) {
-            Carport carport = new Carport(width, length, 250);
-            ctx.sessionAttribute("carport", carport);
-        } else {
-            String roof = ctx.formParam("roof");
-            Carport carport = new Carport(width, length, 250, roof);
-            ctx.sessionAttribute("carport", carport);
+        Carport carport = new Carport(width, length, 270);
+        ctx.sessionAttribute("carport", carport);
+        ctx.render("adresse.html");
 
-
-        }
 
     }
 
     public static void makeCarportWithShed(Context ctx) throws DatabaseException {
-        int width = Integer.parseInt(ctx.formParam("carportWidth"));
-        int length = Integer.parseInt(ctx.formParam("carportLength"));
+        int carportWidth = Integer.parseInt(ctx.formParam("carportWidth"));
+        int carportLength = Integer.parseInt(ctx.formParam("carportLength"));
         //int height = Integer.parseInt(ctx.formParam("height"));
         int shedWidth = Integer.parseInt(ctx.formParam("shedWidth"));
         int shedLength = Integer.parseInt(ctx.formParam("shedLength"));
         boolean shedside = Boolean.parseBoolean(ctx.formParam("shedside"));
 
-        Shed shed = new Shed(shedWidth, shedLength,shedside);
+        if (shedWidth > carportWidth || shedLength > carportLength) {
 
+            ctx.attribute("error", "Dit skur er for stort til din carport. Prøv igen." + "\n" +
+                    "Hvis du ønsker at skuret skal være større end carporten, beskriv i kommentarfeltet.");
+            carportDropdowns(ctx, ConnectionPool.getInstance());
 
-
-        if (ctx.formParam("roof").equals("Uden tagplader")) {
-            Carport carport = new Carport(width, length, 250,shed);
-            ctx.sessionAttribute("shed", shed);
-            ctx.sessionAttribute("carport", carport);
         } else {
-
+            Shed shed = new Shed(shedWidth, shedLength, shedside);
             String roof = ctx.formParam("roof");
-
-            Carport carport = new Carport(width, length, 250, roof ,shed);
+            Carport carport = new Carport(carportWidth, carportLength, 270, roof, shed);
             ctx.sessionAttribute("shed", shed);
             ctx.sessionAttribute("carport", carport);
-
+            ctx.render("adresse.html");
 
         }
+
     }
 
 

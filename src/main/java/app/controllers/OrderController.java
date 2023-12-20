@@ -5,6 +5,7 @@ import app.exceptions.DatabaseException;
 import app.persistence.*;
 import app.util.Calculator;
 import io.javalin.http.Context;
+import org.apache.batik.svggen.SVGGraphics2DIOException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -157,7 +158,7 @@ public class OrderController {
             List<Order> orders = OrderMapper.getOrders(user.getId(), connectionPool);
             ctx.attribute("username", ctx.sessionAttribute("username"));
             ctx.attribute("orders", orders);
-            ctx.render("seOrder.html");
+            ctx.render("order.html");
         }else{
             ctx.render("index.html");
         }
@@ -169,6 +170,17 @@ public class OrderController {
         int orderId = Integer.parseInt(ctx.pathParam("orderId"));
         OrderMapper.deleteOrderDatabase(orderId, connectionPool);
         ctx.redirect("/adminordre");
+    }
+
+
+    public static void showOrderDetails(Context ctx, ConnectionPool connectionPool) throws DatabaseException, SVGGraphics2DIOException {
+        int orderNumber = Integer.parseInt(ctx.pathParam("ordernumber"));
+
+        List<OrderDetail> orderDetail = OrderMapper.getOrderDetailsWithProduct(orderNumber, connectionPool);
+        ctx.sessionAttribute("ordernumber", orderNumber);
+        ctx.attribute("user", orderDetail);
+        SvgController.getSvg(ctx, connectionPool);
+        ctx.render("mymaterial.html");
     }
 
 }

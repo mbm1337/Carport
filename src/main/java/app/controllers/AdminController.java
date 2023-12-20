@@ -70,6 +70,9 @@ public class AdminController {
             ctx.attribute("adminList",admin.getAdminList());
 
             SvgController.getSvg(ctx, connectionPool);
+
+            ctx.render("adminordre.html", Map.of("isAdmin", isAdmin, "isUser", isUser));
+
         }else {
             ctx.redirect("/");
         }

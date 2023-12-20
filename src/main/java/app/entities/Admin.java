@@ -32,6 +32,7 @@ public class Admin {
 
     private double ShedLength;
     private double ShedWidth;
+    private boolean ShedSide;
 
     public List<Admin> getAdminList() {
         return adminList;
@@ -67,7 +68,6 @@ public class Admin {
         ShedSide = shedSide;
     }
 
-    private boolean ShedSide;
 
 
     public String getUserEmail() {

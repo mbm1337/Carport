@@ -1,15 +1,19 @@
 package app.util;
 
+import app.entities.Admin;
 import org.apache.batik.svggen.SVGGraphics2D;
 import org.apache.batik.svggen.SVGGraphics2DIOException;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 
 import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CarportSvgGenerator {
+    static List<int[]> stolpeKoordinater;
 
-    public static String generateSvg(double length, double width) throws SVGGraphics2DIOException {
+    public static String generateSvg(double length, double width,double skurDybde ,double skurBrede,boolean skurside) throws SVGGraphics2DIOException {
         DOMImplementation domImpl = org.apache.batik.dom.GenericDOMImplementation.getDOMImplementation();
         Document document = domImpl.createDocument("http://www.w3.org/2000/svg", "svg", null);
 
@@ -19,7 +23,7 @@ public class CarportSvgGenerator {
         drawStolpe(svgGraphics2D, length, width);
         drawSpaer(svgGraphics2D, length, width);
         drawRem(svgGraphics2D, length, width);
-        //drawShed(svgGraphics2D, length, width, true);
+        drawShed(svgGraphics2D,length, width, skurDybde, skurBrede, skurside);
 
 
 
@@ -28,7 +32,8 @@ public class CarportSvgGenerator {
         return writer.toString();
     }
 
-    private static void drawStolpe(SVGGraphics2D svgGraphics2D, double length, double width) {
+    private static List<int[]> drawStolpe(SVGGraphics2D svgGraphics2D, double length, double width) {
+        stolpeKoordinater = new ArrayList<>();
         int stolpebrede = 15; // Bredde af stolper
         int afstanmellomstolper = 240;
         int antalstolper = Math.max(2, (int) Math.ceil(length / afstanmellomstolper));
@@ -40,12 +45,19 @@ public class CarportSvgGenerator {
         // Beregn afstand mellem stolper
         int distanceBetweenPosts = (end - start) / (antalstolper - 1);
 
+
+
         // Tegn stolper langs længden med afstand mellem dem
         for (int i = 0; i < antalstolper; i++) {
             int x = start + i * distanceBetweenPosts;
-            svgGraphics2D.drawRect(x, 50, stolpebrede, stolpebrede);
-            svgGraphics2D.drawRect(x, (int) (50 + width - stolpebrede), stolpebrede, stolpebrede);
+            svgGraphics2D.drawRect(x, 100, stolpebrede, stolpebrede);
+            svgGraphics2D.drawRect(x, (int) (0 + width - stolpebrede), stolpebrede, stolpebrede);
+
+            stolpeKoordinater.add(new int[]{x, 100});
+            stolpeKoordinater.add(new int[]{x, (int) (0 + width - stolpebrede)});
+
         }
+        return stolpeKoordinater;
     }
 
     private static void drawSpaer(SVGGraphics2D svgGraphics2D, double length, double width) {
@@ -53,7 +65,7 @@ public class CarportSvgGenerator {
         int antalspaer = Math.max(2, (int) Math.ceil(length / afstanmellemspaer));
 
         // Beregn startposition for spær
-        int start =0;
+        int start = 0;
 
         // Beregn afstand mellem spær
         int distanceBetweenSpaer = (int) ((length - start) / (antalspaer - 1));
@@ -61,44 +73,130 @@ public class CarportSvgGenerator {
         // Tegn spærene langs længden med afstand mellem dem
         for (int i = 0; i < antalspaer; i++) {
             int x = start + i * distanceBetweenSpaer;
-            svgGraphics2D.drawLine(x, 50, x, (int) (50 + width));
+            int spaerWidth = 5; // Ændr bredden efter behov
+            int spaerHeight = (int) width;
+
+            svgGraphics2D.drawRect(x, 50, spaerWidth, spaerHeight);
         }
     }
 
     private static void drawRem(SVGGraphics2D svgGraphics2D, double length, double width) {
 
-        int remY = 50; // Afstand fra toppen af stolperne til remmen
+        int remY = 0; // Afstand fra toppen af stolperne til remmen
 
         // Tegn remmen vandret langs den samlede længde
-        svgGraphics2D.drawRect(0, remY, (int) length+3, 10);
+        svgGraphics2D.drawRect(0, 100, (int) length+3, 10);
         svgGraphics2D.drawRect(0, (int) (remY + width-10), (int) length+3,10);
     }
 
 
-    private static void drawShed(SVGGraphics2D svgGraphics2D, double length, double width, boolean startFromRight) {
-        int shedHeight = 150; // Set the height of the shed
-        int stolpebrede = 15;
-        // Find the position of the last post
-        int lastPostPosition = (int) (100 + (Math.ceil(length / 240) - 1) * 240);
+    private static void drawShed(SVGGraphics2D svgGraphics2D, double length, double width, double skurDybde, double skurBrede, boolean startFromRight) {
 
-        int shedStartX;
+        int stolpebrede = 15; // Bredde af stolper
+
+
+        boolean topLeftMatch = false;
+        boolean bottomLeftMatch = false;
+        boolean topRightMatch = false;
+        boolean bottomRightMatch = false;
+        int shedX; // X-positionen for skuret
+        int shedY; // Y-positionen for skuret
+        double tolerance = 0.1;// Tolerance for at matche stolperne 0.1 = 10% indenfor forventet værdi
+
+
+
         if (startFromRight) {
-            shedStartX = lastPostPosition - (int) length / 3; // Start the shed from the right side
+            shedX = (int) (length - skurDybde);
         } else {
-            shedStartX = lastPostPosition; // Start the shed from the left side
+            shedX = (int) (length - skurDybde);
         }
 
-        int shedEndX = shedStartX + (int) length / 2; // Adjust the shed length as needed
-        int shedEndY = 50 + shedHeight; // Adjust the shed height as needed
+        if (startFromRight) {
+            shedY = 100; // Toppen af carporten
+        } else {
+            shedY = (int) (width - skurBrede); // Bund af carporten
+        }
 
-        // Draw the shed
-       // svgGraphics2D.drawRect(shedStartX, 50, (int) length / 3, (int) 150); // Draw the rectangular shed
+        int TopLeftX = shedX;
+        int TopLeftY = shedY;
+        int BottomLeftX = shedX;
+        int BottomLeftY = (int) (shedY + skurBrede - stolpebrede);
+        int TopRightX = (int) (shedX + skurDybde - stolpebrede);
+        int TopRightY = shedY;
+        int BottomRightX = (int) (shedX + skurDybde - stolpebrede);
+        int BottomRightY = (int) (shedY + skurBrede - stolpebrede);
 
-        // Optionally, draw shed posts
-        svgGraphics2D.drawRect(shedStartX, 50, stolpebrede, stolpebrede); // Draw shed post on the left side
-        svgGraphics2D.drawRect(shedEndX - stolpebrede, 50, stolpebrede, stolpebrede); // Draw shed post on the right side
+
+
+        // Tegn skuret
+        svgGraphics2D.drawRect(shedX, shedY, (int) skurDybde, (int) skurBrede);
+
+
+        // Tjek om stolperne matcher skurets hjørner
+
+        for (int[] stolpeKoordinat : stolpeKoordinater) {
+            int stolpeCarportX = stolpeKoordinat[0];
+            int stolpeCarportY = stolpeKoordinat[1];
+
+            if (!topLeftMatch &&
+                    (stolpeCarportX - TopLeftX) <= tolerance * TopLeftX &&
+                    (TopLeftX - stolpeCarportX) <= tolerance * TopLeftX &&
+                    (stolpeCarportY - TopLeftY) <= tolerance * TopLeftY &&
+                    (TopLeftY - stolpeCarportY) <= tolerance * TopLeftY) {
+                topLeftMatch = true;
+            }
+
+            if (!bottomLeftMatch &&
+                    (stolpeCarportX - BottomLeftX) <= tolerance * BottomLeftX &&
+                    (BottomLeftX - stolpeCarportX) <= tolerance * BottomLeftX &&
+                    (stolpeCarportY - BottomLeftY) <= tolerance * BottomLeftY &&
+                    (BottomLeftY - stolpeCarportY) <= tolerance * BottomLeftY) {
+                bottomLeftMatch = true;
+            }
+
+            if (!topRightMatch &&
+                    (TopRightX - stolpeCarportX) <= tolerance * TopRightX &&
+                    (stolpeCarportX - TopRightX) <= tolerance * TopRightX &&
+                    (stolpeCarportY - TopRightY) <= tolerance * TopRightY &&
+                    (TopRightY - stolpeCarportY) <= tolerance * TopRightY) {
+                topRightMatch = true;
+            }
+
+            if (!bottomRightMatch &&
+                    (stolpeCarportX - BottomRightX) <= tolerance * BottomRightX &&
+                    (BottomRightX - stolpeCarportX) <= tolerance * BottomRightX &&
+                    (stolpeCarportY - BottomRightY) <= tolerance * BottomRightY &&
+                    (BottomRightY - stolpeCarportY) <= tolerance * BottomRightY) {
+                bottomRightMatch = true;
+            }
+
+        }
+
+        if (!topLeftMatch) {
+            svgGraphics2D.drawRect(shedX, shedY, stolpebrede, stolpebrede);
+        }
+        if (!bottomLeftMatch) {
+            svgGraphics2D.drawRect(shedX, BottomLeftY, stolpebrede, stolpebrede);
+        }
+        if (!topRightMatch) {
+            svgGraphics2D.drawRect(TopRightX, shedY, stolpebrede, stolpebrede);
+        }
+        if (!bottomRightMatch) {
+            svgGraphics2D.drawRect(BottomRightX, BottomRightY, stolpebrede, stolpebrede);
+        }
+        if ( skurBrede >= 1) {
+            svgGraphics2D.drawRect(shedX, BottomLeftY -55, stolpebrede, stolpebrede);
+        }
+       // svgGraphics2D.drawRect(shedX, BottomLeftY -55, stolpebrede, stolpebrede);
+
     }
 
 
 
 }
+
+
+
+
+
+

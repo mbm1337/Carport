@@ -37,7 +37,7 @@
                 <form method="post" th:action="@{'/edit_matreriel/' + ${material.id}}">
                     <button type="submit">Rediger</button>
                 </form>
-                <form method="post" th:action="@{'/delete_matreriel/' + ${material.id}}" id="deleteForm"
+                <form method="post" th:action="@{'/edit_matreriel/' + ${material.id}}" id="deleteForm"
                       th:attr="onsubmit='return confirmDelete(\'' + ${material.productName} + '\')'">
                     <button type="submit">Slet</button>
                 </form>

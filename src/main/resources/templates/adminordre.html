@@ -59,6 +59,11 @@
                                   th:action="@{'/tilbud/' + ${order.orderNr}}">
                                 <button type="submit">Se order</button>
                             </form>
+                               <form th:each="order : ${entry.value}" th:object="${order}" method="post" id="deleteForm"
+                                      th:action="@{'/delete_order/' + ${order.orderNr}}"
+                                      th:attr="onsubmit='return confirmDelete(\'' + ${order.orderNr} + '\')'">
+                                <button type="submit">Slet</button>
+                            </form>
                         </td>
                     </th:block>
                 </tr>
@@ -84,6 +89,14 @@
                         row.style.display = 'none';
                     }
                 });
+            }
+
+            function confirmDelete(materialId) {
+                console.log('Material ID:', materialId);
+
+                var userConfirmed = confirm("Er du sikker på, at du vil slette " + materialId + "?");
+
+                return userConfirmed;
             }
         </script>
 

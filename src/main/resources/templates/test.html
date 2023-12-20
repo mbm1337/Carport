@@ -11,33 +11,9 @@
     <div class="indhold-box" id="content">
 
       <div id="page-container">
-        <h1>Materials</h1>
-        <table id="sortable-table">
-          <thead>
-          <tr>
-            <th>ID</th>
-            <th>Product Name</th>
-            <th>Product Type</th>
-            <th>Product Size</th>
-            <th>Unit</th>
-            <th>Quantity in Stock</th>
-            <th>sales Price</th>
-            <th>Purchase Price</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr th:each="material : ${#ctx.materials}">
-            <td th:text="${material.id}"></td>
-            <td th:text="${material.productName}"></td>
-            <td th:text="${material.productType}"></td>
-            <td th:text="${material.productSize}"></td>
-            <td th:text="${material.unit}"></td>
-            <td th:text="${material.quantityInStock}"></td>
-            <td th:text="${material.buyPrice}"></td>
-            <td th:text="${material.purchasePrice}"></td>
-          </tr>
-          </tbody>
-        </table>
+
+
+
       </div>
 
     <div th:replace="~{fragments :: footer}"></div>

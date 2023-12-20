@@ -16,9 +16,9 @@
                     på en carport indenfor vores standardprogram.
                     Tilbud og skitsetegning fremsendes med post hurtigst muligt.
                     Ved bestilling medfølger standardbyggevejledning.
+                </h3> <br>
 
-                    Udfyld formularen omhyggeligt og klik på "Bestil tilbud".
-                    Felter markeret med * SKAL udfyldes!</h3> <br>
+                <p class="error" th:text="${#ctx.error}"></p>
 
                 <form id="order" method="post" action="/carport">
                     <label for="carportWidth">Carport Bredde: *</label> <br>
@@ -46,8 +46,8 @@
                     <input type="radio" onclick="hideShed()" id="noShed" name="shed" th:value="noShed" checked/>
                     <label for="noShed">Uden redskabsrum</label> <br>
                     <input type="radio" onclick="showShed()" id="shed" name="shed" th:value="shed"/>
-
                     <label for="shed">Med redskabsrum</label> <br>
+
                     <div id="shedContent" style="display: none">
                         <label for="shedWidth">Redskabsrum bredde:</label> <br>
                         <select id="shedWidth" name="shedWidth">
@@ -58,17 +58,12 @@
                         <select id="shedLength" name="shedLength">
                             <option th:each="shedLength: ${#ctx.shedLength}" th:value="${shedLength.length}"
                                     th:text="${shedLength.length}"></option>
-
                         </select> <br>
 
-                        <label>
-                            redskabsrum højre side i carporten
-                            <input type="checkbox" name="shedside" value="true">
-                        </label>
-                        <label>
-                            redskabsrum venstre side i carporten
-                            <input type="checkbox" name="shedside" value="false">
-                        </label>
+                        <input type="radio" name="shedside" value="true" checked>
+                        <label>Redskabsrum højre side i carporten</label> <br>
+                        <input type="radio" name="shedside" value="false">
+                        <label>Redskabsrum venstre side i carporten</label> <br>
 
 
                     </div> <br>

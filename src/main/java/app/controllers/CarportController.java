@@ -78,7 +78,9 @@ public class CarportController {
         int shedLength = Integer.parseInt(ctx.formParam("shedLength"));
         boolean shedside = Boolean.parseBoolean(ctx.formParam("shedside"));
 
-        if (shedWidth > carportWidth || shedLength > carportLength) {
+
+        int eaves = 30;
+        if (shedWidth > (carportWidth-eaves)|| shedLength > carportLength) {
 
             ctx.attribute("error", "Dit skur er for stort til din carport. Prøv igen." + "\n" +
                     "Hvis du ønsker at skuret skal være større end carporten, beskriv i kommentarfeltet.");

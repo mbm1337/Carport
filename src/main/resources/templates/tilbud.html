@@ -141,8 +141,9 @@
 
                         <div>
                             <p>Send mail til kunde omkring ordre status:</p>
-                            <input type="email" id="email" name="email" th:value="${#ctx.email}" placeholder="Skriv kundens mail" />
+                            <input type="hidden" name="email" th:value="${admin.userEmail}"/>
                             <input type="hidden" name="orderId" th:value="${admin.orderId}"/>
+
                             <button type="submit">Send Mail</button>
                         </div>
                     </form>

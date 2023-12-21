@@ -1,22 +1,41 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
-<div th:replace="~{fragments :: head('materials')}"></div>
+<div th:replace="~{fragments :: head('Admin menu')}"></div>
 
 <body>
 
 <div id="page-container">
     <div id="page-content">
-        <div th:replace="~{fragments :: header('materials')}"></div>
+        <div th:replace="~{fragments :: header('Admin menu')}"></div>
         <div class="indhold-box" id="content">
-
-            <svg xmlns="http://www.w3.org/2000/svg" th:utext="${svgContent}" viewBox="0 0 600 300" style="width: 100%; height: 100%;"></svg>
-
-
-velkommen til admin siden
-
-            <div th:replace="~{fragments :: footer}"></div>
+            <div class="nav">
+                <div class="centered-box">
+                    <form method="post">
+                        <button class="nav-link" type="submit" formaction="/materials">Materialer</button>
+                    </form>
+                </div> <br>
+                <div class="centered-box">
+                    <form method="post">
+                        <button class="nav-link" type="submit" formaction="/adminordre">Ordre</button>
+                    </form>
+                </div> <br>
+                <div class="centered-box">
+                    <form method="post">
+                        <button class="nav-link" type="submit" formaction="/carport_size">Bygge størrelse</button>
+                    </form>
+                </div> <br>
+                <div class="centered-box">
+                    <form method="post">
+                        <button class="nav-link" type="submit" formaction="/adminCalc">Bygge materialer</button>
+                    </form>
+                </div> <br>
+            </div> <br>
         </div>
+
+
+
+        <div th:replace="~{fragments :: footer}"></div>
     </div>
 </div>
 </body>

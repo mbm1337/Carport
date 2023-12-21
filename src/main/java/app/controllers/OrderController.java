@@ -65,6 +65,7 @@ public class OrderController {
                 OrderMapper.createOrdershedDatabase(newOrderId, shed, connectionpool);
             }
 
+            SvgController.getSvgWithParameter(newOrderId, ctx, connectionpool);
             ctx.render("price.html");
 
         } catch (NumberFormatException | DatabaseException e) {
@@ -73,6 +74,8 @@ public class OrderController {
             System.out.println(e);
             ctx.attribute("error_message", "We couldn't save the order: " + e.getMessage());
             ctx.render("adresse.html");
+        } catch (SVGGraphics2DIOException e) {
+            throw new RuntimeException(e);
         }
     }
 

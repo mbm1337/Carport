@@ -54,12 +54,13 @@ public class OrderController {
                 user = new User(0, firstname, lastname, phone, mail, zip, adress, admin, password);
                 int userID = UserMapper.createUserGenerated(user, connectionpool);
                 userid = userID;
-                MailSenderController.sendDetailsToCustomerWithoutLogin(carport, mail, firstname
-                        , phone, mail);
+
             } else {
                 userid = user.getId();
-                MailSenderController.sendDetailsToCustomerWithLogin(carport, mail, firstname);
+
             }
+
+            MailSenderController.sendDetailsToCustomerWithoutLogin(carport, mail, navn, phone, mail, ctx);
 
             Order order = new Order("under process", userid, carport.getLength(), carport.getWidth(), comments);
             int newOrderId = OrderMapper.insertOrder(order, totalPrice, connectionpool);

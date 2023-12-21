@@ -144,7 +144,7 @@ public class OrderController {
             totalBeam = numberOfBeams * spaer600;
         }
 
-        int totalPrice = totalPostsCost + totalRaft + totalBeam + totalScrewPerPost + totalBeslagPerPost + totalScrewPerSPaer + totalBeslagPerSpaer;
+        int totalPrice = totalPostsCost + totalRaft + totalBeam + totalScrewPerPost + totalBeslagPerPost + totalScrewPerSPaer + totalBeslagPerSpaer +totalbeklaedning + totalstolperPerskur;
 
         materials.add(new Material(9, "Spaer", numberOfBeams));
         materials.add(new Material(10, "Raft", numberOfspaer));

@@ -415,6 +415,18 @@ public class AdminController {
         AdminMapper.deleteShedWidth(id, connectionPool);
         ctx.redirect("/carport_size");
     }
+
+    public static void checkIfAdminAndRender(String path,Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+        User currentUser = ctx.sessionAttribute("currentUser");
+        if (currentUser != null) {
+            boolean isAdmin = currentUser.isAdmin();
+            boolean isUser = true;
+            ctx.render(path, Map.of("isAdmin", isAdmin, "isUser", isUser));
+        } else {
+            ctx.redirect("/");
+        }
+    }
+
 }
 
 

@@ -63,9 +63,9 @@ public class UserController {
     }
 
     public static void updateUser(Context ctx, ConnectionPool connectionPool) {
-           User user = ctx.sessionAttribute("currentUser");
+           User currentUser = ctx.sessionAttribute("currentUser");
 
-            if (user != null) {
+            if (currentUser != null) {
                 String firstname = ctx.formParam("firstname");
                 String lastname = ctx.formParam("lastname");
 
@@ -75,16 +75,17 @@ public class UserController {
                 String password = ctx.formParam("password");
 
                 try {
-                    UserMapper.updateUser( user.getId(),firstname, lastname, adress, zip,  phone,password, connectionPool);
+                    UserMapper.updateUser( currentUser.getId(),firstname, lastname, adress, zip,  phone,password, connectionPool);
                   //  User updatedUser = UserMapper.searchUser(user.getEmail(), connectionPool);
-                    ctx.sessionAttribute("currentUser", user);
-                    ctx.redirect("/login");
+                    ctx.sessionAttribute("currentUser", currentUser);
+                    ctx.req().getSession().invalidate();
+                    ctx.render("index.html");
                 } catch (DatabaseException e) {
                     e.printStackTrace();
                     ctx.render("usersetting.html");
                 }
             } else {
-                ctx.redirect("/order");
+                ctx.redirect("/");
             }
         }
 
@@ -94,8 +95,6 @@ public class UserController {
         ctx.req().getSession().invalidate();
         ctx.render("index.html");
     }
-    /*
-       */
 
 
     }

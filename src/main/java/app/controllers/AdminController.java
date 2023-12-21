@@ -467,24 +467,29 @@ public class AdminController {
         boolean isAdmin = false;
         boolean isUser = false;
         User currentUser = ctx.sessionAttribute("currentUser");
-        String email = ctx.formParam("email");
+
 
         if (currentUser != null) {
             isAdmin = currentUser.isAdmin();
             isUser = true;
             int orderId = Integer.parseInt(ctx.formParam("orderId"));
-            String newStatus = ctx.formParam("newStatus");
 
-            Order order = OrderMapper.getOrderById(orderId, connectionPool);
+            String newStatus = ctx.formParam("newStatus");
+            String email = ctx.formParam("email");
+
+            ctx.attribute("email", email);
+
 
             if (newStatus.equals("under process") || newStatus.equals("paid") || newStatus.equals("cancelled")) {
                 AdminMapper.updateStatus(orderId, newStatus, connectionPool);
 
-                if (order != null) {
+                Order order = OrderMapper.getOrderById(orderId, connectionPool);
+
+
                     // Send status update email
                     MailSenderController.sendStatusToCustomer(order, newStatus, email);
-                }
-                ctx.redirect("/admin/orders"); //??
+
+                ctx.redirect("/tilbud/" + orderId);
             } else {
                 ctx.status(400).result("Invalid status update request");
             }

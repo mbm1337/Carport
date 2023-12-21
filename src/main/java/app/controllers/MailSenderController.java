@@ -163,7 +163,7 @@ public class MailSenderController {
             builder.append("Skur længde: ").append(carport.getShed().getLength());
         }
 
-        builder.append("\nTak for at du vælger FOG \n");
+        builder.append("\nTak for at du vælger at handle hos FOG \n");
         builder.append("Venlig hilsen,\nFOG Team");
 
         // Return the complete email body as a string
@@ -192,7 +192,7 @@ public class MailSenderController {
         }
 
         builder.append("Du vil snart modtage en email med yderligere informationer om din ordre.\n");
-        builder.append("\nTak for at du vælger FOG \n");
+        builder.append("\nTak for at du vælger at handle hos FOG \n");
         builder.append("Venlig hilsen,\nFOG Team");
 
 
@@ -220,7 +220,7 @@ public class MailSenderController {
         }
 
         builder.append("Du vil snart modtage en email med yderligere informationer om din ordre.\n");
-        builder.append("\nTak for at du vælger FOG \n");
+        builder.append("\nTak for at du vælger at handle hos FOG \n");
         builder.append("Venlig hilsen,\nFOG Team");
 
         // Return the complete email body as a string
@@ -277,8 +277,6 @@ public class MailSenderController {
 
 
         builder.append("Hej!\n");
-        builder.append("Din ordre #").append(order.getOrderNumber()).append("\n");
-        builder.append("Ordre Status: ").append(order.getStatus()).append("\n\n");
 
         // Choosing message based on order status
         switch (order.getStatus().toLowerCase()) {
@@ -295,7 +293,11 @@ public class MailSenderController {
                 builder.append("Kontakt os for yderligere information om din ordre.\n");
         }
 
-        builder.append("\nTak for at du vælger FOG \n");
+
+        builder.append("Din ordre #").append(order.getOrderNr()).append("\n");
+        builder.append("Ordre Status: ").append(order.getStatus()).append("\n\n");
+
+        builder.append("\nTak for at du vælger at handle hos FOG \n");
         builder.append("Venlig hilsen,\nFOG Team");
 
         // Return the complete email body as a string

@@ -469,6 +469,26 @@ public class AdminController {
 
 
     }
+
+    public static void changeStatus(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+        boolean isAdmin = false;
+        User currentUser = ctx.sessionAttribute("currentUser");
+        if (currentUser != null && currentUser.isAdmin()) {
+            isAdmin = true;
+            int orderId = Integer.parseInt(ctx.formParam("orderId"));
+            String newStatus = ctx.formParam("newStatus");
+
+            if (newStatus.equals("under process") || newStatus.equals("paid") || newStatus.equals("cancelled")) {
+                AdminMapper.updateStatus(orderId, newStatus, connectionPool);
+
+                MailSenderController.sendStatusToCustomer(newStatus, userEmail );
+                ctx.redirect("/admin/orders"); // ??
+            } else {
+                ctx.status(400).result("Invalid status update request");
+            }
+        } else {
+            ctx.redirect("/");
+        }
 }
 
 

@@ -9,6 +9,7 @@
     <div id="page-content">
         <div th:replace="~{fragments :: header('Ordrer')}"></div>
         <div class="indhold-box" id="content">
+            <div id="page-content">
             <h1>Brugere og Ordrer</h1>
 
             <!-- Search input -->
@@ -99,9 +100,10 @@
                 return userConfirmed;
             }
         </script>
-
+        </div>
         <div th:replace="~{fragments :: footer}"></div>
-    </div>
+        </div>
+
 </div>
 </body>
 </html>

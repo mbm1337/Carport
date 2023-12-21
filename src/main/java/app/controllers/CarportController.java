@@ -6,6 +6,7 @@ import app.persistence.CarportMapper;
 import app.persistence.ConnectionPool;
 import io.javalin.http.Context;
 import java.util.List;
+import java.util.Map;
 
 public class CarportController {
 
@@ -27,7 +28,22 @@ public class CarportController {
         ctx.attribute("roof", roof);
 
 
-        ctx.render("carportbuilder.html");
+        boolean isAdmin = false;
+        boolean isUser = false;
+
+        // Tjek om sessionen er tilgængelig
+        User currentUser = ctx.sessionAttribute("currentUser");
+        if (currentUser != null) {
+            isAdmin = currentUser.isAdmin();
+            isUser = true;
+
+            ctx.render("carportbuilder.html", Map.of("isAdmin", isAdmin, "isUser", isUser));
+
+        }else {
+            ctx.render("carportbuilder.html");
+        }
+
+
 
     }
 

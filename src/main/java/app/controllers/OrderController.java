@@ -9,6 +9,7 @@ import org.apache.batik.svggen.SVGGraphics2DIOException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class OrderController {
     public static void getStatus(Context ctx, ConnectionPool connectionpool) {
@@ -153,23 +154,40 @@ public class OrderController {
 
     public static void getOrders(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
 
-        User user = ctx.sessionAttribute("currentUser");
-        if (user != null) {
-            List<Order> orders = OrderMapper.getOrders(user.getId(), connectionPool);
+        User currentUser = ctx.sessionAttribute("currentUser");
+        if (currentUser != null) {
+            boolean isAdmin = currentUser.isAdmin();
+            boolean isUser = true;
+            List<Order> orders = OrderMapper.getOrders(currentUser.getId(), connectionPool);
             ctx.attribute("username", ctx.sessionAttribute("username"));
             ctx.attribute("orders", orders);
-            ctx.render("order.html");
-        }else{
-            ctx.render("index.html");
+            ctx.render("order.html", Map.of("isAdmin", isAdmin, "isUser", isUser));
+        } else {
+            ctx.redirect("/");
         }
 
 
     }
 
     public static void deleteOrder(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
-        int orderId = Integer.parseInt(ctx.pathParam("orderId"));
+        boolean isAdmin = false;
+        boolean isUser = false;
+
+        // Tjek om sessionen er tilgængelig
+        User currentUser = ctx.sessionAttribute("currentUser");
+        if (currentUser != null) {
+            isAdmin = currentUser.isAdmin();
+            isUser = true;
+
+            int orderId = Integer.parseInt(ctx.pathParam("orderId"));
         OrderMapper.deleteOrderDatabase(orderId, connectionPool);
         ctx.redirect("/adminordre");
+        }else {
+            ctx.redirect("/");
+        }
+
+
+
     }
 
 

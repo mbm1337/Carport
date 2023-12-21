@@ -25,26 +25,28 @@
 
             <!-- admin menu-->
             <th:block th:if="${isAdmin}">
+              <li><a data-content="Forside" href="/" class="css-1gx9qgy eex3fzi0" aria-expanded="false">Forside</a></li>
               <li><a data-content="Ændre Materialer" href="/materials" class="css-1gx9qgy eex3fzi0" aria-expanded="false">Ændre Materialer</a></li>
               <li><a data-content="Se Ordre" href="/adminordre" class="css-1gx9qgy eex3fzi0" aria-expanded="false">Se Ordre</a></li>
+              <li><a data-content="Se alle bruger" href="/adminuser" class="css-1gx9qgy eex3fzi0" aria-expanded="false">Se alle bruger</a></li>
               <li><a data-content="Carport bygge matrieler" href="/adminCalc" class="css-1gx9qgy eex3fzi0" aria-expanded="false">Carport bygge matrieler</a></li>
               <li><a data-content="Carport bygge størelse" href="/carport_size" class="css-1gx9qgy eex3fzi0" aria-expanded="false">Carport bygge størelse</a></li>
             </th:block>
 
             <!-- user menu -->
             <th:block th:if="${isUser and not isAdmin}">
-
-                <li><a data-content="Se ordre" href="/seOrder" class="css-1gx9qgy eex3fzi0" aria-expanded="false">Se ordre</a></li>
-              <li><a data-content="Konto" href="/ordre" class="css-1gx9qgy eex3fzi0" aria-expanded="false">Konto</a></li>
-              <li><a data-content="et eller andet" href="/bolig-design" class="css-1gx9qgy eex3fzi0" aria-expanded="false">et eller andet</a></li>
+              <li><a data-content="Forside" href="/" class="css-1gx9qgy eex3fzi0" aria-expanded="false">Forside</a></li>
+                <li><a data-content="Se ordre" href="/order" class="css-1gx9qgy eex3fzi0" aria-expanded="false">Se ordre</a></li>
+              <li><a data-content="Profil" href="/updateuser" class="css-1gx9qgy eex3fzi0" aria-expanded="false">Profil</a></li>
+              <li><a data-content="Bestil Carport" href="/byg-selv" class="css-1gx9qgy eex3fzi0" aria-expanded="false">Bestil Carport</a></li>
             </th:block>
 
             <!-- not logged in -->
             <th:block th:unless="${isUser or isAdmin}">
 
-              <li><a data-content="Forside" href="/materials" class="css-1gx9qgy eex3fzi0" aria-expanded="false">Forside</a></li>
+              <li><a data-content="Forside" href="/" class="css-1gx9qgy eex3fzi0" aria-expanded="false">Forside</a></li>
               <li><a data-content="Bestil" href="/byg-selv" class="css-1gx9qgy eex3fzi0" aria-expanded="false">Bestil</a></li>
-              <li><a data-content="Hvem er vi &amp; design" href="/bolig-design" class="css-1gx9qgy eex3fzi0" aria-expanded="false">Hvem er vi &amp; design</a></li>
+              <li><a data-content="Opret Bruger" href="/createuser" class="css-1gx9qgy eex3fzi0" aria-expanded="false">Opret Bruger</a></li>
             </th:block>
           </ul>
 

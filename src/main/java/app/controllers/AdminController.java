@@ -253,21 +253,38 @@ public class AdminController {
         if (currentUser != null) {
             isAdmin = currentUser.isAdmin();
             isUser = true;
+            int materialId = Integer.parseInt(ctx.pathParam("id"));
+            Admin calcMaterial = AdminMapper.getCalcMaterialsById(materialId, connectionPool);
+            ctx.attribute("calcMaterial", calcMaterial);
+            List<Material> materials = AdminMapper.getMaterials(connectionPool);
+            ctx.attribute("materials", materials);
+            ctx.render("admin_calculator_edit.html", Map.of("isAdmin", isAdmin, "isUser", isUser));
+        }else {
+            ctx.redirect("/");
         }
-        int materialId = Integer.parseInt(ctx.pathParam("id"));
-        Admin calcMaterial = AdminMapper.getCalcMaterialsById(materialId, connectionPool);
-        ctx.attribute("calcMaterial", calcMaterial);
-        List<Material> materials = AdminMapper.getMaterials(connectionPool);
-        ctx.attribute("materials", materials);
-        ctx.render("admin_calculator_edit.html", Map.of("isAdmin", isAdmin, "isUser", isUser));
+
     }
 
     public static void editCalcMaterials(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+        boolean isAdmin = false;
+        boolean isUser = false;
 
-        int id = Integer.parseInt(ctx.pathParam("id"));
-        int materialsId = Integer.parseInt(ctx.formParam("materialsId"));
-        AdminMapper.updateCalcMaterials(id,materialsId, connectionPool);
-        ctx.redirect("/adminCalc");
+        // Tjek om sessionen er tilgængelig
+        User currentUser = ctx.sessionAttribute("currentUser");
+        if (currentUser != null) {
+            isAdmin = currentUser.isAdmin();
+            isUser = true;
+
+            int id = Integer.parseInt(ctx.pathParam("id"));
+            int materialsId = Integer.parseInt(ctx.formParam("materialsId"));
+            AdminMapper.updateCalcMaterials(id,materialsId, connectionPool);
+            ctx.redirect("/adminCalc");
+
+        }else {
+            ctx.redirect("/");
+        }
+
+
 
         }
 
@@ -281,16 +298,20 @@ public class AdminController {
         if (currentUser != null) {
             isAdmin = currentUser.isAdmin();
             isUser = true;
+            List<CarportLength> carportLength = CarportMapper.getCarportLength(connectionPool);
+            ctx.attribute("carportLength", carportLength);
+            List<CarportWidth> carportWidth = CarportMapper.getCarportWidth(connectionPool);
+            ctx.attribute("carportWidth", carportWidth);
+            List<ShedLength> shedLength = CarportMapper.getShedLength(connectionPool);
+            ctx.attribute("shedLength", shedLength);
+            List<ShedWidth> shedWidth = CarportMapper.getShedWidth(connectionPool);
+            ctx.attribute("shedWidth", shedWidth);
+            ctx.render("admin_carport_size.html", Map.of("isAdmin", isAdmin, "isUser", isUser));
+        }else {
+            ctx.redirect("/");
         }
-        List<CarportLength> carportLength = CarportMapper.getCarportLength(connectionPool);
-        ctx.attribute("carportLength", carportLength);
-        List<CarportWidth> carportWidth = CarportMapper.getCarportWidth(connectionPool);
-        ctx.attribute("carportWidth", carportWidth);
-        List<ShedLength> shedLength = CarportMapper.getShedLength(connectionPool);
-        ctx.attribute("shedLength", shedLength);
-        List<ShedWidth> shedWidth = CarportMapper.getShedWidth(connectionPool);
-        ctx.attribute("shedWidth", shedWidth);
-        ctx.render("admin_carport_size.html", Map.of("isAdmin", isAdmin, "isUser", isUser));
+
+
 
 
 
@@ -305,10 +326,15 @@ public class AdminController {
         if (currentUser != null) {
             isAdmin = currentUser.isAdmin();
             isUser = true;
+            int length = Integer.parseInt(ctx.formParam("carportLength"));
+            AdminMapper.addCarportLength(length, connectionPool);
+            ctx.redirect("/carport_size");
+
+        }else {
+            ctx.redirect("/");
         }
-        int length = Integer.parseInt(ctx.formParam("carportLength"));
-        AdminMapper.addCarportLength(length, connectionPool);
-        ctx.redirect("/carport_size");
+
+
     }
 
     public static void addCarportWidth(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
@@ -320,10 +346,14 @@ public class AdminController {
         if (currentUser != null) {
             isAdmin = currentUser.isAdmin();
             isUser = true;
+            int width = Integer.parseInt(ctx.formParam("carportWidth"));
+            AdminMapper.addCarportWidth(width, connectionPool);
+            ctx.redirect("/carport_size");
+        }else {
+            ctx.redirect("/");
         }
-        int width = Integer.parseInt(ctx.formParam("carportWidth"));
-        AdminMapper.addCarportWidth(width, connectionPool);
-        ctx.redirect("/carport_size");
+
+
     }
 
     public static void addShedLength(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
@@ -335,10 +365,14 @@ public class AdminController {
         if (currentUser != null) {
             isAdmin = currentUser.isAdmin();
             isUser = true;
+            int length = Integer.parseInt(ctx.formParam("shedLength"));
+            AdminMapper.addShedLength(length, connectionPool);
+            ctx.redirect("/carport_size");
+        }else {
+            ctx.redirect("/");
         }
-        int length = Integer.parseInt(ctx.formParam("shedLength"));
-        AdminMapper.addShedLength(length, connectionPool);
-        ctx.redirect("/carport_size");
+
+
     }
 
     public static void addShedWidth(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
@@ -350,10 +384,14 @@ public class AdminController {
         if (currentUser != null) {
             isAdmin = currentUser.isAdmin();
             isUser = true;
+            int width = Integer.parseInt(ctx.formParam("shedWidth"));
+            AdminMapper.addShedWidth(width, connectionPool);
+            ctx.redirect("/carport_size");
+        }else {
+            ctx.redirect("/");
         }
-        int width = Integer.parseInt(ctx.formParam("shedWidth"));
-        AdminMapper.addShedWidth(width, connectionPool);
-        ctx.redirect("/carport_size");
+
+
     }
 
     public static void deleteCarportLength(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
@@ -365,10 +403,14 @@ public class AdminController {
         if (currentUser != null) {
             isAdmin = currentUser.isAdmin();
             isUser = true;
+            int id = Integer.parseInt(ctx.pathParam("id"));
+            AdminMapper.deleteCarportLength(id, connectionPool);
+            ctx.redirect("/carport_size");
+        }else {
+            ctx.redirect("/");
         }
-        int id = Integer.parseInt(ctx.pathParam("id"));
-        AdminMapper.deleteCarportLength(id, connectionPool);
-        ctx.redirect("/carport_size");
+
+
     }
 
     public static void deleteCarportWidth(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
@@ -380,10 +422,14 @@ public class AdminController {
         if (currentUser != null) {
             isAdmin = currentUser.isAdmin();
             isUser = true;
+            int id = Integer.parseInt(ctx.pathParam("id"));
+            AdminMapper.deleteCarportWidth(id, connectionPool);
+            ctx.redirect("/carport_size");
+        }else {
+            ctx.redirect("/");
         }
-        int id = Integer.parseInt(ctx.pathParam("id"));
-        AdminMapper.deleteCarportWidth(id, connectionPool);
-        ctx.redirect("/carport_size");
+
+
     }
 
     public static void deleteShedLength(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
@@ -395,10 +441,14 @@ public class AdminController {
         if (currentUser != null) {
             isAdmin = currentUser.isAdmin();
             isUser = true;
+            int id = Integer.parseInt(ctx.pathParam("id"));
+            AdminMapper.deleteShedLength(id, connectionPool);
+            ctx.redirect("/carport_size");
+        }else {
+            ctx.redirect("/");
         }
-        int id = Integer.parseInt(ctx.pathParam("id"));
-        AdminMapper.deleteShedLength(id, connectionPool);
-        ctx.redirect("/carport_size");
+
+
     }
 
     public static void deleteShedWidth(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
@@ -410,10 +460,14 @@ public class AdminController {
         if (currentUser != null) {
             isAdmin = currentUser.isAdmin();
             isUser = true;
+            int id = Integer.parseInt(ctx.pathParam("id"));
+            AdminMapper.deleteShedWidth(id, connectionPool);
+            ctx.redirect("/carport_size");
+        }else {
+            ctx.redirect("/");
         }
-        int id = Integer.parseInt(ctx.pathParam("id"));
-        AdminMapper.deleteShedWidth(id, connectionPool);
-        ctx.redirect("/carport_size");
+
+
     }
 
     public static void checkIfAdminAndRender(String path,Context ctx, ConnectionPool connectionPool) throws DatabaseException {
@@ -425,6 +479,24 @@ public class AdminController {
         } else {
             ctx.redirect("/");
         }
+    }
+
+
+    public static void cheklogin(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+        boolean isAdmin = false;
+        boolean isUser = false;
+
+        // Tjek om sessionen er tilgængelig
+        User currentUser = ctx.sessionAttribute("currentUser");
+        if (currentUser != null) {
+            isAdmin = currentUser.isAdmin();
+            isUser = true;
+            ctx.render("index.html",Map.of("isAdmin", isAdmin, "isUser", isUser));
+        }else {
+            ctx.render("index.html");
+        }
+
+
     }
 
 }

@@ -78,7 +78,7 @@ public class UserController {
                     UserMapper.updateUser( user.getId(),firstname, lastname, adress, zip,  phone,password, connectionPool);
                   //  User updatedUser = UserMapper.searchUser(user.getEmail(), connectionPool);
                     ctx.sessionAttribute("currentUser", user);
-                    ctx.redirect("/login");
+                    ctx.redirect("/logout");
                 } catch (DatabaseException e) {
                     e.printStackTrace();
                     ctx.render("usersetting.html");

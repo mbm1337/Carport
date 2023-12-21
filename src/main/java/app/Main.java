@@ -33,7 +33,7 @@ public class Main {
         }).start(7079);
 
         // Routing
-        app.get("/", ctx -> ctx.render("index.html"));
+        app.get("/", ctx -> AdminController.cheklogin(ctx, connectionPool));
         app.post("/byg-selv", ctx -> CarportController.carportDropdowns(ctx, connectionPool));
         app.get("/byg-selv", ctx -> CarportController.carportDropdowns(ctx, connectionPool));
         app.post("/carport", ctx -> CarportController.makeCarport(ctx, connectionPool));
@@ -59,7 +59,7 @@ public class Main {
         app.get("/showOrderDetails/{ordernumber}",ctx -> OrderController.showOrderDetails(ctx, connectionPool));
         app.post("/showOrderDetails",ctx -> ctx.render("mymaterial.html"));
         app.post("/updateuser", ctx -> UserController.updateUser(ctx, connectionPool));
-        app.get("/updateuser",ctx->ctx.render("usersetting.html"));
+        app.get("/updateuser",ctx-> AdminController.checkIfAdminAndRender("usersetting.html",ctx, connectionPool));
         app.get("/logout", ctx -> UserController.logout(ctx));
 
 
@@ -73,12 +73,14 @@ public class Main {
         app.post("/updatePrice", ctx -> AdminController.editBalance(ctx, connectionPool));
         app.post("/edit_matreriel/{id}", ctx -> AdminController.editMaterial(ctx, connectionPool));
         app.post("/adminordre", ctx -> AdminController.getUsersAndOrders(ctx, connectionPool));
+        app.get("/adminordre", ctx -> AdminController.getUsersAndOrders(ctx, connectionPool));
         app.post("/tilbud/{ordernumber}", ctx -> AdminController.getOrderDetails(ctx, connectionPool));
         app.get("/tilbud/{ordernumber}", ctx -> AdminController.getOrderDetails(ctx, connectionPool));
 
         app.post("/sendMail", ctx -> AdminController.changeStatus(ctx, connectionPool));
 
         app.post("/materials", ctx -> AdminController.getMaterial(ctx, connectionPool));
+        app.get("/materials", ctx -> AdminController.getMaterial(ctx, connectionPool));
         app.post("/updatematerials/{id}", ctx -> AdminController.updateMaterial(ctx, connectionPool));
         app.get("/add_matreriel", ctx -> AdminController.checkIfAdminAndRender("add_matreriel.html",ctx, connectionPool));
         app.post("/add_matreriel", ctx -> AdminController.addMaterial(ctx, connectionPool));

@@ -4,6 +4,8 @@ import java.util.Properties;
 
 import app.entities.Carport;
 import app.entities.Order;
+import app.entities.User;
+import io.javalin.http.Context;
 import jakarta.mail.Message;
 import jakarta.mail.MessagingException;
 import jakarta.mail.PasswordAuthentication;
@@ -15,7 +17,7 @@ import jakarta.mail.internet.MimeMessage;
 public class MailSenderController {
 
 
-    public static void sendCarportDetailsEmail(Carport carport, String emailRecipient, String userName, int userPhoneNumber) {
+    public static void sendCarportDetailsEmail(Carport carport, String emailRecipient, String userName, int userPhoneNumber, Context ctx) {
         // Provide recipient's email ID
         String to = "fog.carports@gmail.com"; // fog.carports@gmail.com is the test mail
         // Provide sender's email ID (your Gmail email address)
@@ -47,7 +49,7 @@ public class MailSenderController {
             // Set email subject field
             message.setSubject("A new carport has been ordered!");
             // Construct the email body
-            String emailBody = sendOrderToSeller(carport, userName, userPhoneNumber);
+            String emailBody = sendOrderToSeller(carport, userName, userPhoneNumber, ctx);
             // Set the content of the email message
             message.setText(emailBody);
             // Send the email message
@@ -144,17 +146,26 @@ public class MailSenderController {
         }
     }
 
-    private static String sendOrderToSeller(Carport carport, String userName, int userPhoneNumber) {
+    private static String sendOrderToSeller(Carport carport, String userName, int userPhoneNumber, Context ctx) {
 
         StringBuilder builder = new StringBuilder();
 
         // send information about the carport to the email body
         builder.append("Carport Detaljer:\n");
-        builder.append("Navn: ").append(userName).append("\n");
-        builder.append("Telefon nummer: ").append(userPhoneNumber).append("\n");
+
+        User currentUser = ctx.sessionAttribute("currentUser");
+
+        if(currentUser != null) {
+            builder.append("Navn: ").append(currentUser.getFirstName()).append("\n");
+            builder.append("Telefon nummer: ").append(currentUser.getPhoneNumber()).append("\n");
+        } else {
+            builder.append("Navn: ").append(userName).append("\n");
+            builder.append("Telefon nummer: ").append(userPhoneNumber).append("\n");
+        }
         builder.append("Bredde: ").append(carport.getWidth()).append("\n");
         builder.append("Længde: ").append(carport.getLength()).append("\n");
         builder.append("Tag: ").append(carport.getRoof()).append("\n");
+
 
         // Check if the carport includes a shed
         if (carport.getShed() != null) {

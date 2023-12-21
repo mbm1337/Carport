@@ -44,7 +44,9 @@ public class OrderController {
             String password = ctx.formParam("telefonNummer");
             String comments = ctx.formParam("comments");
 
-            MailSenderController.sendCarportDetailsEmail(carport, "fog.carports@gmail.com", firstname, phone);
+
+            MailSenderController.sendCarportDetailsEmail(carport, "fog.carports@gmail.com", firstname, phone,ctx);
+
 
             boolean admin = Boolean.parseBoolean(ctx.formParam("admin"));
 
@@ -222,13 +224,26 @@ public class OrderController {
 
 
     public static void showOrderDetails(Context ctx, ConnectionPool connectionPool) throws DatabaseException, SVGGraphics2DIOException {
+        boolean isAdmin = false;
+        boolean isUser = false;
+
+        // Tjek om sessionen er tilgængelig
+        User currentUser = ctx.sessionAttribute("currentUser");
+        if (currentUser != null) {
+            isAdmin = currentUser.isAdmin();
+            isUser = true;
+
         int orderNumber = Integer.parseInt(ctx.pathParam("ordernumber"));
 
         List<OrderDetail> orderDetail = OrderMapper.getOrderDetailsWithProduct(orderNumber, connectionPool);
         ctx.sessionAttribute("ordernumber", orderNumber);
         ctx.attribute("user", orderDetail);
         SvgController.getSvg(ctx, connectionPool);
-        ctx.render("mymaterial.html");
+        ctx.render("mymaterial.html", Map.of("isAdmin", isAdmin, "isUser", isUser));
+        }else {
+            ctx.redirect("/");
+        }
+
     }
 
 }

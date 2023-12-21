@@ -47,7 +47,7 @@ public class Calculator {
 
 
         if (carportLength >= 600) {
-            int i = numberOfRafts+1;
+            int i = numberOfRafts + 1;
 
         }
         return numberOfRafts;
@@ -109,29 +109,41 @@ public class Calculator {
 
         if (shedWidth <= lengthOfbraedt && shedLength <= lengthOfbraedt) {
             total = 27 * 4;
-        } else if(shedWidth >= lengthOfbraedt && shedLength >= lengthOfbraedt) {
+        } else if (shedWidth >= lengthOfbraedt && shedLength >= lengthOfbraedt) {
             int subtractWidthFromLengthOfBraedt = shedWidth - lengthOfbraedt;
             int subtractLengthFromLengthOfBraedt = shedLength - lengthOfbraedt;
 
             int multiplyWidth = subtractWidthFromLengthOfBraedt * 27;
             int multiplyLength = subtractLengthFromLengthOfBraedt * 27;
 
-            int extraBraedtWidth = (int) Math.ceil((double) multiplyWidth / 210)*2+(27*2);
-            int extraBraedtLength = (int) Math.ceil((double) multiplyLength / 210)*2+(27*2);
+            int extraBraedtWidth = (int) Math.ceil((double) multiplyWidth / 210) * 2 + (27 * 2);
+            int extraBraedtLength = (int) Math.ceil((double) multiplyLength / 210) * 2 + (27 * 2);
 
-            total = extraBraedtWidth+extraBraedtLength;
+            total = extraBraedtWidth + extraBraedtLength;
         }
 
         return total;
     }
 
-    public int postsofshed(int shedWidth) {
-        int numberOfShedPosts = 2;
+    public int numberOfStolperPerSkur(int shedlength, int shedwidth) {
+        int distanceBetweenPosts = 210;
 
-        if (shedWidth > 510) {
-            numberOfShedPosts += 4;
+
+        int totalpost = 0;
+
+        if (shedlength <= 500 && shedlength <= 500) {
+            totalpost = 2 * 4;
+        } else {
+            if (shedwidth <= 600 && shedwidth <= 800 && shedlength <= 600 && shedlength <= 800) {
+                totalpost = 3 * 4;
+
+
+            }
+
+
         }
 
-        return numberOfShedPosts;
+        return totalpost;
     }
 }
+

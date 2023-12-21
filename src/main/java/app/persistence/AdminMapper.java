@@ -1,6 +1,6 @@
 package app.persistence;
 import app.entities.*;
-import app.exceptions.DatabaseException;
+        import app.exceptions.DatabaseException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -326,23 +326,23 @@ public class AdminMapper {
 
     public static Admin getCalcMaterialsById(int id, ConnectionPool connectionPool) {
 
-            try (Connection connection = connectionPool.getConnection()) {
-                String sql = "SELECT * FROM public.carport_calculator WHERE id = ?";
-                try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-                    preparedStatement.setInt(1, id);
+        try (Connection connection = connectionPool.getConnection()) {
+            String sql = "SELECT * FROM public.carport_calculator WHERE id = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                preparedStatement.setInt(1, id);
 
-                    try (ResultSet rs = preparedStatement.executeQuery()) {
-                        while (rs.next()) {
-                            int materialsId = rs.getInt("material_id");
-                            String comments = rs.getString("description");
-                            return new Admin(id,materialsId, comments);
-                        }
+                try (ResultSet rs = preparedStatement.executeQuery()) {
+                    while (rs.next()) {
+                        int materialsId = rs.getInt("material_id");
+                        String comments = rs.getString("description");
+                        return new Admin(id,materialsId, comments);
                     }
                 }
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
             }
-            return null; // If material with the given ID is not found
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null; // If material with the given ID is not found
     }
 
     public static void addCarportLength(int length, ConnectionPool connectionPool) throws DatabaseException {
@@ -474,5 +474,22 @@ public class AdminMapper {
     }
 
     public static void updatePrice(String updatePrice, ConnectionPool connectionPool) {
+    }
+
+    public static void updateStatus(int orderId, String newStatus, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "UPDATE orders SET status = ? WHERE ordernumber = ?";
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, newStatus);
+            ps.setInt(2, orderId);
+
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected != 1) {
+                throw new DatabaseException("Error updating order status");
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Error updating order status");
+        }
     }
 }

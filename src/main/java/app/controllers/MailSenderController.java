@@ -3,6 +3,7 @@ package app.controllers;
 import java.util.Properties;
 
 import app.entities.Carport;
+import app.entities.Order;
 import jakarta.mail.Message;
 import jakarta.mail.MessagingException;
 import jakarta.mail.PasswordAuthentication;
@@ -162,6 +163,9 @@ public class MailSenderController {
             builder.append("Skur længde: ").append(carport.getShed().getLength());
         }
 
+        builder.append("\nTak for at du vælger at handle hos FOG \n");
+        builder.append("Venlig hilsen,\nFOG Team");
+
         // Return the complete email body as a string
         return builder.toString();
     }
@@ -188,6 +192,8 @@ public class MailSenderController {
         }
 
         builder.append("Du vil snart modtage en email med yderligere informationer om din ordre.\n");
+        builder.append("\nTak for at du vælger at handle hos FOG \n");
+        builder.append("Venlig hilsen,\nFOG Team");
 
 
         // Return the complete email body as a string
@@ -214,15 +220,17 @@ public class MailSenderController {
         }
 
         builder.append("Du vil snart modtage en email med yderligere informationer om din ordre.\n");
+        builder.append("\nTak for at du vælger at handle hos FOG \n");
+        builder.append("Venlig hilsen,\nFOG Team");
 
         // Return the complete email body as a string
         return builder.toString();
     }
 
     // Status Mail to Customer
-    public static void sendStatusToCustomer(Carport carport, String emailRecipient, String userName) {
+    public static void sendStatusToCustomer(Order order, String status, String emailRecipient) {
         // Provide recipient's email ID
-        String to = emailRecipient; // fog.carports@gmail.com is the test mail
+        String to = emailRecipient;
         // Provide sender's email ID (your Gmail email address)
         String from = "fog.carports@gmail.com";
         // Provide your Gmail email address and App Password
@@ -250,9 +258,9 @@ public class MailSenderController {
             // Set To email field
             message.setRecipient(Message.RecipientType.TO, new InternetAddress(to));
             // Set email subject field
-            message.setSubject("Tak for at vælge Fog!");
+            message.setSubject("Status på din ordre!");
             // Construct the email body
-            String emailBody = sendOrderStatus(carport, userName);
+            String emailBody = sendOrderStatus(order, status, emailRecipient);
             // Set the content of the email message
             message.setText(emailBody);
             // Send the email message
@@ -263,32 +271,39 @@ public class MailSenderController {
         }
     }
 
-    private static String sendOrderStatus(Carport carport, String userName) {
 
+    private static String sendOrderStatus(Order order, String status, String emailRecipeint) {
         StringBuilder builder = new StringBuilder();
 
-        // send information about the details to the email body
-        builder.append("Hej ").append(userName).append(",\n");
-        builder.append("Tusind tak for din betaling!\n");
-        builder.append("Ordre Status:\n");
-        builder.append("Din ordre er nu under behandling og vil blive sendt afsted så hurtigt som muligt\n\n");
-        builder.append("Detaljer på din carport:\n");
-        builder.append("Bredde: ").append(carport.getWidth()).append("\n");
-        builder.append("Længde: ").append(carport.getLength()).append("\n");
-        builder.append("Tag: ").append(carport.getRoof()).append("\n");
 
-        // Check if the carport includes a shed
-        if (carport.getShed() != null) {
-            // If a shed is included, append its details to the email body
-            builder.append("Skur bredde: ").append(carport.getShed().getWidth()).append("\n");
-            builder.append("Skur længde: ").append(carport.getShed().getLength());
+        builder.append("Hej!\n");
+
+        // Choosing message based on order status
+        switch (order.getStatus().toLowerCase()) {
+            case "under process":
+                builder.append("Din ordre er nu under behandling.\n");
+                break;
+            case "paid":
+                builder.append("Vi har modtaget din betaling, og din ordre er nu i gang.\n");
+                break;
+            case "cancelled":
+                builder.append("Din ordre er blevet annulleret.\n");
+                break;
+            default:
+                builder.append("Kontakt os for yderligere information om din ordre.\n");
         }
 
-        builder.append("Du vil snart modtage en email med yderligere informationer om din ordre.\n");
+
+        builder.append("Din ordre #").append(order.getOrderNr()).append("\n");
+        builder.append("Ordre Status: ").append(order.getStatus()).append("\n\n");
+
+        builder.append("\nTak for at du vælger at handle hos FOG \n");
+        builder.append("Venlig hilsen,\nFOG Team");
 
         // Return the complete email body as a string
         return builder.toString();
     }
+
 
 
 }

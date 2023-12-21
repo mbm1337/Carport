@@ -80,10 +80,12 @@ public class Main {
         app.post("/add_matreriel", ctx -> AdminController.addMaterial(ctx, connectionPool));
         app.post("/delete_matreriel/{id}", ctx -> AdminController.deleteMaterial(ctx, connectionPool));
         app.post("/adminCalc", ctx -> AdminController.getCalcMaterials(ctx, connectionPool));
+        app.get("/adminCalc", ctx -> AdminController.getCalcMaterials(ctx, connectionPool));
         app.get("/adminCalc/{id}", ctx -> AdminController.getCalcMaterialsById(ctx, connectionPool));
         app.post("/adminCalc/{id}", ctx -> AdminController.getCalcMaterialsById(ctx, connectionPool));
         app.post("/adminCalc/{id}/edit", ctx -> AdminController.editCalcMaterials(ctx, connectionPool));
         app.post("/carport_size", ctx -> AdminController.getDimensions(ctx, connectionPool));
+        app.get("/carport_size", ctx -> AdminController.getDimensions(ctx, connectionPool));
         app.post("/add_carportlength", ctx -> AdminController.addCarportLength(ctx, connectionPool));
         app.post("/add_carportwidth", ctx -> AdminController.addCarportWidth(ctx, connectionPool));
         app.post("/add_shedlength", ctx -> AdminController.addShedLength(ctx, connectionPool));

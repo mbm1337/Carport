@@ -481,6 +481,24 @@ public class AdminController {
         }
     }
 
+
+    public static void cheklogin(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+        boolean isAdmin = false;
+        boolean isUser = false;
+
+        // Tjek om sessionen er tilgængelig
+        User currentUser = ctx.sessionAttribute("currentUser");
+        if (currentUser != null) {
+            isAdmin = currentUser.isAdmin();
+            isUser = true;
+            ctx.render("index.html",Map.of("isAdmin", isAdmin, "isUser", isUser));
+        }else {
+            ctx.render("index.html");
+        }
+
+
+    }
+
 }
 
 

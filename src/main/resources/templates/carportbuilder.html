@@ -25,7 +25,7 @@
                     <select id="carportWidth" name="carportWidth">
                         <option th:each="carportWidth: ${#ctx.carportWidth}"
                                 th:value="${carportWidth.width}"
-                                th:text="${carportWidth.width}"></option>
+                                th:text="${carportWidth.width+' cm'}"></option>
                     </select> <br>
 
                     <label for="carportLength">Carport  Længde: *</label> <br>
@@ -33,7 +33,7 @@
 
                         <option th:each="carportLength: ${#ctx.carportLength}" th:value="${carportLength.length}"
 
-                                th:text="${carportLength.length}"></option>
+                                th:text="${carportLength.length+' cm'}"></option>
                     </select> <br>
 
                     <label for="roof">Carport Tag: *</label> <br>
@@ -49,15 +49,17 @@
                     <label for="shed">Med redskabsrum</label> <br>
 
                     <div id="shedContent" style="display: none">
+
+                        <p>Dit skur skal være 30cm mindre i bredden. Ønsker du et skur som er større end din carport, skriv i kommentarfeltet på næste side</p>
                         <label for="shedWidth">Redskabsrum bredde:</label> <br>
                         <select id="shedWidth" name="shedWidth">
                             <option th:each="shedWidth: ${#ctx.shedWidth}" th:value="${shedWidth.width}"
-                                    th:text="${shedWidth.width}"></option>
+                                    th:text="${shedWidth.width +' cm'}"></option>
                         </select> <br>
                         <label for="shedLength">Redskabsrum Længde:</label> <br>
                         <select id="shedLength" name="shedLength">
                             <option th:each="shedLength: ${#ctx.shedLength}" th:value="${shedLength.length}"
-                                    th:text="${shedLength.length}"></option>
+                                    th:text="${shedLength.length+' cm'}"></option>
                         </select> <br>
 
                         <input type="radio" name="shedside" value="true" checked>

@@ -11,6 +11,7 @@ import java.util.Map;
 
 public class AdminController {
     static Map<User, List<Order>> usersAndOrders;
+
     public static void getUsersAndOrders(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
         boolean isAdmin = false;
         boolean isUser = false;
@@ -44,7 +45,6 @@ public class AdminController {
         }
 
 
-
     }
 
 
@@ -64,20 +64,18 @@ public class AdminController {
             ctx.sessionAttribute("ordernumber", orderNumber);
 
             Boolean loggedIn = ctx.sessionAttribute("isAdmin");
-            ctx.attribute("city",ZipMapper.getCityByZip(admin.getZip(), connectionPool));
+            ctx.attribute("city", ZipMapper.getCityByZip(admin.getZip(), connectionPool));
 
             ctx.attribute("admin", admin);
-            ctx.attribute("adminList",admin.getAdminList());
+            ctx.attribute("adminList", admin.getAdminList());
 
             SvgController.getSvg(ctx, connectionPool);
 
             ctx.render("tilbud.html", Map.of("isAdmin", isAdmin, "isUser", isUser));
 
-        }else {
+        } else {
             ctx.redirect("/");
         }
-
-
 
 
     }
@@ -93,8 +91,8 @@ public class AdminController {
             isUser = true;
             double updatePrice = Double.parseDouble(ctx.formParam("newPrice"));
             int id = Integer.parseInt(ctx.formParam("orderId"));
-            AdminMapper.updatePrice(id,updatePrice, connectionPool);
-            ctx.redirect("/tilbud/"+id);
+            AdminMapper.updatePrice(id, updatePrice, connectionPool);
+            ctx.redirect("/tilbud/" + id);
         } else {
             ctx.redirect("/");
         }
@@ -137,8 +135,7 @@ public class AdminController {
 
             ctx.attribute("material", material);
             ctx.render("edit_matreriel.html", Map.of("isAdmin", isAdmin, "isUser", isUser));
-        }
-       else {
+        } else {
             ctx.redirect("/");
         }
 
@@ -163,7 +160,7 @@ public class AdminController {
         double buyPrice = Double.parseDouble(ctx.formParam("buyPrice"));
         double purchasePrice = Double.parseDouble(ctx.formParam("purchasePrice"));
 
-        Material material = new Material(id,productName, productType, productSize, unit, quantityInStock, buyPrice, purchasePrice);
+        Material material = new Material(id, productName, productType, productSize, unit, quantityInStock, buyPrice, purchasePrice);
         AdminMapper.updateMaterial(material, connectionPool);
         Boolean loggedIn = ctx.sessionAttribute("isAdmin");
         if (loggedIn != null && loggedIn) {
@@ -173,7 +170,6 @@ public class AdminController {
         } else {
             ctx.redirect("/");
         }
-
 
 
     }
@@ -222,6 +218,7 @@ public class AdminController {
         AdminMapper.deleteMaterial(id, connectionPool);
         ctx.redirect("/materials");
     }
+
     public static void getCalcMaterials(Context ctx, ConnectionPool connectionPool) throws DatabaseException, SQLException {
         boolean isAdmin = false;
         boolean isUser = false;
@@ -237,7 +234,7 @@ public class AdminController {
             List<Material> materials = AdminMapper.getMaterials(connectionPool);
             ctx.attribute("materials", materials);
             ctx.render("admin_calculator.html", Map.of("isAdmin", isAdmin, "isUser", isUser));
-        }else {
+        } else {
             ctx.redirect("/");
         }
 
@@ -259,7 +256,7 @@ public class AdminController {
             List<Material> materials = AdminMapper.getMaterials(connectionPool);
             ctx.attribute("materials", materials);
             ctx.render("admin_calculator_edit.html", Map.of("isAdmin", isAdmin, "isUser", isUser));
-        }else {
+        } else {
             ctx.redirect("/");
         }
 
@@ -277,16 +274,15 @@ public class AdminController {
 
             int id = Integer.parseInt(ctx.pathParam("id"));
             int materialsId = Integer.parseInt(ctx.formParam("materialsId"));
-            AdminMapper.updateCalcMaterials(id,materialsId, connectionPool);
+            AdminMapper.updateCalcMaterials(id, materialsId, connectionPool);
             ctx.redirect("/adminCalc");
 
-        }else {
+        } else {
             ctx.redirect("/");
         }
 
 
-
-        }
+    }
 
 
     public static void getDimensions(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
@@ -307,12 +303,9 @@ public class AdminController {
             List<ShedWidth> shedWidth = CarportMapper.getShedWidth(connectionPool);
             ctx.attribute("shedWidth", shedWidth);
             ctx.render("admin_carport_size.html", Map.of("isAdmin", isAdmin, "isUser", isUser));
-        }else {
+        } else {
             ctx.redirect("/");
         }
-
-
-
 
 
     }
@@ -330,7 +323,7 @@ public class AdminController {
             AdminMapper.addCarportLength(length, connectionPool);
             ctx.redirect("/carport_size");
 
-        }else {
+        } else {
             ctx.redirect("/");
         }
 
@@ -349,7 +342,7 @@ public class AdminController {
             int width = Integer.parseInt(ctx.formParam("carportWidth"));
             AdminMapper.addCarportWidth(width, connectionPool);
             ctx.redirect("/carport_size");
-        }else {
+        } else {
             ctx.redirect("/");
         }
 
@@ -368,7 +361,7 @@ public class AdminController {
             int length = Integer.parseInt(ctx.formParam("shedLength"));
             AdminMapper.addShedLength(length, connectionPool);
             ctx.redirect("/carport_size");
-        }else {
+        } else {
             ctx.redirect("/");
         }
 
@@ -387,7 +380,7 @@ public class AdminController {
             int width = Integer.parseInt(ctx.formParam("shedWidth"));
             AdminMapper.addShedWidth(width, connectionPool);
             ctx.redirect("/carport_size");
-        }else {
+        } else {
             ctx.redirect("/");
         }
 
@@ -406,7 +399,7 @@ public class AdminController {
             int id = Integer.parseInt(ctx.pathParam("id"));
             AdminMapper.deleteCarportLength(id, connectionPool);
             ctx.redirect("/carport_size");
-        }else {
+        } else {
             ctx.redirect("/");
         }
 
@@ -425,7 +418,7 @@ public class AdminController {
             int id = Integer.parseInt(ctx.pathParam("id"));
             AdminMapper.deleteCarportWidth(id, connectionPool);
             ctx.redirect("/carport_size");
-        }else {
+        } else {
             ctx.redirect("/");
         }
 
@@ -444,7 +437,7 @@ public class AdminController {
             int id = Integer.parseInt(ctx.pathParam("id"));
             AdminMapper.deleteShedLength(id, connectionPool);
             ctx.redirect("/carport_size");
-        }else {
+        } else {
             ctx.redirect("/");
         }
 
@@ -463,7 +456,7 @@ public class AdminController {
             int id = Integer.parseInt(ctx.pathParam("id"));
             AdminMapper.deleteShedWidth(id, connectionPool);
             ctx.redirect("/carport_size");
-        }else {
+        } else {
             ctx.redirect("/");
         }
 
@@ -472,23 +465,33 @@ public class AdminController {
 
     public static void changeStatus(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
         boolean isAdmin = false;
+        boolean isUser = false;
         User currentUser = ctx.sessionAttribute("currentUser");
-        if (currentUser != null && currentUser.isAdmin()) {
-            isAdmin = true;
+        String email = ctx.formParam("email");
+
+        if (currentUser != null) {
+            isAdmin = currentUser.isAdmin();
+            isUser = true;
             int orderId = Integer.parseInt(ctx.formParam("orderId"));
             String newStatus = ctx.formParam("newStatus");
+
+            Order order = OrderMapper.getOrderById(orderId, connectionPool);
 
             if (newStatus.equals("under process") || newStatus.equals("paid") || newStatus.equals("cancelled")) {
                 AdminMapper.updateStatus(orderId, newStatus, connectionPool);
 
-                MailSenderController.sendStatusToCustomer(newStatus, userEmail );
-                ctx.redirect("/admin/orders"); // ??
+                if (order != null) {
+                    // Send status update email
+                    MailSenderController.sendStatusToCustomer(order, newStatus, email);
+                }
+                ctx.redirect("/admin/orders"); //??
             } else {
                 ctx.status(400).result("Invalid status update request");
             }
         } else {
             ctx.redirect("/");
         }
+    }
 }
 
 

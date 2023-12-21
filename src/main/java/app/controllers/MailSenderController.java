@@ -228,7 +228,7 @@ public class MailSenderController {
     }
 
     // Status Mail to Customer
-    public static void sendStatusToCustomer(Order order, String emailRecipient, String userName) {
+    public static void sendStatusToCustomer(Order order, String status, String emailRecipient) {
         // Provide recipient's email ID
         String to = emailRecipient;
         // Provide sender's email ID (your Gmail email address)
@@ -260,7 +260,7 @@ public class MailSenderController {
             // Set email subject field
             message.setSubject("Status på din ordre!");
             // Construct the email body
-            String emailBody = sendOrderStatus(order, emailRecipient, userName);
+            String emailBody = sendOrderStatus(order, status, emailRecipient);
             // Set the content of the email message
             message.setText(emailBody);
             // Send the email message
@@ -272,10 +272,11 @@ public class MailSenderController {
     }
 
 
-    private static String sendOrderStatus(Order order, String emailRecipeint, String userName) {
+    private static String sendOrderStatus(Order order, String status, String emailRecipeint) {
         StringBuilder builder = new StringBuilder();
 
-        builder.append("Hej ").append(userName).append(",\n");
+
+        builder.append("Hej!\n");
         builder.append("Din ordre #").append(order.getOrderNumber()).append("\n");
         builder.append("Ordre Status: ").append(order.getStatus()).append("\n\n");
 

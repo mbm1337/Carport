@@ -491,4 +491,5 @@ public class AdminMapper {
         } catch (SQLException e) {
             throw new DatabaseException("Error updating order status");
         }
+    }
 }

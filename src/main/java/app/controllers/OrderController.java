@@ -2,7 +2,10 @@ package app.controllers;
 
 import app.entities.*;
 import app.exceptions.DatabaseException;
-import app.persistence.*;
+import app.persistence.ConnectionPool;
+import app.persistence.MaterialMapper;
+import app.persistence.OrderMapper;
+import app.persistence.UserMapper;
 import app.util.Calculator;
 import io.javalin.http.Context;
 import org.apache.batik.svggen.SVGGraphics2DIOException;
@@ -83,13 +86,25 @@ public class OrderController {
 
         Calculator calc = new Calculator();
         Carport carport = ctx.sessionAttribute("carport");
+        Shed shed = ctx.sessionAttribute("shed"); // Retrieve shed from session
+
+
+        int length = carport.getLength();  // Hent længde fra session
+        int width = carport.getWidth();    // Hent bredde fra session
+        int shedwidth = 0;
+        int shedLength = 0;
+        if (shed != null) {
+             shedwidth = shed.getWidth();
+             shedLength = shed.getLength();
+        }
+
+
 
         int spaer600 = MaterialMapper.getPrice(9, connectionPool);
         int spaer480 = MaterialMapper.getPrice(10, connectionPool);
         int priceOfposts = MaterialMapper.getPrice(12, connectionPool);
-        int length = carport.getLength();  // Hent længde fra session
-        int width = carport.getWidth();    // Hent bredde fra session
-
+        int stolperPriceskur = MaterialMapper.getPrice(12, connectionPool);
+        int beklædningprice = MaterialMapper.getPrice(13, connectionPool);
         int screwsPerPerPost = MaterialMapper.getPrice(22, connectionPool);
         int screwPerSpaer = MaterialMapper.getPrice(22, connectionPool);
         int beslagPerPost = MaterialMapper.getPrice(20, connectionPool);
@@ -103,12 +118,17 @@ public class OrderController {
         int numberScrewPerSpaer = calc.screwSpaer(length);
         int numberBeslagPerPost = calc.beslagPost(length);
         int numberBeslagPerSpaer = calc.beslagspaer(length);
+        int numberofstolperPerskur = calc.postsofshed(shedwidth);
+        int numberOfBeklaedning = calc.beklaedning(shedwidth, shedLength);
+
 
         int totalPostsCost = numberOfPosts * priceOfposts;
         int totalScrewPerPost = numberOfPosts * numberPerscrewPost;
         int totalScrewPerSPaer = numberOfspaer * numberScrewPerSpaer;
         int totalBeslagPerPost = beslagPerPost * numberBeslagPerPost;
         int totalBeslagPerSpaer = beslagPerSpaer * numberBeslagPerSpaer;
+        int totalbeklaedning = beklædningprice * numberOfBeklaedning;
+        int totalstolperPerskur = stolperPriceskur * numberofstolperPerskur;
 
 
         int totalRaft;
@@ -125,7 +145,7 @@ public class OrderController {
             totalBeam = numberOfBeams * spaer600;
         }
 
-        int totalPrice = totalPostsCost + totalRaft + totalBeam + totalScrewPerPost + totalBeslagPerPost + totalScrewPerSPaer + totalBeslagPerSpaer;
+        int totalPrice = totalPostsCost + totalRaft + totalBeam + totalScrewPerPost + totalBeslagPerPost + totalScrewPerSPaer + totalBeslagPerSpaer +totalbeklaedning + totalstolperPerskur;
 
         materials.add(new Material(9, "Spaer", numberOfBeams));
         materials.add(new Material(10, "Raft", numberOfspaer));
@@ -134,6 +154,10 @@ public class OrderController {
         materials.add(new Material(22, "ScrewPerSpaer", numberScrewPerSpaer));
         materials.add(new Material(20, "BeslagPerPost", numberBeslagPerPost));
         materials.add(new Material(20, "BeslagPerSpaer", numberOfspaer));
+
+
+        materials.add(new Material(13, "brædt", numberOfBeklaedning));
+        materials.add(new Material(12, "stoplerPerSkur", numberofstolperPerskur));
 
 
         ctx.sessionAttribute("carport", carport);

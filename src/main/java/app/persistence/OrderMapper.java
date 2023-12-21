@@ -181,4 +181,79 @@ public class OrderMapper {
         return orderDetails;
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public static Order getOrderById(int orderId, ConnectionPool connectionPool) throws DatabaseException {
+        Order order = null;
+        try (Connection connection = connectionPool.getConnection()) {
+            String sql = "SELECT * FROM \"orders\" WHERE ordernumber = ?";
+            try (PreparedStatement ps = connection.prepareStatement(sql)) {
+                ps.setInt(1, orderId);
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (rs.next()) {
+                        int orderNr = rs.getInt("ordernumber");
+                        int userId = rs.getInt("user_id");
+                        String status = rs.getString("status");
+                        int price = rs.getInt("price");
+                        // Assuming Order constructor accepts these parameters
+                        order = new Order(orderNr, userId, status, price);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Error retrieving order with ID: " + orderId);
+        }
+        return order;
+    }
+
 }

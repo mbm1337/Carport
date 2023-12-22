@@ -82,6 +82,7 @@ public class OrderController {
             // Handle errors
             e.printStackTrace();
             System.out.println(e);
+            ctx.attribute("message",e.getMessage());
             ctx.attribute("error_message", "We couldn't save the order: " + e.getMessage());
             ctx.render("adresse.html");
         } catch (SVGGraphics2DIOException e) {

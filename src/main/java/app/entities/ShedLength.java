@@ -1,8 +1,8 @@
 package app.entities;
 
 public class ShedLength {
-    int id;
-    int length;
+    private int id;
+    private int length;
 
     public ShedLength(int id, int length) {
         this.id = id;

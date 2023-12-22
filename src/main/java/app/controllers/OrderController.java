@@ -103,10 +103,9 @@ public class OrderController {
         int shedwidth = 0;
         int shedLength = 0;
         if (shed != null) {
-             shedwidth = shed.getWidth();
-             shedLength = shed.getLength();
+            shedwidth = shed.getWidth();
+            shedLength = shed.getLength();
         }
-
 
 
         int spaer600 = MaterialMapper.getPrice(9, connectionPool);
@@ -114,93 +113,114 @@ public class OrderController {
         int priceOfposts = MaterialMapper.getPrice(12, connectionPool);
         int stolperPriceskur = MaterialMapper.getPrice(12, connectionPool);
         int beklædningprice = MaterialMapper.getPrice(13, connectionPool);
-        int screwsPerPerPost = MaterialMapper.getPrice(22, connectionPool);
-        int screwPerSpaer = MaterialMapper.getPrice(22, connectionPool);
-        int beslagPerPost = MaterialMapper.getPrice(20, connectionPool);
-        int beslagPerSpaer = MaterialMapper.getPrice(20, connectionPool);
+        int screwsSpaerPostPrice = MaterialMapper.getPrice(22, connectionPool);
+
+        int beslagPerPostPrice = MaterialMapper.getPrice(20, connectionPool);
+        int beslagPerSpaerPrice = MaterialMapper.getPrice(20, connectionPool);
 
 
         int numberOfPosts = calc.numberOfPosts(length);
         int numberOfBeams = calc.beamAmount(length);
         int numberOfspaer = calc.spaerAmount(length);
-        int numberPerscrewPost = calc.screwPost(length);
-        int numberScrewPerSpaer = calc.screwSpaer(length);
+        int screwamount = calc.screwSpaer(length) + calc.screwPost(length);
         int numberBeslagPerPost = calc.beslagPost(length);
         int numberBeslagPerSpaer = calc.beslagspaer(length);
-        int numberofstolperPerskur = calc.numberOfStolperPerSkur(shedwidth,shedLength);
+        int numberofstolperPerskur = calc.numberOfStolperPerSkur(shedwidth, shedLength);
         int numberOfBeklaedning = calc.beklaedning(shedwidth, shedLength);
 
 
         int totalPostsCost = numberOfPosts * priceOfposts;
-        int totalScrewPerPost = numberOfPosts * numberPerscrewPost;
-        int totalScrewPerSPaer = numberOfspaer * numberScrewPerSpaer;
-        int totalBeslagPerPost = beslagPerPost * numberBeslagPerPost;
-        int totalBeslagPerSpaer = beslagPerSpaer * numberBeslagPerSpaer;
-        int totalbeklaedning = beklædningprice * numberOfBeklaedning;
-        int totalstolperPerskur = stolperPriceskur * numberofstolperPerskur;
 
 
-        int totalRaft;
-        if (length <= 480) {
-            totalRaft = numberOfspaer * spaer480;
-        } else {
-            totalRaft = numberOfspaer * spaer600;
-        }
-
-        int totalBeam;
-        if (length <= 480) {
-            totalBeam = numberOfBeams * spaer480;
-        } else {
-            totalBeam = numberOfBeams * spaer600;
-        }
-
-        int totalPrice = totalPostsCost + totalRaft + totalBeam + totalScrewPerPost + totalBeslagPerPost + totalScrewPerSPaer + totalBeslagPerSpaer +totalbeklaedning + totalstolperPerskur;
-
-        materials.add(new Material(9, "Spaer", numberOfBeams));
-        materials.add(new Material(10, "Raft", numberOfspaer));
-        materials.add(new Material(12, "Posts", numberOfPosts));
-        materials.add(new Material(22, "ScrewPerPost", numberPerscrewPost));
-        materials.add(new Material(22, "ScrewPerSpaer", numberScrewPerSpaer));
-        materials.add(new Material(20, "BeslagPerPost", numberBeslagPerPost));
-        materials.add(new Material(20, "BeslagPerSpaer", numberOfspaer));
+        int totalPriceOfScrews = screwsSpaerPostPrice*screwamount;
 
 
-        materials.add(new Material(13, "brædt", numberOfBeklaedning));
-        materials.add(new Material(12, "stoplerPerSkur", numberofstolperPerskur));
+        int screwpakke = 0;
 
-
-        ctx.sessionAttribute("carport", carport);
-        ctx.attribute("length", length);
-        ctx.attribute("width", width);
-        ctx.sessionAttribute("quantityordered", materials);
-        ctx.sessionAttribute("totalprice", totalPrice);
-        try {
-            OrderController.insertingAnOrder(totalPrice, ctx, connectionPool);
-        } catch (DatabaseException e) {
-            // Handle exception if needed
-            e.printStackTrace();
+        if (screwamount > 0) {
+            int i;
+            for (i = 0; screwamount > 0; screwamount -= 200) {
+                i++;
+            }
+            screwpakke += i;
         }
 
 
-        return totalPrice;
+
+
+
+            int totalCostBeslagPerPost = beslagPerPostPrice * numberBeslagPerPost;
+            int totalCostBeslagPerSpaer = beslagPerSpaerPrice * numberBeslagPerSpaer;
+            int totalCostbeklaedning = beklædningprice * numberOfBeklaedning;
+            int totalCoststolperPerskur = stolperPriceskur * numberofstolperPerskur;
+
+
+            int totalRaft;
+            if (length <= 480) {
+                totalRaft = numberOfspaer * spaer480;
+            } else {
+                totalRaft = numberOfspaer * spaer600;
+            }
+
+            int totalBeam;
+            if (length <= 480) {
+                totalBeam = numberOfBeams * spaer480;
+            } else {
+                totalBeam = numberOfBeams * spaer600;
+            }
+
+
+            int totalPrice = totalCostbeklaedning + totalCoststolperPerskur + totalCostBeslagPerPost + totalCostBeslagPerSpaer + totalPriceOfScrews + totalPostsCost + totalBeam + totalRaft;
+            materials.add(new Material(9, "rem", numberOfBeams));
+            materials.add(new Material(10, "spaer", numberOfspaer));
+            materials.add(new Material(12, "Posts", numberOfPosts));
+
+            materials.add(new Material(20, "BeslagPerSpaer", numberBeslagPerSpaer));
+            materials.add(new Material(20, "BeslagPerPost", numberBeslagPerPost));
+
+            materials.add(new Material(22, "ScrewPerSpaer", screwpakke));
+
+
+
+            materials.add(new Material(13, "brædt", numberOfBeklaedning));
+
+            materials.add(new Material(12, "stoplerPerSkur", numberofstolperPerskur));
+
+
+            ctx.sessionAttribute("carport", carport);
+            ctx.attribute("length", length);
+            ctx.attribute("width", width);
+            ctx.sessionAttribute("quantityordered", materials);
+            ctx.sessionAttribute("totalprice", totalPrice);
+            try {
+                OrderController.insertingAnOrder(totalPrice, ctx, connectionPool);
+            } catch (DatabaseException e) {
+                // Handle exception if needed
+                e.printStackTrace();
+            }
+
+return totalPrice;
+
+
+
     }
+        public static void getOrders (Context ctx, ConnectionPool connectionPool) throws DatabaseException {
 
-    public static void getOrders(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+            User currentUser = ctx.sessionAttribute("currentUser");
+            if (currentUser != null) {
+                boolean isAdmin = currentUser.isAdmin();
+                boolean isUser = true;
+                List<Order> orders = OrderMapper.getOrders(currentUser.getId(), connectionPool);
+                ctx.attribute("username", ctx.sessionAttribute("username"));
+                ctx.attribute("orders", orders);
+                ctx.render("order.html", Map.of("isAdmin", isAdmin, "isUser", isUser));
+            } else {
+                ctx.redirect("/");
+            }
 
-        User currentUser = ctx.sessionAttribute("currentUser");
-        if (currentUser != null) {
-            boolean isAdmin = currentUser.isAdmin();
-            boolean isUser = true;
-            List<Order> orders = OrderMapper.getOrders(currentUser.getId(), connectionPool);
-            ctx.attribute("username", ctx.sessionAttribute("username"));
-            ctx.attribute("orders", orders);
-            ctx.render("order.html", Map.of("isAdmin", isAdmin, "isUser", isUser));
-        } else {
-            ctx.redirect("/");
+
         }
 
-
-    }
 
     public static void deleteOrder(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
         boolean isAdmin = false;

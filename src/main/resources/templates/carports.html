@@ -18,7 +18,7 @@
                 <td class="carport-text" th:text="${allCarports.productName}"></td>
             </tr>
             <tr>
-                <td class="carport-text" th:text="${allCarports.carportPrice} + ' pr. stk + evt. fragt'"></td>
+                <td class="carport-text" th:text="${allCarports.carportPrice} + 'kr. pr. stk + evt. fragt'"></td>
             </tr>
         </table>
         <form method="post" th:action="@{'/carport_info/' + ${allCarports.id}}" class="carport-form">

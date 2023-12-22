@@ -1,6 +1,6 @@
 package app.persistence;
 import app.entities.*;
-        import app.exceptions.DatabaseException;
+import app.exceptions.DatabaseException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -93,8 +93,8 @@ public class AdminMapper {
                 try (ResultSet resultSet = preparedStatement.executeQuery()) {
                     while (resultSet.next()) {
 
-                        admin.setForname(resultSet.getString("forname"));
-                        admin.setAftername(resultSet.getString("aftername"));
+                        admin.setFirstname(resultSet.getString("forname"));
+                        admin.setLastname(resultSet.getString("aftername"));
                         admin.setUserEmail(resultSet.getString("email"));
                         admin.setZip(resultSet.getInt("zip"));
                         admin.setAddress(resultSet.getString("address"));
@@ -473,8 +473,6 @@ public class AdminMapper {
         }
     }
 
-    public static void updatePrice(String updatePrice, ConnectionPool connectionPool) {
-    }
 
     public static void updateStatus(int orderId, String newStatus, ConnectionPool connectionPool) throws DatabaseException {
         String sql = "UPDATE orders SET status = ? WHERE ordernumber = ?";

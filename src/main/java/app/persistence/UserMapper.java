@@ -5,6 +5,8 @@ import app.entities.User;
 import app.exceptions.DatabaseException;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserMapper {
 
@@ -119,15 +121,18 @@ public class UserMapper {
             return newUserId;
         } catch (SQLException e) {
             String message = "Couldn't create a new user in the database: " + e.getMessage();
+            if (e.getMessage().startsWith("ERROR: duplicate key value ")) {
+                message = "Email findes allerede. Vælg en anden";
+            }
             throw new DatabaseException(message);
         }
     }
     // UserMapper.java
 
 
-        public static void updateUser(int userId, String firstName , String lastName, String address, int zip,int phone,String password ,ConnectionPool connectionPool) throws DatabaseException {
+        public static void updateUser(int userId, String firstName , String lastName, String address, int zip,int phone,String password ,boolean isAdmin,ConnectionPool connectionPool) throws DatabaseException {
             try (Connection connection = connectionPool.getConnection()) {
-                String sql = "UPDATE \"user\"  SET forname = ?, aftername = ?, address = ?, zip = ?, phone = ?, password = ? WHERE id = ?";
+                String sql = "UPDATE \"user\"  SET forname = ?, aftername = ?, address = ?, zip = ?, phone = ?, password = ?, admin = ?  WHERE id = ?";
                 try (PreparedStatement ps = connection.prepareStatement(sql)) {
                     ps.setString(1, firstName);
                     ps.setString(2, lastName);
@@ -135,16 +140,127 @@ public class UserMapper {
                     ps.setInt(4, zip);
                     ps.setInt(5, phone);
                     ps.setString(6, password);
-                    ps.setInt(7, userId);
+                    ps.setBoolean(7, isAdmin);
+                    ps.setInt(8, userId);
+
                     int rowsaffected =ps.executeUpdate();
 
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
                 throw new DatabaseException("Error updating user information");
+
             }
 return;
         }
 
+    public static Object getUserById(int id, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "SELECT * FROM \"user\" WHERE id = ?";
+        User user = null;
+
+        try (Connection connection = connectionPool.getConnection()) {
+            try (PreparedStatement ps = connection.prepareStatement(sql)) {
+                ps.setInt(1, id);
+                ResultSet resultSet = ps.executeQuery();
+
+                if (resultSet.next()) {
+                    String firstName = resultSet.getString("forname");
+                    String lastName = resultSet.getString("aftername");
+                    String email = resultSet.getString("email");
+                    int zip = resultSet.getInt("zip");
+                    String address = resultSet.getString("address");
+                    boolean admin = resultSet.getBoolean("admin");
+                    String password = resultSet.getString("password");
+                    int phone = resultSet.getInt("phone");
+
+                    user = new User(id, firstName, lastName, phone, email, zip, address, admin, password);
+                }
+            }
+        } catch (SQLException e) {
+            String msg = "Der er sket en fejl under søgning efter brugeren.";
+            throw new DatabaseException(msg);
+        }
+
+        return user;
     }
+    public static List<Integer> getOrdersForUser(int userId, Connection connection) throws SQLException {
+        List<Integer> orderIds = new ArrayList<>();
+
+        String selectOrdersSQL = "SELECT ordernumber FROM orders WHERE user_id = ?";
+        try (PreparedStatement ps = connection.prepareStatement(selectOrdersSQL)) {
+            ps.setInt(1, userId);
+            ResultSet resultSet = ps.executeQuery();
+
+            while (resultSet.next()) {
+                orderIds.add(resultSet.getInt("ordernumber"));
+            }
+        }
+
+        return orderIds;
+    }
+    public static void deleteOrder(Connection connection, int orderId) throws SQLException {
+        String deleteOrdersSQL = "DELETE FROM orders WHERE ordernumber = ?";
+        try (PreparedStatement ps = connection.prepareStatement(deleteOrdersSQL)) {
+            ps.setInt(1, orderId);
+            ps.executeUpdate();
+        }
+    }
+
+    public static void deleteHasShed(Connection connection, int orderId) throws SQLException {
+        String deleteShedSQL = "DELETE FROM has_shed WHERE order_id = ?";
+        try (PreparedStatement ps = connection.prepareStatement(deleteShedSQL)) {
+            ps.setInt(1, orderId);
+            ps.executeUpdate();
+        }
+    }
+
+    public static void deleteOrderDetails(Connection connection, int orderId) throws SQLException {
+        String deleteDetailsSQL = "DELETE FROM orderdetails WHERE ordernumber = ?";
+        try (PreparedStatement ps = connection.prepareStatement(deleteDetailsSQL)) {
+            ps.setInt(1, orderId);
+            ps.executeUpdate();
+        }
+    }
+
+    public static void deleteUser(int userId, Connection connection) throws SQLException {
+        String deleteUserSQL = "DELETE FROM \"user\" WHERE id = ?";
+        try (PreparedStatement ps = connection.prepareStatement(deleteUserSQL)) {
+            ps.setInt(1, userId);
+            ps.executeUpdate();
+        }
+    }
+
+    public static List<User> getUsers(ConnectionPool connectionPool) throws DatabaseException {
+        List<User> users = new ArrayList<>();
+        String sql = "SELECT * FROM \"user\"";
+
+
+        try (Connection connection = connectionPool.getConnection()) {
+            try (PreparedStatement ps = connection.prepareStatement(sql)) {
+                ResultSet resultSet = ps.executeQuery();
+
+                while (resultSet.next()) {
+                    int id = resultSet.getInt("id");
+                    String firstName = resultSet.getString("forname");
+                    String lastName = resultSet.getString("aftername");
+                    String email = resultSet.getString("email");
+                    int zip = resultSet.getInt("zip");
+                    String address = resultSet.getString("address");
+                    boolean admin = resultSet.getBoolean("admin");
+                    String password = resultSet.getString("password");
+                    int phone = resultSet.getInt("phone");
+
+                    User user = new User(id, firstName, lastName, phone, email, zip, address, admin, password);
+                    users.add(user);
+                }
+            }
+        } catch (SQLException e) {
+            String msg = "Der er sket en fejl under søgning efter brugeren.";
+            throw new DatabaseException(msg);
+        }
+
+        return users;
+    }
+
+}
 

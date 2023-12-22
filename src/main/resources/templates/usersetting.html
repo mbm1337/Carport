@@ -54,6 +54,10 @@
                             <td><input type="text"  name="address" th:value="${user.address}" /></td>
                             <td></td>
                             <td><input type="text"  name="password" th:value="${user.password}" /></td>
+
+                            <input type="hidden" id="status" name="status" th:value="${user.admin}" />
+
+
                             <td colspan="2"><button type="submit">Update</button></td>
                         </tr>
 

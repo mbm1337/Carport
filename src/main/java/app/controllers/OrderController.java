@@ -35,27 +35,33 @@ public class OrderController {
 
             Carport carport = ctx.sessionAttribute("carport");
             User user = ctx.sessionAttribute("currentUser");
-            String firstname = ctx.formParam("navn");
-            String lastname = ctx.formParam("efternavn");
-            String adress = ctx.formParam("adresse");
-            int zip = Integer.parseInt(ctx.formParam("zip"));
-            int phone = Integer.parseInt(ctx.formParam("telefonNummer"));
-            String mail = ctx.formParam("email");
-            String password = ctx.formParam("telefonNummer");
-            String comments = ctx.formParam("comments");
-
-
-            MailSenderController.sendCarportDetailsEmail(carport, "fog.carports@gmail.com", firstname, phone,ctx);
-
 
             boolean admin = Boolean.parseBoolean(ctx.formParam("admin"));
+            String firstname;
+            String lastname;
+            String adress;
+            int zip;
+            int phone;
+            String mail;
+            String password;
+            String comments = "";
 
             if (user == null) {
+                firstname = ctx.formParam("navn");
+                lastname = ctx.formParam("efternavn");
+                adress = ctx.formParam("adresse");
+                zip = Integer.parseInt(ctx.formParam("zip"));
+                phone = Integer.parseInt(ctx.formParam("telefonNummer"));
+                mail = ctx.formParam("email");
+                password = ctx.formParam("telefonNummer");
+                comments = ctx.formParam("comments");
                 user = new User(0, firstname, lastname, phone, mail, zip, adress, admin, password);
-                int userID = UserMapper.createUserGenerated(user, connectionpool);
-                userid = userID;
+                userid = UserMapper.createUserGenerated(user, connectionpool);
 
             } else {
+                firstname = user.getFirstName();
+                phone = user.getPhoneNumber();
+                mail = user.getEmail();
                 userid = user.getId();
 
             }
@@ -76,12 +82,14 @@ public class OrderController {
             ctx.attribute("firstname",firstname);
             ctx.attribute("phone",phone);
             ctx.attribute("mail",mail);
+            MailSenderController.sendCarportDetailsEmail(carport, "fog.carports@gmail.com", firstname, phone,ctx);
             ctx.render("price.html");
 
         } catch (NumberFormatException | DatabaseException e) {
             // Handle errors
             e.printStackTrace();
             System.out.println(e);
+            ctx.attribute("message",e.getMessage());
             ctx.attribute("error_message", "We couldn't save the order: " + e.getMessage());
             ctx.render("adresse.html");
         } catch (SVGGraphics2DIOException e) {

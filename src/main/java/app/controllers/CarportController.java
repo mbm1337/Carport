@@ -65,7 +65,13 @@ public class CarportController {
         //int height = Integer.parseInt(ctx.formParam("carportHeight"));
         Carport carport = new Carport(width, length, 270);
         ctx.sessionAttribute("carport", carport);
-        ctx.render("adresse.html");
+        if (ctx.sessionAttribute("currentUser") != null) {
+            OrderController.calculatePrice(ctx, ConnectionPool.getInstance());
+
+        } else {
+
+            ctx.render("adresse.html", Map.of("isUser", true));
+        }
 
 
     }
@@ -92,7 +98,12 @@ public class CarportController {
             Carport carport = new Carport(carportWidth, carportLength, 270, roof, shed);
             ctx.sessionAttribute("shed", shed);
             ctx.sessionAttribute("carport", carport);
-            ctx.render("adresse.html");
+            if (ctx.sessionAttribute("currentUser") != null) {
+                OrderController.calculatePrice(ctx, ConnectionPool.getInstance());
+            } else {
+                ctx.render("adresse.html", Map.of("isUser", true));
+            }
+
 
         }
 

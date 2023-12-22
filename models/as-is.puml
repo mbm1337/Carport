@@ -1,0 +1,41 @@
+@startuml
+'https://plantuml.com/activity-diagram-beta
+
+Title: as-is
+
+|Kunde|
+start
+:Vælg produkt;
+:Vælg egne mål for carport;
+if(Skur) then (Ja)
+:Vælg mål/placering for skur;
+else (Nej)
+endif
+|System|
+:Vis tegning af carport;|
+|Fog|
+:Ordre gennemgang;
+:Kontrakt til kunde;
+:Send faktura;
+
+|Kunde|
+:Betaling;
+
+|System|
+:Modtag betaling;
+:Send stykliste og vejledning til kunde;
+
+|Fog|
+:Send ordre til produktion;
+
+|Kunde|
+:Modtag materialer;
+:Byg carport;
+
+
+stop
+
+
+
+
+@enduml

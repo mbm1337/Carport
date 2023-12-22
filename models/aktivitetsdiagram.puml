@@ -1,6 +1,7 @@
 @startuml
 'https://plantuml.com/activity-diagram-beta
 
+Title: to-be
 
 |Kunde|
 start
@@ -18,21 +19,15 @@ endif
 :Mail til sælger]
 |Tilbudsberegning|
 :Udfyld tilbudsberegning;
-if (Komplikationer?) is (yes) then
+if (Komplikationer?) is (Ja) then
 |Telefonisk|
 :Ring til kunde;
 :Spørg om komplikationer;
 :Ret tilbudsberegning;
-else (no)
+else (Nej)
 endif
 |Sælger|
 :Tilbudsberegning]
-:Send tilbud til kunde;
-|Kunde|
-:Tilbud]
-if (Accepter tilbud?) is (yes) then
-|Sælger|
-:Accepteret tilbud]
 :Opret og send faktura til kunde;
 |Kunde|
 :Faktura]
@@ -51,8 +46,7 @@ if (Accepter tilbud?) is (yes) then
 :Ordre]
 :Pak ordre;
 :Send ordre til kunde;
-else (no)
-endif
+
 
 |Kunde|
 stop

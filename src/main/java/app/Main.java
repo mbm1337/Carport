@@ -46,13 +46,14 @@ public class Main {
         app.get("/login", ctx -> ctx.render("login.html"));
         app.post("/createuser", ctx -> UserController.createuser(ctx, connectionPool));
         app.get("/createuser", ctx -> ctx.render("createuser.html"));
-        //app.get("/carportone", ctx -> ctx.render("carportone.html"));
-        app.get("/carportone", ctx -> ShippingController.getShippingInfoByZip(ctx, connectionPool));
-        app.post("/carportone", ctx -> ShippingController.getShippingInfoByZip(ctx, connectionPool));
+
         app.get("/price", ctx -> OrderController.calculatePrice(ctx, connectionPool));
         app.post("/price", ctx -> OrderController.calculatePrice(ctx, connectionPool));
+
+        app.post("/carports", ctx -> StandardCarportController.getStandardCarportsForFrontPage(ctx, connectionPool));
         app.get("/carports", ctx -> StandardCarportController.getStandardCarportsForFrontPage(ctx, connectionPool));
         app.post("/carport_info/{id}", ctx -> StandardCarportController.getStandardCarport(ctx, connectionPool));
+
         app.post("/shipping_cal", ctx -> ShippingController.getShippingInfoByZip(ctx, connectionPool));
         app.get("/shipping_cal", ctx -> ShippingController.getShippingInfoByZip(ctx, connectionPool));
         app.get("/svg/{ordernumber}",ctx -> SvgController.getSvg(ctx, connectionPool));
@@ -74,8 +75,8 @@ public class Main {
         app.get("/admin", ctx -> AdminController.checkIfAdminAndRender("admin.html",ctx, connectionPool));
         app.post("/updatePrice", ctx -> AdminController.editBalance(ctx, connectionPool));
         app.post("/edit_matreriel/{id}", ctx -> AdminController.editMaterial(ctx, connectionPool));
-        app.post("/adminordre", ctx -> AdminController.getUsersAndOrders(ctx, connectionPool));
-        app.get("/adminordre", ctx -> AdminController.getUsersAndOrders(ctx, connectionPool));
+        app.post("/adminordre", ctx -> AdminController.getUsersAndOrders("adminordre.html",ctx, connectionPool));
+        app.get("/adminordre", ctx -> AdminController.getUsersAndOrders("adminordre.html",ctx, connectionPool));
         app.post("/tilbud/{ordernumber}", ctx -> AdminController.getOrderDetails(ctx, connectionPool));
         app.get("/tilbud/{ordernumber}", ctx -> AdminController.getOrderDetails(ctx, connectionPool));
 
@@ -103,6 +104,12 @@ public class Main {
         app.post("/delete_shedlength/{id}", ctx -> AdminController.deleteShedLength(ctx, connectionPool));
         app.post("/delete_shedwidth/{id}", ctx -> AdminController.deleteShedWidth(ctx, connectionPool));
         app.post("/delete_order/{orderId}", ctx -> OrderController.deleteOrder(ctx, connectionPool));
+        app.get("/adminuser", ctx -> UserController.getUser(ctx, connectionPool));
+        app.post("/adminuser", ctx -> UserController.getUser(ctx, connectionPool));
+        app.get("/admin_user_details/{id}", ctx ->  UserController.showUserDetails(ctx, connectionPool));
+        app.post("/admin_user_details/{id}", ctx ->  UserController.showUserDetails(ctx, connectionPool));
+        app.post("/deleteUser/{id}", ctx ->  UserController.deleteUserWithOrders(ctx, connectionPool));
+
 
 
 

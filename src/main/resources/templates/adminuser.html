@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<div th:replace="~{fragments :: head('Ordrer')}"></div>
+
+<body>
+
+<div id="page-container">
+    <div id="page-content">
+        <div th:replace="~{fragments :: header('Ordrer')}"></div>
+        <div class="indhold-box" id="content">
+            <div id="page-content">
+                <h1>Brugere</h1>
+                <table id="sortable-table">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Email</th>
+                        <th>Balance</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="user : ${usersAndOrders}" class="table-row">
+                        <td th:text="${user.key.id}"></td>
+                        <td th:text="${user.key.firstName}"></td>
+                        <td th:text="${user.key.lastName}"></td>
+                        <td>
+
+                            <form th:object="${user.key}" method="post"
+                                  th:action="@{'/admin_user_details/' + ${user.key.id}}">
+                                <button type="submit">Se detaljer</button>
+                            </form>
+
+                            <form method="post" th:action="@{'/deleteUser/' + ${user.key.id}}"  id="deleteForm"
+                                  th:attr="onsubmit='return confirmDelete(\'' + ${user.key.firstName} + '\')'">
+                                <button type="submit">Slet</button>
+                            </form>
+
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <script>
+                function searchcontent() {
+                    const searchInput = document.getElementById('searchInput');
+                    const filter = searchInput.value.toLowerCase();
+                    const tableRows = document.querySelectorAll('#sortable-table tbody tr');
+
+                    tableRows.forEach(function (row) {
+                        const rowText = Array.from(row.querySelectorAll('td'))
+                            .map(cell => cell.textContent.toLowerCase())
+                            .join(' ');
+
+                        if (filter === '' || rowText.includes(filter)) {
+                            row.style.display = '';
+                        } else {
+                            row.style.display = 'none';
+                        }
+                    });
+                }
+            </script>
+            <script>
+                function confirmDelete(username) {
+
+                    var userConfirmed = confirm("Er du sikker på, at du vil slette " + username + "?");
+
+                    return userConfirmed;
+                }
+            </script>
+
+        </div>
+        <div th:replace="~{fragments :: footer}"></div>
+    </div>
+</div>
+
+</body>
+</html>

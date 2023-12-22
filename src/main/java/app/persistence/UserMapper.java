@@ -119,6 +119,9 @@ public class UserMapper {
             return newUserId;
         } catch (SQLException e) {
             String message = "Couldn't create a new user in the database: " + e.getMessage();
+            if (e.getMessage().startsWith("ERROR: duplicate key value ")) {
+                message = "Brugernavnet findes allerede. Vælg et andet";
+            }
             throw new DatabaseException(message);
         }
     }
@@ -142,6 +145,7 @@ public class UserMapper {
             } catch (SQLException e) {
                 e.printStackTrace();
                 throw new DatabaseException("Error updating user information");
+
             }
 return;
         }

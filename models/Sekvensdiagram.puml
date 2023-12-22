@@ -1,17 +1,18 @@
 @startuml
-title Calculate Price Sequence Diagram
-
 actor User
-participant OrderController
-participant Calculator
+participant Carport
+participant Order
+participant DB
+participant SVG
 
-User -> OrderController : calculatePrice(ctx, connectionPool)
-activate OrderController
-OrderController -> Calculator : calculateTotalPrice(order)
-activate Calculator
-Calculator --> OrderController : totalPrice
-deactivate Calculator
-OrderController --> User : totalPrice
-deactivate OrderController
 
+User -> Carport: Choose carport,
+Carport -> Order: Send carport
+Order -> DB: Save order
+DB -> Order: Return order id
+Order -> SVG: Send order id
+SVG -> Order: Return SVG
+Order -> User: Return order svg
 @enduml
+```
+

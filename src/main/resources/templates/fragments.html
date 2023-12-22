@@ -90,27 +90,29 @@
 
 
 
+              <!-- Admin menu block -->
               <th:block th:if="${isAdmin}">
-
-                <a data-content="Materialer" href="/materials">Materialer</a>
-                <a data-content="Ordre" href="/ordre">Ordre</a>
-                <a href="#">Link 3</a>
+                <a data-content="Forside" href="/">Forside</a>
+                <a data-content="Ændre Materialer" href="/materials">Ændre Materialer</a>
+                <a data-content="Se Ordre" href="/adminordre">Se Ordre</a>
+                <a data-content="Se alle bruger" href="/adminuser">Se alle bruger</a>
+                <a data-content="Carport bygge matrieler" href="/adminCalc">Carport bygge matrieler</a>
+                <a data-content="Carport bygge størelse" href="/carport_size">Carport bygge størelse</a>
               </th:block>
 
-              <!-- user menu -->
+              <!-- User menu block -->
               <th:block th:if="${isUser and not isAdmin}">
-                <a data-content="Konto" href="/materials">Konto</a>
-                <a data-content="Se ordre" href="/ordre">Se ordre</a>
-                <a href="#">et eller andet</a>
-
+                <a data-content="Forside" href="/">Forside</a>
+                <a data-content="Se ordre" href="/order">Se ordre</a>
+                <a data-content="Profil" href="/updateuser">Profil</a>
+                <a data-content="Bestil Carport" href="/byg-selv">Bestil Carport</a>
               </th:block>
 
-              <!-- not logged in -->
+              <!-- Not logged in block -->
               <th:block th:unless="${isUser or isAdmin}">
-                <a data-content="Forside" href="/materials">Forside</a>
-                <a data-content="Bestil" href="/ordre">Bestil</a>
-
-
+                <a data-content="Forside" href="/">Forside</a>
+                <a data-content="Bestil" href="/byg-selv">Bestil</a>
+                <a data-content="Opret Bruger" href="/createuser">Opret Bruger</a>
               </th:block>
 
 

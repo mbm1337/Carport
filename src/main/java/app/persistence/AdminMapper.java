@@ -18,7 +18,7 @@ public class AdminMapper {
         Map<User, List<Order>> usersAndOrders = new HashMap<>();
         try (Connection connection = connectionPool.getConnection()) {
             String sql = "SELECT \"user\".id, \"user\".forname, \"user\".aftername, \"user\".email, " +
-                    "\"user\".phone, \"user\".zip, \"user\".address, " +
+                    "\"user\".phone, \"user\".zip, \"user\".address,\"user\".admin, " +
                     "orders.ordernumber, orders.orderdate, orders.user_id, orders.status, orders.comments, orders.price, orders.length ,orders.width  " +
                     "FROM \"user\" " +
                     "JOIN orders ON orders.user_id = \"user\".id " +
@@ -34,7 +34,8 @@ public class AdminMapper {
                         rs.getString("aftername"),
                         rs.getInt("phone"),
                         rs.getInt("zip"),
-                        rs.getString("address")
+                        rs.getString("address"),
+                        rs.getBoolean("admin")
                 );
 
                 Order order = new Order(

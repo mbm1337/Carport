@@ -106,14 +106,7 @@ this.orderNr = ordernumber;
     public int getQuantityOrdered() {
         return quantityOrdered;
     }
-/*
-    public String toString() {
-        return "OrderNumber: " + orderNumber +
-                ", ProductName: " + productName +
-                ", QuantityOrdered: " + quantityOrdered +
-                ", Price: " + price;
-    }
-*/
+
 
     public String toString() {
         return "Order{" +

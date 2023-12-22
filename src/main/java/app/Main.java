@@ -6,6 +6,7 @@ import app.controllers.*;
 import app.controllers.AdminController;
 import app.controllers.ShippingController;
 import app.controllers.StandardCarportController;
+import app.entities.Admin;
 import app.entities.StandardCarport;
 import app.controllers.CarportController;
 import app.controllers.OrderController;
@@ -46,8 +47,8 @@ public class Main {
         //app.get("/carportone", ctx -> ctx.render("carportone.html"));
         app.get("/carportone", ctx -> ShippingController.getShippingInfoByZip(ctx, connectionPool));
         app.post("/carportone", ctx -> ShippingController.getShippingInfoByZip(ctx, connectionPool));
+        app.get("/price", ctx -> OrderController.calculatePrice(ctx, connectionPool));
         app.post("/price", ctx -> OrderController.calculatePrice(ctx, connectionPool));
-        app.post("/insertingAnOrder", ctx -> ctx.render("price.html"));
         app.get("/carports", ctx -> StandardCarportController.getStandardCarportsForFrontPage(ctx, connectionPool));
         app.post("/carport_info/{id}", ctx -> StandardCarportController.getStandardCarport(ctx, connectionPool));
         app.post("/shipping_cal", ctx -> ShippingController.getShippingInfoByZip(ctx, connectionPool));
@@ -75,6 +76,9 @@ public class Main {
         app.get("/adminordre", ctx -> AdminController.getUsersAndOrders(ctx, connectionPool));
         app.post("/tilbud/{ordernumber}", ctx -> AdminController.getOrderDetails(ctx, connectionPool));
         app.get("/tilbud/{ordernumber}", ctx -> AdminController.getOrderDetails(ctx, connectionPool));
+
+        app.post("/sendMail", ctx -> AdminController.changeStatus(ctx, connectionPool));
+
         app.post("/materials", ctx -> AdminController.getMaterial(ctx, connectionPool));
         app.get("/materials", ctx -> AdminController.getMaterial(ctx, connectionPool));
         app.post("/updatematerials/{id}", ctx -> AdminController.updateMaterial(ctx, connectionPool));

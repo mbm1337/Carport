@@ -83,11 +83,6 @@
                                 <input type="text" name="name" th:value="${admin.orderDate}" readonly="readonly" />
                                 <div class="clear"></div>
                             </div>
-                            <div class="form-left-to-w3l">
-                                <p>Status</p>
-                                <input type="text" name="name" th:value="${admin.status}" readonly="readonly" />
-                                <div class="clear"></div>
-                            </div>
                         </div>
 
                         <p>kommentar </p>
@@ -132,6 +127,25 @@
                         <input type="text" id="newPrice" name="newPrice" th:value="${#ctx.admin.orderPrice}" />
                         <input type="hidden" id="orderId" name="orderId" th:value="${#ctx.admin.orderId}" />
                         <button type="submit">Gem ændringer</button>
+                    </form>
+
+
+                    <div class="form-left-to-w3l">
+                        <form method="post" action="/sendMail">
+                            <label for="statusSelect">Status</label>
+                            <select id="statusSelect" name="newStatus">
+                                <option value="under process" th:selected="${admin.status == 'under process'}">under process</option>
+                                <option value="paid" th:selected="${admin.status == 'paid'}">paid</option>
+                                <option value="cancelled" th:selected="${admin.status == 'cancelled'}">cancelled</option>
+                            </select>
+
+                        <div>
+                            <p>Send mail til kunde omkring ordre status:</p>
+                            <input type="hidden" name="email" th:value="${admin.userEmail}"/>
+                            <input type="hidden" name="orderId" th:value="${admin.orderId}"/>
+
+                            <button type="submit">Send Mail</button>
+                        </div>
                     </form>
 
                     <svg th:utext="${svgContent}" width="1024" height=800 viewBox="0 0 800 800"></svg>

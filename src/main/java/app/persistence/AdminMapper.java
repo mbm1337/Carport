@@ -93,8 +93,8 @@ public class AdminMapper {
                 try (ResultSet resultSet = preparedStatement.executeQuery()) {
                     while (resultSet.next()) {
 
-                        admin.setForname(resultSet.getString("forname"));
-                        admin.setAftername(resultSet.getString("aftername"));
+                        admin.setFirstname(resultSet.getString("forname"));
+                        admin.setLastname(resultSet.getString("aftername"));
                         admin.setUserEmail(resultSet.getString("email"));
                         admin.setZip(resultSet.getInt("zip"));
                         admin.setAddress(resultSet.getString("address"));
@@ -158,10 +158,10 @@ public class AdminMapper {
 
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected != 1) {
-                throw new DatabaseException("Fejl i opdatering af top");
+                throw new DatabaseException("Fejl i opdatering af pris");
             }
         } catch (SQLException e) {
-            throw new DatabaseException("Fejl i opdatering af top");
+            throw new DatabaseException("Fejl i opdatering af pris");
         }
     }
 
@@ -326,23 +326,23 @@ public class AdminMapper {
 
     public static Admin getCalcMaterialsById(int id, ConnectionPool connectionPool) {
 
-            try (Connection connection = connectionPool.getConnection()) {
-                String sql = "SELECT * FROM public.carport_calculator WHERE id = ?";
-                try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-                    preparedStatement.setInt(1, id);
+        try (Connection connection = connectionPool.getConnection()) {
+            String sql = "SELECT * FROM public.carport_calculator WHERE id = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                preparedStatement.setInt(1, id);
 
-                    try (ResultSet rs = preparedStatement.executeQuery()) {
-                        while (rs.next()) {
-                            int materialsId = rs.getInt("material_id");
-                            String comments = rs.getString("description");
-                            return new Admin(id,materialsId, comments);
-                        }
+                try (ResultSet rs = preparedStatement.executeQuery()) {
+                    while (rs.next()) {
+                        int materialsId = rs.getInt("material_id");
+                        String comments = rs.getString("description");
+                        return new Admin(id,materialsId, comments);
                     }
                 }
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
             }
-            return null; // If material with the given ID is not found
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null; // If material with the given ID is not found
     }
 
     public static void addCarportLength(int length, ConnectionPool connectionPool) throws DatabaseException {
@@ -473,6 +473,21 @@ public class AdminMapper {
         }
     }
 
-    public static void updatePrice(String updatePrice, ConnectionPool connectionPool) {
+
+    public static void updateStatus(int orderId, String newStatus, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "UPDATE orders SET status = ? WHERE ordernumber = ?";
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, newStatus);
+            ps.setInt(2, orderId);
+
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected != 1) {
+                throw new DatabaseException("Error updating order status");
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Error updating order status");
+        }
     }
 }

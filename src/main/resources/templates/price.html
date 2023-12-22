@@ -1,16 +1,30 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-  <meta charset="UTF-8">
-  <title>Order Confirmation</title>
-</head>
-<body>
-<h1>Order Confirmation</h1>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
-<p>vi takker for ordren ,du vil snart modtage en bekræftelse</p>
+<div th:replace="~{fragments :: head('Ordre')}"></div>
 
+  <body>
 
+  <div id="page-container">
+    <div id="page-content">
+      <div th:replace="~{fragments :: header('Ordre')}"></div>
+      <div class="indhold-box-price" id="content">
+          <div id="text" width="300px">
 
+          <a th:text="${'Hej ' + #ctx.firstname+ '. Tak for din bestilling!'}"></a><br/>
+          <a th:text="${'Din ordre er modtaget og vi vil kontakte dig hurtigst muligt på endten tlf: ' + #ctx.phone + '. Eller mail: ' + #ctx.mail}"></a> <br/>
+          <a>Du modtager en ordrebekræftelse på mail.</a> <br/>
+          </div>
+
+          <div class="svg-container">
+              <svg th:utext="${svgContent}" width="1024" height=800 viewBox="0 0 800 800"></svg>
+              <svg th:utext="${svgContent2}" width="1024" height=800 viewBox="0 0 800 800"></svg>
+          </div>
+
+      </div>
+      <div th:replace="~{fragments :: footer}"></div>
+    </div>
+  </div>
 
 </body>
 </html>

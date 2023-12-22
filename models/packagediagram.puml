@@ -1,0 +1,58 @@
+@startuml
+
+package "controllers" {
+    [AdminController]
+    [CarpoolController]
+    [MailSenderController]
+    [UserController]
+    [OrderController]
+    [ShippingController]
+    [StandardCarportController]
+    [SvgController]
+    [ZipController]
+
+}
+package "entities" {
+    [Admin]
+    [Carport]
+    [CarportLength]
+    [CarportWidth]
+    [City]
+    [Material]
+    [Order]
+    [OrderDetail]
+    [Shed]
+    [ShedLength]
+    [ShedWidth]
+    [Shipping]
+    [StandardCarport]
+    [User]
+}
+
+package "exceptions" {
+    [DatabaseException]
+
+
+}
+package "persistence" {
+    [AdminMapper]
+    [CarportMapper]
+    [ConnectionPool]
+    [MaterialMapper]
+    [OrderMapper]
+    [ShippingMapper]
+    [StandardCarportMapper]
+    [UserMapper]
+    [ZipMapper]
+}
+
+package "utils" {
+    [Calculator]
+    [CarportSvgGenerator]
+    [GeneratePDF]
+    [SvgGenerator]
+}
+
+
+
+@enduml

@@ -1,0 +1,17 @@
+@startuml
+title Calculate Price Sequence Diagram
+
+actor User
+participant OrderController
+participant Calculator
+
+User -> OrderController : calculatePrice(ctx, connectionPool)
+activate OrderController
+OrderController -> Calculator : calculateTotalPrice(order)
+activate Calculator
+Calculator --> OrderController : totalPrice
+deactivate Calculator
+OrderController --> User : totalPrice
+deactivate OrderController
+
+@enduml

@@ -2,21 +2,17 @@
 'https://plantuml.com/object-diagram
 
 
-object customer{
-    name
+object user{
+    firstname
+    lastname
     email
+    zipcode
     address
     phone
-    town
-    postcode
     password
+    admin?
 }
 
-object employee{
-    name
-    email
-    password
-}
 
 
 object carport{
@@ -24,7 +20,6 @@ object carport{
     carportlength
     carportheight
     roofmaterial
-    carportprice
 
 }
 object shed{
@@ -36,15 +31,15 @@ object order{
     ordernumber
     orderdate
     orderstatus
+    comment
     orderprice
 }
 
 
 
 
-customer "1"--"*" order
-order "1"-- "1"carport
-employee "1"--"*" order
+user "1"--"*" order
+order "1"-- "1" carport
 carport "1"-- "1"shed
 
 

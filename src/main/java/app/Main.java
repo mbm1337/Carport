@@ -30,7 +30,9 @@ public class Main {
             config.staticFiles.add("/public");
             JavalinThymeleaf.init(ThymeleafConfig.templateEngine());
 
-        }).start(7072);
+        }).start(7079
+
+        );
 
         // Routing
         app.get("/", ctx -> AdminController.cheklogin(ctx, connectionPool));

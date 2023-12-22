@@ -118,7 +118,7 @@ public class OrderController {
         int numberScrewPerSpaer = calc.screwSpaer(length);
         int numberBeslagPerPost = calc.beslagPost(length);
         int numberBeslagPerSpaer = calc.beslagspaer(length);
-        int numberofstolperPerskur = calc.postsofshed(shedwidth);
+        int numberofstolperPerskur = calc.numberOfStolperPerSkur(shedwidth,shedLength);
         int numberOfBeklaedning = calc.beklaedning(shedwidth, shedLength);
 
 

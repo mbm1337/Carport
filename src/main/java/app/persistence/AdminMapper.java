@@ -158,10 +158,10 @@ public class AdminMapper {
 
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected != 1) {
-                throw new DatabaseException("Fejl i opdatering af top");
+                throw new DatabaseException("Fejl i opdatering af pris");
             }
         } catch (SQLException e) {
-            throw new DatabaseException("Fejl i opdatering af top");
+            throw new DatabaseException("Fejl i opdatering af pris");
         }
     }
 

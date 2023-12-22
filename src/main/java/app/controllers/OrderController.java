@@ -66,7 +66,7 @@ public class OrderController {
 
             }
 
-            MailSenderController.sendDetailsToCustomerWithoutLogin(carport, mail, firstname, phone, mail, ctx);
+            MailSenderController.sendDetailsToCustomer(carport, mail, firstname, phone, mail, ctx);
 
             Order order = new Order("under process", userid, carport.getLength(), carport.getWidth(), comments);
             int newOrderId = OrderMapper.insertOrder(order, totalPrice, connectionpool);

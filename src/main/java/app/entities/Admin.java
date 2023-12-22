@@ -24,8 +24,8 @@ public class Admin {
     private double sellPrice;
     private double purchasePrice;
     private String userEmail;
-    private String forname;
-    private String aftername;
+    private String firstname;
+    private String lastname;
     private int zip;
     private String address;
     private boolean isAdmin;
@@ -78,20 +78,20 @@ public class Admin {
         this.userEmail = userEmail;
     }
 
-    public String getForname() {
-        return forname;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public void setForname(String forname) {
-        this.forname = forname;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
     }
 
-    public String getAftername() {
-        return aftername;
+    public String getLastname() {
+        return lastname;
     }
 
-    public void setAftername(String aftername) {
-        this.aftername = aftername;
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
     }
 
     public int getZip() {
@@ -134,7 +134,7 @@ public class Admin {
         this.phone = phone;
     }
 
-    public Admin(int id, int orderId, String orderDate, String status, String comments, int userId, double orderPrice, int materialsId, int quantityOrdered, double detailPrice, int length, int width, String productName, String productType, String productSize, String unit, int quantityInStock, double sellPrice, double purchasePrice, String userEmail, String forname, String aftername, int zip, String address, boolean isAdmin, String password, int phone) {
+    public Admin(int id, int orderId, String orderDate, String status, String comments, int userId, double orderPrice, int materialsId, int quantityOrdered, double detailPrice, int length, int width, String productName, String productType, String productSize, String unit, int quantityInStock, double sellPrice, double purchasePrice, String userEmail, String firstname, String lastname, int zip, String address, boolean isAdmin, String password, int phone) {
         this.id = id;
         this.orderId = orderId;
         this.orderDate = orderDate;
@@ -155,8 +155,8 @@ public class Admin {
         this.sellPrice = sellPrice;
         this.purchasePrice = purchasePrice;
         this.userEmail = userEmail;
-        this.forname = forname;
-        this.aftername = aftername;
+        this.firstname = firstname;
+        this.lastname = lastname;
         this.zip = zip;
         this.address = address;
         this.isAdmin = isAdmin;
@@ -166,21 +166,6 @@ public class Admin {
 
     private String password;
     private int phone;
-
-
-
-    public Admin(int orderId, String orderDate, String status, String comments,
-                 int userId, double orderPrice, int materialsId, int quantityOrdered, double detailPrice) {
-        this.orderId = orderId;
-        this.orderDate = orderDate;
-        this.status = status;
-        this.comments = comments;
-        this.userId = userId;
-        this.orderPrice = orderPrice;
-        this.materialsId = materialsId;
-        this.quantityOrdered = quantityOrdered;
-        this.detailPrice = detailPrice;
-    }
 
     public Admin() {
         adminList = new ArrayList<>();

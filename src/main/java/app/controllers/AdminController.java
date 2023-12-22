@@ -12,35 +12,29 @@ import java.util.Map;
 public class AdminController {
     static Map<User, List<Order>> usersAndOrders;
 
-    public static void getUsersAndOrders(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+    public static void getUsersAndOrders(String path,Context ctx, ConnectionPool connectionPool) throws DatabaseException {
         boolean isAdmin = false;
         boolean isUser = false;
 
-        // Tjek om sessionen er tilgængelig
+
+
+
+        Map<User, List<Order>> usersAndOrders = AdminMapper.getUsersAndOrders(connectionPool);
+
+
+
         User currentUser = ctx.sessionAttribute("currentUser");
         if (currentUser != null) {
             isAdmin = currentUser.isAdmin();
             isUser = true;
-        }
-
-        Map<User, List<Order>> usersAndOrders = AdminMapper.getUsersAndOrders(connectionPool);
-        ctx.attribute("usersAndOrders", usersAndOrders);
-        ctx.render("adminordre.html");
-
-        usersAndOrders.forEach((user, orders) -> {
-            orders.sort(Comparator.comparing(Order::getStatus));
-        });
-
-        // Send de sorteret data til skabelonen
-
-        Boolean loggedIn = ctx.sessionAttribute("isAdmin");
-        if (loggedIn != null && loggedIn) {
 
             ctx.attribute("usersAndOrders", usersAndOrders);
 
-            ctx.render("adminordre.html", Map.of("isAdmin", isAdmin, "isUser", isUser));
+            //ctx.render("adminordre.html", Map.of("isAdmin", isAdmin, "isUser", isUser));
+            ctx.render(path, Map.of("isAdmin", isAdmin, "isUser", isUser));
 
-        } else {
+        }
+         else {
             ctx.redirect("/");
         }
 

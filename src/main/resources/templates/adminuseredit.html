@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<div th:replace="~{fragments :: head('materials')}"></div>
+
+<body>
+
+<div id="page-container">
+    <div id="page-content">
+        <div th:replace="~{fragments :: header('materials')}"></div>
+        <div class="container">
+            <div class="user-box">
+                <div class="porduct-order-agile">
+                    <div  class="user-details">
+                        <form method="post" action="/updateuser">
+                        <div class="main">
+                            <div class="form-left-to-w3l">
+                                <p>First Name</p>
+                                <input type="text" name="firstname" th:value="${user.firstName}" />
+                                <div class="clear"></div>
+                            </div>
+                            <div class="form-left-to-w3l">
+                                <p>Last Name</p>
+                                <input type="text" name="lastname" th:value="${user.lastName}" />
+                                <div class="clear"></div>
+                            </div>
+                        </div>
+                        <div class="main">
+                            <div class="form-left-to-w3l">
+                                <p>Email</p>
+                                <input type="text" name="name" th:value="${user.email}" readonly="readonly" />
+                                <div class="clear"></div>
+                            </div>
+                            <div class="form-left-to-w3l">
+                                <p>Phone</p>
+                                <input type="text" name="phoneNumber" th:value="${user.phoneNumber}" />
+                                <div class="clear"></div>
+                            </div>
+                            <input type="hidden" id="status" name="password" th:value="${user.password}" />
+                            <input type="hidden" id="id" name="id" th:value="${user.id}" />
+                        </div>
+                        <div class="main">
+                            <div class="form-left-to-w3l">
+                                <p>Address</p>
+                                <input type="text" name="address" th:value="${user.address}" />
+                                <div class="clear"></div>
+                            </div>
+
+                        </div>
+                        <div class="main">
+                            <div class="form-left-to-w3l">
+                                <p>Post Nr.</p>
+                                <input type="text" name="zip" th:value="${user.zip}" />
+                                <div class="clear"></div>
+                            </div>
+                            <div class="form-left-to-w3l">
+                                <p>Region</p>
+                                <input type="text" name="name" value="region" />
+                                <div class="clear"></div>
+                            </div>
+                        </div>
+
+                            <div class="form-left-to-w3l">
+                                <p>Status</p>
+                                <p th:text="${user.admin ? 'Admin' : 'User'}"></p>
+                                <div class="clear"></div>
+                            </div>
+
+
+                            <div class="form-left-to-w3l">
+                                <label for="statusSelect">Status</label>
+                                <select id="statusSelect" name="status">
+                                    <option value="true">Admin</option>
+                                    <option value="false" >User</option>
+                                </select>
+
+
+
+                            <td colspan="2"><button type="submit">Update</button></td>
+                        </div>
+                        </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

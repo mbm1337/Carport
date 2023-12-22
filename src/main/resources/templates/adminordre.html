@@ -12,15 +12,13 @@
             <div id="page-content">
             <h1>Brugere og Ordrer</h1>
 
-            <!-- Search input -->
-
-
             <table id="sortable-table">
                 <thead>
                 <tr>
                     <th>ID</th>
                     <th>Email</th>
-                    <th>Balance</th>
+                    <th>FirstName</th>
+                    <th>LastName</th>
                     <th>Ordre Nr</th>
                     <th>Ordre Status</th>
                     <th>Ordre Pris</th>
@@ -32,6 +30,7 @@
                     <!-- Kontroller om brugeren har ordrer -->
                     <th:block th:if="${#lists.size(entry.value) > 0}">
                         <td th:text="${entry.key.id}"></td>
+                        <td th:text="${entry.key.email}"></td>
                         <td th:text="${entry.key.firstName}"></td>
                         <td th:text="${entry.key.lastName}"></td>
                         <td>

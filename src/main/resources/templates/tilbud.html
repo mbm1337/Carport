@@ -16,12 +16,12 @@
                         <div class="main">
                             <div class="form-left-to-w3l">
                                 <p>First Name</p>
-                                <input type="text" name="name" th:value="${admin.forname}" readonly="readonly" />
+                                <input type="text" name="name" th:value="${admin.firstname}" readonly="readonly" />
                                 <div class="clear"></div>
                             </div>
                             <div class="form-left-to-w3l">
                                 <p>Last Name</p>
-                                <input type="text" name="name" th:value="${admin.aftername}" readonly="readonly" />
+                                <input type="text" name="name" th:value="${admin.lastname}" readonly="readonly" />
                                 <div class="clear"></div>
                             </div>
                         </div>
@@ -106,15 +106,24 @@
                                         <th>Material ID</th>
                                         <th>Quantity Ordered</th>
                                         <th>Product Name</th>
+                                        <th>Purchase Price</th>
+                                        <th>Sale Price</th>
                                     </tr>
                                     </thead>
                                     <tbody>
 
-                                    <tr th:each="admin : ${#ctx.adminList}">
-                                        <td th:text="${admin.materialsId}"></td>
-                                        <td th:text="${admin.quantityOrdered}"></td>
-                                        <td th:text="${admin.productName}"></td>
-                                    </tr>
+                                    <table id="purchaseTable">
+                                        <tr th:each="admin : ${#ctx.adminList}">
+                                            <td th:text="${admin.materialsId}"></td>
+                                            <td th:text="${admin.quantityOrdered}"></td>
+                                            <td th:text="${admin.productName}"></td>
+                                            <td th:text="${admin.purchaseprice}"></td>
+                                            <td th:text="${admin.sellprice}"></td>
+                                        </tr>
+                                    </table>
+                                    <p>Total Indkøbs Pris: <span id="totalPrice">0.00</span></p>
+
+
                                     </tbody>
                                 </table>
                             </div>
@@ -158,3 +167,41 @@
 </div>
 </body>
 </html>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    function calculateTotalPrice() {
+        var table = document.getElementById("purchaseTable");
+        var rows = table.getElementsByTagName("tr");
+
+        var totalPrice = 0;
+
+        for (var i = 1; i < rows.length; i++) {
+            var currentRow = rows[i];
+
+            // Hent antallet fra den anden celle (index 1)
+            var quantityCell = currentRow.cells[1];
+            var quantity = parseFloat(quantityCell.innerText || quantityCell.textContent);
+
+            // Hent prisen fra den fjerde celle (index 3)
+            var priceCell = currentRow.cells[3];
+            var price = parseFloat(priceCell.innerText || priceCell.textContent);
+
+            // Beregn den delvise pris for den aktuelle række
+            var partialPrice = quantity * price;
+
+            // Tilføj den delvise pris til den samlede pris
+            totalPrice += partialPrice;
+        }
+
+        // Returner den samlede pris, så den kan bruges andre steder
+        return totalPrice.toFixed(2);
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        // Kald calculateTotalPrice og vis resultatet et sted på din side
+        var totalPriceElement = document.getElementById("totalPrice");
+        totalPriceElement.innerText = calculateTotalPrice();
+    });
+    /*]]>*/
+</script>
+

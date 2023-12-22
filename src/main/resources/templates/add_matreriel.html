@@ -1,50 +1,77 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
-<div th:replace="~{fragments :: head('materials')}"></div>
+<div th:replace="~{fragments :: head('Materialer')}"></div>
 
 <body>
 
 <div id="page-container">
   <div id="page-content">
-    <div th:replace="~{fragments :: header('materials')}"></div>
+    <div th:replace="~{fragments :: header('Materialer')}"></div>
     <div class="indhold-box" id="content">
-    <table id="sortable-table">
+      <div id="page-content">
+        <h1>Tilføj Materialer</h1>
 
-      <form method="post">
-        <table>
-          <tr>
-            <th>Product Name</th>
-            <th>Product Type</th>
-            <th>Product Size</th>
-            <th>Unit</th>
-            <th>Quantity in Stock</th>
-            <th>Buy Price</th>
-            <th>Purchase Price</th>
-          </tr>
-          <tr>
-            <td><input type="text" name="productName" /></td>
-            <td><input type="text" name="productType" /></td>
-            <td><input type="text" name="productSize"  /></td>
-            <td><input type="text" name="unit" /></td>
-            <td><input type="text" name="quantityInStock" /></td>
-            <td><input type="text" name="buyPrice"/></td>
-            <td><input type="text" name="purchasePrice" /></td>
-          </tr>
-        </table>
-
-
-        <button type="submit" formaction="/add_matreriel">tilføj</button>
-      </form>
+        <form method="post">
+          <table>
+            <tr>
+              <th>Product Name</th>
+              <th>Product Type</th>
+              <th>Product Size</th>
+              <th>Unit</th>
+              <th>Quantity in Stock</th>
+              <th>Buy Price</th>
+              <th>Purchase Price</th>
+            </tr>
+            <tr>
+              <td><input type="text" name="productName" /></td>
+              <td><input type="text" name="productType" /></td>
+              <td><input type="text" name="productSize"  /></td>
+              <td><input type="text" name="unit" /></td>
+              <td><input type="text" name="quantityInStock" /></td>
+              <td><input type="text" name="buyPrice"/></td>
+              <td><input type="text" name="purchasePrice" /></td>
+            </tr>
+          </table>
 
 
+          <button type="submit" formaction="/add_matreriel">tilføj</button>
+        </form>
 
-    </table>
 
+      </div>
 
+      <script>
+        function searchcontent() {
+          const searchInput = document.getElementById('searchInput');
+          const filter = searchInput.value.toLowerCase();
+          const tableRows = document.querySelectorAll('#sortable-table tbody tr');
+
+          tableRows.forEach(function (row) {
+            const rowText = Array.from(row.querySelectorAll('td'))
+                    .map(cell => cell.textContent.toLowerCase())
+                    .join(' ');
+
+            if (filter === '' || rowText.includes(filter)) {
+              row.style.display = '';
+            } else {
+              row.style.display = 'none';
+            }
+          });
+        }
+
+        function confirmDelete(materialId) {
+          console.log('Material ID:', materialId);
+
+          var userConfirmed = confirm("Er du sikker på, at du vil slette " + materialId + "?");
+
+          return userConfirmed;
+        }
+      </script>
+    </div>
     <div th:replace="~{fragments :: footer}"></div>
   </div>
-  </div>
+
 </div>
 </body>
 </html>

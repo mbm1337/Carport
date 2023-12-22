@@ -233,6 +233,9 @@ public class OrderMapper {
 
 
 
+
+
+
     public static Order getOrderById(int orderId, ConnectionPool connectionPool) throws DatabaseException {
         Order order = null;
         try (Connection connection = connectionPool.getConnection()) {

@@ -22,14 +22,14 @@ public class AdminMapper {
                     "orders.ordernumber, orders.orderdate, orders.user_id, orders.status, orders.comments, orders.price, orders.length ,orders.width  " +
                     "FROM \"user\" " +
                     "JOIN orders ON orders.user_id = \"user\".id " +
-                    "ORDER BY \"user\".id, orders.ordernumber"; // Add JOIN and ORDER BY clauses
+                    "ORDER BY \"user\".id, orders.ordernumber";
 
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 User user = new User(
-                        rs.getInt("id"),      // Brugerens ID
-                        rs.getString("email"), // Brugerens email
+                        rs.getInt("id"),
+                        rs.getString("email"),
                         rs.getString("forname"),
                         rs.getString("aftername"),
                         rs.getInt("phone"),

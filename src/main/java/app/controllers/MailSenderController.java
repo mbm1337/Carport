@@ -95,7 +95,7 @@ public class MailSenderController {
         return builder.toString();
     }
 
-    public static void sendDetailsToCustomerWithoutLogin(Carport carport, String emailRecipient, String userName, int userPhoneNumber, String userEmail, Context ctx) {
+    public static void sendDetailsToCustomer(Carport carport, String emailRecipient, String userName, int userPhoneNumber, String userEmail, Context ctx) {
         // Provide recipient's email ID
         String to = emailRecipient;
         // Provide sender's email ID (your Gmail email address)

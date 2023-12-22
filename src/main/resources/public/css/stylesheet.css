@@ -705,3 +705,15 @@ select.form-control {
         color: red;
 
 }
+
+.indhold-box-price{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        flex-wrap: wrap;
+}
+
+.svg-container {
+        display: flex;
+        flex-direction: column;
+}

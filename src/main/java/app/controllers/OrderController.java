@@ -35,29 +35,32 @@ public class OrderController {
 
             Carport carport = ctx.sessionAttribute("carport");
             User user = ctx.sessionAttribute("currentUser");
-            String navn = ctx.formParam("navn");
-            String efternavn = ctx.formParam("efternavn");
-            String adresse = ctx.formParam("adresse");
+            String firstname = ctx.formParam("navn");
+            String lastname = ctx.formParam("efternavn");
+            String adress = ctx.formParam("adresse");
             int zip = Integer.parseInt(ctx.formParam("zip"));
             int phone = Integer.parseInt(ctx.formParam("telefonNummer"));
             String mail = ctx.formParam("email");
             String password = ctx.formParam("telefonNummer");
             String comments = ctx.formParam("comments");
 
-            MailSenderController.sendCarportDetailsEmail(carport, "fog.carports@gmail.com", navn, phone);
+
+            MailSenderController.sendCarportDetailsEmail(carport, "fog.carports@gmail.com", firstname, phone,ctx);
+
 
             boolean admin = Boolean.parseBoolean(ctx.formParam("admin"));
 
-            User currentUser = ctx.sessionAttribute("currentUser");
             if (user == null) {
-                user = new User(0, navn, efternavn, phone, mail, zip, adresse, admin, password);
+                user = new User(0, firstname, lastname, phone, mail, zip, adress, admin, password);
                 int userID = UserMapper.createUserGenerated(user, connectionpool);
                 userid = userID;
-                MailSenderController.sendDetailsToCustomerWithoutLogin(carport, mail, navn, phone, mail);
+
             } else {
                 userid = user.getId();
-                MailSenderController.sendDetailsToCustomerWithLogin(carport, mail, navn);
+
             }
+
+            MailSenderController.sendDetailsToCustomerWithoutLogin(carport, mail, navn, phone, mail, ctx);
 
             Order order = new Order("under process", userid, carport.getLength(), carport.getWidth(), comments);
             int newOrderId = OrderMapper.insertOrder(order, totalPrice, connectionpool);
@@ -69,6 +72,10 @@ public class OrderController {
                 OrderMapper.createOrdershedDatabase(newOrderId, shed, connectionpool);
             }
 
+            SvgController.getSvgWithParameter(newOrderId, ctx, connectionpool);
+            ctx.attribute("firstname",firstname);
+            ctx.attribute("phone",phone);
+            ctx.attribute("mail",mail);
             ctx.render("price.html");
 
         } catch (NumberFormatException | DatabaseException e) {
@@ -77,6 +84,8 @@ public class OrderController {
             System.out.println(e);
             ctx.attribute("error_message", "We couldn't save the order: " + e.getMessage());
             ctx.render("adresse.html");
+        } catch (SVGGraphics2DIOException e) {
+            throw new RuntimeException(e);
         }
     }
 

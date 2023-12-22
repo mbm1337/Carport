@@ -47,8 +47,8 @@ public class Main {
         //app.get("/carportone", ctx -> ctx.render("carportone.html"));
         app.get("/carportone", ctx -> ShippingController.getShippingInfoByZip(ctx, connectionPool));
         app.post("/carportone", ctx -> ShippingController.getShippingInfoByZip(ctx, connectionPool));
+        app.get("/price", ctx -> OrderController.calculatePrice(ctx, connectionPool));
         app.post("/price", ctx -> OrderController.calculatePrice(ctx, connectionPool));
-        app.post("/insertingAnOrder", ctx -> ctx.render("price.html"));
         app.get("/carports", ctx -> StandardCarportController.getStandardCarportsForFrontPage(ctx, connectionPool));
         app.post("/carport_info/{id}", ctx -> StandardCarportController.getStandardCarport(ctx, connectionPool));
         app.post("/shipping_cal", ctx -> ShippingController.getShippingInfoByZip(ctx, connectionPool));

@@ -147,7 +147,9 @@ public class Calculator {
     }
 
     public int postsofshed(int shedwidth) {
-        return shedwidth / 210;
+
+        return 1;
+
     }
 }
 

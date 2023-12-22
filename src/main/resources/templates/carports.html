@@ -1,34 +1,35 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
-<div th:replace="~{fragments :: head('Carports')}"></div>
-
+<div th:replace="~{fragments :: head('Carport')}"></div>
 
 <body>
+<div id="page-container">
+    <div id="page-content">
+        <div th:replace="~{fragments :: header('Carport')}"></div>
+        <div class="indhold-box" id="content">
 
-<div th:replace="~{fragments :: header('Carports')}"></div>
-<div class="carports-container">
-    <div th:each="allCarports : ${allCarports}" class="carport-item">
-        <img class="carports_img" th:src="@{'/images/carport_' + ${allCarports.id} + '.jpg'}" alt='Carports' />
-        <table class="carport-info">
-            <tr>
-                <td class="carport-text" th:text="${allCarports.merchandiser}"></td>
-            </tr>
-            <tr>
-                <td class="carport-text" th:text="${allCarports.productName}"></td>
-            </tr>
-            <tr>
-                <td class="carport-text" th:text="${allCarports.carportPrice} + 'kr. pr. stk + evt. fragt'"></td>
-            </tr>
-        </table>
-        <form method="post" th:action="@{'/carport_info/' + ${allCarports.id}}" class="carport-form">
-            <button type="submit" class="info-btn">Se mere info</button>
-        </form>
+            <div th:each="allCarports : ${allCarports}" class="carport-item">
+                <img class="carports_img" th:src="@{'/images/carport_' + ${allCarports.id} + '.jpg'}" alt='Carports' />
+                <table class="carport-info">
+                    <tr>
+                        <td class="carport-text" th:text="${allCarports.merchandiser}"></td>
+                    </tr>
+                    <tr>
+                        <td class="carport-text" th:text="${allCarports.productName}"></td>
+                    </tr>
+                    <tr>
+                        <td class="carport-text" th:text="${allCarports.carportPrice} + ' pr. stk + evt. fragt'"></td>
+                    </tr>
+                </table>
+                <form method="post" th:action="@{'/carport_info/' + ${allCarports.id}}" class="carport-form">
+                    <button type="submit" class="info-btn">Se mere info</button>
+                </form>
+            </div>
+        </div>
+            <div th:replace="~{fragments :: footer}"></div>
+        </div>
     </div>
 </div>
-<div th:replace="~{fragments :: footer}"></div>
-
 </body>
-
-
 </html>

@@ -73,9 +73,9 @@ public class Calculator {
     }
 
     public int screwSpaer(int length) {
-        int screwsPerPost = 20;
-        int totalPosts = spaerAmount(length);
-        return totalPosts * screwsPerPost;
+        int screwsPerSpaer= 20;
+        int totalspaer = spaerAmount(length);
+        return totalspaer * screwsPerSpaer;
     }
 
     public int beslagPost(int length) {
@@ -147,7 +147,9 @@ public class Calculator {
     }
 
     public int postsofshed(int shedwidth) {
+
         return 1;
+
     }
 }
 

@@ -24,7 +24,7 @@ public class User {
         this.password = password;
     }
 
-    public User(int id, String email, String firstName, String lastName, int phoneNumber, int zip, String address) {
+    public User(int id, String email, String firstName, String lastName, int phoneNumber, int zip, String address, boolean admin) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -32,6 +32,7 @@ public class User {
         this.email = email;
         this.zip = zip;
         this.address = address;
+        this.admin = admin;
     }
 
     public User(int id, String email) {

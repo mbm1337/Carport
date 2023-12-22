@@ -1,38 +1,35 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
-<head>
-    <title>Create account</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="../public/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
-</head>
+<div th:replace="~{fragments :: head('materials')}"></div>
 
 <body>
-<div class="content">
 
+<div id="page-container">
+    <div id="page-content">
+        <div th:replace="~{fragments :: header('materials')}"></div>
+        <div class="indhold-box" id="content">
 
-    <div class="content-box">
-        <h1>Create user</h1>
-        <form class="form-page" id="form-create" method="post" >
-            <h3>Fill the form</h3>
-            <input type="text" name ="forname"  placeholder="forname" /><br>
-            <input type="text" name="aftername" placeholder="aftername"/><br>
-            <input type="text" name="email" placeholder="email"/><br>
-            <input type="text" name="address" placeholder="address"/><br>
-            <input type="text" name="zip" placeholder="zip"/><br>
-            <input type="text" name="phone" placeholder="phone"/><br>
-            <input type="password" name="password1" placeholder="password"/><br>
-            <input type="password" name="password2" placeholder="re-enter password"/><br>
-            <button class="login_button" type="submit"  formaction="/createuser">Create user</button>
-            <p>you already have an account?</p>
-            <a href="/login" class="link-login" >login</a>
-            <p class="message" th:text="${#ctx.message}"></p>
+            <form class="form-page" id="form-create" method="post" >
+                <h3>Fill the form</h3>
+                <input type="text" name ="forname"  placeholder="forname" /><br>
+                <input type="text" name="aftername" placeholder="aftername"/><br>
+                <input type="text" name="email" placeholder="email"/><br>
+                <input type="text" name="address" placeholder="address"/><br>
+                <input type="text" name="zip" placeholder="zip"/><br>
+                <input type="text" name="phone" placeholder="phone"/><br>
+                <input type="password" name="password1" placeholder="password"/><br>
+                <input type="password" name="password2" placeholder="re-enter password"/><br>
+                <button class="login_button" type="submit"  formaction="/createuser">Create user</button>
+                <p>you already have an account?</p>
+                <a href="/login" class="link-login" >login</a>
+                <p class="message" th:text="${#ctx.message}"></p>
 
-        </form>
+            </form>
+        </div>
+            <div th:replace="~{fragments :: footer}"></div>
+
     </div>
 </div>
-
 </body>
-
 </html>

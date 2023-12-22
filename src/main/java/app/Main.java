@@ -30,7 +30,9 @@ public class Main {
             config.staticFiles.add("/public");
             JavalinThymeleaf.init(ThymeleafConfig.templateEngine());
 
-        }).start(7072);
+        }).start(7079
+
+        );
 
         // Routing
         app.get("/", ctx -> AdminController.cheklogin(ctx, connectionPool));
@@ -73,8 +75,8 @@ public class Main {
         app.get("/admin", ctx -> AdminController.checkIfAdminAndRender("admin.html",ctx, connectionPool));
         app.post("/updatePrice", ctx -> AdminController.editBalance(ctx, connectionPool));
         app.post("/edit_matreriel/{id}", ctx -> AdminController.editMaterial(ctx, connectionPool));
-        app.post("/adminordre", ctx -> AdminController.getUsersAndOrders(ctx, connectionPool));
-        app.get("/adminordre", ctx -> AdminController.getUsersAndOrders(ctx, connectionPool));
+        app.post("/adminordre", ctx -> AdminController.getUsersAndOrders("adminordre.html",ctx, connectionPool));
+        app.get("/adminordre", ctx -> AdminController.getUsersAndOrders("adminordre.html",ctx, connectionPool));
         app.post("/tilbud/{ordernumber}", ctx -> AdminController.getOrderDetails(ctx, connectionPool));
         app.get("/tilbud/{ordernumber}", ctx -> AdminController.getOrderDetails(ctx, connectionPool));
 
@@ -102,6 +104,12 @@ public class Main {
         app.post("/delete_shedlength/{id}", ctx -> AdminController.deleteShedLength(ctx, connectionPool));
         app.post("/delete_shedwidth/{id}", ctx -> AdminController.deleteShedWidth(ctx, connectionPool));
         app.post("/delete_order/{orderId}", ctx -> OrderController.deleteOrder(ctx, connectionPool));
+        app.get("/adminuser", ctx -> UserController.getUser(ctx, connectionPool));
+        app.post("/adminuser", ctx -> UserController.getUser(ctx, connectionPool));
+        app.get("/admin_user_details/{id}", ctx ->  UserController.showUserDetails(ctx, connectionPool));
+        app.post("/admin_user_details/{id}", ctx ->  UserController.showUserDetails(ctx, connectionPool));
+        app.post("/deleteUser/{id}", ctx ->  UserController.deleteUserWithOrders(ctx, connectionPool));
+
 
 
 

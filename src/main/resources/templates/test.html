@@ -1,18 +1,43 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
-<div th:replace="~{fragments :: head('materials')}"></div>
+<div th:replace="~{fragments :: head('Carport')}"></div>
 
 <body>
 
 <div id="page-container">
   <div id="page-content">
-    <div th:replace="~{fragments :: header('materials')}"></div>
+    <div th:replace="~{fragments :: header('Carport')}"></div>
     <div class="indhold-box" id="content">
 
+      <table>
+        <tbody>
+        <tr>
+          <td>
+            <form id="zip" method="post">
+              <p>Indtast dit postnummer for at udregne leveringspris og leveringstid.</p>
+              <input type="text" name="zip" placeholder="Postnummer">
+              <div id="cal-btn">
+                <button type="submit">Beregn</button>
+              </div>
+            </form>
+          </td>
+        </tr>
 
+        <tr th:each="shipping : ${#ctx.session.containsKey(shipping)}">
+          <td th:text="${'Leveringspris: ' + (#ctx.shippingPrice != null ? #ctx.shippingPrice : 0) + ',-'}"></td>
+        </tr>
+        <tr th:each="shipping : ${#ctx.session.containsKey(shipping)}">
+          <td th:text="${'Leveringstid: ' + (#ctx.shippingTime != null ? #ctx.shippingTime : 0) + ' hverdage'}"></td>
+        </tr>
 
-    <div th:replace="~{fragments :: footer}"></div>
+        <tr class="spacer-row">
+          <td></td>
+        </tr>
+        </tbody>
+      </table>
+
+      <div th:replace="~{fragments :: footer}"></div>
   </div>
   </div>
 </div>

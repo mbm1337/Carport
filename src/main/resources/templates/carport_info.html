@@ -1,40 +1,47 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
-<div th:replace="~{fragments :: head('Carport_info')}"></div>
+<div th:replace="~{fragments :: head('Carport')}"></div>
 
 <body>
 
-<div th:replace="~{fragments :: header('Carport_info')}"></div>
-<div id="carports-info-container">
-    <div th:each="standardCarport : ${standardCarport}" id="carport-info-id">
-        <img class="carports_img" th:src="@{'/images/carport_' + ${standardCarport.id} + '.jpg'}" alt='Carports' />
-        <table>
-            <tr>
-                <td class="carport-text" th:text="${standardCarport.merchandiser}"></td>
-            </tr>
-            <tr>
-                <td class="carport-text" th:text="${standardCarport.productName}"></td>
-            </tr>
-            <tr>
-                <td class="carport-text" th:text="${standardCarport.carportPrice} + ' pr. stk + evt. fragt'"></td>
-            </tr>
-            <tr>
-                <td class="carport-text" th:text="${standardCarport.description}"></td>
-            </tr>
-            <tr>
-                <td class="carport-form">
-                    <form th:action="@{'/shipping_cal'}" method="post">
-                        <input type="hidden" name="carportId" />
-                        <p>Beregn leveringstid og leveringspris:</p>
-                        <button type="submit">Klik her</button>
-                    </form>
-                </td>
-            </tr>
-        </table>
+<div id="page-container">
+    <div id="page-content">
+        <div th:replace="~{fragments :: header('Carport')}"></div>
+        <div class="indhold-box" id="content">
+
+            <div id="carports-info-container">
+                <div th:each="standardCarport : ${standardCarport}" id="carport-info-id">
+                    <img class="carports_img" th:src="@{'/images/carport_' + ${standardCarport.id} + '.jpg'}" alt='Carports' />
+                    <table>
+                        <tr>
+                            <td class="carport-text" th:text="${standardCarport.merchandiser}"></td>
+                        </tr>
+                        <tr>
+                            <td class="carport-text" th:text="${standardCarport.productName}"></td>
+                        </tr>
+                        <tr>
+                            <td class="carport-text" th:text="${standardCarport.carportPrice} + ' pr. stk + evt. fragt'"></td>
+                        </tr>
+                        <tr>
+                            <td class="carport-text" th:text="${standardCarport.description}"></td>
+                        </tr>
+                        <tr>
+                            <td class="carport-form">
+                                <form th:action="@{'/shipping_cal'}" method="post">
+                                    <input type="hidden" name="carportId" />
+                                    <p>Beregn leveringstid og leveringspris:</p>
+                                    <button type="submit">Klik her</button>
+                                </form>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+            <div th:replace="~{fragments :: footer}"></div>
+        </div>
     </div>
 </div>
-
-<div th:replace="~{fragments :: footer}"></div>
 </body>
 </html>

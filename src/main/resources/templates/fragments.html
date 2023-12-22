@@ -58,7 +58,7 @@
           </div>
         </section>
         <div class="css-4emdtb e1nzw00810">
-          <a href="/om-fog/forretninger" class="css-yy3si3 e1nzw0082">
+          <a href="https://www.johannesfog.dk/om-fog/forretninger" class="css-yy3si3 e1nzw0082">
 
             <span class="css-108uwdu e1nzw0086">Find Fog</span>
           </a>
@@ -133,10 +133,11 @@
     </header>
 
     <footer th:fragment="footer">
-      <a th:if="${#ctx.session.currentUser} == null" th:href="@{/createuser}">Create account</a>
-      <a th:if="${#ctx.session.currentUser} != null" th:href="@{/logout}">Logout</a>
-      <a href="/">Til forside</a>
+
+      <img th:src="@{/img/footer.png}" src="../public/img/footer.png" height="505" />
+
     </footer>
+
   </div>
 </div>
 </body>

@@ -101,8 +101,8 @@ public class Main {
         app.post("/delete_shedlength/{id}", ctx -> AdminController.deleteShedLength(ctx, connectionPool));
         app.post("/delete_shedwidth/{id}", ctx -> AdminController.deleteShedWidth(ctx, connectionPool));
         app.post("/delete_order/{orderId}", ctx -> OrderController.deleteOrder(ctx, connectionPool));
-        app.get("/adminuser", ctx -> AdminController.getUsersAndOrders("adminuser.html",ctx, connectionPool));
-        app.post("/adminuser", ctx -> AdminController.getUsersAndOrders("adminuser.html",ctx, connectionPool));
+        app.get("/adminuser", ctx -> UserController.getUser(ctx, connectionPool));
+        app.post("/adminuser", ctx -> UserController.getUser(ctx, connectionPool));
         app.get("/admin_user_details/{id}", ctx ->  UserController.showUserDetails(ctx, connectionPool));
         app.post("/admin_user_details/{id}", ctx ->  UserController.showUserDetails(ctx, connectionPool));
         app.post("/deleteUser/{id}", ctx ->  UserController.deleteUserWithOrders(ctx, connectionPool));

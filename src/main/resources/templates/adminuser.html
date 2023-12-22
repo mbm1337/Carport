@@ -20,19 +20,20 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="user : ${usersAndOrders}" class="table-row">
-                        <td th:text="${user.key.id}"></td>
-                        <td th:text="${user.key.firstName}"></td>
-                        <td th:text="${user.key.lastName}"></td>
+                    <tr th:each="user : ${users}" class="table-row">
+                        <td th:text="${user.id}"></td>
+
+                        <td th:text="${user.firstName}"></td>
+                        <td th:text="${user.lastName}"></td>
                         <td>
 
-                            <form th:object="${user.key}" method="post"
-                                  th:action="@{'/admin_user_details/' + ${user.key.id}}">
+                            <form th:object="${user.id}" method="post"
+                                  th:action="@{'/admin_user_details/' + ${user.id}}">
                                 <button type="submit">Se detaljer</button>
                             </form>
 
-                            <form method="post" th:action="@{'/deleteUser/' + ${user.key.id}}"  id="deleteForm"
-                                  th:attr="onsubmit='return confirmDelete(\'' + ${user.key.firstName} + '\')'">
+                            <form method="post" th:action="@{'/deleteUser/' + ${user.id}}"  id="deleteForm"
+                                  th:attr="onsubmit='return confirmDelete(\'' + ${user.firstName} + '\')'">
                                 <button type="submit">Slet</button>
                             </form>
 

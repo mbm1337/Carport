@@ -226,5 +226,37 @@ return;
         }
     }
 
+    public static List<User> getUsers(ConnectionPool connectionPool) throws DatabaseException {
+        List<User> users = new ArrayList<>();
+        String sql = "SELECT * FROM \"user\"";
+
+
+        try (Connection connection = connectionPool.getConnection()) {
+            try (PreparedStatement ps = connection.prepareStatement(sql)) {
+                ResultSet resultSet = ps.executeQuery();
+
+                while (resultSet.next()) {
+                    int id = resultSet.getInt("id");
+                    String firstName = resultSet.getString("forname");
+                    String lastName = resultSet.getString("aftername");
+                    String email = resultSet.getString("email");
+                    int zip = resultSet.getInt("zip");
+                    String address = resultSet.getString("address");
+                    boolean admin = resultSet.getBoolean("admin");
+                    String password = resultSet.getString("password");
+                    int phone = resultSet.getInt("phone");
+
+                    User user = new User(id, firstName, lastName, phone, email, zip, address, admin, password);
+                    users.add(user);
+                }
+            }
+        } catch (SQLException e) {
+            String msg = "Der er sket en fejl under søgning efter brugeren.";
+            throw new DatabaseException(msg);
+        }
+
+        return users;
+    }
+
 }
 

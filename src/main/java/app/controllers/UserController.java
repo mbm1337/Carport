@@ -173,6 +173,20 @@ public class UserController {
             ctx.redirect("/");
         }
     }
+    public static void getUser(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+        User currentUser = ctx.sessionAttribute("currentUser");
+        if (currentUser != null) {
+            boolean isAdmin = currentUser.isAdmin();
+            boolean isUser = true;
+            List<User> users = UserMapper.getUsers(connectionPool);
+            ctx.attribute("username", ctx.sessionAttribute("username"));
+            ctx.attribute("users", users);
+            ctx.render("adminuser.html", Map.of("isAdmin", isAdmin, "isUser", isUser));
+        } else {
+            ctx.redirect("/");
+        }
+    }
+
 }
 
 

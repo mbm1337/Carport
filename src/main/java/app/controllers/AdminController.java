@@ -20,9 +20,7 @@ public class AdminController {
 
 
         Map<User, List<Order>> usersAndOrders = AdminMapper.getUsersAndOrders(connectionPool);
-        usersAndOrders.forEach((user, orders) -> {
-            orders.sort(Comparator.comparing(Order::getStatus));
-        });
+
 
 
         User currentUser = ctx.sessionAttribute("currentUser");

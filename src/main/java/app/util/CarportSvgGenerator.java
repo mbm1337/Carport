@@ -1,6 +1,5 @@
 package app.util;
 
-import app.entities.Admin;
 import org.apache.batik.svggen.SVGGraphics2D;
 import org.apache.batik.svggen.SVGGraphics2DIOException;
 import org.w3c.dom.DOMImplementation;
@@ -46,7 +45,6 @@ public class CarportSvgGenerator {
         int distanceBetweenPosts = (end - start) / (antalstolper - 1);
 
 
-
         // Tegn stolper langs længden med afstand mellem dem
         for (int i = 0; i < antalstolper; i++) {
             int x = start + i * distanceBetweenPosts;
@@ -89,11 +87,9 @@ public class CarportSvgGenerator {
         svgGraphics2D.drawRect(0, (int) (remY + width), (int) length+3,10);
     }
 
-
     private static void drawShed(SVGGraphics2D svgGraphics2D, double length, double width, double skurDybde, double skurBrede, boolean startFromRight) {
 
         int stolpebrede = 15; // Bredde af stolper
-
 
         boolean topLeftMatch = false;
         boolean bottomLeftMatch = false;
@@ -102,8 +98,6 @@ public class CarportSvgGenerator {
         int shedX; // X-positionen for skuret
         int shedY; // Y-positionen for skuret
         double tolerance = 0.1;// Tolerance for at matche stolperne 0.1 = 10% indenfor forventet værdi
-
-
 
         if (startFromRight) {
             shedX = (int) (length - skurDybde);
@@ -187,12 +181,8 @@ public class CarportSvgGenerator {
         if ( skurBrede >= 1) {
             svgGraphics2D.drawRect(shedX, BottomLeftY -55, stolpebrede, stolpebrede);
         }
-       // svgGraphics2D.drawRect(shedX, BottomLeftY -55, stolpebrede, stolpebrede);
 
     }
-
-
-
 }
 
 

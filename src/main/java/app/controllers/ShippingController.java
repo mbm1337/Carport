@@ -24,6 +24,5 @@ public class ShippingController {
         }
         ctx.render("shipping_cal.html");
     }
-
 }
 

@@ -28,6 +28,5 @@ public class StandardCarportController {
         } catch (DatabaseException e) {
             ctx.attribute("message", e.getMessage());
         }
-
     }
 }

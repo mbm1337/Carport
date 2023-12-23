@@ -1,4 +1,5 @@
 package app.persistence;
+
 import app.entities.*;
 import app.exceptions.DatabaseException;
 
@@ -63,10 +64,6 @@ public class AdminMapper {
     }
 
 
-
-
-
-
     public static Admin getOrderDetails(int orderNumber, ConnectionPool connectionPool) {
         Admin admin = new Admin();
         List<Admin> adminList = new ArrayList<>();
@@ -114,7 +111,6 @@ public class AdminMapper {
                         admin.setQuantityOrdered(resultSet.getInt("quantityordered"));
 
 
-
                         admin.setLength(resultSet.getInt("length"));
                         admin.setWidth(resultSet.getInt("width"));
 
@@ -136,18 +132,14 @@ public class AdminMapper {
                         adminMaterial.setPurchasePrice(resultSet.getDouble("purchaseprice"));
                         adminList.add(adminMaterial);
                     }
-
                 }
             }
-
         } catch (SQLException e) {
             e.printStackTrace(); // Handle database call errors
         }
-
         admin.setAdminList(adminList);
         return admin;
     }
-
 
     public static void updatePrice(int ordernumber, double price, ConnectionPool connectionPool) throws DatabaseException {
         String sql = "UPDATE orders SET price = ? WHERE ordernumber = ?";
@@ -166,7 +158,7 @@ public class AdminMapper {
         }
     }
 
-    public static List<Material> getMaterials( ConnectionPool connectionPool) throws SQLException {
+    public static List<Material> getMaterials(ConnectionPool connectionPool) throws SQLException {
         List<Material> materials = new ArrayList<>();
         try (Connection connection = connectionPool.getConnection()) {
             String sql = "SELECT * FROM \"materials\"";
@@ -265,7 +257,6 @@ public class AdminMapper {
         } catch (SQLException e) {
             throw new DatabaseException("Fejl i opdatering af material");
         }
-
         return material;
     }
 
@@ -283,7 +274,6 @@ public class AdminMapper {
         } catch (SQLException e) {
             throw new DatabaseException("Fejl i sletning af material");
         }
-
         return null;
     }
 
@@ -299,7 +289,7 @@ public class AdminMapper {
                 int id = rs.getInt("id");
                 int materialsId = rs.getInt("material_id");
                 String comments = rs.getString("description");
-                calcMaterials.add(new Admin(id,materialsId, comments));
+                calcMaterials.add(new Admin(id, materialsId, comments));
             }
             return calcMaterials;
         } catch (SQLException e) {
@@ -336,7 +326,7 @@ public class AdminMapper {
                     while (rs.next()) {
                         int materialsId = rs.getInt("material_id");
                         String comments = rs.getString("description");
-                        return new Admin(id,materialsId, comments);
+                        return new Admin(id, materialsId, comments);
                     }
                 }
             }
@@ -473,7 +463,6 @@ public class AdminMapper {
             throw new DatabaseException("Fejl i sletning af shed width");
         }
     }
-
 
     public static void updateStatus(int orderId, String newStatus, ConnectionPool connectionPool) throws DatabaseException {
         String sql = "UPDATE orders SET status = ? WHERE ordernumber = ?";

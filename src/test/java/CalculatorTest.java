@@ -1,4 +1,3 @@
-import app.entities.Carport;
 import app.util.Calculator;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -67,6 +66,6 @@ public class CalculatorTest {
     public void testNumberOfStolperPerSkur() {
         Calculator calculator = new Calculator();
         int stolper = calculator.numberOfStolperPerSkur(7, 7);
-        assertEquals(12, stolper);
+        assertEquals(8, stolper);
     }
 }

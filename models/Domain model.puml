@@ -2,7 +2,7 @@
 'https://plantuml.com/object-diagram
 
 
-object user{
+object User{
     firstname
     lastname
     email
@@ -15,19 +15,19 @@ object user{
 
 
 
-object carport{
+object Carport{
     carportwidth
     carportlength
     carportheight
     roofmaterial
 
 }
-object shed{
+object Shed{
     shedwidth
     shedlength
 }
 
-object order{
+object Order{
     ordernumber
     orderdate
     orderstatus
@@ -35,12 +35,21 @@ object order{
     orderprice
 }
 
+object Material{
+    materialname
+    marerialtype
+    materialsize
+    materialbuyprice
+    materialsellprice
+}
 
 
 
-user "1"--"*" order
-order "1"-- "1" carport
-carport "1"-- "1"shed
+
+User "1"--"*" Order
+Order "1"-- "1" Carport
+Order "1" -- "*" Material
+Carport "1"-- "1" Shed
 
 
 

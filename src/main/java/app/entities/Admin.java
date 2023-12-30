@@ -69,7 +69,6 @@ public class Admin {
     }
 
 
-
     public String getUserEmail() {
         return userEmail;
     }
@@ -171,7 +170,8 @@ public class Admin {
         adminList = new ArrayList<>();
 
     }
-    public Admin(int id,int materialsId, String comments) {
+
+    public Admin(int id, int materialsId, String comments) {
         this.id = id;
         this.materialsId = materialsId;
         this.comments = comments;

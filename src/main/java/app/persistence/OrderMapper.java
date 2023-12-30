@@ -32,8 +32,9 @@ public class OrderMapper {
 
         return status;
     }
+
     public static int insertOrder(Order order, double totalPrice, ConnectionPool connectionPool) throws DatabaseException {
-        int newOrderId =0;
+        int newOrderId = 0;
         try (Connection connection = connectionPool.getConnection()) {
             String sql = "INSERT INTO \"orders\" (user_id, orderdate,status,comments,price,length,width) VALUES (?,?,?,?,?,?,?)";
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -42,7 +43,7 @@ public class OrderMapper {
             ps.setString(3, order.getStatus());
             ps.setString(4, order.getComment());
             ps.setDouble(5, totalPrice);
-            ps.setInt(6,order.getLength());
+            ps.setInt(6, order.getLength());
             ps.setInt(7, order.getWidth());
 
             int rs = ps.executeUpdate();
@@ -53,15 +54,14 @@ public class OrderMapper {
 
             return newOrderId;
 
-
         } catch (SQLException e) {
             e.printStackTrace();
 
             String msg = "Der skete en fejl. Kan ikke oprette en ordre";
             throw new DatabaseException(msg);
         }
-
     }
+
     public static void createOrderDetailsDatabase(int newOrderId, Order order, int id, int quantityordered, ConnectionPool connectionPool) throws DatabaseException {
         try (Connection connection = connectionPool.getConnection()) {
             String sql = "INSERT INTO \"orderdetails\" (ordernumber, quantityordered, materials_id) VALUES (?, ?, ?)";
@@ -97,7 +97,6 @@ public class OrderMapper {
         }
     }
 
-
     public static void createOrdershedDatabase(int newOrderId, Shed shed, ConnectionPool connectionPool) throws DatabaseException {
         try (Connection connection = connectionPool.getConnection()) {
             String sql = "INSERT INTO \"has_shed\" (order_id, length, width,side) VALUES (?, ?, ?,?)";
@@ -112,9 +111,6 @@ public class OrderMapper {
             throw new DatabaseException(msg);
         }
     }
-
-
-
 
     public static void deleteOrderDatabase(int orderId, ConnectionPool connectionPool) throws DatabaseException {
         try (Connection connection = connectionPool.getConnection()) {
@@ -144,7 +140,6 @@ public class OrderMapper {
             throw new DatabaseException(msg);
         }
     }
-
 
     public static List<OrderDetail> getOrderDetailsWithProduct(int ordernumber, ConnectionPool connectionPool) throws DatabaseException {
         List<OrderDetail> orderDetails = new ArrayList<>();
@@ -181,61 +176,6 @@ public class OrderMapper {
         return orderDetails;
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     public static Order getOrderById(int orderId, ConnectionPool connectionPool) throws DatabaseException {
         Order order = null;
         try (Connection connection = connectionPool.getConnection()) {
@@ -258,5 +198,4 @@ public class OrderMapper {
         }
         return order;
     }
-
 }

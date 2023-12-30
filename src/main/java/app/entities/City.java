@@ -2,7 +2,7 @@ package app.entities;
 
 public class City {
     private int zip;
-     private String city;
+    private String city;
 
 
     public City(int zip, String city) {

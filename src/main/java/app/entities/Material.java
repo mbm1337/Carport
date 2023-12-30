@@ -12,7 +12,7 @@ public class Material {
 
     private int quantityordered;
 
-    public Material(int id,String productName,int quantityordered) {
+    public Material(int id, String productName, int quantityordered) {
 
         this.id = id;
         this.quantityordered = quantityordered;
@@ -81,6 +81,7 @@ public class Material {
         this.buyPrice = buyPrice;
         this.purchasePrice = purchasePrice;
     }
+
     @Override
     public String toString() {
         return "Material{" +

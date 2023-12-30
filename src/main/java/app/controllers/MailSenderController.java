@@ -80,7 +80,6 @@ public class MailSenderController {
         builder.append("Længde: ").append(carport.getLength()).append("\n");
         builder.append("Tag: ").append(carport.getRoof()).append("\n");
 
-
         // Check if the carport includes a shed
         if (carport.getShed() != null) {
             // If a shed is included, append its details to the email body
@@ -174,7 +173,6 @@ public class MailSenderController {
         return builder.toString();
     }
 
-
     // Status Mail to Customer
     public static void sendStatusToCustomer(Order order, String status, String emailRecipient) {
         // Provide recipient's email ID
@@ -219,10 +217,8 @@ public class MailSenderController {
         }
     }
 
-
     private static String sendOrderStatus(Order order, String status, String emailRecipeint) {
         StringBuilder builder = new StringBuilder();
-
 
         builder.append("Hej!\n");
 
@@ -250,7 +246,4 @@ public class MailSenderController {
         // Return the complete email body as a string
         return builder.toString();
     }
-
-
-
 }

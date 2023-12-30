@@ -2,7 +2,7 @@ package app.entities;
 
 public class OrderDetail {
     int orderNumber;
-    int  quantityordered;
+    int quantityordered;
     int materialsId;
     String productName;
 

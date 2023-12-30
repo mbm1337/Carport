@@ -6,6 +6,7 @@ import app.persistence.ConnectionPool;
 import app.persistence.UserMapper;
 import io.javalin.http.Context;
 import org.apache.batik.svggen.SVGGraphics2DIOException;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
@@ -48,7 +49,6 @@ public class UserController {
         String password2 = ctx.formParam("password2");
         int phone = Integer.parseInt(ctx.formParam("phone"));
 
-
         // Validering af passwords - at de to matcher
         if (password1.equals(password2)) {
             try {
@@ -70,7 +70,6 @@ public class UserController {
     public static void updateUser(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
         User currentUser = ctx.sessionAttribute("currentUser");
 
-
         if (currentUser != null) {
             String firstname = ctx.formParam("firstname");
             String lastname = ctx.formParam("lastname");
@@ -86,7 +85,6 @@ public class UserController {
                     UserMapper.updateUser(id, firstname, lastname, adress, zip, phone, password, isAdmin, connectionPool);
                     ctx.redirect("/admin_user_details/" + id);
                 } else {
-
 
                     UserMapper.updateUser(currentUser.getId(), firstname, lastname, adress, zip, phone, password, isAdmin, connectionPool);
 
@@ -104,7 +102,6 @@ public class UserController {
             ctx.redirect("/");
         }
     }
-
 
     public static void logout(Context ctx) {
         // Invalidate session
@@ -130,12 +127,9 @@ public class UserController {
             ctx.sessionAttribute("user", id);
             ctx.render("adminuseredit.html", Map.of("isAdmin", isAdmin, "isUser", isUser));
 
-
         } else {
             ctx.redirect("/");
         }
-
-
     }
 
     public static void deleteUserWithOrders(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
@@ -173,6 +167,7 @@ public class UserController {
             ctx.redirect("/");
         }
     }
+
     public static void getUser(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
         User currentUser = ctx.sessionAttribute("currentUser");
         if (currentUser != null) {
@@ -186,7 +181,6 @@ public class UserController {
             ctx.redirect("/");
         }
     }
-
 }
 
 

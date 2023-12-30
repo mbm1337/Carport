@@ -5,7 +5,6 @@ import app.persistence.MaterialMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import java.sql.Connection;
@@ -42,7 +41,7 @@ class MaterialMapperTest {
 
 
     @Test
-    void getPrice_returnsPrice_whenIdExists() throws SQLException {
+    void getPriceReturnsPriceWhenIdExists() throws SQLException {
 
         // Define behavior
         when(connectionPool.getConnection()).thenReturn(connection);
@@ -60,7 +59,7 @@ class MaterialMapperTest {
 
 
     @Test
-    void getPrice_throwsException_whenSQLExceptionOccurs() throws SQLException {
+    void getPriceThrowsExceptionWhenSQLExceptionOccurs() throws SQLException {
 
         // Define behavior
         when(connectionPool.getConnection()).thenReturn(connection);

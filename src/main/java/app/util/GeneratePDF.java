@@ -10,7 +10,6 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 public class GeneratePDF {
 
-
     private Document doc;
     private PdfWriter writer;
 

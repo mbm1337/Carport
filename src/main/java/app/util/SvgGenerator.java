@@ -18,7 +18,6 @@ SvgGenerator {
 
         SVGGraphics2D svgGraphics2D = new SVGGraphics2D(document);
 
-
         drawStolpe(svgGraphics2D, length, width);
         drawRem(svgGraphics2D, length, width);
         drawShed(svgGraphics2D,length, width, skurDybde);
@@ -61,8 +60,6 @@ SvgGenerator {
         }
     }
 
-
-
     private static void drawRem(SVGGraphics2D svgGraphics2D, double length, double width) {
         int remY = 40; // Afstand fra toppen af stolperne til remmen
 
@@ -100,16 +97,9 @@ SvgGenerator {
             int x = start + i * distanceBetweenSpaer;
             int spaerHeight = 270;
 
-
-
             if ( skurDybde >= 1) {
                 svgGraphics2D.drawRect(x, 50, plankeBrede, spaerHeight);
             }
         }
     }
-
-
-
-
-
 }

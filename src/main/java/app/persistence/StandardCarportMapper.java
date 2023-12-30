@@ -35,10 +35,8 @@ public class StandardCarportMapper {
         } catch (SQLException e) {
             throw new DatabaseException("Couldn't fetch the carport from the database by ID: " + e);
         }
-
         return standardCarport;
     }
-
 
     public static List<StandardCarport> getAllCarports(ConnectionPool connectionPool) throws DatabaseException {
         List<StandardCarport> allCarports = new ArrayList<>();

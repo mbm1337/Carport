@@ -53,6 +53,13 @@ package "utils" {
     [SvgGenerator]
 }
 
+"controllers" -- "utils"
+"controllers" -- "persistence"
+"persistence" -- "exceptions"
+"entities" -- "persistence"
+"entities" -- "controllers"
+
+
 
 
 @enduml

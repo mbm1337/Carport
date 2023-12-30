@@ -23,28 +23,22 @@ public class AdminMapperTest {
 
     @Mock
     private ConnectionPool connectionPool;
-
     @Mock
     private Connection connection;
-
     @Mock
     private PreparedStatement preparedStatement;
-
     @Mock
     private ResultSet resultSet;
-
-
     @BeforeEach
     public void setup() throws SQLException {
         MockitoAnnotations.initMocks(this);
         when(connectionPool.getConnection()).thenReturn(connection);
-
+        when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
+        when(preparedStatement.executeQuery()).thenReturn(resultSet);
     }
 
     @Test
     public void getUsersAndOrdersReturnsExpectedResult() throws SQLException {
-        when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
-        when(preparedStatement.executeQuery()).thenReturn(resultSet);
         when(resultSet.next()).thenReturn(true, false);
         when(resultSet.getInt(anyString())).thenReturn(1);
         when(resultSet.getString(anyString())).thenReturn("test");
@@ -60,8 +54,6 @@ public class AdminMapperTest {
 
     @Test
     public void getMaterialsReturnsExpectedResult() throws SQLException {
-        when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
-        when(preparedStatement.executeQuery()).thenReturn(resultSet);
         when(resultSet.next()).thenReturn(true, false);
         when(resultSet.getInt(anyString())).thenReturn(1);
         when(resultSet.getString(anyString())).thenReturn("test");
@@ -79,7 +71,6 @@ public class AdminMapperTest {
 
     @Test
     public void updateMaterialThrowsDatabaseExceptionWhenNoRowsAffected() throws SQLException {
-        when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
         when(preparedStatement.executeUpdate()).thenReturn(0);
 
         Material material = new Material(1, "test", "test", "test", "test", (short) 1, 1.0, 1.0);

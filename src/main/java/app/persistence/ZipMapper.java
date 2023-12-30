@@ -11,37 +11,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-
 public class ZipMapper {
-
-   /* public static City getCityByZip(int zip, ConnectionPool connectionPool) throws DatabaseException {
-        City city = null;
-
-        String sql = "SELECT  * FROM \"city\" WHERE zip = ?";
-
-        try (Connection connection = connectionPool.getConnection()){
-            try (PreparedStatement ps = connection.prepareStatement(sql)) {
-            ps.setInt(1, zip);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                int postnummer = rs.getInt("zip");
-                String cityName = rs.getString("city_name");
-                city = new City(postnummer, cityName);
-
-                }
-            }
-        } catch (SQLException e) {
-            throw new DatabaseException("Couldn't fetch the city from the database  " + zip);
-        }
-
-        return city;
-    }
-*/
-     public static String getCityByZip(int zip, ConnectionPool connectionPool) throws DatabaseException {
+    public static String getCityByZip(int zip, ConnectionPool connectionPool) throws DatabaseException {
         String city = "";
         String sql = "SELECT city_name FROM \"city\" WHERE zip = ?";
 
-        try (Connection connection = connectionPool.getConnection()){
+        try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement ps = connection.prepareStatement(sql)) {
                 ps.setInt(1, zip);
                 ResultSet rs = ps.executeQuery();
@@ -59,10 +34,9 @@ public class ZipMapper {
         return city;
     }
 
+    public static List<City> citiesbyzip(ConnectionPool connectionPool) throws DatabaseException {
 
-    public static List<City>citiesbyzip(ConnectionPool connectionPool) throws DatabaseException{
-
-        String sql= "SELECT zip,city_name from \"city\"";
+        String sql = "SELECT zip,city_name from \"city\"";
         List<City> city = new ArrayList<>();
 
         try (Connection connection = connectionPool.getConnection()) {
@@ -77,7 +51,7 @@ public class ZipMapper {
                 city.add(new City(zip, by));
             }
         } catch (SQLException e) {
-            throw new DatabaseException("Couldn't upload the toppings from database"+city);
+            throw new DatabaseException("Couldn't upload the toppings from database" + city);
 
         }
 

@@ -27,7 +27,6 @@ public class CarportController {
         List<String> roof = CarportMapper.getRoof(connectionPool);
         ctx.attribute("roof", roof);
 
-
         boolean isAdmin = false;
         boolean isUser = false;
 
@@ -42,21 +41,15 @@ public class CarportController {
         }else {
             ctx.render("carportbuilder.html");
         }
-
-
-
     }
 
-    public static void makeCarport(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+    public static void makeCarport(Context ctx,ConnectionPool connectionPool) throws DatabaseException {
 
         if (ctx.formParam("shed").equals("shed")){
             makeCarportWithShed(ctx);
         } else {
             makeCarportWithoutShed(ctx);
         }
-
-
-
     }
 
     public static void makeCarportWithoutShed(Context ctx) {
@@ -72,8 +65,6 @@ public class CarportController {
 
             ctx.render("adresse.html", Map.of("isUser", true));
         }
-
-
     }
 
     public static void makeCarportWithShed(Context ctx) throws DatabaseException {
@@ -103,12 +94,6 @@ public class CarportController {
             } else {
                 ctx.render("adresse.html", Map.of("isUser", true));
             }
-
-
         }
-
     }
-
-
-
 }

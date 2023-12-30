@@ -22,7 +22,7 @@ public class Calculator {
 
 
         int totalpost = 0;
-        if (carportlength <= 500) {
+        if (carportlength <= 570 ) {
             totalpost = 2 * 2;
         } else if (carportlength >= 600 && carportlength <= 800) {
             totalpost = 3 * 2;

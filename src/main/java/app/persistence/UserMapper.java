@@ -37,7 +37,6 @@ public class UserMapper {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     public static void createuser(String forname, String aftername, String email, int zip, String address, boolean admin, String password, int phone, ConnectionPool connectionPool) throws DatabaseException {
@@ -70,7 +69,6 @@ public class UserMapper {
         }
     }
 
-
     public static User searchUser(String email, ConnectionPool connectionPool) throws DatabaseException {
         String sql = "SELECT * FROM \"user\" WHERE email = ?";
         User user = null;
@@ -93,11 +91,10 @@ public class UserMapper {
         }
 
         return user;
-
     }
 
     public static int createUserGenerated(User user, ConnectionPool connectionPool) throws DatabaseException {
-          int newUserId = 0;
+        int newUserId = 0;
 
         try (Connection connection = connectionPool.getConnection()) {
             String sql = "INSERT INTO \"user\" (forname, aftername, email, zip, address, admin, password, phone) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
@@ -127,32 +124,29 @@ public class UserMapper {
             throw new DatabaseException(message);
         }
     }
-    // UserMapper.java
 
+    public static void updateUser(int userId, String firstName, String lastName, String address, int zip, int phone, String password, boolean isAdmin, ConnectionPool connectionPool) throws DatabaseException {
+        try (Connection connection = connectionPool.getConnection()) {
+            String sql = "UPDATE \"user\"  SET forname = ?, aftername = ?, address = ?, zip = ?, phone = ?, password = ?, admin = ?  WHERE id = ?";
+            try (PreparedStatement ps = connection.prepareStatement(sql)) {
+                ps.setString(1, firstName);
+                ps.setString(2, lastName);
+                ps.setString(3, address);
+                ps.setInt(4, zip);
+                ps.setInt(5, phone);
+                ps.setString(6, password);
+                ps.setBoolean(7, isAdmin);
+                ps.setInt(8, userId);
 
-        public static void updateUser(int userId, String firstName , String lastName, String address, int zip,int phone,String password ,boolean isAdmin,ConnectionPool connectionPool) throws DatabaseException {
-            try (Connection connection = connectionPool.getConnection()) {
-                String sql = "UPDATE \"user\"  SET forname = ?, aftername = ?, address = ?, zip = ?, phone = ?, password = ?, admin = ?  WHERE id = ?";
-                try (PreparedStatement ps = connection.prepareStatement(sql)) {
-                    ps.setString(1, firstName);
-                    ps.setString(2, lastName);
-                    ps.setString(3, address);
-                    ps.setInt(4, zip);
-                    ps.setInt(5, phone);
-                    ps.setString(6, password);
-                    ps.setBoolean(7, isAdmin);
-                    ps.setInt(8, userId);
-
-                    int rowsaffected =ps.executeUpdate();
-
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-                throw new DatabaseException("Error updating user information");
+                int rowsaffected = ps.executeUpdate();
 
             }
-return;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DatabaseException("Error updating user information");
+
         }
+    }
 
     public static Object getUserById(int id, ConnectionPool connectionPool) throws DatabaseException {
         String sql = "SELECT * FROM \"user\" WHERE id = ?";
@@ -183,6 +177,7 @@ return;
 
         return user;
     }
+
     public static List<Integer> getOrdersForUser(int userId, Connection connection) throws SQLException {
         List<Integer> orderIds = new ArrayList<>();
 
@@ -198,6 +193,7 @@ return;
 
         return orderIds;
     }
+
     public static void deleteOrder(Connection connection, int orderId) throws SQLException {
         String deleteOrdersSQL = "DELETE FROM orders WHERE ordernumber = ?";
         try (PreparedStatement ps = connection.prepareStatement(deleteOrdersSQL)) {
@@ -258,9 +254,7 @@ return;
             String msg = "Der er sket en fejl under søgning efter brugeren.";
             throw new DatabaseException(msg);
         }
-
         return users;
     }
-
 }
 

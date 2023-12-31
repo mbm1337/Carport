@@ -1,4 +1,3 @@
-import app.entities.Carport;
 import app.util.Calculator;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;

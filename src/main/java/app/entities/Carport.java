@@ -13,8 +13,6 @@ public class Carport {
     private boolean shedside;
 
 
-
-
     public boolean isShedside() {
         return shedside;
     }
@@ -53,7 +51,8 @@ public class Carport {
         this.height = height;
         this.shed = shed;
     }
-    public Carport(int width, int length, int height,String roof, Shed shed) {
+
+    public Carport(int width, int length, int height, String roof, Shed shed) {
         this.id = counter++;
         this.width = width;
         this.length = length;

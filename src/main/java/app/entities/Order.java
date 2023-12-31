@@ -9,11 +9,11 @@ public class Order {
     private double price;
     private int orderNumber;
     private String productName;
-    private  int quantityOrdered;
+    private int quantityOrdered;
     private int length;
     private int width;
     private String comment;
-   private String orderdate;
+    private String orderdate;
 
     public Order(String status, int userId, int length, int width, String comments) {
 
@@ -26,7 +26,7 @@ public class Order {
 
 
     public Order(int ordernumber, int userId, String status, int price, int length, int width, String comments, String orderdate) {
-this.orderNr = ordernumber;
+        this.orderNr = ordernumber;
         this.userId = userId;
         this.status = status;
         this.comment = comments;
@@ -66,12 +66,12 @@ this.orderNr = ordernumber;
     }
 
 
-
     public Order(int userId, String status, int price) {
         this.userId = userId;
         this.status = status;
         this.price = price;
     }
+
     public Order(int orderNumber, String productName, int quantityOrdered, double price) {
         this.orderNumber = orderNumber;
         this.productName = productName;

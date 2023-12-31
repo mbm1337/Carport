@@ -5,23 +5,16 @@ import app.exceptions.DatabaseException;
 import io.javalin.http.Context;
 import org.apache.batik.svggen.SVGGraphics2DIOException;
 import java.sql.SQLException;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
 public class AdminController {
-    static Map<User, List<Order>> usersAndOrders;
 
     public static void getUsersAndOrders(String path,Context ctx, ConnectionPool connectionPool) throws DatabaseException {
         boolean isAdmin = false;
         boolean isUser = false;
 
-
-
-
         Map<User, List<Order>> usersAndOrders = AdminMapper.getUsersAndOrders(connectionPool);
-
-
 
         User currentUser = ctx.sessionAttribute("currentUser");
         if (currentUser != null) {
@@ -30,17 +23,12 @@ public class AdminController {
 
             ctx.attribute("usersAndOrders", usersAndOrders);
 
-            //ctx.render("adminordre.html", Map.of("isAdmin", isAdmin, "isUser", isUser));
             ctx.render(path, Map.of("isAdmin", isAdmin, "isUser", isUser));
-
         }
          else {
             ctx.redirect("/");
         }
-
-
     }
-
 
     public static void getOrderDetails(Context ctx, ConnectionPool connectionPool) throws DatabaseException, SVGGraphics2DIOException {
         boolean isAdmin = false;
@@ -70,8 +58,6 @@ public class AdminController {
         } else {
             ctx.redirect("/");
         }
-
-
     }
 
     public static void editBalance(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
@@ -90,9 +76,7 @@ public class AdminController {
         } else {
             ctx.redirect("/");
         }
-
     }
-
 
     public static void getMaterial(Context ctx, ConnectionPool connectionPool) throws SQLException {
         boolean isAdmin = false;
@@ -111,7 +95,6 @@ public class AdminController {
         } else {
             ctx.redirect("/");
         }
-
     }
 
     public static void editMaterial(Context ctx, ConnectionPool connectionPool) throws DatabaseException, SQLException {
@@ -132,7 +115,6 @@ public class AdminController {
         } else {
             ctx.redirect("/");
         }
-
     }
 
     public static void updateMaterial(Context ctx, ConnectionPool connectionPool) throws DatabaseException, SQLException {
@@ -168,7 +150,6 @@ public class AdminController {
 
     }
 
-
     public static void addMaterial(Context ctx, ConnectionPool connectionPool) throws DatabaseException, SQLException {
         boolean isAdmin = false;
         boolean isUser = false;
@@ -195,7 +176,6 @@ public class AdminController {
         } else {
             ctx.redirect("/");
         }
-
     }
 
     public static void deleteMaterial(Context ctx, ConnectionPool connectionPool) throws DatabaseException, SQLException {
@@ -231,8 +211,6 @@ public class AdminController {
         } else {
             ctx.redirect("/");
         }
-
-
     }
 
     public static void getCalcMaterialsById(Context ctx, ConnectionPool connectionPool) throws DatabaseException, SQLException {
@@ -253,7 +231,6 @@ public class AdminController {
         } else {
             ctx.redirect("/");
         }
-
     }
 
     public static void editCalcMaterials(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
@@ -274,10 +251,7 @@ public class AdminController {
         } else {
             ctx.redirect("/");
         }
-
-
     }
-
 
     public static void getDimensions(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
         boolean isAdmin = false;
@@ -300,8 +274,6 @@ public class AdminController {
         } else {
             ctx.redirect("/");
         }
-
-
     }
 
     public static void addCarportLength(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
@@ -320,8 +292,6 @@ public class AdminController {
         } else {
             ctx.redirect("/");
         }
-
-
     }
 
     public static void addCarportWidth(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
@@ -339,8 +309,6 @@ public class AdminController {
         } else {
             ctx.redirect("/");
         }
-
-
     }
 
     public static void addShedLength(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
@@ -358,8 +326,6 @@ public class AdminController {
         } else {
             ctx.redirect("/");
         }
-
-
     }
 
     public static void addShedWidth(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
@@ -377,8 +343,6 @@ public class AdminController {
         } else {
             ctx.redirect("/");
         }
-
-
     }
 
     public static void deleteCarportLength(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
@@ -396,8 +360,6 @@ public class AdminController {
         } else {
             ctx.redirect("/");
         }
-
-
     }
 
     public static void deleteCarportWidth(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
@@ -415,8 +377,6 @@ public class AdminController {
         } else {
             ctx.redirect("/");
         }
-
-
     }
 
     public static void deleteShedLength(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
@@ -434,8 +394,6 @@ public class AdminController {
         } else {
             ctx.redirect("/");
         }
-
-
     }
 
     public static void deleteShedWidth(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
@@ -453,15 +411,12 @@ public class AdminController {
         } else {
             ctx.redirect("/");
         }
-
-
     }
 
     public static void changeStatus(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
         boolean isAdmin = false;
         boolean isUser = false;
         User currentUser = ctx.sessionAttribute("currentUser");
-
 
         if (currentUser != null) {
             isAdmin = currentUser.isAdmin();
@@ -503,7 +458,6 @@ public class AdminController {
         }
     }
 
-
     public static void cheklogin(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
         boolean isAdmin = false;
         boolean isUser = false;
@@ -517,10 +471,7 @@ public class AdminController {
         }else {
             ctx.render("index.html");
         }
-
-
     }
-
 }
 
 

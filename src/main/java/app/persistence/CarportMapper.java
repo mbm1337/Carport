@@ -31,7 +31,6 @@ public class CarportMapper {
         return carportWidth;
     }
 
-
     public static List<CarportLength> getCarportLength(ConnectionPool connectionPool) throws DatabaseException {
         List<CarportLength> carportLength = new ArrayList<>();
         String sql = "SELECT * FROM carport_length";

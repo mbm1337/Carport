@@ -1,23 +1,10 @@
 package app;
 
 import app.config.ThymeleafConfig;
-
 import app.controllers.*;
-import app.controllers.AdminController;
-import app.controllers.ShippingController;
-import app.controllers.StandardCarportController;
-import app.entities.Admin;
-import app.entities.StandardCarport;
-import app.controllers.CarportController;
-import app.controllers.OrderController;
-import app.controllers.UserController;
-import app.controllers.ZipController;
 import app.persistence.ConnectionPool;
-import app.persistence.OrderMapper;
 import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinThymeleaf;
-
-import java.util.Map;
 
 public class Main {
 
@@ -34,26 +21,22 @@ public class Main {
 
         );
 
-        // Routing
+        // User Routing
         app.get("/", ctx -> AdminController.cheklogin(ctx, connectionPool));
         app.post("/byg-selv", ctx -> CarportController.carportDropdowns(ctx, connectionPool));
         app.get("/byg-selv", ctx -> CarportController.carportDropdowns(ctx, connectionPool));
         app.post("/carport", ctx -> CarportController.makeCarport(ctx, connectionPool));
-        //app.post("/adresse",ctx-> ZipController.cityAndZip(ctx,connectionPool));
         app.post("/adresse",ctx-> ZipController.cityAndZip(ctx,connectionPool));
         app.post("/status", ctx -> OrderController.getStatus(ctx, connectionPool));
         app.post("/login", ctx -> UserController.login(ctx, connectionPool));
         app.get("/login", ctx -> ctx.render("login.html"));
         app.post("/createuser", ctx -> UserController.createuser(ctx, connectionPool));
         app.get("/createuser", ctx -> ctx.render("createuser.html"));
-
         app.get("/price", ctx -> OrderController.calculatePrice(ctx, connectionPool));
         app.post("/price", ctx -> OrderController.calculatePrice(ctx, connectionPool));
-
         app.post("/carports", ctx -> StandardCarportController.getStandardCarportsForFrontPage(ctx, connectionPool));
         app.get("/carports", ctx -> StandardCarportController.getStandardCarportsForFrontPage(ctx, connectionPool));
         app.post("/carport_info/{id}", ctx -> StandardCarportController.getStandardCarport(ctx, connectionPool));
-
         app.post("/shipping_cal", ctx -> ShippingController.getShippingInfoByZip(ctx, connectionPool));
         app.get("/shipping_cal", ctx -> ShippingController.getShippingInfoByZip(ctx, connectionPool));
         app.get("/svg/{ordernumber}",ctx -> SvgController.getSvg(ctx, connectionPool));
@@ -66,12 +49,7 @@ public class Main {
         app.get("/logout", ctx -> UserController.logout(ctx));
 
 
-
-
-
-        //admin funtioner
-
-
+        //Admin Routing
         app.get("/admin", ctx -> AdminController.checkIfAdminAndRender("admin.html",ctx, connectionPool));
         app.post("/updatePrice", ctx -> AdminController.editBalance(ctx, connectionPool));
         app.post("/edit_matreriel/{id}", ctx -> AdminController.editMaterial(ctx, connectionPool));
@@ -79,9 +57,7 @@ public class Main {
         app.get("/adminordre", ctx -> AdminController.getUsersAndOrders("adminordre.html",ctx, connectionPool));
         app.post("/tilbud/{ordernumber}", ctx -> AdminController.getOrderDetails(ctx, connectionPool));
         app.get("/tilbud/{ordernumber}", ctx -> AdminController.getOrderDetails(ctx, connectionPool));
-
         app.post("/sendMail", ctx -> AdminController.changeStatus(ctx, connectionPool));
-
         app.post("/materials", ctx -> AdminController.getMaterial(ctx, connectionPool));
         app.get("/materials", ctx -> AdminController.getMaterial(ctx, connectionPool));
         app.post("/updatematerials/{id}", ctx -> AdminController.updateMaterial(ctx, connectionPool));
@@ -109,11 +85,5 @@ public class Main {
         app.get("/admin_user_details/{id}", ctx ->  UserController.showUserDetails(ctx, connectionPool));
         app.post("/admin_user_details/{id}", ctx ->  UserController.showUserDetails(ctx, connectionPool));
         app.post("/deleteUser/{id}", ctx ->  UserController.deleteUserWithOrders(ctx, connectionPool));
-
-
-
-
-
-
     }
 }

@@ -8,9 +8,13 @@ participant SVG
 
 User -> Carport: Choose carport,
 Carport -> Order: Send carport
+Order -> Order: Calculate carport
 Order -> DB: Save order
 DB -> Order: Return order id
 Order -> SVG: Send order id
+SVG -> DB: Send order id
+DB -> SVG: Return order
+SVG -> SVG: Make SVG
 SVG -> Order: Return SVG
 Order -> User: Return order svg
 @enduml

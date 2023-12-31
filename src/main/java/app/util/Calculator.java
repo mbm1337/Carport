@@ -2,18 +2,14 @@ package app.util;
 
 import app.entities.Carport;
 
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class Calculator {
     Carport carport;
-    List<Integer> material = new ArrayList<Integer>();
 
 
     public int calculateArea(int width, int length) {
         return width * length;
-
 
     }
 
@@ -30,6 +26,7 @@ public class Calculator {
                 totalpost = totalpost * 2;
             }
         }
+
         return totalpost;
     }
 
@@ -124,19 +121,10 @@ public class Calculator {
             if (shedwidth <= 600 && shedwidth <= 800 && shedlength <= 600 && shedlength <= 800) {
                 totalpost = 3 * 4;
 
-
             }
-
-
         }
 
         return totalpost;
-    }
-
-    public int postsofshed(int shedwidth) {
-
-        return 1;
-
     }
 }
 

@@ -8,7 +8,7 @@ public class StandardCarport {
     private int carportPrice;
     private String description;
 
-    public StandardCarport(int id, String merchandiser, String productName, int carportPrice, String description)  {
+    public StandardCarport(int id, String merchandiser, String productName, int carportPrice, String description) {
         this.id = id;
         this.merchandiser = merchandiser;
         this.productName = productName;

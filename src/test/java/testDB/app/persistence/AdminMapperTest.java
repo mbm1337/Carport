@@ -38,8 +38,6 @@ class AdminMapperTest {
             //Fails if no class is found
             e.printStackTrace();
         }
-
-
     }
 
 
@@ -87,9 +85,6 @@ class AdminMapperTest {
                 stmt.execute("INSERT INTO public.orderdetails VALUES " +
                         "(1,10,3)" + ",(2,20,3)" + ",(3,30,3)");
 
-
-
-
             } catch (SQLException throwables){
                 fail("Didnt execute");
             }
@@ -131,14 +126,5 @@ class AdminMapperTest {
         assertEquals("adress1", u1.getAddress());
         assertFalse(u1.isAdmin());
         assertEquals(12345678, u1.getPhoneNumber());
-
-
-
     }
-
-
-
-
-
-
 }

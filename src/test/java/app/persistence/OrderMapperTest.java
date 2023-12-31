@@ -1,8 +1,6 @@
-package mockito.app.persistence;
+package app.persistence;
 
 import app.exceptions.DatabaseException;
-import app.persistence.ConnectionPool;
-import app.persistence.OrderMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -32,16 +30,15 @@ class OrderMapperTest {
     private ResultSet resultSet;
 
     @BeforeEach
-    void setUp() throws SQLException {
+    void setUp() {
         MockitoAnnotations.initMocks(this);
-        when(connectionPool.getConnection()).thenReturn(connection);
-        when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
-        when(preparedStatement.executeQuery()).thenReturn(resultSet);
-
     }
 
     @Test
     void getOrderStatusByUserIdReturnsStatusWhenOrderExists() throws SQLException, DatabaseException {
+        when(connectionPool.getConnection()).thenReturn(connection);
+        when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
+        when(preparedStatement.executeQuery()).thenReturn(resultSet);
         when(resultSet.next()).thenReturn(true);
         when(resultSet.getString("status")).thenReturn("delivered");
 
@@ -52,6 +49,8 @@ class OrderMapperTest {
 
     @Test
     void getOrderStatusByUserIdThrowsDatabaseExceptionWhenSQLExceptionOccurs() throws SQLException {
+        when(connectionPool.getConnection()).thenReturn(connection);
+        when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
         when(preparedStatement.executeQuery()).thenThrow(SQLException.class);
 
         assertThrows(DatabaseException.class, () -> OrderMapper.getOrderStatusByUserId(1, connectionPool));

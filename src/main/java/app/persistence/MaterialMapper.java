@@ -8,8 +8,7 @@ import java.sql.SQLException;
 
 public class MaterialMapper {
 
-
-    public static  int getPrice(int id, ConnectionPool connectionPool) {
+    public static int getPrice(int id, ConnectionPool connectionPool) {
         try (Connection connection = connectionPool.getConnection()) {
             String sql = "SELECT sellprice FROM materials WHERE id = ?";
             try (PreparedStatement ps = connection.prepareStatement(sql)) {

@@ -17,7 +17,7 @@ public class Main {
             config.staticFiles.add("/public");
             JavalinThymeleaf.init(ThymeleafConfig.templateEngine());
 
-        }).start(7078
+        }).start(7079
 
         );
 

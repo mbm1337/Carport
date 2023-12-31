@@ -107,7 +107,6 @@ public class OrderController {
         Carport carport = ctx.sessionAttribute("carport");
         Shed shed = ctx.sessionAttribute("shed"); // Retrieve shed from session
 
-
         int length = carport.getLength();  // Hent længde fra session
         int width = carport.getWidth();    // Hent bredde fra session
         int shedwidth = 0;
@@ -116,8 +115,6 @@ public class OrderController {
             shedwidth = shed.getWidth();
             shedLength = shed.getLength();
         }
-
-
         int spaer600 = MaterialMapper.getPrice(9, connectionPool);
         int spaer480 = MaterialMapper.getPrice(10, connectionPool);
         int priceOfposts = MaterialMapper.getPrice(12, connectionPool);
@@ -128,7 +125,6 @@ public class OrderController {
         int beslagPerPostPrice = MaterialMapper.getPrice(20, connectionPool);
         int beslagPerSpaerPrice = MaterialMapper.getPrice(20, connectionPool);
 
-
         int numberOfPosts = calc.numberOfPosts(length);
         int numberOfBeams = calc.beamAmount(length);
         int numberOfspaer = calc.spaerAmount(length);
@@ -136,15 +132,9 @@ public class OrderController {
         int numberBeslagPerPost = calc.beslagPost(length);
         int numberBeslagPerSpaer = calc.beslagspaer(length);
 
-
         int totalPostsCost = numberOfPosts * priceOfposts;
 
-
-
-
-
         int screwpakke = 0;
-
         if (screwamount > 0) {
             int i;
             for (i = 0; screwamount > 0; screwamount -= 200) {
@@ -154,17 +144,10 @@ public class OrderController {
 
         }
         int totalPriceOfScrews = screwsSpaerPostPrice*screwpakke;
-
-
-
-
-
         int totalCostBeslagPerPost = beslagPerPostPrice * numberBeslagPerPost;
-            int totalCostBeslagPerSpaer = beslagPerSpaerPrice * numberBeslagPerSpaer;
+        int totalCostBeslagPerSpaer = beslagPerSpaerPrice * numberBeslagPerSpaer;
 
-
-
-            int totalRaft;
+        int totalRaft;
             if (length <= 480) {
                 totalRaft = numberOfspaer * spaer480;
             } else {
@@ -186,37 +169,23 @@ public class OrderController {
                 materials.add(new Material(9, "rem", numberOfBeams));
                 materials.add(new Material(10, "spaer", numberOfspaer));
                 materials.add(new Material(12, "Posts", numberOfPosts));
-
                 materials.add(new Material(20, "BeslagPerSpaer", numberBeslagPerSpaer));
                 materials.add(new Material(20, "BeslagPerPost", numberBeslagPerPost));
-
                 materials.add(new Material(22, "ScrewPerSpaer", screwpakke));
-
-
-
                 materials.add(new Material(13, "brædt", numberOfBeklaedning));
-
                 materials.add(new Material(12, "stoplerPerSkur", numberofstolperPerskur));
-                totalPrice = totalCostbeklaedning + totalCoststolperPerskur + totalCostBeslagPerPost + totalCostBeslagPerSpaer + totalPriceOfScrews + totalPostsCost + totalBeam + totalRaft;
-
-
+                totalPrice = totalCostbeklaedning + totalCoststolperPerskur + totalCostBeslagPerPost + totalCostBeslagPerSpaer + totalPriceOfScrews + totalPostsCost
+                        + totalBeam + totalRaft;
             }else {
 
-
-                 totalPrice = totalCostBeslagPerPost + totalCostBeslagPerSpaer + totalPriceOfScrews + totalPostsCost + totalBeam + totalRaft;
+                totalPrice = totalCostBeslagPerPost + totalCostBeslagPerSpaer + totalPriceOfScrews + totalPostsCost + totalBeam + totalRaft;
                 materials.add(new Material(9, "rem", numberOfBeams));
                 materials.add(new Material(10, "spaer", numberOfspaer));
                 materials.add(new Material(12, "Posts", numberOfPosts));
-
                 materials.add(new Material(20, "BeslagPerSpaer", numberBeslagPerSpaer));
                 materials.add(new Material(20, "BeslagPerPost", numberBeslagPerPost));
-
                 materials.add(new Material(22, "ScrewPerSpaer", screwpakke));
-
-
             }
-
-
             ctx.sessionAttribute("carport", carport);
             ctx.attribute("length", length);
             ctx.attribute("width", width);
@@ -229,9 +198,6 @@ public class OrderController {
                 e.printStackTrace();
             }
                 return totalPrice;
-
-
-
 
     }
 

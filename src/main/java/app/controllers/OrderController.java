@@ -29,8 +29,9 @@ public class OrderController {
 
     public static void insertingAnOrder(int totalPrice, Context ctx, ConnectionPool connectionpool) throws DatabaseException {
         try {
+
             List<Material> materials = ctx.sessionAttribute("quantityordered");
-            int userid;
+            int userid = 0;
             Shed shed = ctx.sessionAttribute("shed");
 
             Carport carport = ctx.sessionAttribute("carport");
@@ -39,7 +40,7 @@ public class OrderController {
             boolean admin = Boolean.parseBoolean(ctx.formParam("admin"));
             String firstname;
             String lastname;
-            String address;
+            String adress;
             int zip;
             int phone;
             String mail;
@@ -49,13 +50,13 @@ public class OrderController {
             if (user == null) {
                 firstname = ctx.formParam("navn");
                 lastname = ctx.formParam("efternavn");
-                address = ctx.formParam("adresse");
+                adress = ctx.formParam("adresse");
                 zip = Integer.parseInt(ctx.formParam("zip"));
                 phone = Integer.parseInt(ctx.formParam("telefonNummer"));
                 mail = ctx.formParam("email");
                 password = ctx.formParam("telefonNummer");
                 comments = ctx.formParam("comments");
-                user = new User(0, firstname, lastname, phone, mail, zip, address, admin, password);
+                user = new User(0, firstname, lastname, phone, mail, zip, adress, admin, password);
                 userid = UserMapper.createUserGenerated(user, connectionpool);
 
             } else {
@@ -79,17 +80,17 @@ public class OrderController {
             }
 
             SvgController.getSvgWithParameter(newOrderId, ctx, connectionpool);
-            ctx.attribute("firstname", firstname);
-            ctx.attribute("phone", phone);
-            ctx.attribute("mail", mail);
-            MailSenderController.sendCarportDetailsEmail(carport, "fog.carports@gmail.com", firstname, phone, ctx);
+            ctx.attribute("firstname",firstname);
+            ctx.attribute("phone",phone);
+            ctx.attribute("mail",mail);
+            MailSenderController.sendCarportDetailsEmail(carport, "fog.carports@gmail.com", firstname, phone,ctx);
             ctx.render("price.html");
 
         } catch (NumberFormatException | DatabaseException e) {
             // Handle errors
             e.printStackTrace();
             System.out.println(e);
-            ctx.attribute("message", e.getMessage());
+            ctx.attribute("message",e.getMessage());
             ctx.attribute("error_message", "We couldn't save the order: " + e.getMessage());
             ctx.render("adresse.html");
         } catch (SVGGraphics2DIOException e) {
@@ -97,13 +98,14 @@ public class OrderController {
         }
     }
 
+
     public static double calculatePrice(Context ctx, ConnectionPool connectionPool) {
+        int totalPrice = 0;
         List<Material> materials = new ArrayList<>();
 
         Calculator calc = new Calculator();
         Carport carport = ctx.sessionAttribute("carport");
         Shed shed = ctx.sessionAttribute("shed"); // Retrieve shed from session
-
 
         int length = carport.getLength();  // Hent længde fra session
         int width = carport.getWidth();    // Hent bredde fra session
@@ -113,7 +115,6 @@ public class OrderController {
             shedwidth = shed.getWidth();
             shedLength = shed.getLength();
         }
-
         int spaer600 = MaterialMapper.getPrice(9, connectionPool);
         int spaer480 = MaterialMapper.getPrice(10, connectionPool);
         int priceOfposts = MaterialMapper.getPrice(12, connectionPool);
@@ -130,80 +131,92 @@ public class OrderController {
         int screwamount = calc.screwSpaer(length) + calc.screwPost(length);
         int numberBeslagPerPost = calc.beslagPost(length);
         int numberBeslagPerSpaer = calc.beslagspaer(length);
-        int numberofstolperPerskur = calc.numberOfStolperPerSkur(shedwidth, shedLength);
-        int numberOfBeklaedning = calc.beklaedning(shedwidth, shedLength);
 
         int totalPostsCost = numberOfPosts * priceOfposts;
 
-        int totalPriceOfScrews = screwsSpaerPostPrice * screwamount;
-
         int screwpakke = 0;
-
         if (screwamount > 0) {
             int i;
             for (i = 0; screwamount > 0; screwamount -= 200) {
                 i++;
             }
             screwpakke += i;
-        }
 
+        }
+        int totalPriceOfScrews = screwsSpaerPostPrice*screwpakke;
         int totalCostBeslagPerPost = beslagPerPostPrice * numberBeslagPerPost;
         int totalCostBeslagPerSpaer = beslagPerSpaerPrice * numberBeslagPerSpaer;
-        int totalCostbeklaedning = beklædningprice * numberOfBeklaedning;
-        int totalCoststolperPerskur = stolperPriceskur * numberofstolperPerskur;
 
         int totalRaft;
-        if (length <= 480) {
-            totalRaft = numberOfspaer * spaer480;
-        } else {
-            totalRaft = numberOfspaer * spaer600;
-        }
+            if (length <= 480) {
+                totalRaft = numberOfspaer * spaer480;
+            } else {
+                totalRaft = numberOfspaer * spaer600;
+            }
 
-        int totalBeam;
-        if (length <= 480) {
-            totalBeam = numberOfBeams * spaer480;
-        } else {
-            totalBeam = numberOfBeams * spaer600;
-        }
+            int totalBeam;
+            if (length <= 480) {
+                totalBeam = numberOfBeams * spaer480;
+            } else {
+                totalBeam = numberOfBeams * spaer600;
+            }
 
-        int totalPrice = totalCostbeklaedning + totalCoststolperPerskur + totalCostBeslagPerPost + totalCostBeslagPerSpaer + totalPriceOfScrews + totalPostsCost + totalBeam + totalRaft;
-        materials.add(new Material(9, "rem", numberOfBeams));
-        materials.add(new Material(10, "spaer", numberOfspaer));
-        materials.add(new Material(12, "Posts", numberOfPosts));
-        materials.add(new Material(20, "BeslagPerSpaer", numberBeslagPerSpaer));
-        materials.add(new Material(20, "BeslagPerPost", numberBeslagPerPost));
-        materials.add(new Material(22, "ScrewPerSpaer", screwpakke));
-        materials.add(new Material(13, "brædt", numberOfBeklaedning));
-        materials.add(new Material(12, "stoplerPerSkur", numberofstolperPerskur));
+            if (shed != null){
+            int numberofstolperPerskur = calc.numberOfStolperPerSkur(shedwidth, shedLength);
+            int numberOfBeklaedning = calc.beklaedning(shedwidth, shedLength);
+            int totalCostbeklaedning = beklædningprice * numberOfBeklaedning;
+            int totalCoststolperPerskur = stolperPriceskur * numberofstolperPerskur;
+                materials.add(new Material(9, "rem", numberOfBeams));
+                materials.add(new Material(10, "spaer", numberOfspaer));
+                materials.add(new Material(12, "Posts", numberOfPosts));
+                materials.add(new Material(20, "BeslagPerSpaer", numberBeslagPerSpaer));
+                materials.add(new Material(20, "BeslagPerPost", numberBeslagPerPost));
+                materials.add(new Material(22, "ScrewPerSpaer", screwpakke));
+                materials.add(new Material(13, "brædt", numberOfBeklaedning));
+                materials.add(new Material(12, "stoplerPerSkur", numberofstolperPerskur));
+                totalPrice = totalCostbeklaedning + totalCoststolperPerskur + totalCostBeslagPerPost + totalCostBeslagPerSpaer + totalPriceOfScrews + totalPostsCost
+                        + totalBeam + totalRaft;
+            }else {
 
-        ctx.sessionAttribute("carport", carport);
-        ctx.attribute("length", length);
-        ctx.attribute("width", width);
-        ctx.sessionAttribute("quantityordered", materials);
-        ctx.sessionAttribute("totalprice", totalPrice);
-        try {
-            OrderController.insertingAnOrder(totalPrice, ctx, connectionPool);
-        } catch (DatabaseException e) {
-            // Handle exception if needed
-            e.printStackTrace();
-        }
-        return totalPrice;
+                totalPrice = totalCostBeslagPerPost + totalCostBeslagPerSpaer + totalPriceOfScrews + totalPostsCost + totalBeam + totalRaft;
+                materials.add(new Material(9, "rem", numberOfBeams));
+                materials.add(new Material(10, "spaer", numberOfspaer));
+                materials.add(new Material(12, "Posts", numberOfPosts));
+                materials.add(new Material(20, "BeslagPerSpaer", numberBeslagPerSpaer));
+                materials.add(new Material(20, "BeslagPerPost", numberBeslagPerPost));
+                materials.add(new Material(22, "ScrewPerSpaer", screwpakke));
+            }
+            ctx.sessionAttribute("carport", carport);
+            ctx.attribute("length", length);
+            ctx.attribute("width", width);
+            ctx.sessionAttribute("quantityordered", materials);
+            ctx.sessionAttribute("totalprice", totalPrice);
+            try {
+                OrderController.insertingAnOrder(totalPrice, ctx, connectionPool);
+            } catch (DatabaseException e) {
+                // Handle exception if needed
+                e.printStackTrace();
+            }
+                return totalPrice;
+
     }
 
-    public static void getOrders(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+        public static void getOrders (Context ctx, ConnectionPool connectionPool) throws DatabaseException {
 
-        User currentUser = ctx.sessionAttribute("currentUser");
-        if (currentUser != null) {
-            boolean isAdmin = currentUser.isAdmin();
-            boolean isUser = true;
-            List<Order> orders = OrderMapper.getOrders(currentUser.getId(), connectionPool);
-            ctx.attribute("username", ctx.sessionAttribute("username"));
-            ctx.attribute("orders", orders);
-            ctx.render("order.html", Map.of("isAdmin", isAdmin, "isUser", isUser));
-        } else {
-            ctx.redirect("/");
+            User currentUser = ctx.sessionAttribute("currentUser");
+            if (currentUser != null) {
+                boolean isAdmin = currentUser.isAdmin();
+                boolean isUser = true;
+                List<Order> orders = OrderMapper.getOrders(currentUser.getId(), connectionPool);
+                ctx.attribute("username", ctx.sessionAttribute("username"));
+                ctx.attribute("orders", orders);
+                ctx.render("order.html", Map.of("isAdmin", isAdmin, "isUser", isUser));
+            } else {
+                ctx.redirect("/");
+            }
+
+
         }
-    }
 
 
     public static void deleteOrder(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
@@ -217,12 +230,16 @@ public class OrderController {
             isUser = true;
 
             int orderId = Integer.parseInt(ctx.pathParam("orderId"));
-            OrderMapper.deleteOrderDatabase(orderId, connectionPool);
-            ctx.redirect("/adminordre");
-        } else {
+        OrderMapper.deleteOrderDatabase(orderId, connectionPool);
+        ctx.redirect("/adminordre");
+        }else {
             ctx.redirect("/");
         }
+
+
+
     }
+
 
     public static void showOrderDetails(Context ctx, ConnectionPool connectionPool) throws DatabaseException, SVGGraphics2DIOException {
         boolean isAdmin = false;
@@ -234,15 +251,17 @@ public class OrderController {
             isAdmin = currentUser.isAdmin();
             isUser = true;
 
-            int orderNumber = Integer.parseInt(ctx.pathParam("ordernumber"));
+        int orderNumber = Integer.parseInt(ctx.pathParam("ordernumber"));
 
-            List<OrderDetail> orderDetail = OrderMapper.getOrderDetailsWithProduct(orderNumber, connectionPool);
-            ctx.sessionAttribute("ordernumber", orderNumber);
-            ctx.attribute("user", orderDetail);
-            SvgController.getSvg(ctx, connectionPool);
-            ctx.render("mymaterial.html", Map.of("isAdmin", isAdmin, "isUser", isUser));
-        } else {
+        List<OrderDetail> orderDetail = OrderMapper.getOrderDetailsWithProduct(orderNumber, connectionPool);
+        ctx.sessionAttribute("ordernumber", orderNumber);
+        ctx.attribute("user", orderDetail);
+        SvgController.getSvg(ctx, connectionPool);
+        ctx.render("mymaterial.html", Map.of("isAdmin", isAdmin, "isUser", isUser));
+        }else {
             ctx.redirect("/");
         }
+
     }
+
 }

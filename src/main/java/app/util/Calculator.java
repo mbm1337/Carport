@@ -15,10 +15,8 @@ public class Calculator {
 
     public int numberOfPosts(int carportlength) {
         int distanceBetweenPosts = 240;
-
-
         int totalpost = 0;
-        if (carportlength <= 500) {
+        if (carportlength <= 570 ) {
             totalpost = 2 * 2;
         } else if (carportlength >= 600 && carportlength <= 800) {
             totalpost = 3 * 2;
@@ -27,7 +25,6 @@ public class Calculator {
                 totalpost = (int) Math.ceil(carportlength / distanceBetweenPosts);
                 totalpost = totalpost * 2;
             }
-
         }
 
         return totalpost;
@@ -35,23 +32,17 @@ public class Calculator {
 
     public static int spaerAmount(int carportLength) {
         //spær
-
         int numberOfRafts = (int) Math.ceil((double) carportLength / 55);
-
-
         if (carportLength >= 600) {
             int i = numberOfRafts + 1;
-
         }
         return numberOfRafts;
-
     }
 
     public static int beamAmount(int carportLength) {
         int numberOfrem = 2;
 
         int additionalRem = 0;
-
         if (carportLength > 600) {
             numberOfrem = 3;
         }

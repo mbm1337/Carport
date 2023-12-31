@@ -42,8 +42,8 @@ public class CalculatorTest {
     @Test
     public void testBeslagPost() {
         Calculator calculator = new Calculator();
-        int beslag = calculator.beslagPost(700);
-        assertEquals(6, beslag);
+        int beslag = calculator.beslagPost(500);
+        assertEquals(4, beslag);
     }
 
 
@@ -51,21 +51,21 @@ public class CalculatorTest {
     @Test
     public void testShedArea() {
         Calculator calculator = new Calculator();
-        int area = calculator.shedArea(8, 6);
-        assertEquals(48, area);
+        int area = calculator.shedArea(210, 210);
+        assertEquals(44100, area);
     }
 
     @Test
     public void testBeklaedning() {
         Calculator calculator = new Calculator();
-        int beklaedning = calculator.beklaedning(9, 9);
+        int beklaedning = calculator.beklaedning(210, 210);
         assertEquals(108, beklaedning);
     }
 
     @Test
     public void testNumberOfStolperPerSkur() {
         Calculator calculator = new Calculator();
-        int stolper = calculator.numberOfStolperPerSkur(7, 7);
+        int stolper = calculator.numberOfStolperPerSkur(210, 210);
         assertEquals(8, stolper);
     }
 }
